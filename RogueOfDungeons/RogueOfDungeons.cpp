@@ -1,19 +1,13 @@
-
-#include <iostream>
+#include "Graphics.h"
 #include <SDL.h>
+#include <iostream>
 
-int main(int argc, char* argv[])
+using namespace N;
+using namespace std;
+int SDL_main(int argc, char* argv[]) /* Замена для main, поскольку SDL требует собственного 
+main легче будет работать в SDL_main чем создавать доп main*/
 {
-
-	if (SDL_Init(SDL_INIT_EVERYTHING) < 0)
-	{
-		std::cout << "SDL initialization failed. SDL Error: " << SDL_GetError();
-	}
-	else
-	{
-		std::cout << "SDL initialization succeeded!";
-	}
-
-	std::cin.get();
+	Graphics graphics;//создание объекта класса
+	graphics.CreateWindow();//функция создания окна
 	return 0;
-}
+};

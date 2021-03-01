@@ -1,13 +1,17 @@
 #include "Graphics.h"
+#include "Game.h"
 #include <SDL.h>
 #include <iostream>
+#include <conio.h>
 
-using namespace N;
+
 using namespace std;
-int SDL_main(int argc, char* argv[]) /* Замена для main, поскольку SDL требует собственного 
-main легче будет работать в SDL_main чем создавать доп main*/
+int main(int argc, char* argv[])
 {
-	Graphics graphics;//создание объекта класса
+	Game graphics;//создание объекта класса
 	graphics.CreateWindow();//функция создания окна
-	return 0;
+	bool run = true;
+	graphics.button = 'a';
+	
+	return graphics.quit();
 };

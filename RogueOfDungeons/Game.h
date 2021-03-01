@@ -1,6 +1,6 @@
 #pragma once
 #include <SDL.h>
-#include <conio.h>
+
 #include <iostream>
 	class Game
 	{

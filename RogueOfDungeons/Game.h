@@ -1,13 +1,17 @@
 #pragma once
 #include <SDL.h>
-#include <conio.h>
 #include <iostream>
+#include "Graphics.h"
+#include <string>
+#include <SDL_image.h>
 	class Game
 	{
 	private:
 		bool isRunning;
 		SDL_Window* window;
 		SDL_Renderer* renderer;
+		Graphics* Background = new Graphics(window, renderer);
+		Graphics* Play = new Graphics(window, renderer);
 	public:
 		Game();
 		~Game();

@@ -1,6 +1,7 @@
 #include "Game.h"
+#include "Graphics.h"
 
-Game::Game() 
+Game::Game()
 {}
 Game::~Game()
 {}
@@ -24,8 +25,8 @@ void Game::init(const char* title, int xpos, int ypos, int width, int height, bo
 		renderer = SDL_CreateRenderer(window, -1, 0);
 		if (renderer)
 		{
-			SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
 			std::cout << "Renderer created!" << std::endl;
+			SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
 		}
 		isRunning = true;
 	}
@@ -48,12 +49,15 @@ void Game::handleEvents()
 	}
 }
 void Game::update()
-{}
+{
+	Background->OutputTexture(0, 0, 1280, 720, "image/BackgroundMenu.png");
+	Play->OutputTexture(0, 0, 350, 100, "image/Play.png");
+}
 void Game::render() 
 {
-	SDL_RenderClear(renderer);
-	
 	SDL_RenderPresent(renderer);
+	SDL_RenderClear(renderer);
+	SDL_Delay(16);
 }
 void Game::clean()
 {

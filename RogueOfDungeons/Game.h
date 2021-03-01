@@ -1,14 +1,21 @@
 #pragma once
-#include "Graphics.h"
+#include <SDL.h>
 #include <conio.h>
 #include <iostream>
-namespace std {
-	class Game : public Graphics
+	class Game
 	{
 	private:
-		
+		bool isRunning;
+		SDL_Window* window;
+		SDL_Renderer* renderer;
 	public:
-		char button;
-		int quit();
+		Game();
+		~Game();
+		void init(const char* title, int xpos, int ypos, int width, int height, bool fullscreen);
+		void handleEvents();
+		void update();
+		void render();
+		void clean();
+		bool running();
+
 	};
-}

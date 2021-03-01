@@ -52,7 +52,7 @@ void Game::update()
 void Game::render() 
 {
 	SDL_RenderClear(renderer);
-	//...
+	
 	SDL_RenderPresent(renderer);
 }
 void Game::clean()

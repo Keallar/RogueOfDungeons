@@ -1,8 +1,4 @@
-#include <SDL.h>
-#include <SDL_Image.h>
 #include "Graphics.h"
-#include <iostream>
-#include <string>
 
 Graphics::Graphics(SDL_Window* window, SDL_Renderer* renderer) : _window(window), _renderer(renderer) {
 	

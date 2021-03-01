@@ -16,10 +16,10 @@ int main(int argc, char* argv[])
 	Graphics Test(_window, _renderer);
 	Test.OutputTexture(0, 0, 1280, 720, "images/BackgroundMenu.png");
 	Graphics Play(_window, _renderer);
-	Play.OutputTexture(600, 400, 200, 200, "images/Play.png");
+	Play.OutputTexture((WIDTH/2-(354/2)), 400, 354, 108, "images/Play.png");
 	SDL_RenderPresent(_renderer);
 	SDL_RenderClear(_renderer);
-	SDL_Delay(3000);
+	
 	SDL_Event e;
 	bool quit = false;
 	while (!quit) {
@@ -32,6 +32,8 @@ int main(int argc, char* argv[])
 	}
 	SDL_DestroyWindow(_window);
 	SDL_DestroyRenderer(_renderer);
+	Test.Destroy();
+	Play.Destroy();
 	SDL_Quit();
 	return 0;
 }

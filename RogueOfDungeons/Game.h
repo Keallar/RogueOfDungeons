@@ -4,7 +4,8 @@
 #include "Graphics.h"
 #include <string>
 #include <SDL_image.h>
-	class Game
+	
+class Game
 	{
 	private:
 		bool isRunning;
@@ -21,5 +22,4 @@
 		void render();
 		void clean();
 		bool running();
-
 	};

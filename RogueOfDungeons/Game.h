@@ -10,8 +10,7 @@
 		bool isRunning;
 		SDL_Window* window;
 		SDL_Renderer* renderer;
-		Graphics* Background = new Graphics(window, renderer);
-		Graphics* Play = new Graphics(window, renderer);
+		SDL_Texture* textureBackground;
 	public:
 		Game();
 		~Game();

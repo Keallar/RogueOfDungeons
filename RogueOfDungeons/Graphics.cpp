@@ -15,8 +15,9 @@ void renderTexture(SDL_Texture *tex, SDL_Renderer *ren, int x, int y, int w, int
 }
 
 void Graphics::OutputTexture(int x,int  y,int  w,int h, std::string file) {
-	_texture = IMG_LoadTexture(_renderer, file.c_str());
-	renderTexture(_texture,_renderer, x, y, w, h);
+	_surface = IMG_Load(file.c_str());
+	_texture = SDL_CreateTextureFromSurface(_renderer, _surface);
+	SDL_RenderCopy(_renderer, _texture, NULL, NULL);
 	if (!_texture)
 	{
 		std::cout << IMG_GetError(); // Можно заменить на SDL_GetError()

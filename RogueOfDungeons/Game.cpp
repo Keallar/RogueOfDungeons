@@ -50,14 +50,15 @@ void Game::handleEvents()
 }
 void Game::update()
 {
-	Background->OutputTexture(0, 0, 1280, 720, "image/BackgroundMenu.png");
-	Play->OutputTexture(0, 0, 350, 100, "image/Play.png");
+	
 }
 void Game::render() 
 {
-	SDL_RenderPresent(renderer);
 	SDL_RenderClear(renderer);
-	SDL_Delay(16);
+
+	textureBackground = IMG_LoadTexture(renderer, "images/backgroundMenu.png");
+	SDL_RenderCopy(renderer, textureBackground, NULL, NULL);
+	SDL_RenderPresent(renderer);
 }
 void Game::clean()
 {

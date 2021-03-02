@@ -6,6 +6,7 @@
 
 class Graphics {
 private:
+	SDL_Surface* _surface;
 	SDL_Texture* _texture;
 	SDL_Renderer* _renderer;
 	SDL_Window* _window;

@@ -24,6 +24,8 @@ void Graphics::OutputTexture(int x,int  y,int  w,int h, std::string file) {
 	}
 }
 
+
+
 void Graphics::Destroy() {
 	SDL_DestroyTexture(_texture);
 }

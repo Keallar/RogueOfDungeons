@@ -1,5 +1,7 @@
 #include "Game.h"
 #include <SDL_image.h>
+#include "textureManager.h"
+SDL_Texture* playerTex;
 Game::Game() 
 {}
 Game::~Game()
@@ -34,6 +36,7 @@ void Game::init(const char* title, int xpos, int ypos, int width, int height, bo
 	{
 		isRunning = false;
 	}
+	playerTex = textureManager::LoadTexture("", renderer);
 }
 
 void Game::handleEvents()

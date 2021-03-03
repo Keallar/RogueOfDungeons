@@ -10,10 +10,11 @@ public:
 	void clean();
 
 private:
-	int xpos;
-	int ypos;
 	SDL_Texture* objTexture;
 	SDL_Rect srcRect, destRect;
 	SDL_Renderer* renderer;
+protected:
+	int xpos;
+	int ypos;
 };
 

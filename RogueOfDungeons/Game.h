@@ -1,7 +1,9 @@
 #pragma once
 #include <SDL.h>
-#include "Graphics.h"
+#include "Player.h"
 #include <iostream>
+#include "MainMenu.h"
+
 	class Game
 	{
 	private:
@@ -11,6 +13,7 @@
 		SDL_Texture* texture;
 		SDL_Rect tex_RECT;
 		SDL_Rect tex_posRect;
+		MainMenu MainMenu;
 		
 
 	public:

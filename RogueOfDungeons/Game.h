@@ -1,5 +1,6 @@
 #pragma once
 #include <SDL.h>
+#include "SDL.h"
 #include "Player.h"
 #include <iostream>
 #include "MainMenu.h"
@@ -17,6 +18,7 @@
 		
 
 	public:
+		
 		Game();
 		~Game();
 		void init(const char* title, int xpos, int ypos, int width, int height, bool fullscreen);

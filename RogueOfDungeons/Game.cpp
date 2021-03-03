@@ -1,6 +1,8 @@
 #include "Game.h"
 #include "Graphics.h"
 
+using namespace std;
+
 Game::Game()
 {}
 Game::~Game()

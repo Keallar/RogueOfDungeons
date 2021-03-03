@@ -5,6 +5,8 @@
 #include <string>
 #include <SDL_image.h>
 	
+using namespace std;
+
 class Game
 	{
 	private:

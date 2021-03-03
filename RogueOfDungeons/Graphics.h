@@ -1,8 +1,10 @@
 #pragma once
 #include <string>
-#include <SDL.h>
+#include "SDL.h"
 #include <iostream>
 #include <SDL_image.h>
+
+using namespace std;
 
 class Graphics {
 private:

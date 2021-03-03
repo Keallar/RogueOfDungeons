@@ -1,5 +1,7 @@
 #include "Graphics.h"
 
+using namespace std;
+
 Graphics::Graphics(SDL_Window* window, SDL_Renderer* renderer) : _window(window), _renderer(renderer) {
 	
 }

@@ -1,7 +1,8 @@
 #include "Game.h"
 #include <SDL_image.h>
 #include "textureManager.h"
-
+#include "MainMenu.h"
+MainMenu* Menu;
 Game::Game() 
 {}
 Game::~Game()
@@ -34,6 +35,7 @@ void Game::init(const char* title, int xpos, int ypos, int width, int height, bo
 	{
 		isRunning = false;
 	}
+	
 }
 
 void Game::handleEvents()
@@ -49,16 +51,14 @@ void Game::handleEvents()
 	}
 }
 void Game::update()
-{
-	if (MainMenu.flag == 1) {
-		MainMenu.Render();
-		MainMenu.RenderButtons();
-		MainMenu.Update();
-		MainMenu.UpdateButtons();
-		MainMenu.clearButtons();
-		MainMenu.clear();
-
-	}
+{		
+		Menu->MainMenuTextureSetter("images/BackgroundMenu.png", renderer);
+		Menu->Render();
+		Menu->RenderButtons();
+		Menu->Update();
+		Menu->UpdateButtons();
+		Menu->clearButtons();
+		Menu->clear();
 }
 void Game::render()
 {

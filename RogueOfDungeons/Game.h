@@ -13,11 +13,11 @@
 		SDL_Texture* texture;
 		SDL_Rect tex_RECT;
 		SDL_Rect tex_posRect;
-		MainMenu MainMenu;
 		
 
 	public:
-		Game();
+		
+		Game();	
 		~Game();
 		void init(const char* title, int xpos, int ypos, int width, int height, bool fullscreen);
 		void handleEvents();

@@ -2,8 +2,8 @@
 #include "Game.h"
 #include "textureManager.h"
 MainMenu::MainMenu() {
-	MainMenuTexture = textureManager::LoadTexture("images/BackgroundMenu.png", renderer);
-}
+	
+};
 void MainMenu::Render() {
 	SDL_RenderCopy(renderer, MainMenuTexture, NULL, NULL);
 	SDL_RenderPresent(renderer);
@@ -23,4 +23,7 @@ void MainMenu::clear() {
 void MainMenu::clearButtons() {
 
 }
-
+void MainMenu::MainMenuTextureSetter(const char* texturesheet, SDL_Renderer* ren) {
+	renderer = ren;
+	MainMenuTexture = textureManager::LoadTexture(texturesheet, ren);
+}

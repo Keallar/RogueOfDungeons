@@ -9,9 +9,9 @@ private:
 	
 public:
 	int flag = 1;
-	MainMenu();
+	MainMenu(const char* texturesheet, SDL_Renderer* ren);
 	~MainMenu();
-	void MainMenuTextureSeater();
+	
 	void Render();
 	void RenderButtons();
 	void Update();

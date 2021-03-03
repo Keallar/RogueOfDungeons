@@ -1,13 +1,15 @@
 #include "Game.h"
 #include <SDL_image.h>
 #include "textureManager.h"
+MainMenu* Menu;
 
 Game::Game() 
 {}
 Game::~Game()
 {}
-void Game::init(const char* title, int xpos, int ypos, int width, int height, bool fullscreen) 
+void Game::init(const char* title, int xpos, int ypos, int width, int height, bool fullscreen)
 {
+	
 	int flags = 0;
 	if (fullscreen)
 	{
@@ -25,15 +27,17 @@ void Game::init(const char* title, int xpos, int ypos, int width, int height, bo
 		renderer = SDL_CreateRenderer(window, -1, 0);
 		if (renderer)
 		{
-			SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
+			SDL_SetRenderDrawColor(renderer, 255, 0, 255, 255);
 			std::cout << "Renderer created!" << std::endl;
 		}
 		isRunning = true;
 	}
-	else 
+	
+	else
 	{
 		isRunning = false;
 	}
+	Menu = new MainMenu("images/BackgroundMenu.png", renderer);
 }
 
 void Game::handleEvents()
@@ -50,19 +54,13 @@ void Game::handleEvents()
 }
 void Game::update()
 {
-	if (MainMenu.flag == 1) {
-		MainMenu.Render();
-		MainMenu.RenderButtons();
-		MainMenu.Update();
-		MainMenu.UpdateButtons();
-		MainMenu.clearButtons();
-		MainMenu.clear();
+	Menu->Render();
 
-	}
+	
+
 }
 void Game::render()
 {
-	SDL_RenderClear(renderer);	
 	SDL_RenderCopy(renderer, texture, &tex_RECT, &tex_posRect);
 	SDL_RenderPresent(renderer);
 }

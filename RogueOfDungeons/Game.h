@@ -5,7 +5,6 @@
 #include <string>
 #include <SDL_image.h>
 	
-//lol
 using namespace std;
 
 class Game

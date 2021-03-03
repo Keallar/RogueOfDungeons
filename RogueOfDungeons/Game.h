@@ -1,5 +1,3 @@
-#pragma once
-#include <SDL.h>
 #include "SDL.h"
 #include "Player.h"
 #include <iostream>
@@ -27,6 +25,5 @@
 		void render();
 		void clean();
 		bool running();
-		
 
 	};

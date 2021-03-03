@@ -6,8 +6,6 @@ Game::Game()
 {}
 Game::~Game()
 {}
-
-
 void Game::init(const char* title, int xpos, int ypos, int width, int height, bool fullscreen) 
 {
 	int flags = 0;
@@ -53,36 +51,10 @@ void Game::handleEvents()
 }
 void Game::update()
 {
-	SDL_Delay(300);
 }
 void Game::render()
 {
 	SDL_RenderClear(renderer);
-	texture = IMG_LoadTexture(renderer, "images/ABOBA.png");
-	if (tex_RECT.x + 69 < 340) {
-		tex_RECT.x = tex_RECT.x + 69;
-	}
-	else
-	{
-		tex_RECT.x = 0;
-	}
-	tex_RECT.y = 10;
-	tex_RECT.w = 67;
-	tex_RECT.h = 81;
-	if (tex_posRect.x + 50 < 751) {
-		tex_posRect.x = tex_posRect.x + 50;
-	}
-	else {
-		tex_posRect.x = 0;
-	}
-	if (tex_posRect.y + 50 < 551) {
-		tex_posRect.y = tex_posRect.y + 50;
-	}
-	else {
-		tex_posRect.y = 0;
-	}
-	tex_posRect.w = 67;
-	tex_posRect.h = 81;
 	SDL_RenderCopy(renderer, texture, &tex_RECT, &tex_posRect);
 	SDL_RenderPresent(renderer);
 }

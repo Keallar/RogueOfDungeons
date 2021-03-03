@@ -1,6 +1,6 @@
 #pragma once
 #include <SDL.h>
-
+#include "Graphics.h"
 #include <iostream>
 	class Game
 	{
@@ -8,6 +8,11 @@
 		bool isRunning;
 		SDL_Window* window;
 		SDL_Renderer* renderer;
+		SDL_Texture* texture;
+		SDL_Rect tex_RECT;
+		SDL_Rect tex_posRect;
+		
+
 	public:
 		Game();
 		~Game();
@@ -17,5 +22,6 @@
 		void render();
 		void clean();
 		bool running();
+		
 
 	};

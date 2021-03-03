@@ -1,5 +1,6 @@
 #include "Graphics.h"
-
+#include <string>
+/*
 Graphics::Graphics(SDL_Window* window, SDL_Renderer* renderer) : _window(window), _renderer(renderer) {
 	
 }
@@ -25,4 +26,4 @@ void Graphics::Destroy() {
 
 void GetEvent() {
 
-}
+}*/

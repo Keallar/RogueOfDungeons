@@ -3,6 +3,7 @@
 #include <SDL.h>
 #include <iostream>
 #include <SDL_image.h>
+/*
 class Graphics {
 private:
 	SDL_Texture* _texture;
@@ -14,4 +15,4 @@ public:
 	~Graphics() {};
 	void OutputTexture(int x,int y,int w,int h, std::string file);
 	void Destroy();
-};
+};*/

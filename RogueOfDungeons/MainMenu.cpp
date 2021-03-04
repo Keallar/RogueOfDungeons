@@ -5,6 +5,10 @@ MainMenu::MainMenu(const char* texturesheet, SDL_Renderer* ren) {
 	renderer = ren;
 	MainMenuTexture = textureManager::LoadTexture(texturesheet, ren);
 }
+MainMenu::~MainMenu()
+{}
+void MainMenu::MainMenuTextureSeater()
+{}
 void MainMenu::Render() {
 	SDL_RenderCopy(renderer, MainMenuTexture, NULL, NULL);
 	SDL_RenderPresent(renderer);

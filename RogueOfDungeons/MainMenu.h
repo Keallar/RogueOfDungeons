@@ -1,4 +1,3 @@
-#pragma once
 #include "Game.h"
 #include "textureManager.h"
 class MainMenu

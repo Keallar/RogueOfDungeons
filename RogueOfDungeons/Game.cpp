@@ -3,7 +3,9 @@
 #include "textureManager.h"
 MainMenu* Menu;
 
-Game::Game() 
+using namespace std;
+
+Game::Game()
 {}
 Game::~Game()
 {}
@@ -28,7 +30,6 @@ void Game::init(const char* title, int xpos, int ypos, int width, int height, bo
 		if (renderer)
 		{
 			SDL_SetRenderDrawColor(renderer, 255, 0, 255, 255);
-			std::cout << "Renderer created!" << std::endl;
 		}
 		isRunning = true;
 	}

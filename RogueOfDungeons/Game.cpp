@@ -2,6 +2,7 @@
 #include <SDL_image.h>
 #include "textureManager.h"
 #include "RenderManager.h"
+#include "InputManager.h"
 MainMenu* Menu;
 
 Game::Game() 
@@ -46,11 +47,28 @@ void Game::handleEvents()
 	SDL_Event event;
 	SDL_PollEvent(&event);
 	switch (event.type)
-	{ case SDL_QUIT:
-		isRunning = false;
-		break;
-	  default:
-		break;
+	{ 
+		case SDL_QUIT:
+			isRunning = false;
+			break;
+		case SDL_MOUSEBUTTONDOWN:
+			SDL_GetMouseState(&mouseCoord.x, &mouseCoord.y);
+			if(Menu->flag == 1) {
+				if (InputManager::MouseInArea(640, 361, 250, 100, mouseCoord.x, mouseCoord.y)) {
+					isRunning = false;
+					break;
+				}
+				if (InputManager::MouseInArea(640, 471, 420, 100, mouseCoord.x, mouseCoord.y)) {
+					isRunning = false;
+					break;
+				}
+				if (InputManager::MouseInArea(640, 581, 250, 100, mouseCoord.x, mouseCoord.y)) {
+					isRunning = false;
+					break;
+				}
+			}
+		default:
+			break;
 	}
 }
 void Game::update()

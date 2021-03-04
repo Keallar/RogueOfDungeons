@@ -1,6 +1,7 @@
 #include "Game.h"
 #include <SDL_image.h>
 #include "textureManager.h"
+#include "RenderManager.h"
 MainMenu* Menu;
 
 Game::Game() 
@@ -37,7 +38,7 @@ void Game::init(const char* title, int xpos, int ypos, int width, int height, bo
 	{
 		isRunning = false;
 	}
-	Menu = new MainMenu("images/BackgroundMenu.png", renderer);
+	Menu = new MainMenu("images/BackgroundMenu.png", "images/Play.png", "images/Settings.png","images/Exit.png", renderer);
 }
 
 void Game::handleEvents()

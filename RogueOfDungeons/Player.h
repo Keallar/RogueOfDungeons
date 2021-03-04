@@ -1,11 +1,12 @@
-/*#pragma once
+#pragma once
 #include "GameObject.h"
 #include "Game.h"
 class Player :
     public GameObject
 {
 private:
-    GameObject Player1("aboba", renderer, x , y);
+	SDL_Renderer* renderer;
+    GameObject Player1 = GameObject("aboba", renderer, 0 , 0);
     
 public:
     void Render() {
@@ -18,5 +19,5 @@ public:
         GameObject::clean();
     }
     bool flag = 0;
-};*/
+};
 

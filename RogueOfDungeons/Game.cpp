@@ -1,5 +1,6 @@
 #include "Game.h"
-#include "Graphics.h"
+#include <SDL_image.h>
+#include "textureManager.h"
 
 using namespace std;
 
@@ -7,7 +8,6 @@ Game::Game()
 {}
 Game::~Game()
 {}
-
 void Game::init(const char* title, int xpos, int ypos, int width, int height, bool fullscreen) 
 {
 	int flags = 0;
@@ -52,14 +52,21 @@ void Game::handleEvents()
 }
 void Game::update()
 {
-	Background->OutputTexture(0, 0, 1280, 720, "image/BackgroundMenu.png");
-	Play->OutputTexture(0, 0, 350, 100, "image/Play.png");
+	if (MainMenu.flag == 1) {
+		MainMenu.Render();
+		MainMenu.RenderButtons();
+		MainMenu.Update();
+		MainMenu.UpdateButtons();
+		MainMenu.clearButtons();
+		MainMenu.clear();
+
+	}
 }
-void Game::render() 
+void Game::render()
 {
+	SDL_RenderClear(renderer);	
+	SDL_RenderCopy(renderer, texture, &tex_RECT, &tex_posRect);
 	SDL_RenderPresent(renderer);
-	SDL_RenderClear(renderer);
-	SDL_Delay(16);
 }
 void Game::clean()
 {

@@ -1,20 +1,21 @@
 #pragma once
 #include <SDL.h>
+#include "Player.h"
 #include <iostream>
-#include "Graphics.h"
-#include <string>
-#include <SDL_image.h>
-	
-using namespace std;
+#include "MainMenu.h"
 
-class Game
+	class Game
 	{
 	private:
 		bool isRunning;
 		SDL_Window* window;
 		SDL_Renderer* renderer;
-		Graphics* Background = new Graphics(window, renderer);
-		Graphics* Play = new Graphics(window, renderer);
+		SDL_Texture* texture;
+		SDL_Rect tex_RECT;
+		SDL_Rect tex_posRect;
+		MainMenu MainMenu;
+		
+
 	public:
 		Game();
 		~Game();
@@ -24,4 +25,6 @@ class Game
 		void render();
 		void clean();
 		bool running();
+		
+
 	};

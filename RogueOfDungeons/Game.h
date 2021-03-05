@@ -4,6 +4,10 @@
 #include <iostream>
 #include "MainMenu.h"
 
+struct COORDS {
+	int x;
+	int y;
+};
 	class Game
 	{
 	private:
@@ -13,7 +17,7 @@
 		SDL_Texture* texture;
 		SDL_Rect tex_RECT;
 		SDL_Rect tex_posRect;
-		
+		COORDS mouseCoord;
 
 	public:
 		Game();

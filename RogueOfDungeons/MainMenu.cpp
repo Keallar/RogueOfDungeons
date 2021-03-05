@@ -17,20 +17,6 @@ void MainMenu::Render() {
 	RenderManager::CopyToRender(ExitButton, renderer, 640, 581, 250, 100);
 	SDL_RenderPresent(renderer);
 }
-void MainMenu::RenderButtons() {
 
-}
-void MainMenu::Update() {
-
-}
-void MainMenu::UpdateButtons() {
-
-}
-void MainMenu::clear() {
-
-}
-void MainMenu::clearButtons() {
-
-}
 
 

@@ -15,11 +15,6 @@ public:
 		const char* texturesheetSettings, const char* texturesheetExit, SDL_Renderer* ren);
 	~MainMenu();
 	void Render();
-	void RenderButtons();
-	void Update();
-	void UpdateButtons();
-	void clear();
-	void clearButtons();
 
 };
 

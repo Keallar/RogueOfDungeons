@@ -60,10 +60,12 @@ void Game::handleEvents()
 				}
 				if (InputManager::MouseInArea(640, 471, 420, 100, mouseCoord.x, mouseCoord.y)) {
 					isRunning = false;
+					std::cout << "ABOBA1";
 					break;
 				}
 				if (InputManager::MouseInArea(640, 581, 250, 100, mouseCoord.x, mouseCoord.y)) {
 					isRunning = false;
+					std::cout << "ABOBA2";
 					break;
 				}
 			}
@@ -73,7 +75,10 @@ void Game::handleEvents()
 }
 void Game::update()
 {
-	Menu->Render();
+	if (Menu->flag == 1)
+	{
+		Menu->Render();
+	}
 
 	
 

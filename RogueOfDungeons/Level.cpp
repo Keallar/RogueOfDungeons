@@ -1,5 +1,7 @@
 #include "Level.h"
 
+enum Tiles {};
+
 Level::Level(SDL_Renderer* renderer) {
 	ren = renderer;
 	TileTexture = textureManager::LoadTexture("images/Tiles.png", ren);

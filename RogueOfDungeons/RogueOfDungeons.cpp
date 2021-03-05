@@ -1,11 +1,7 @@
-
 #include "Game.h"
 #include <SDL.h>
 #include <iostream>
 #include "MainMenu.h"
-
-
-
 
 Game* game = nullptr;
 int main(int argc, char* argv[])

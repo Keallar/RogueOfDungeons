@@ -3,6 +3,7 @@
 class GameObject
 {
 public:
+	GameObject(); //конструктор по умлочанию
 	GameObject(const char* texturesheet, SDL_Renderer* ren, int x, int y);
 	~GameObject();
 	void Update();

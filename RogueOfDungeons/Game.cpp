@@ -54,11 +54,12 @@ void Game::handleEvents()
 			SDL_GetMouseState(&mouseCoord.x, &mouseCoord.y);
 			if(Menu->flag == 1) {
 				if (InputManager::MouseInArea(640, 361, 250, 100,  mouseCoord.x, mouseCoord.y)) {
-					isRunning = false;
+					Menu->flag = 0
+					class Level::Start();
 					break;
 				}
 				if (InputManager::MouseInArea(640, 471, 420, 100,  mouseCoord.x, mouseCoord.y)) {
-					isRunning = false;
+
 					break;
 				}
 				if (InputManager::MouseInArea(640, 581, 250, 100,  mouseCoord.x, mouseCoord.y)) {

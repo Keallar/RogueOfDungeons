@@ -1,8 +1,7 @@
 #include "Game.h"
 #include <SDL_image.h>
 #include "textureManager.h"
-#include "RenderManager.h"
-#include "InputManager.h"
+#include "Level.h"
 MainMenu* Menu;
 
 Game::Game() 
@@ -73,10 +72,10 @@ void Game::handleEvents()
 }
 void Game::update()
 {
-	Menu->Render();
-
+	if (Menu->flag == 1) {
+		Menu->Render();
+	}
 	
-
 }
 void Game::render()
 {

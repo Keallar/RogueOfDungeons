@@ -2,6 +2,7 @@
 #include <SDL_image.h>
 #include "textureManager.h"
 #include "Level.h"
+
 MainMenu* Menu;
 
 Game::Game() 
@@ -54,8 +55,7 @@ void Game::handleEvents()
 			SDL_GetMouseState(&mouseCoord.x, &mouseCoord.y);
 			if(Menu->flag == 1) {
 				if (InputManager::MouseInArea(640, 361, 250, 100,  mouseCoord.x, mouseCoord.y)) {
-					Menu->flag = 0
-					class Level::Start();
+					Menu->flag = 0;
 					break;
 				}
 				if (InputManager::MouseInArea(640, 471, 420, 100,  mouseCoord.x, mouseCoord.y)) {
@@ -66,6 +66,20 @@ void Game::handleEvents()
 					isRunning = false;
 					break;
 				}
+		case SDL_KEYDOWN:
+			switch (event.key.keysym.sym)
+			{
+			case SDL_SCANCODE_W:
+				break;
+			case SDL_SCANCODE_S:
+				break;
+			case SDL_SCANCODE_A:
+				break;
+			case SDL_SCANCODE_D:
+				break;
+			default:
+				break;
+			}
 			}
 		default:
 			break;

@@ -17,7 +17,7 @@ Player::~Player()
 
 void Player::Render()
 {
-	SDL_RenderCopy(ren, PlayerTexture, NULL, NULL);
+
 }
 
 void Player::Update()

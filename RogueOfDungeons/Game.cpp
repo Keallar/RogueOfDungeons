@@ -64,7 +64,6 @@ void Game::handleEvents()
 				}
 				if (InputManager::MouseInArea(640, 471, 420, 100,  mouseCoord.x, mouseCoord.y)) 
 				{
-
 					break;
 				}
 				if (InputManager::MouseInArea(640, 581, 250, 100,  mouseCoord.x, mouseCoord.y))

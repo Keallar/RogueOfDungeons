@@ -22,11 +22,11 @@ void Level::Render()
 		{
 			if ((i == 0) || (j == 0) || (i == 21) || (j == 31))
 			{
-				TileSet(14, j*32, i*32);
+				TileSet(8, j*32, i*32);
 			}
 			else
 			{
-				TileSet(2, j*32, i*32);
+				TileSet(7, j*32, i*32);
 			}
 		}
 	}

@@ -1,8 +1,8 @@
-#pragma once
+п»ї#pragma once
 #include "Level.h"
 #include "Player.h"
 
-enum Tiles {};//цвета тайлов
+enum Tiles {};//пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
 
 Level::Level(SDL_Renderer* renderer) 
 {
@@ -31,11 +31,11 @@ void Level::Render()
 		{
 			if ((i == 0) || (j == 0) || (i == 21) || (j == 31))
 			{
-				TileSet(5, j*32, i*32);
+				TileSet(8, j*32, i*32);
 			}
 			else
 			{
-				TileSet(3, j*32, i*32);
+				TileSet(7, j*32, i*32);
 			}
 		}
 	}

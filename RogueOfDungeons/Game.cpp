@@ -3,6 +3,7 @@
 #include "textureManager.h"
 #include "Level.h"
 MainMenu* Menu;
+Level* level;
 
 Game::Game() 
 {}
@@ -54,8 +55,9 @@ void Game::handleEvents()
 			SDL_GetMouseState(&mouseCoord.x, &mouseCoord.y);
 			if(Menu->flag == 1) {
 				if (InputManager::MouseInArea(640, 361, 250, 100,  mouseCoord.x, mouseCoord.y)) {
-					Menu->flag = 0
-					class Level::Start();
+					Menu->flag = 0;
+					level = new Level(renderer);
+					level->Start();
 					break;
 				}
 				if (InputManager::MouseInArea(640, 471, 420, 100,  mouseCoord.x, mouseCoord.y)) {
@@ -76,8 +78,14 @@ void Game::update()
 	if (Menu->flag == 1) {
 		Menu->Render();
 	}
-	
+	else {
+		if (level->flag == 1) {
+			SDL_SetRenderDrawColor(renderer, 0, 0, 0, 0);
+			level->Render();
+		}
+	}
 }
+	
 void Game::render()
 {
 	SDL_RenderCopy(renderer, texture, &tex_RECT, &tex_posRect);

@@ -1,13 +1,16 @@
 #pragma once
 #include "Game.h"
-#include <ctime>
+
 class Level 
 {
 private:
 	int Location[22][32];
-	SDL_Texture* TileTexture[];
+	SDL_Texture* TileTexture;
+	SDL_Renderer* ren;
 public:
-	bool Start();
-	void TileSet(int num);
-	int Random(int min, int max);
+	bool flag;
+	Level(SDL_Renderer* renderer);
+	void Start();
+	void Render();
+	void TileSet(int num, int x, int y);
 };

@@ -2,7 +2,7 @@
 #include "Level.h"
 #include "Player.h"
 
-enum Tiles {};//����� ������
+enum Tiles {};
 
 Level::Level(SDL_Renderer* renderer) 
 {
@@ -10,21 +10,20 @@ Level::Level(SDL_Renderer* renderer)
 	TileTexture = textureManager::LoadTexture("images/Tiles.png", ren);
 	PlayBackground = textureManager::LoadTexture("images/Playback.png", ren);
 	flagTB = 0;
-	//player();
+	player = new Player("images/Hero.png", ren);
 	flagPlayer = 0;
 }
 
 void Level::Start()
 {
-	SDL_RenderCopy(ren, PlayBackground, NULL, NULL);
 	flagTB = 1;
-	player->Render();
 	flagPlayer = 1;
 }
 
 
 void Level::Render()
 {
+	RenderManager::CopyToRender(PlayBackground, ren);
 	for (int i = 0; i < 22; i++) 
 	{
 		for (int j = 0; j < 32; j++) 
@@ -39,7 +38,7 @@ void Level::Render()
 			}
 		}
 	}
-
+	player->Render();
 }
 
 void Level::TileSet(int num, int x, int y) 

@@ -1,19 +1,24 @@
 #pragma once
 #include "Game.h"
+#include "textureManager.h"
+
 class GameObject
 {
 public:
-	GameObject(SDL_Renderer* renderer, const char* texName);
-	GameObject();
+	GameObject(); //конструктор по умлочанию
+	GameObject(const char* texturesheet, SDL_Renderer* renderer);
+	GameObject(const char* texturesheet, SDL_Renderer* renderer, int x, int y);
 	~GameObject();
 	void Update();
-	void TextureSet();
+	void Render();
 	void clean();
 
-protected:
+private:
 	SDL_Texture* objTexture;
 	SDL_Rect srcRect, destRect;
-	SDL_Renderer* ren;
-	int flag = 0;
+	SDL_Renderer* renderer;
+protected:
+	int xpos;
+	int ypos;
 };
 

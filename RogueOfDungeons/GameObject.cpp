@@ -1,6 +1,10 @@
 #include "GameObject.h"
 #include "textureManager.h"
 
+GameObject::GameObject(const char* texturesheet, SDL_Renderer* renderer)
+{
+
+}
 
 GameObject::GameObject(SDL_Renderer* renderer,const char* texName)
 {

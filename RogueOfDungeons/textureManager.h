@@ -21,4 +21,8 @@ class InputManager
 {
 public:
 	static bool MouseInArea(int x, int y, int w, int h, int MouseX, int MouseY);
+	static bool pressW();
+	static bool pressA();
+	static bool pressS();
+	static bool pressD();
 };

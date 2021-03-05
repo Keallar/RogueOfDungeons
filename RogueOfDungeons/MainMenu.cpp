@@ -17,7 +17,6 @@ void MainMenu::Render()
 	RenderManager::CopyToRender(PlayButton, renderer, 640, 361, 250, 100);
 	RenderManager::CopyToRender(SettingsButton, renderer, 640, 471, 420, 100);
 	RenderManager::CopyToRender(ExitButton, renderer, 640, 581, 250, 100);
-	SDL_RenderPresent(renderer);
 }
 
 

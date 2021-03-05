@@ -3,19 +3,17 @@
 class GameObject
 {
 public:
-	GameObject(); //конструктор по умлочанию
-	GameObject(const char* texturesheet, SDL_Renderer* ren, int x, int y);
+	GameObject(SDL_Renderer* renderer, const char* texName);
+	GameObject();
 	~GameObject();
 	void Update();
-	void Render();
+	void TextureSet();
 	void clean();
 
-private:
+protected:
 	SDL_Texture* objTexture;
 	SDL_Rect srcRect, destRect;
-	SDL_Renderer* renderer;
-protected:
-	int xpos;
-	int ypos;
+	SDL_Renderer* ren;
+	int flag = 0;
 };
 

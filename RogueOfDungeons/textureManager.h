@@ -15,6 +15,7 @@ private:
 public:
 	static void CopyToRender(SDL_Texture* texture, SDL_Renderer* ren, int x, int y, int w, int h, int dx, int dy, int dw, int dh);
 	static void CopyToRender(SDL_Texture* texture, SDL_Renderer* ren, int x, int y, int w, int h);
+	static void CopyToRender(SDL_Texture* texture, SDL_Renderer* ren);
 };
 
 class InputManager

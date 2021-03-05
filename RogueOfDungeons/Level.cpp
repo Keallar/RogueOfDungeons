@@ -10,23 +10,23 @@ Level::Level(SDL_Renderer* renderer) {
 }
 
 void Level::Start() {
-	SDL_RenderCopy(ren, PlayBackground, NULL, NULL);
 	flag = 1;
 }
 
 void Level::Render()
 {
+	SDL_RenderCopy(ren, PlayBackground, NULL, NULL);
 	for (int i = 0; i < 22; i++) 
 	{
 		for (int j = 0; j < 32; j++) 
 		{
 			if ((i == 0) || (j == 0) || (i == 21) || (j == 31))
 			{
-				TileSet(5, j*32, i*32);
+				TileSet(14, j*32, i*32);
 			}
 			else
 			{
-				TileSet(3, j*32, i*32);
+				TileSet(2, j*32, i*32);
 			}
 		}
 	}

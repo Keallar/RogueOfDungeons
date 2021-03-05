@@ -1,19 +1,20 @@
-#pragma once
+/*#pragma once
 #include "GameObject.h"
 #include "Game.h"
 
-class Player : public GameObject
+class Player :
+    public GameObject
 {
 private:
     GameObject Player1;
-    SDL_Texture* PlayerTexture;
+    SDL_Texture* TileTexture;
     SDL_Renderer* ren;
-    int PlayerLVL;
+
 public:
     Player(const char* texturesheet, SDL_Renderer* ren, int x, int y);
     ~Player();
     void Render() {
-       GameObject::Render();
+        GameObject::Render();
     }
     void Update() {
         GameObject::Update();
@@ -22,5 +23,5 @@ public:
         GameObject::clean();
     }
     bool flag = 0;
-};
+};*/
 

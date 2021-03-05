@@ -2,26 +2,19 @@
 #include "GameObject.h"
 #include "Game.h"
 
-class Player :
-    public GameObject
+class Player
 {
 private:
-    GameObject Player1;
-    SDL_Texture* TileTexture;
+    GameObject mainPlayer;
+    SDL_Texture* PlayerTexture;
     SDL_Renderer* ren;
 
 public:
-    Player(const char* texturesheet, SDL_Renderer* ren, int x, int y);
+    Player();
+    Player(const char* texturesheet, SDL_Renderer* ren);
     ~Player();
-    void Render() {
-        GameObject::Render();
-    }
-    void Update() {
-        GameObject::Update();
-    }
-    void clean() {
-        GameObject::clean();
-    }
+    void Render();
+    void Update();
+    void clean();
     bool flag = 0;
 };
-

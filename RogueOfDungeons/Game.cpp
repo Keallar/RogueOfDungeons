@@ -93,11 +93,13 @@ void Game::handleEvents()
 }
 void Game::update()
 {
-	if (Menu->flag == 1) {
+	if (Menu->flag == 1)
+	{
 		Menu->Render();
 	}
 	else {
-		if (level->flag == 1) {
+		if (level->flag == 1) 
+		{
 			level->Render();
 		}
 	}

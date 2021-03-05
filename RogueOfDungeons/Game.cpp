@@ -1,8 +1,7 @@
 #include "Game.h"
 #include <SDL_image.h>
 #include "textureManager.h"
-#include "RenderManager.h"
-#include "InputManager.h"
+#include "Level.h"
 MainMenu* Menu;
 
 Game::Game() 
@@ -54,18 +53,16 @@ void Game::handleEvents()
 		case SDL_MOUSEBUTTONDOWN:
 			SDL_GetMouseState(&mouseCoord.x, &mouseCoord.y);
 			if(Menu->flag == 1) {
-				if (InputManager::MouseInArea(640, 361, 250, 100, mouseCoord.x, mouseCoord.y)) {
+				if (InputManager::MouseInArea(640, 361, 250, 100,  mouseCoord.x, mouseCoord.y)) {
 					isRunning = false;
 					break;
 				}
-				if (InputManager::MouseInArea(640, 471, 420, 100, mouseCoord.x, mouseCoord.y)) {
+				if (InputManager::MouseInArea(640, 471, 420, 100,  mouseCoord.x, mouseCoord.y)) {
 					isRunning = false;
-					std::cout << "ABOBA1";
 					break;
 				}
-				if (InputManager::MouseInArea(640, 581, 250, 100, mouseCoord.x, mouseCoord.y)) {
+				if (InputManager::MouseInArea(640, 581, 250, 100,  mouseCoord.x, mouseCoord.y)) {
 					isRunning = false;
-					std::cout << "ABOBA2";
 					break;
 				}
 			}
@@ -75,13 +72,10 @@ void Game::handleEvents()
 }
 void Game::update()
 {
-	if (Menu->flag == 1)
-	{
+	if (Menu->flag == 1) {
 		Menu->Render();
 	}
-
 	
-
 }
 void Game::render()
 {

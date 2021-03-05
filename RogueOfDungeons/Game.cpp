@@ -2,7 +2,7 @@
 #include <SDL_image.h>
 #include "textureManager.h"
 #include "Level.h"
-
+#include "GameObject.h"
 MainMenu* Menu;
 Level* level;
 
@@ -75,13 +75,14 @@ void Game::handleEvents()
 		case SDL_KEYDOWN:
 			switch (event.key.keysym.sym)
 			{
-			case SDL_SCANCODE_W:
+			case SDLK_w:
+				
 				break;
-			case SDL_SCANCODE_S:
+			case SDLK_s:
 				break;
-			case SDL_SCANCODE_A:
+			case SDLK_a:
 				break;
-			case SDL_SCANCODE_D:
+			case SDLK_d:
 				break;
 			default:
 				break;

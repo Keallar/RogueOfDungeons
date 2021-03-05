@@ -1,10 +1,6 @@
 #include "Player.h"
 #include "GameObject.h"
 
-Player::Player()
-{}
-
-
 Player::Player(const char* texturesheet, SDL_Renderer* renderer)
 {
 	ren = renderer;
@@ -18,7 +14,7 @@ Player::~Player()
 
 void Player::Render()
 {
-	RenderManager::CopyToRender(PlayerTexture, ren);
+	RenderManager::CopyToRender(PlayerTexture, ren, 32, 32, 32, 32);
 }
 
 void Player::Update()

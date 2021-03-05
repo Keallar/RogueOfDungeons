@@ -55,17 +55,20 @@ void Game::handleEvents()
 		case SDL_MOUSEBUTTONDOWN:
 			SDL_GetMouseState(&mouseCoord.x, &mouseCoord.y);
 			if(Menu->flag == 1) {
-				if (InputManager::MouseInArea(640, 361, 250, 100,  mouseCoord.x, mouseCoord.y)) {
+				if (InputManager::MouseInArea(640, 361, 250, 100,  mouseCoord.x, mouseCoord.y))
+				{
 					Menu->flag = 0;
 					level = new Level(renderer);
 					level->Start();
 					break;
 				}
-				if (InputManager::MouseInArea(640, 471, 420, 100,  mouseCoord.x, mouseCoord.y)) {
+				if (InputManager::MouseInArea(640, 471, 420, 100,  mouseCoord.x, mouseCoord.y)) 
+				{
 
 					break;
 				}
-				if (InputManager::MouseInArea(640, 581, 250, 100,  mouseCoord.x, mouseCoord.y)) {
+				if (InputManager::MouseInArea(640, 581, 250, 100,  mouseCoord.x, mouseCoord.y))
+				{
 					isRunning = false;
 					break;
 				}

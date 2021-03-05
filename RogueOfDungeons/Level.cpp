@@ -2,7 +2,7 @@
 #include "Level.h"
 #include "Player.h"
 
-enum Tiles {};
+enum Tiles {};//цвета тайлов
 
 Level::Level(SDL_Renderer* renderer) 
 {

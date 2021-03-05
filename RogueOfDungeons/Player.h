@@ -1,4 +1,4 @@
-/*#pragma once
+#pragma once
 #include "GameObject.h"
 #include "Game.h"
 
@@ -23,5 +23,5 @@ public:
         GameObject::clean();
     }
     bool flag = 0;
-};*/
+};
 

@@ -10,7 +10,7 @@ private:
 	SDL_Texture* TileTexture;
 	SDL_Texture* PlayBackground;
 	SDL_Renderer* ren;
-	Player player;
+	Player* player;
 public:
 	bool flagTB;
 	bool flagPlayer;

@@ -1,6 +1,8 @@
 #include "Player.h"
 #include "GameObject.h"
 
+Player::Player()
+{}
 
 
 Player::Player(const char* texturesheet, SDL_Renderer* renderer)

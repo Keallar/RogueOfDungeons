@@ -10,6 +10,7 @@ private:
     SDL_Renderer* ren;
 
 public:
+    Player();
     Player(const char* texturesheet, SDL_Renderer* ren);
     ~Player();
     void Render()

@@ -1,18 +1,26 @@
+#pragma once
 #include "Level.h"
 
 enum Tiles {};
 
-Level::Level(SDL_Renderer* renderer) {
+Level::Level(SDL_Renderer* renderer) 
+{
 	ren = renderer;
 	TileTexture = textureManager::LoadTexture("images/Tiles.png", ren);
 	PlayBackground = textureManager::LoadTexture("images/Playback.png", ren);
-	flag = 0;
+	flagTB = 0;
+	new player("images/Hero.png", renderer);
 }
 
-void Level::Start() {
+void Level::Start()
+{
 	SDL_RenderCopy(ren, PlayBackground, NULL, NULL);
-	flag = 1;
+	flagTB = 1;
+	player.Render();
+	flagPlayer = 1;
+
 }
+
 
 void Level::Render()
 {

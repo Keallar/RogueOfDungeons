@@ -1,11 +1,11 @@
-/*#pragma once
+#pragma once
 #include "GameObject.h"
 #include "Game.h"
-class Player :
+/*class Player :
     public GameObject
 {
 private:
-    GameObject Player1("aboba", renderer, x , y);
+
     
 public:
     void Render() {

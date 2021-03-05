@@ -95,7 +95,6 @@ void Game::update()
 	}
 	else {
 		if (level->flag == 1) {
-			SDL_SetRenderDrawColor(renderer, 0, 0, 0, 0);
 			level->Render();
 		}
 	}
@@ -103,7 +102,6 @@ void Game::update()
 	
 void Game::render()
 {
-	SDL_RenderCopy(renderer, texture, &tex_RECT, &tex_posRect);
 	SDL_RenderPresent(renderer);
 }
 void Game::clean()

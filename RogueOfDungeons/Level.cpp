@@ -3,11 +3,12 @@
 Level::Level(SDL_Renderer* renderer) {
 	ren = renderer;
 	TileTexture = textureManager::LoadTexture("images/Tiles.png", ren);
+	PlayBackground = textureManager::LoadTexture("images/Playback.png", ren);
 	flag = 0;
 }
 
 void Level::Start() {
-	SDL_RenderClear(ren);
+	SDL_RenderCopy(ren, PlayBackground, NULL, NULL);
 	flag = 1;
 }
 

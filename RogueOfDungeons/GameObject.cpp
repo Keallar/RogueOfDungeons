@@ -1,5 +1,7 @@
 #include "GameObject.h"
 #include "textureManager.h"
+
+
 GameObject::GameObject(const char* texturesheet, SDL_Renderer* ren, int x, int y)
 {
 	renderer = ren;
@@ -8,6 +10,7 @@ GameObject::GameObject(const char* texturesheet, SDL_Renderer* ren, int x, int y
 	xpos = x;
 	ypos = y;
 }
+
 void GameObject::Update() 
 {
 

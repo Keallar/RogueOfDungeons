@@ -1,5 +1,7 @@
 #include "Level.h"
 
+enum Tiles {};
+
 Level::Level(SDL_Renderer* renderer) {
 	ren = renderer;
 	TileTexture = textureManager::LoadTexture("images/Tiles.png", ren);
@@ -20,7 +22,7 @@ void Level::Render()
 		{
 			if ((i == 0) || (j == 0) || (i == 21) || (j == 31))
 			{
-				TileSet(9, j*32, i*32);
+				TileSet(5, j*32, i*32);
 			}
 			else
 			{

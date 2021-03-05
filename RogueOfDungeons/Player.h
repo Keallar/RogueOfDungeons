@@ -5,7 +5,7 @@
 class Player
 {
 private:
-    GameObject mainPlayer;
+    //GameObject mainPlayer;
     SDL_Texture* PlayerTexture;
     SDL_Renderer* ren;
 

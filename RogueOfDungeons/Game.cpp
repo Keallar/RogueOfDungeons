@@ -99,7 +99,7 @@ void Game::update()
 		Menu->Render();
 	}
 	else {
-		if (level->flag == 1) 
+		if (level->flagPlayer == 1 && level->flagTB == 1) 
 		{
 			level->Render();
 		}

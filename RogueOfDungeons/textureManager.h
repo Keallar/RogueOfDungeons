@@ -22,12 +22,14 @@ class InputManager
 {
 private:
 	static SDL_Rect player;
+	
+
 public:
 	static bool MouseInArea(int x, int y, int w, int h, int MouseX, int MouseY);
-	static bool pressW();
-	static bool pressA();
-	static bool pressS();
-	static bool pressD();
+	static int pressW(int y);
+	static int pressA(int x);
+	static int pressS(int y);
+	static int pressD(int x);
 };
 
 class FontManager {

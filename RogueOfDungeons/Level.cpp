@@ -1,7 +1,12 @@
 ﻿#pragma once
 #include "Level.h"
 
-enum Tiles {};//цвета тайлов
+enum Tiles {white, green, darkYellowDirt, black, yellowSand,
+brownDesks, lightBrownWood, lilac, redBlood, vinous, blueWater, orangeBrick,
+greenDirt, Dirt, lightBrick, portal1, portal2};//цвета тайлов
+//turquoise = бирюзовый
+//vinous = винный, бордовый
+//lilac = сиреневый
 
 Level::Level(SDL_Renderer* renderer) 
 {

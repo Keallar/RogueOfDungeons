@@ -20,7 +20,7 @@ Player::~Player()
 
 void Player::Render()
 {
-	RenderManager::CopyToRender(PlayerTexture, ren, 32, 32, 32, 32, 0, 0, 32, 32);
+	RenderManager::CopyToRender(PlayerTexture, ren, 32, 32, 64, 64, 0, 0, 32, 32);
 }
 
 void Player::Update(int x, int y)

@@ -1,6 +1,5 @@
 ﻿#pragma once
 #include "Level.h"
-#include "Player.h"
 
 enum Tiles {white, green, darkYellowDirt, black, yellowSand,
 brownDesks, lightBrownWood, lilac, redBlood, vinous, blueWater, orangeBrick,
@@ -15,7 +14,8 @@ Level::Level(SDL_Renderer* renderer)
 	TileTexture = textureManager::LoadTexture("images/Tiles.png", ren);
 	PlayBackground = textureManager::LoadTexture("images/Playback.png", ren);
 	flagTB = 0;
-	player = new Player("images/Hero.png", ren);
+	player =new Player("images/Hero.png", ren);
+	ui = new UI(renderer);
 	flagPlayer = 0;
 }
 
@@ -44,6 +44,7 @@ void Level::Render()
 		}
 	}
 	player->Render();
+	ui->start();
 }
 
 void Level::TileSet(int num, int x, int y) 

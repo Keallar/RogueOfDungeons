@@ -1,6 +1,7 @@
 #pragma once
 #include "Game.h"
 #include "Player.h"
+#include "UI.h"
 
 
 class Level 
@@ -11,6 +12,7 @@ private:
 	SDL_Texture* PlayBackground;
 	SDL_Renderer* ren;
 	Player* player;
+	UI* ui;
 public:
 	bool flagTB;
 	bool flagPlayer;

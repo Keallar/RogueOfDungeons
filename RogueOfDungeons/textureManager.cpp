@@ -2,6 +2,7 @@
 #include "textureManager.h"
 #include "SDL.h"
 #include "SDL_image.h"
+#include "SDL_ttf.h"
 
 SDL_Rect RenderManager::COORD;
 SDL_Rect RenderManager::dCOORD;
@@ -64,4 +65,18 @@ void RenderManager::CopyToRender(SDL_Texture* texture, SDL_Renderer* ren, int x,
 }	
 void RenderManager::CopyToRender(SDL_Texture* texture, SDL_Renderer* ren) {
 	SDL_RenderCopy(ren, texture, NULL, NULL);
+}
+
+SDL_Surface* FontManager::surf;
+SDL_Color FontManager::fontColor;
+TTF_Font* FontManager::font;
+SDL_Texture* FontManager::fontTexture;
+
+SDL_Texture* FontManager::renderText(const char* text, const char* fontFile, Uint8 rgb_r, Uint8 rgb_b, Uint8 rgb_g, Uint8 rgb_a, int fontSize, SDL_Renderer* renderer) {
+	fontColor = { rgb_r, rgb_b, rgb_g, rgb_a };
+	font = TTF_OpenFont("fonts/manaspc.ttf", fontSize);
+	surf = TTF_RenderText_Blended(font, text, fontColor);
+	fontTexture = SDL_CreateTextureFromSurface(renderer, surf);
+	SDL_FreeSurface(surf);
+	return fontTexture;
 }

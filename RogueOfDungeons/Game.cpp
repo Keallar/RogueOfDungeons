@@ -1,15 +1,15 @@
 #pragma once
 #include "Game.h"
 #include <SDL_image.h>
+#include <SDL_ttf.h>
 #include "textureManager.h"
 #include "Level.h"
 #include "GameObject.h"
 #include "Player.h"
+#include "UI.h"
 
 MainMenu* Menu;
 Level* level;
-Player* player;
-
 
 Game::Game() 
 {}
@@ -23,9 +23,9 @@ void Game::init(const char* title, int xpos, int ypos, int width, int height, bo
 	{
 		flags = SDL_WINDOW_FULLSCREEN;
 	}
-	if (SDL_Init(SDL_INIT_EVERYTHING) == 0)
+	if ((SDL_Init(SDL_INIT_EVERYTHING) == 0)||(TTF_Init == 0))
 	{
-		std::cout << "ABOBA";
+		std::cout << "ABOBA";	
 
 		window = SDL_CreateWindow(title, xpos, ypos, width, height, flags);
 		if (window)
@@ -40,7 +40,6 @@ void Game::init(const char* title, int xpos, int ypos, int width, int height, bo
 		}
 		isRunning = true;
 	}
-	
 	else
 	{
 		isRunning = false;
@@ -104,6 +103,8 @@ void Game::clean()
 {
 	SDL_DestroyWindow(window);
 	SDL_DestroyRenderer(renderer);
+	IMG_Quit();
+	TTF_Quit();
 	SDL_Quit();
 	std::cout << "GG" << std::endl;
 }

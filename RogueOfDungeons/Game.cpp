@@ -11,7 +11,6 @@
 MainMenu* Menu;
 Level* level;
 Player* player;
-
 Game::Game() 
 {}
 Game::~Game()

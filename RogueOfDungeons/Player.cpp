@@ -19,7 +19,7 @@ void Player::Render()
 	RenderManager::CopyToRender(PlayerTexture, ren, 32, 32, 32, 32, 0, 0, 32, 32);
 }
 
-void Player::Update()
+void Player::Update(int x, int y)
 {
 	SDL_Event eventMovePlayer;
 	SDL_PollEvent(&eventMovePlayer);
@@ -29,16 +29,20 @@ void Player::Update()
 		switch (eventMovePlayer.key.keysym.sym)
 		{
 		case SDLK_w:
-			inputMovePlayer->pressW();
+			ypos = y;
+			inputMovePlayer->pressW(ypos);
 			break;
 		case SDLK_s:
-			inputMovePlayer->pressS();
+			xpos = x;
+			inputMovePlayer->pressS(xpos);
 			break;
 		case SDLK_a:
-			inputMovePlayer->pressA();
+			ypos = y;
+			inputMovePlayer->pressA(ypos);
 			break;
 		case SDLK_d:
-			inputMovePlayer->pressD();
+			xpos = x;
+			inputMovePlayer->pressD(xpos);
 			break;
 		default:
 			break;

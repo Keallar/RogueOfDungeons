@@ -93,6 +93,7 @@ void Game::update()
 			level->Render();
 		}
 	}
+	player->Update(playerCoord.x, playerCoord.y);
 }
 	
 void Game::render()

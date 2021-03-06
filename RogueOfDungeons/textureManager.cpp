@@ -27,40 +27,28 @@ bool InputManager::MouseInArea(int x, int y, int w, int h, int MouseX, int Mouse
 	}
 }
 
-bool InputManager::pressW()
+int InputManager::pressW(int y)
 {
-	if (key[SDL_SCANCODE_W])
-	{
-	
-	}
-	return true;
+	y = y + 10;
+	return y;
 }
 
-bool InputManager::pressA()
+int InputManager::pressA(int x)
 {
-	if (key[SDL_SCANCODE_A])
-	{
-
-	}
-	return true;
+	x = x - 10;
+	return x;
 }
 
-bool InputManager::pressS()
+int InputManager::pressS(int y)
 {
-	if (key[SDL_SCANCODE_S])
-	{
-
-	}
-	return true;
+	y = y - 10;
+	return y;
 }
 
-bool InputManager::pressD()
+int InputManager::pressD(int x)
 {
-	if (key[SDL_SCANCODE_D])
-	{
-
-	}
-	return true;
+	x = x + 10;
+	return x;
 }
 
 void RenderManager::CopyToRender(SDL_Texture* texture, SDL_Renderer* ren, int x, int y, int w, int h, int dx, int dy, int dw, int dh) 

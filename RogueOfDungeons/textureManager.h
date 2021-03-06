@@ -21,7 +21,7 @@ public:
 class InputManager
 {
 private:
-	SDL_Rect player;
+	static SDL_Rect player;
 public:
 	static bool MouseInArea(int x, int y, int w, int h, int MouseX, int MouseY);
 	static bool pressW();

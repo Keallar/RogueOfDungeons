@@ -40,14 +40,17 @@ void Player::Update(int x, int y)
 		case SDLK_s:
 			xpos = x;
 			inputMovePlayer->pressS(xpos);
+			Player::Render();
 			break;
 		case SDLK_a:
 			ypos = y;
 			inputMovePlayer->pressA(ypos);
+			Player::Render();
 			break;
 		case SDLK_d:
 			xpos = x;
 			inputMovePlayer->pressD(xpos);
+			Player::Render();
 			break;
 		default:
 			break;

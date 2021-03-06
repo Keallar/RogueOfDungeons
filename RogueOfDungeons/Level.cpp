@@ -1,6 +1,5 @@
 ﻿#pragma once
 #include "Level.h"
-#include "Player.h"
 
 enum Tiles {};//цвета тайлов
 
@@ -11,6 +10,7 @@ Level::Level(SDL_Renderer* renderer)
 	PlayBackground = textureManager::LoadTexture("images/Playback.png", ren);
 	flagTB = 0;
 	player =new Player("images/Hero.png", ren);
+	ui = new UI(renderer);
 	flagPlayer = 0;
 }
 
@@ -39,6 +39,7 @@ void Level::Render()
 		}
 	}
 	player->Render();
+	ui->start();
 }
 
 void Level::TileSet(int num, int x, int y) 

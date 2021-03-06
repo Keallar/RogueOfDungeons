@@ -1,6 +1,8 @@
 #include "Player.h"
 #include "GameObject.h"
 
+InputManager* inputMovePlayer;
+
 Player::Player(const char* texturesheet, SDL_Renderer* renderer)
 {
 	ren = renderer;
@@ -27,13 +29,16 @@ void Player::Update()
 		switch (eventMovePlayer.key.keysym.sym)
 		{
 		case SDLK_w:
-
+			inputMovePlayer->pressW();
 			break;
 		case SDLK_s:
+			inputMovePlayer->pressS();
 			break;
 		case SDLK_a:
+			inputMovePlayer->pressA();
 			break;
 		case SDLK_d:
+			inputMovePlayer->pressD();
 			break;
 		default:
 			break;

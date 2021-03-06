@@ -1,10 +1,15 @@
+#pragma once
 #include "Game.h"
 #include <SDL_image.h>
 #include "textureManager.h"
 #include "Level.h"
 #include "GameObject.h"
+#include "Player.h"
+
 MainMenu* Menu;
 Level* level;
+Player* player;
+
 
 Game::Game() 
 {}

@@ -11,12 +11,10 @@
 
 Game::Game() 
 {
-	player = new Player;
 	level = 0;
 }
 Game::~Game()
 {
-	delete player;
 	delete Menu;
 	if (!level) 
 	{
@@ -92,12 +90,12 @@ void Game::update()
 {
 	if (Menu->flag == 1)
 	{
-		Menu->Render();
+		//Menu->Update();
 	}
 	else if (level->flagPlayer == 1 && level->flagTB == 1)
 		{
-			level->Render();
-			player->Update();
+			level->Update();
+			
 		}
 	
 }
@@ -112,7 +110,6 @@ void Game::render()
 	else if (level->flagPlayer == 1 && level->flagTB == 1)
 	{
 		level->Render();
-		player->Render();
 	}
 
 	SDL_RenderPresent(renderer);

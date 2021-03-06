@@ -1,6 +1,8 @@
 #include "Player.h"
 #include "GameObject.h"
 
+InputManager* inputMovePlayer;
+
 Player::Player(const char* texturesheet, SDL_Renderer* renderer)
 {
 	ren = renderer;

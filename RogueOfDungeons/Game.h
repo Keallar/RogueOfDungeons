@@ -19,6 +19,7 @@ private:
 	SDL_Texture* texture;
 	SDL_Rect tex_RECT;
 	SDL_Rect tex_posRect;
+	Player* player;
 	COORDS mouseCoord;
 	COORDS playerCoord;
 

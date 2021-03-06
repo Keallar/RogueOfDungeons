@@ -8,8 +8,8 @@ private:
     
     SDL_Texture* PlayerTexture;
     SDL_Renderer* ren;
-    int xpos;
-    int ypos;
+    int xpos = 32;
+    int ypos = 32;
     int HP;
     int exp;
     int damageInput;

@@ -35,7 +35,7 @@ void Player::Update(int x, int y)
 		case SDLK_w:
 			ypos = y;
 			inputMovePlayer->pressW(ypos);
-			//RenderManager::CopyToRender("images/Hero.png", ren, 32, ypos, 32, 32, 0, 0, 32, 32);
+			Player::Render();
 			break;
 		case SDLK_s:
 			xpos = x;

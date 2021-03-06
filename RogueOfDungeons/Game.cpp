@@ -1,7 +1,7 @@
 #pragma once
 #include "Game.h"
 #include <SDL_image.h>
-#include <SDL_ttf.h>
+#include "SDL_ttf.h"
 #include "textureManager.h"
 #include "Level.h"
 #include "GameObject.h"

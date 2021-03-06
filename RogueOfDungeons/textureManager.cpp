@@ -30,25 +30,25 @@ bool InputManager::MouseInArea(int x, int y, int w, int h, int MouseX, int Mouse
 
 int InputManager::pressW(int y)
 {
-	y = y + 10;
+	y = y - 32;
 	return y;
 }
 
 int InputManager::pressA(int x)
 {
-	x = x - 10;
+	x = x - 32;
 	return x;
 }
 
 int InputManager::pressS(int y)
 {
-	y = y - 10;
+	y = y + 32;
 	return y;
 }
 
 int InputManager::pressD(int x)
 {
-	x = x + 10;
+	x = x + 32;
 	return x;
 }
 

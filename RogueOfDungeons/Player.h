@@ -10,6 +10,9 @@ private:
     SDL_Renderer* ren;
     int xpos;
     int ypos;
+    int HP;
+    int exp;
+    int damageInput;
 
 public:
     Player();

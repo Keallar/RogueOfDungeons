@@ -19,7 +19,7 @@ void Enemy::Update()
 	if (HP == 0) 
 	{
 		SDL_DestroyTexture(enemyTexture);
-		Enemy::~Enemy();
+		//Enemy::~Enemy();
 	}
 
 }

@@ -2,6 +2,7 @@
 #include "GameObject.h"
 
 InputManager* inputMovePlayer;
+const Uint8* state = SDL_GetKeyboardState(0);
 
 Player::Player(const char* texturesheet, SDL_Renderer* renderer)
 {
@@ -11,7 +12,10 @@ Player::Player(const char* texturesheet, SDL_Renderer* renderer)
 
 Player::~Player()
 {
-
+	if (HP == 0)
+	{
+		SDL_DestroyTexture(PlayerTexture);
+	}
 }
 
 void Player::Render()
@@ -31,6 +35,7 @@ void Player::Update(int x, int y)
 		case SDLK_w:
 			ypos = y;
 			inputMovePlayer->pressW(ypos);
+			//RenderManager::CopyToRender("images/Hero.png", ren, 32, ypos, 32, 32, 0, 0, 32, 32);
 			break;
 		case SDLK_s:
 			xpos = x;

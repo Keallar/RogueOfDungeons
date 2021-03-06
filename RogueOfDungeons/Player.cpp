@@ -40,6 +40,7 @@ void Player::Update()
 			inputMovePlayer->pressW(ypos);
 			std::cout << "PP//";
 			Player::Render();
+			std::cout << "PP\n";
 			break;
 		case SDL_SCANCODE_S:
 			inputMovePlayer->pressS(xpos);

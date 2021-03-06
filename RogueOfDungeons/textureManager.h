@@ -21,11 +21,15 @@ public:
 class InputManager
 {
 private:
-	SDL_Rect player;
+	static SDL_Rect player;
 public:
 	static bool MouseInArea(int x, int y, int w, int h, int MouseX, int MouseY);
 	static bool pressW();
+	bool flagW = 0;
 	static bool pressA();
+	bool flagA = 0;
 	static bool pressS();
+	bool flagS = 0;
 	static bool pressD();
+	bool flagD = 0;
 };

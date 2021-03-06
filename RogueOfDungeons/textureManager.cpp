@@ -1,9 +1,13 @@
+#pragma once
 #include "textureManager.h"
 #include "SDL.h"
 #include "SDL_image.h"
 
 SDL_Rect RenderManager::COORD;
 SDL_Rect RenderManager::dCOORD;
+SDL_Rect InputManager::player;
+const Uint8* key = SDL_GetKeyboardState(0);
+
 
 SDL_Texture* textureManager::LoadTexture(const char* texName, SDL_Renderer* ren) 
 {
@@ -25,22 +29,38 @@ bool InputManager::MouseInArea(int x, int y, int w, int h, int MouseX, int Mouse
 
 bool InputManager::pressW()
 {
-
+	if (key[SDL_SCANCODE_W])
+	{
+	
+	}
+	return true;
 }
 
 bool InputManager::pressA()
 {
+	if (key[SDL_SCANCODE_A])
+	{
 
+	}
+	return true;
 }
 
 bool InputManager::pressS()
 {
+	if (key[SDL_SCANCODE_S])
+	{
 
+	}
+	return true;
 }
 
 bool InputManager::pressD()
 {
+	if (key[SDL_SCANCODE_D])
+	{
 
+	}
+	return true;
 }
 
 void RenderManager::CopyToRender(SDL_Texture* texture, SDL_Renderer* ren, int x, int y, int w, int h, int dx, int dy, int dw, int dh) 

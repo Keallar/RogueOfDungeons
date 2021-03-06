@@ -2,7 +2,12 @@
 #include "Level.h"
 #include "Player.h"
 
-enum Tiles {};//цвета тайлов
+enum Tiles {white, green, darkYellowDirt, black, yellowSand,
+brownDesks, lightBrownWood, lilac, redBlood, vinous, blueWater, orangeBrick,
+greenDirt, Dirt, lightBrick, portal1, portal2};//цвета тайлов
+//turquoise = бирюзовый
+//vinous = винный, бордовый
+//lilac = сиреневый
 
 Level::Level(SDL_Renderer* renderer) 
 {
@@ -10,7 +15,7 @@ Level::Level(SDL_Renderer* renderer)
 	TileTexture = textureManager::LoadTexture("images/Tiles.png", ren);
 	PlayBackground = textureManager::LoadTexture("images/Playback.png", ren);
 	flagTB = 0;
-	player =new Player("images/Hero.png", ren);
+	player = new Player("images/Hero.png", ren);
 	flagPlayer = 0;
 }
 

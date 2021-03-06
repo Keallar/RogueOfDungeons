@@ -43,4 +43,5 @@ void Player::Update()
 		default:
 			break;
 		}
+	}
 }

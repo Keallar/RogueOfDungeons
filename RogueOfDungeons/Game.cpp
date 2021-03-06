@@ -12,7 +12,10 @@ MainMenu* Menu;
 Level* level;
 Player* player;
 Game::Game() 
-{}
+{
+	playerCoordx = 32;
+	playerCoordy = 32;
+}
 Game::~Game()
 {}
 void Game::init(const char* title, int xpos, int ypos, int width, int height, bool fullscreen)
@@ -86,13 +89,11 @@ void Game::update()
 	{
 		Menu->Render();
 	}
-	else {
-		if (level->flagPlayer == 1 && level->flagTB == 1) 
+	else if (level->flagPlayer == 1 && level->flagTB == 1)
 		{
-			level->Render();
+			//level->Render();
 		}
-	}
-	player->Update(playerCoord.x, playerCoord.y);
+	player->Update();
 }
 	
 void Game::render()

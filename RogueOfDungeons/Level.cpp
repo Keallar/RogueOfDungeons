@@ -2,11 +2,12 @@
 #include "Level.h"
 #include "Player.h"
 
-enum Tiles {white, green, darkYellow, black, yellow,
-brown, red, vinous, blue, justRed, justGreen, justBrown,
-sky, orange, turquoise};//цвета тайлов
-// turquoise = бирюзовый
+enum Tiles {white, green, darkYellowDirt, black, yellowSand,
+brownDesks, lightBrownWood, lilac, redBlood, vinous, blueWater, orangeBrick,
+greenDirt, Dirt, lightBrick, portal1, portal2};//цвета тайлов
+//turquoise = бирюзовый
 //vinous = винный, бордовый
+//lilac = сиреневый
 
 Level::Level(SDL_Renderer* renderer) 
 {

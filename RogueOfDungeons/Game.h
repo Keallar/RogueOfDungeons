@@ -20,8 +20,6 @@ private:
 	SDL_Rect tex_RECT;
 	SDL_Rect tex_posRect;
 	COORDS mouseCoord;
-	COORDS playerCoord;
-
 public:
 	Game();
 	~Game();
@@ -31,6 +29,6 @@ public:
 	void render();
 	void clean();
 	bool running();
-		
-
+	int playerCoordx;
+	int playerCoordy;
 };

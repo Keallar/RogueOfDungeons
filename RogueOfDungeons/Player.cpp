@@ -17,30 +17,20 @@ Player::~Player()
 		SDL_DestroyTexture(PlayerTexture);
 	}
 }
+void Player::UpdateCoord() {
+	playerCoordx += 32;
+	std::cout << playerCoordx;
+}
 
 void Player::Render()
 {
-	RenderManager::CopyToRender(PlayerTexture, ren, xpos, ypos, 64, 64, 0, 0, 32, 32);
+	RenderManager::CopyToRender(PlayerTexture, ren, playerCoordx, playerCoordy, 64, 64, 0, 0, 32, 32);
 }
 
-void Player::Update(int xpos, int ypos)
+void Player::Update()
 {
-	int x = xpos, y = ypos;
-	SDL_Event eventMovePlayer;
-	SDL_PollEvent(&eventMovePlayer);
-	state = SDL_GetKeyboardState(NULL);
-	while ((x == xpos)||(y == ypos))
-	{
-		if (state[SDL_SCANCODE_W])
-			ypos -= 32;
-		else if (state[SDL_SCANCODE_S])
-			ypos += 32;
-		else if (state[SDL_SCANCODE_A])
-			xpos -= 32;
-		else if (state[SDL_SCANCODE_D])
-			xpos += 32;
-	}
-	Player::Render();
+	Player::UpdateCoord();
+	
 	/*switch (eventMovePlayer.type)
 	{
 	case SDL_KEYDOWN:

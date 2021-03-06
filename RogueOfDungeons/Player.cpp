@@ -20,10 +20,10 @@ Player::~Player()
 
 void Player::Render()
 {
-	RenderManager::CopyToRender(PlayerTexture, ren, 32, 32, 64, 64, 0, 0, 32, 32);
+	RenderManager::CopyToRender(PlayerTexture, ren, xpos, ypos, 64, 64, 0, 0, 32, 32);
 }
 
-void Player::Update(int x, int y)
+void Player::Update(int xpos, int ypos)
 {
 	SDL_Event eventMovePlayer;
 	SDL_PollEvent(&eventMovePlayer);
@@ -32,23 +32,20 @@ void Player::Update(int x, int y)
 	case SDL_KEYDOWN:
 		switch (eventMovePlayer.key.keysym.sym)
 		{
-		case SDLK_w:
-			ypos = y;
+		case SDL_SCANCODE_W:
 			inputMovePlayer->pressW(ypos);
 			Player::Render();
+			std::cout << "PP\n";
 			break;
-		case SDLK_s:
-			xpos = x;
+		case  SDL_SCANCODE_S:
 			inputMovePlayer->pressS(xpos);
 			Player::Render();
 			break;
-		case SDLK_a:
-			ypos = y;
+		case  SDL_SCANCODE_A:
 			inputMovePlayer->pressA(ypos);
 			Player::Render();
 			break;
-		case SDLK_d:
-			xpos = x;
+		case  SDL_SCANCODE_D:
 			inputMovePlayer->pressD(xpos);
 			Player::Render();
 			break;

@@ -1,10 +1,15 @@
+#pragma once
 #include "Game.h"
 #include <SDL_image.h>
 #include "textureManager.h"
 #include "Level.h"
 #include "GameObject.h"
+#include "Player.h"
+
 MainMenu* Menu;
 Level* level;
+Player* player;
+
 
 Game::Game() 
 {}
@@ -64,7 +69,6 @@ void Game::handleEvents()
 				}
 				if (InputManager::MouseInArea(640, 471, 420, 100,  mouseCoord.x, mouseCoord.y)) 
 				{
-
 					break;
 				}
 				if (InputManager::MouseInArea(640, 581, 250, 100,  mouseCoord.x, mouseCoord.y))
@@ -72,21 +76,6 @@ void Game::handleEvents()
 					isRunning = false;
 					break;
 				}
-		case SDL_KEYDOWN:
-			switch (event.key.keysym.sym)
-			{
-			case SDLK_w:
-				
-				break;
-			case SDLK_s:
-				break;
-			case SDLK_a:
-				break;
-			case SDLK_d:
-				break;
-			default:
-				break;
-			}
 			}
 		default:
 			break;

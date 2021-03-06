@@ -6,7 +6,7 @@
 class Level 
 {
 private:
-	int Location[22][32];
+	//int Location[22][32];
 	SDL_Texture* TileTexture;
 	SDL_Texture* PlayBackground;
 	SDL_Renderer* ren;

@@ -19,10 +19,6 @@ private:
 	SDL_Texture* texture;
 	SDL_Rect tex_RECT;
 	SDL_Rect tex_posRect;
-<<<<<<< HEAD
-
-=======
->>>>>>> 0015e4d2555512ac3b29336d3dd3bde905408150
 	COORDS mouseCoord;
 	COORDS playerCoord;
 

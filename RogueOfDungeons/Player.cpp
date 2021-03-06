@@ -14,15 +14,28 @@ Player::~Player()
 
 void Player::Render()
 {
-
+	RenderManager::CopyToRender(PlayerTexture, ren, 0, 0, 32, 32, 32, 32, 32, 32);
 }
 
 void Player::Update()
 {
+	SDL_Event eventMovePlayer;
+	SDL_PollEvent(&eventMovePlayer);
+	switch (eventMovePlayer.type)
+	{
+	case SDL_KEYDOWN:
+		switch (eventMovePlayer.key.keysym.sym)
+		{
+		case SDLK_w:
 
-}
-
-void Player::clean()
-{
-
+			break;
+		case SDLK_s:
+			break;
+		case SDLK_a:
+			break;
+		case SDLK_d:
+			break;
+		default:
+			break;
+		}
 }

@@ -71,21 +71,6 @@ void Game::handleEvents()
 					isRunning = false;
 					break;
 				}
-		case SDL_KEYDOWN:
-			switch (event.key.keysym.sym)
-			{
-			case SDLK_w:
-				
-				break;
-			case SDLK_s:
-				break;
-			case SDLK_a:
-				break;
-			case SDLK_d:
-				break;
-			default:
-				break;
-			}
 			}
 		default:
 			break;

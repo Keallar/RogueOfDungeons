@@ -23,6 +23,26 @@ bool InputManager::MouseInArea(int x, int y, int w, int h, int MouseX, int Mouse
 	}
 }
 
+bool InputManager::pressW()
+{
+
+}
+
+bool InputManager::pressA()
+{
+
+}
+
+bool InputManager::pressS()
+{
+
+}
+
+bool InputManager::pressD()
+{
+
+}
+
 void RenderManager::CopyToRender(SDL_Texture* texture, SDL_Renderer* ren, int x, int y, int w, int h, int dx, int dy, int dw, int dh) 
 {
 	COORD.x = x; COORD.y = y; COORD.w = w; COORD.h = h;

@@ -1,5 +1,5 @@
 #pragma once
-#include "Game.h"
+#include "SDL.h"
 
 class UI {
 	SDL_Renderer* ren;

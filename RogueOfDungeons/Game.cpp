@@ -8,16 +8,21 @@
 #include "Player.h"
 #include "UI.h"
 
-MainMenu* Menu;
-Level* level;
-Player* player;
+
 Game::Game() 
 {
-	playerCoordx = 32;
-	playerCoordy = 32;
+	player = new Player;
+	level = 0;
 }
 Game::~Game()
-{}
+{
+	delete player;
+	delete Menu;
+	if (!level) 
+	{
+		delete level;
+	}
+}
 void Game::init(const char* title, int xpos, int ypos, int width, int height, bool fullscreen)
 {
 	
@@ -92,12 +97,24 @@ void Game::update()
 	else if (level->flagPlayer == 1 && level->flagTB == 1)
 		{
 			level->Render();
+			player->Update();
 		}
-	player->Update();
+	
 }
 	
 void Game::render()
 {
+	SDL_RenderClear(renderer);
+	if (Menu->flag == 1)
+	{
+		Menu->Render();
+	}
+	else if (level->flagPlayer == 1 && level->flagTB == 1)
+	{
+		level->Render();
+		player->Render();
+	}
+
 	SDL_RenderPresent(renderer);
 }
 void Game::clean()

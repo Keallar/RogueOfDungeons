@@ -1,6 +1,7 @@
 #include "Player.h"
 #include "GameObject.h"
-
+#include "textureManager.h"
+#include <iostream>
 InputManager* inputMovePlayer;
 const Uint8* state;
 
@@ -17,19 +18,18 @@ Player::~Player()
 		SDL_DestroyTexture(PlayerTexture);
 	}
 }
-void Player::UpdateCoord() {
-	playerCoordx += 32;
-	std::cout << playerCoordx;
-}
+
 
 void Player::Render()
 {
-	RenderManager::CopyToRender(PlayerTexture, ren, playerCoordx, playerCoordy, 64, 64, 0, 0, 32, 32);
+	RenderManager::CopyToRender(PlayerTexture, ren, playerCoordx, playerCoordy, 64, 64, 32, 0, 32, 32);
 }
 
 void Player::Update()
 {
-	Player::UpdateCoord();
+	playerCoordx += 1;
+	std::cout << playerCoordx << std::endl;
+
 	
 	/*switch (eventMovePlayer.type)
 	{

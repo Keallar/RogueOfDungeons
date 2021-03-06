@@ -1,6 +1,5 @@
 #include "MainMenu.h"
-#include "Game.h"
-#include "textureManager.h"
+
 
 MainMenu::MainMenu(const char* texturesheetMenu, const char* texturesheetPlay,
 	const char* texturesheetSettings, const char* texturesheetExit, SDL_Renderer* ren) 
@@ -17,6 +16,10 @@ void MainMenu::Render()
 	RenderManager::CopyToRender(PlayButton, renderer, 640, 361, 250, 100);
 	RenderManager::CopyToRender(SettingsButton, renderer, 640, 471, 420, 100);
 	RenderManager::CopyToRender(ExitButton, renderer, 640, 581, 250, 100);
+}
+MainMenu::~MainMenu()
+{
+
 }
 
 

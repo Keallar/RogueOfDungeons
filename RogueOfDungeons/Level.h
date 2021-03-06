@@ -1,5 +1,4 @@
 #pragma once
-#include "Game.h"
 #include "Player.h"
 #include "UI.h"
 
@@ -17,6 +16,7 @@ public:
 	bool flagTB;
 	bool flagPlayer;
 	Level(SDL_Renderer* renderer);
+	void Update();
 	void Start();
 	void Render();
 	void TileSet(int num, int x, int y);

@@ -4,6 +4,7 @@
 #include "Player.h"
 #include <iostream>
 #include "MainMenu.h"
+#include "Level.h"
 
 struct COORDS {
 	int x;
@@ -20,6 +21,8 @@ private:
 	SDL_Rect tex_RECT;
 	SDL_Rect tex_posRect;
 	COORDS mouseCoord;
+	MainMenu* Menu;
+	Level* level;
 public:
 	Game();
 	~Game();

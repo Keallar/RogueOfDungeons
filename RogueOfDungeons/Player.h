@@ -1,6 +1,6 @@
 #pragma once
 #include "GameObject.h"
-#include "Game.h"
+#include "SDL.h"
 
 class Player
 {
@@ -15,13 +15,12 @@ private:
     int playerCoordy = 32;
 
 public:
-    Player();
+    Player() = default;
     Player(const char* texturesheet, SDL_Renderer* ren);
     ~Player();
     void Render();
     void Update();
     void clean();
-    void UpdateCoord();
     bool flag = 0;
     
 };

@@ -3,6 +3,7 @@
 #include "SDL.h"
 #include "SDL_image.h"
 #include "SDL_ttf.h"
+#include <iostream>
 
 SDL_Rect RenderManager::COORD;
 SDL_Rect RenderManager::dCOORD;
@@ -54,9 +55,12 @@ int InputManager::pressD(int x)
 
 void RenderManager::CopyToRender(SDL_Texture* texture, SDL_Renderer* ren, int x, int y, int w, int h, int dx, int dy, int dw, int dh) 
 {
+	SDL_Rect src = {0, 0, dw, dh};
+	SDL_Rect dest = { x, y, w, h };
 	COORD.x = x; COORD.y = y; COORD.w = w; COORD.h = h;
 	dCOORD.x = dx; dCOORD.y = dy; dCOORD.w = dw; dCOORD.h = dh;
-	SDL_RenderCopy(ren, texture, &dCOORD, &COORD);
+	SDL_RenderCopy(ren, texture, &src, &dest);
+	std::cout << x<< ","<< y << std::endl;
 }
 void RenderManager::CopyToRender(SDL_Texture* texture, SDL_Renderer* ren, int x, int y, int w, int h) 
 {

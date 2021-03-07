@@ -17,7 +17,6 @@ Player::~Player()
 	}
 }
 
-
 void Player::Render()
 {
 	RenderManager::CopyToRender(PlayerTexture, ren, playerCoordx, playerCoordy, 64, 64, 0, 0, 32, 32);

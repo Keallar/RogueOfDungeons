@@ -20,6 +20,9 @@ GameObject::GameObject(const char* texturesheet, SDL_Renderer* renderer, int x, 
 	height = h;
 }
 
+GameObject::~GameObject()
+{}
+
 void GameObject::Update()
 {
 

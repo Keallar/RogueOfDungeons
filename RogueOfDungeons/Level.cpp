@@ -53,6 +53,9 @@ void Level::Render()
 			{
 				RenderManager::SetTile(j * 32, i * 32, 7, ren, TileTexture);
 			}
+			if (Location[i][j] == 2) {
+				RenderManager::SetTile(j * 32, i * 32, 10, ren, TileTexture);
+			}
 		}
 	}
 	player->Render();
@@ -130,5 +133,85 @@ void Level::Generate() {
 			}
 		}
 	}
-	
+	int countPoints = 0;
+	COORDS lastPoint = startPoint;
+	while (countPoints <= 200) {
+		int choose = rand() % 5;
+		if (choose = 5) {
+			if (32 - lastPoint.x < 32 / 2) {
+				if (22 - lastPoint.y < 22 / 2) {
+					if (rand() % 2) {
+						choose = 1;
+					}
+					else {
+						choose = 3;
+					}
+				}
+				else {
+					if (rand() % 2) {
+						choose = 1;
+					}
+					else {
+						choose = 2;
+					}
+				}
+			}
+			else {
+				if (22 - lastPoint.y >= 22 / 2) {
+					if (rand() % 2) {
+						choose = 0;
+					}
+					else {
+						choose = 2;
+					}
+				}
+				else {
+					if (rand() % 2) {
+						choose = 0;
+					}
+					else {
+						choose = 3;
+					}
+				}
+			}
+		}
+		switch (choose) {
+		case 0:
+			if ((GetLocation(lastPoint.y, lastPoint.x + 1)) != 0) {
+				ChangeLocation(lastPoint.y, lastPoint.x + 1);
+				lastPoint = { lastPoint.x + 1, lastPoint.y };
+				break;
+			}
+		case 1:
+			if ((GetLocation(lastPoint.y, lastPoint.x - 1)) != 0) {
+				ChangeLocation(lastPoint.y, lastPoint.x - 1);
+				lastPoint = { lastPoint.x - 1, lastPoint.y };
+				break;
+			}
+		case 2:
+			if ((GetLocation(lastPoint.y + 1, lastPoint.x)) != 0) {
+				ChangeLocation(lastPoint.y + 1, lastPoint.x);
+				lastPoint = { lastPoint.x , lastPoint.y + 1 };
+				break;
+			}
+		case 3:
+			if ((GetLocation(lastPoint.y - 1, lastPoint.x)) != 0) {
+				ChangeLocation(lastPoint.y - 1, lastPoint.x);
+				lastPoint = { lastPoint.x, lastPoint.y - 1 };
+				break;
+			}
+		default:
+			lastPoint = { rand() % 32, rand() % 22 };
+			break;
+		}
+		countPoints++;
+	}
+	for (int i = 0; i < 32; i++) {
+		for (int j = 0; j < 22; j++) {
+			if ((i == 0) || (i == 31) || (j == 0) || (j == 21)) {
+				Location[j][i] = 2;
+			}
+		}
+	}
 }
+

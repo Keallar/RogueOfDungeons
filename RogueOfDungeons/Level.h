@@ -1,7 +1,9 @@
 #pragma once
+#include <vector>
 #include "Enemy.h"
 #include "Player.h"
 #include "UI.h"
+#include "GameObject.h"
 
 //цвета тайлов
 enum Tiles
@@ -38,6 +40,7 @@ private:
 	Player* player;
 	Enemy* enemy;
 	UI* ui;
+	vector <GameObject> enemies;
 public:
 	bool flagTB;
 	bool flagPlayer;

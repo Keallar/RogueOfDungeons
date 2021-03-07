@@ -6,7 +6,7 @@
 class Level 
 {
 private:
-	//int Location[22][32];
+	int Location[22][32];
 	SDL_Texture* TileTexture;
 	SDL_Texture* PlayBackground;
 	SDL_Renderer* ren;
@@ -19,5 +19,7 @@ public:
 	void Update();
 	void Start();
 	void Render();
-	void TileSet(int num, int x, int y);
+	void Generate();
+	void ChangeLocation(int x, int y);
+	int GetLocation(int x, int y);
 };

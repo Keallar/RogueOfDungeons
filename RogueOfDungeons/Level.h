@@ -1,4 +1,5 @@
 #pragma once
+#include "Enemy.h"
 #include "Player.h"
 #include "UI.h"
 
@@ -35,6 +36,7 @@ private:
 	SDL_Texture* PlayBackground;
 	SDL_Renderer* ren;
 	Player* player;
+	Enemy* enemy;
 	UI* ui;
 public:
 	bool flagTB;

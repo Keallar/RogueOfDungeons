@@ -1,5 +1,5 @@
 #pragma once
-#include "Game.h"
+#include "SDL.h"
 class Enemy
 {
 private:
@@ -8,8 +8,9 @@ private:
 	int expReward;
 	SDL_Renderer* ren;
 	SDL_Texture* enemyTexture;
-	int xpos, ypos, xanim, yanim;
+	int xpos = 128, ypos = 128, xanim= 0, yanim = 0;
 public:
+	Enemy() = default;
 	Enemy(const char* texturesheet, SDL_Renderer* ren, int HealthP, int Damage, int EXPR);
 	~Enemy();
 	void Update();

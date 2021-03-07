@@ -7,6 +7,7 @@
 #include "GameObject.h"
 #include "Player.h"
 #include "UI.h"
+#include "Enemy.h"
 
 
 Game::Game() 

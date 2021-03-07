@@ -25,27 +25,34 @@ void Player::Render()
 
 void Player::Update()
 {
-	if (keys[SDL_SCANCODE_W])
+	if (flag == 0)
 	{
-		playerCoordy -= 32;
-		std::cout << "w" << std::endl;
-	}
+		if (keys[SDL_SCANCODE_W])
+		{
+			playerCoordy -= 32;
+			std::cout << "w" << std::endl;
+			flag = 1;
+		}
 
-	if (keys[SDL_SCANCODE_A])
-	{
-		playerCoordx -= 32;
-		std::cout << "a" << std::endl;
-	}
+		if (keys[SDL_SCANCODE_A])
+		{
+			playerCoordx -= 32;
+			std::cout << "a" << std::endl;
+			flag = 1;
+		}
 
-	if (keys[SDL_SCANCODE_S])
-	{
-		playerCoordy += 32;
-		std::cout << "s" << std::endl;
-	}
+		if (keys[SDL_SCANCODE_S])
+		{
+			playerCoordy += 32;
+			std::cout << "s" << std::endl;
+			flag = 1;
+		}
 
-	if (keys[SDL_SCANCODE_D])
-	{
-		playerCoordx += 32;
-		std::cout << "d" << std::endl;
+		if (keys[SDL_SCANCODE_D])
+		{
+			playerCoordx += 32;
+			std::cout << "d" << std::endl;
+			flag = 1;
+		}
 	}
 }

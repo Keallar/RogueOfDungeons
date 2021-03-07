@@ -9,7 +9,8 @@ Level::Level(SDL_Renderer* renderer)
 	TileTexture = textureManager::LoadTexture("images/Tiles.png", ren);
 	PlayBackground = textureManager::LoadTexture("images/Playback.png", ren);
 	flagTB = 0;
-	player =new Player("images/Hero.png", ren);
+	player = new Player("images/Hero.png", ren);
+	enemy = new Enemy("images/Turtle.png", ren, 10, 3, 4);
 	flagPlayer = 0;
 }
 
@@ -48,4 +49,5 @@ void Level::Render()
 		}
 	}
 	player->Render();
+	enemy->Render();
 }

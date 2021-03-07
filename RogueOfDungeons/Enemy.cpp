@@ -1,4 +1,5 @@
 #include "Enemy.h"
+#include "Managers.h"
 
 Enemy::Enemy(const char* texturesheet, SDL_Renderer* renderer, int HealthP, int Damage, int EXPR) 
 {
@@ -8,18 +9,19 @@ Enemy::Enemy(const char* texturesheet, SDL_Renderer* renderer, int HealthP, int 
 	ren = renderer;
 	enemyTexture = textureManager::LoadTexture(texturesheet, ren);
 }
-
+Enemy::~Enemy() 
+{
+	if (HP == 0)
+	{
+		SDL_DestroyTexture(enemyTexture);
+	}
+}
 void Enemy::Render() 
 {
-	RenderManager::CopyToRender(enemyTexture, ren, xpos, ypos, 32, 32, xanim, yanim, 32, 32);
+	RenderManager::CopyToRender(enemyTexture, ren, xpos, ypos, 128, 128, xanim, yanim, 32, 32);
 }
 
 void Enemy::Update()
 {
-	if (HP == 0) 
-	{
-		SDL_DestroyTexture(enemyTexture);
-		//Enemy::~Enemy();
-	}
 
 }

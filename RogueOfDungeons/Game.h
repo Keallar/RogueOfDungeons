@@ -11,6 +11,15 @@ struct COORDS {
 	int y;
 };
 
+enum GameState
+{
+	Menu,
+	Settings,
+	Exit,
+	GamePlay,
+	PlayerState
+};
+
 class Game
 {
 private:
@@ -32,7 +41,5 @@ public:
 	void update();
 	void render();
 	void clean();
-	bool running();
-	int playerCoordx;
-	int playerCoordy;
+	bool running();;
 };

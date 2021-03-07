@@ -5,10 +5,6 @@
 #include "SDL_ttf.h"
 #include <iostream>
 
-SDL_Rect InputManager::player;
-const Uint8* key = SDL_GetKeyboardState(0);
-
-
 SDL_Texture* textureManager::LoadTexture(const char* texName, SDL_Renderer* ren) 
 {
 	SDL_Texture* tex = IMG_LoadTexture(ren, texName);
@@ -25,30 +21,6 @@ bool InputManager::MouseInArea(int x, int y, int w, int h, int MouseX, int Mouse
 	{
 		return false;
 	}
-}
-
-int InputManager::pressW(int y)
-{
-	y = y - 32;
-	return y;
-}
-
-int InputManager::pressA(int x)
-{
-	x = x - 32;
-	return x;
-}
-
-int InputManager::pressS(int y)
-{
-	y = y + 32;
-	return y;
-}
-
-int InputManager::pressD(int x)
-{
-	x = x + 32;
-	return x;
 }
 
 void RenderManager::CopyToRender(SDL_Texture* texture, SDL_Renderer* ren, int x, int y, int w, int h, int dx, int dy, int dw, int dh) 
@@ -123,7 +95,6 @@ void RenderManager::SetTile(int x, int y, int tile, SDL_Renderer* renderer, SDL_
 		break;
 	}
 }
-
 
 SDL_Texture* FontManager::renderText(const char* text, const char* fontFile, Uint8 rgb_r, Uint8 rgb_b, Uint8 rgb_g, Uint8 rgb_a, int fontSize, SDL_Renderer* renderer) {
 	SDL_Surface* surf;

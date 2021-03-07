@@ -1,6 +1,12 @@
 #pragma once
-static int Coords[10] = {32, 32, 512, 512, 0, 0, 0, 0, 0, 0};
-// 0 - х коорда перса
-// 1 - y коорда перса
-// 2 - x коорда первого енеми
-// 3 - y коорда первого енеми
+class EntityPosition
+{
+public:
+	static int Coords[10];
+	// В ПРАЙВАТЕ НЕ РАБОТАЕТ ОТСТАНЬТЕ
+	// 1 - y коорда перса
+	// 2 - x коорда первого енеми
+	// 3 - y коорда первого енеми
+	static void ChangeCoords(int i, int Change);
+};
+

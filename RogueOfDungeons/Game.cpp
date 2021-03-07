@@ -8,12 +8,7 @@
 #include "Player.h"
 #include "UI.h"
 
-enum Status
-{
-	Menu,
-	LevelGeneration,
-	Pause
-};
+
 Game::Game() 
 {
 	level = 0;

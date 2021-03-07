@@ -1,6 +1,6 @@
 ﻿#pragma once
 #include "Level.h"
-#include "textureManager.h"
+#include "Managers.h"
 
 
 Level::Level(SDL_Renderer* renderer) 

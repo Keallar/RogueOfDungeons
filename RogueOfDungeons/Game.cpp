@@ -2,16 +2,22 @@
 #include "Game.h"
 #include <SDL_image.h>
 #include "SDL_ttf.h"
-#include "textureManager.h"
+#include "Managers.h"
 #include "Level.h"
 #include "GameObject.h"
 #include "Player.h"
 #include "UI.h"
 
-
+enum Status
+{
+	Menu,
+	LevelGeneration,
+	Pause
+};
 Game::Game() 
 {
 	level = 0;
+	ui = 0;
 }
 Game::~Game()
 {
@@ -69,6 +75,7 @@ void Game::handleEvents()
 				{
 					Menu->flag = 0;
 					level = new Level(renderer);
+					ui = new UI(renderer);
 					level->Start();
 					break;
 				}
@@ -109,6 +116,7 @@ void Game::render()
 	else if (level->flagPlayer == 1 && level->flagTB == 1)
 	{
 		level->Render();
+		ui->start();
 	}
 
 	SDL_RenderPresent(renderer);

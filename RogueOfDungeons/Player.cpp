@@ -1,6 +1,6 @@
 #include "Player.h"
 #include "GameObject.h"
-#include "textureManager.h"
+#include "Managers.h"
 #include <iostream>
 
 Player::Player(const char* texturesheet, SDL_Renderer* renderer)

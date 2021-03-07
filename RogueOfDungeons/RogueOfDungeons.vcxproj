@@ -149,7 +149,7 @@
     <ClCompile Include="MainMenu.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="RogueOfDungeons.cpp" />
-    <ClCompile Include="textureManager.cpp" />
+    <ClCompile Include="Managers.cpp" />
     <ClCompile Include="UI.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -159,7 +159,7 @@
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="MainMenu.h" />
     <ClInclude Include="Player.h" />
-    <ClInclude Include="textureManager.h" />
+    <ClInclude Include="Managers.h" />
     <ClInclude Include="UI.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

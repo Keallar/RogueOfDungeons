@@ -56,6 +56,11 @@ void Level::Render()
 			if (Location[i][j] == 2) {
 				RenderManager::SetTile(j * 32, i * 32, 10, ren, TileTexture);
 			}
+			if (Location[i][j] == 0) {
+				if (!(rand() % 6)) {
+					RenderManager::SetTile(j * 32, i * 32, 3, ren, TileTexture);
+				}
+			}
 		}
 	}
 	player->Render();

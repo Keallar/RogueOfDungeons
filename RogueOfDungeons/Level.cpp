@@ -47,23 +47,23 @@ void Level::Render()
 		{
 			if (Location[i][j] == 0)
 			{
-				RenderManager::SetTile(j * 32, i * 32, 4, ren, TileTexture);
+				RenderManager::SetTile(j * 32, i * 32, 8, ren, TileTexture);
 			}
 			else
 			{
-				RenderManager::SetTile(j * 32, i * 32, 6, ren, TileTexture);
+				RenderManager::SetTile(j * 32, i * 32, 7, ren, TileTexture);
 			}
 		}
 	}
 	player->Render();
 }
 
-void Level::ChangeLocation(int y, int x) {
+void Level::ChangeLocation(int x, int y) {
 	if (x >= 0, x < 32, y >= 0, y < 22) {
 		Location[y][x] = 0;
 	}
 }
-int Level::GetLocation(int y, int x) {
+int Level::GetLocation(int x, int y) {
 	if (x >= 0, x < 32, y >= 0, y < 22) {
 		return Location[y][x];
 	}
@@ -74,78 +74,61 @@ int Level::GetLocation(int y, int x) {
 
 void Level::Generate() {
 	srand(time(0));
-	COORDS startPoint = { rand() % 32, rand() % 22 };
-	int countPoints = 0;
-	COORDS lastPoint = startPoint;
-	while (countPoints <= 300) {
-		int choose = rand() % 5;
-		if (choose = 5) {
-			if (32 - lastPoint.x < 32 / 2) {
-				if (22 - lastPoint.y < 22 / 2) {
-					if (rand() % 2) {
-						choose = 1;
-					}
-					else {
-						choose = 3;
-					}
-				}
-				else {
-					if (rand() % 2) {
-						choose = 1;
-					}
-					else {
-						choose = 2;
-					}
+	COORDS startPoint = { rand() % 32, rand() % 4 };
+	ChangeLocation(startPoint.x, startPoint.y);
+	for (int i = 0; i < 22; i++) {
+		for (int j = 0; j < 32; j++) {
+			int count = 0;
+			if (GetLocation(j, i + 1) == 0) {
+				count++;
+			}
+			if (GetLocation(j+1, i + 1) == 0) {
+				count++;
+			}
+			if (GetLocation(j+1, i) == 0) {
+				count++;
+			}
+			if (GetLocation(j+1, i - 1) == 0) {
+				count++;
+			}
+			if (GetLocation(j, i - 1) == 0) {
+				count++;
+			}
+			if (GetLocation(j-1, i - 1) == 0) {
+				count++;
+			}
+			if (GetLocation(j-1, i) == 0) {
+				count++;
+			}
+			if (GetLocation(j-1, i + 1) == 0) {
+				count++;
+			}
+			if (count == 1) {
+				if (rand() % 3) {
+					ChangeLocation(j, i);
 				}
 			}
-			else {
-				if (22 - lastPoint.y >= 22 / 2) {
-					if (rand() % 2) {
-						choose = 0;
-					}
-					else {
-						choose = 2;
-					}
+			if (count == 2) {
+				if (rand() % 3) {
+					ChangeLocation(j, i);
+				}	
+			}
+			if (count == 3) {
+				if (rand() % 3) {
+					ChangeLocation(j, i);
 				}
-				else {
-					if (rand() % 2) {
-						choose = 0;
-					}
-					else {
-						choose = 3;
-					}
+			}
+			if (count == 4) {
+				if (!(rand() % 4)) {
+					ChangeLocation(j, i);
+				}
+			}
+			if (count == 5) {
+				if (!(rand() % 4)) {
+					ChangeLocation(j, i);
 				}
 			}
 		}
-		switch (choose) {
-		case 0:
-			if ((GetLocation(lastPoint.y, lastPoint.x + 1)) != 0) {
-				ChangeLocation(lastPoint.y, lastPoint.x + 1);
-				lastPoint = { lastPoint.x + 1, lastPoint.y };
-				break;
-			}
-		case 1:
-			if ((GetLocation(lastPoint.y, lastPoint.x - 1)) != 0) {
-				ChangeLocation(lastPoint.y, lastPoint.x - 1);
-				lastPoint = { lastPoint.x - 1, lastPoint.y };
-				break;
-			}
-		case 2:
-			if ((GetLocation(lastPoint.y + 1, lastPoint.x)) != 0) {
-				ChangeLocation(lastPoint.y + 1, lastPoint.x);
-				lastPoint = { lastPoint.x , lastPoint.y + 1 };
-				break;
-			}
-		case 3:
-			if ((GetLocation(lastPoint.y - 1, lastPoint.x)) != 0) {
-				ChangeLocation(lastPoint.y - 1, lastPoint.x);
-				lastPoint = { lastPoint.x, lastPoint.y - 1 };
-				break;
-			}
-		default:
-			lastPoint = { rand() % 32, rand() % 22 };
-			break;
-		}
-		countPoints++;
 	}
+	
 }

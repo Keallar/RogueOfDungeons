@@ -3,7 +3,6 @@
 #include "SDL_image.h"
 #include "SDL_ttf.h"
 
-
 class textureManager
 {
 public:
@@ -26,13 +25,7 @@ private:
 	
 
 public:
-	static bool MouseInArea(int x, int y, int w, int h, int MouseX, int MouseY);
-	static int pressW(int y);
-	static int pressA(int x);
-	static int pressS(int y);
-	static int pressD(int x);
-	
-	
+	static bool MouseInArea(int x, int y, int w, int h, int MouseX, int MouseY);	
 };
 
 class FontManager {

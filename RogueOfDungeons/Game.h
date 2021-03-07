@@ -11,7 +11,6 @@ struct COORDS {
 	int y;
 };
 
-
 enum GameState
 {
 	Menu,

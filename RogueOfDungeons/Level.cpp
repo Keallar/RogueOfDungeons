@@ -18,6 +18,7 @@ Level::~Level()
 	delete player;
 	delete ui;
 }
+
 void Level::Update() 
 {
 	player->Update();
@@ -28,7 +29,6 @@ void Level::Start()
 	flagTB = 1;
 	flagPlayer = 1;
 }
-
 
 void Level::Render()
 {

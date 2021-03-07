@@ -57,7 +57,6 @@ void RenderManager::CopyToRender(SDL_Texture* texture, SDL_Renderer* ren, int x,
 	COORD.x = x; COORD.y = y; COORD.w = w; COORD.h = h;
 	dCOORD.x = dx; dCOORD.y = dy; dCOORD.w = dw; dCOORD.h = dh;
 	SDL_RenderCopy(ren, texture, &dCOORD, &COORD);
-	std::cout << x<< ","<< y << std::endl;
 }
 void RenderManager::CopyToRender(SDL_Texture* texture, SDL_Renderer* ren, int x, int y, int w, int h) 
 {	
@@ -135,6 +134,8 @@ SDL_Texture* FontManager::renderText(const char* text, const char* fontFile, Uin
 	font = TTF_OpenFont("fonts/manaspc.ttf", fontSize);
 	surf = TTF_RenderText_Blended(font, text, fontColor);
 	fontTexture = SDL_CreateTextureFromSurface(renderer, surf);
-	SDL_FreeSurface(surf);
+	if ((!fontTexture)) {
+		std::cout << "All right in fonts!" << std::endl;
+	}
 	return fontTexture;
 }

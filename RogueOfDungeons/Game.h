@@ -23,6 +23,7 @@ private:
 	COORDS mouseCoord;
 	MainMenu* Menu;
 	Level* level;
+	UI* ui;
 public:
 	Game();
 	~Game();

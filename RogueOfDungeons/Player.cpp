@@ -28,7 +28,6 @@ void Player::Render()
 void Player::Update()
 {
 	playerCoordx += 1;
-	std::cout << playerCoordx << std::endl;
 
 	
 	/*switch (eventMovePlayer.type)

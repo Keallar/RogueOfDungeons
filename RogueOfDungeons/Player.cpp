@@ -2,8 +2,6 @@
 #include "GameObject.h"
 #include "textureManager.h"
 #include <iostream>
-InputManager* inputMovePlayer;
-const Uint8* state;
 
 Player::Player(const char* texturesheet, SDL_Renderer* renderer)
 {
@@ -27,38 +25,29 @@ void Player::Render()
 
 void Player::Update()
 {
-	playerCoordx += 1;
-	std::cout << playerCoordx << std::endl;
-
-	
-	/*switch (eventMovePlayer.type)
+	SDL_Event eventMovePlayer;
+	while (SDL_PollEvent(&eventMovePlayer))
 	{
-	case SDL_KEYDOWN:
-		switch (eventMovePlayer.key.keysym.sym)
+		switch (eventMovePlayer.type)
 		{
-		case SDL_SCANCODE_W:
-			inputMovePlayer->pressW(ypos);
-			std::cout << "PP//";
-			Player::Render();
-			std::cout << "PP\n";
-			break;
-		case SDL_SCANCODE_S:
-			inputMovePlayer->pressS(xpos);
-			Player::Render();
-			break;
-		case SDLK_a:
-			
-			inputMovePlayer->pressA(ypos);
-			Player::Render();
-			break;
-		case SDLK_d:
-			
-			inputMovePlayer->pressD(xpos);
-			Player::Render();
-			break;
-		default:
-			break;
+		case SDL_KEYDOWN:
+			switch (eventMovePlayer.key.keysym.sym)
+			{
+			case SDL_SCANCODE_W:
+				playerCoordy = InputManager::pressW(playerCoordy);
+				break;
+			case SDL_SCANCODE_A:
+				playerCoordx = InputManager::pressA(playerCoordx);
+				break;
+			case SDL_SCANCODE_S:
+				playerCoordy = InputManager::pressS(playerCoordy);
+				break;
+			case SDLK_d:
+				playerCoordx = InputManager::pressD(playerCoordx);
+				break;
+			default:
+				break;
+			}
 		}
-	}*/
-
+	}
 }

@@ -8,7 +8,7 @@
 SDL_Rect RenderManager::COORD;
 SDL_Rect RenderManager::dCOORD;
 SDL_Rect InputManager::player;
-const Uint8* key = SDL_GetKeyboardState(0);
+const Uint8* key = SDL_GetKeyboardState(NULL);
 
 
 SDL_Texture* textureManager::LoadTexture(const char* texName, SDL_Renderer* ren) 
@@ -31,25 +31,25 @@ bool InputManager::MouseInArea(int x, int y, int w, int h, int MouseX, int Mouse
 
 int InputManager::pressW(int y)
 {
-	y = y - 32;
+	y -= 32;
 	return y;
 }
 
 int InputManager::pressA(int x)
 {
-	x = x - 32;
+	x -= 32;
 	return x;
 }
 
 int InputManager::pressS(int y)
 {
-	y = y + 32;
+	y += 32;
 	return y;
 }
 
 int InputManager::pressD(int x)
 {
-	x = x + 32;
+	x += 32;
 	return x;
 }
 
@@ -59,7 +59,6 @@ void RenderManager::CopyToRender(SDL_Texture* texture, SDL_Renderer* ren, int x,
 	COORD.x = x; COORD.y = y; COORD.w = w; COORD.h = h;
 	dCOORD.x = dx; dCOORD.y = dy; dCOORD.w = dw; dCOORD.h = dh;
 	SDL_RenderCopy(ren, texture, &dCOORD, &COORD);
-	std::cout << x<< ","<< y << std::endl;
 }
 void RenderManager::CopyToRender(SDL_Texture* texture, SDL_Renderer* ren, int x, int y, int w, int h) 
 {

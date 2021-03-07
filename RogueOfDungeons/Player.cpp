@@ -2,7 +2,7 @@
 #include "GameObject.h"
 #include "Managers.h"
 #include <iostream>
-#include "EntityPosition.h"
+
 
 Player::Player(const char* texturesheet, SDL_Renderer* renderer)
 {
@@ -28,7 +28,7 @@ void Player::Update()
 		if (keys[SDL_SCANCODE_W])
 		{
 			Coords[1] -= 32;
-			std::cout << "w" << std::endl;
+			std::cout << "w" << Coords[0] << Coords[1] << std::endl;
 			SDL_Delay(400);
 		}
 

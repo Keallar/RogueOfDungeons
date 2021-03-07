@@ -1,7 +1,7 @@
 #pragma once
 #include "GameObject.h"
 #include "SDL.h"
-
+#include "EntityPosition.h"
 
 class Player
 {

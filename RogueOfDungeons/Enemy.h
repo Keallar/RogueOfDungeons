@@ -8,7 +8,7 @@ private:
 	int expReward;
 	SDL_Renderer* ren;
 	SDL_Texture* enemyTexture;
-	int xpos = 128, ypos = 128, xanim= 0, yanim = 0;
+	int xanim= 0, yanim = 0;
 public:
 	Enemy() = default;
 	Enemy(const char* texturesheet, SDL_Renderer* ren, int HealthP, int Damage, int EXPR);

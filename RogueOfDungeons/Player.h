@@ -5,7 +5,6 @@
 class Player
 {
 private:
-    
     SDL_Texture* PlayerTexture;
     SDL_Renderer* ren;
     int HP;

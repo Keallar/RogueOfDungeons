@@ -18,7 +18,7 @@ enum GameState
 	Settings,
 	Exit,
 	GamePlay,
-	Player
+	PlayerState
 };
 
 class Game
@@ -42,7 +42,5 @@ public:
 	void update();
 	void render();
 	void clean();
-	bool running();
-	int playerCoordx;
-	int playerCoordy;
+	bool running();;
 };

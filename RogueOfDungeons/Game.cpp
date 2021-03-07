@@ -8,17 +8,13 @@
 #include "Player.h"
 #include "UI.h"
 
-enum Status
-{
-	Menu,
-	LevelGeneration,
-	Pause
-};
+
 Game::Game() 
 {
 	level = 0;
 	ui = 0;
 }
+
 Game::~Game()
 {
 	delete Menu;
@@ -27,6 +23,7 @@ Game::~Game()
 		delete level;
 	}
 }
+
 void Game::init(const char* title, int xpos, int ypos, int width, int height, bool fullscreen)
 {
 	
@@ -93,6 +90,7 @@ void Game::handleEvents()
 			break;
 	}
 }
+
 void Game::update()
 {
 	if (Menu->flag == 1)
@@ -130,6 +128,7 @@ void Game::clean()
 	SDL_Quit();
 	std::cout << "GG" << std::endl;
 }
+
 bool Game::running() 
 { 
 	return isRunning; 

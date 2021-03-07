@@ -31,6 +31,8 @@ public:
 	static int pressA(int x);
 	static int pressS(int y);
 	static int pressD(int x);
+	
+	
 };
 
 class FontManager {

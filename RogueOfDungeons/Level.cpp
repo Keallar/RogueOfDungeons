@@ -1,12 +1,7 @@
 ﻿#pragma once
 #include "Level.h"
 #include "Managers.h"
-enum Tiles {white, green, darkYellowDirt, black, yellowSand,
-brownDesks, lightBrownWood, lilac, redBlood, vinous, blueWater, orangeBrick,
-greenDirt, Dirt, lightBrick, portal1, portal2};//цвета тайлов
-//turquoise = бирюзовый
-//vinous = винный, бордовый
-//lilac = сиреневый
+
 
 Level::Level(SDL_Renderer* renderer) 
 {
@@ -16,6 +11,12 @@ Level::Level(SDL_Renderer* renderer)
 	flagTB = 0;
 	player =new Player("images/Hero.png", ren);
 	flagPlayer = 0;
+}
+
+Level::~Level()
+{
+	delete player;
+	delete ui;
 }
 void Level::Update() 
 {

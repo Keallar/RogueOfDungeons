@@ -5,7 +5,6 @@
 class Player
 {
 private:
-    
     SDL_Texture* PlayerTexture;
     SDL_Renderer* ren;
     int HP;
@@ -13,6 +12,7 @@ private:
     int damageInput;
     int playerCoordx = 32;
     int playerCoordy = 32;
+    const Uint8* keys = SDL_GetKeyboardState(NULL);
 
 public:
     Player() = default;

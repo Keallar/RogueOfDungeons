@@ -40,7 +40,8 @@ private:
 	Player* player;
 	Enemy* enemy;
 	UI* ui;
-	vector <GameObject> enemies;
+	std::vector <Enemy> enemies; //здесь будет пул врагов
+	std::vector <GameObject> textures; //здесь будет пул тайлов и других объектов
 public:
 	bool flagTB;
 	bool flagPlayer;

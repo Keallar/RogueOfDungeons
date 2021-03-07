@@ -74,5 +74,8 @@
     <ClInclude Include="Managers.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="EntityPosition.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

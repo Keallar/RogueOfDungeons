@@ -25,7 +25,16 @@ Level::~Level()
 }
 void Level::Update() 
 {
-	player->Update();
+	if (flagPlayer == 1)
+	{
+		player->Update();
+		flagPlayer = 0;
+	}
+	if (flagPlayer == 0)
+	{
+		enemy->Update();
+		flagPlayer = 1;
+	}
 }
 
 void Level::Start()

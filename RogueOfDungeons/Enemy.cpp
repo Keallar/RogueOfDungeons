@@ -1,5 +1,6 @@
 #include "Enemy.h"
 #include "Managers.h"
+#include "Player.h"
 
 Enemy::Enemy(const char* texturesheet, SDL_Renderer* renderer, int HealthP, int Damage, int EXPR) 
 {
@@ -23,5 +24,4 @@ void Enemy::Render()
 
 void Enemy::Update()
 {
-
 }

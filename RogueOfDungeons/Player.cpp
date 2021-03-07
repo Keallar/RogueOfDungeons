@@ -1,6 +1,6 @@
 #include "Player.h"
 #include "GameObject.h"
-#include "textureManager.h"
+#include "Managers.h"
 #include <iostream>
 InputManager* inputMovePlayer;
 const Uint8* state;

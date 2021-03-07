@@ -2,7 +2,7 @@
 #include "Game.h"
 #include <SDL_image.h>
 #include "SDL_ttf.h"
-#include "textureManager.h"
+#include "Managers.h"
 #include "Level.h"
 #include "GameObject.h"
 #include "Player.h"

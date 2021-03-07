@@ -1,5 +1,5 @@
 #include "UI.h"
-#include "textureManager.h"
+#include "Managers.h"
 
 UI::UI(SDL_Renderer* renderer) {
 	ren = renderer;

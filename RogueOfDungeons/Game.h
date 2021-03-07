@@ -11,6 +11,16 @@ struct COORDS {
 	int y;
 };
 
+
+enum GameState
+{
+	MainMenu,
+	Settings,
+	Exit,
+	GamePlay,
+	Player
+};
+
 class Game
 {
 private:

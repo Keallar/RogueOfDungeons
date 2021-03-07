@@ -14,7 +14,7 @@ struct COORDS {
 
 enum GameState
 {
-	MainMenu,
+	Menu,
 	Settings,
 	Exit,
 	GamePlay,

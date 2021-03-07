@@ -40,6 +40,7 @@ public:
 	bool flagTB;
 	bool flagPlayer;
 	Level(SDL_Renderer* renderer);
+	~Level();
 	void Update();
 	void Start();
 	void Render();

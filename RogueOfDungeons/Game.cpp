@@ -95,7 +95,6 @@ void Game::update()
 	else if (level->flagPlayer == 1 && level->flagTB == 1)
 		{
 			level->Update();
-			
 		}
 	
 }

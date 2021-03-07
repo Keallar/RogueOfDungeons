@@ -13,6 +13,12 @@ Level::Level(SDL_Renderer* renderer)
 	ui = new UI(renderer);
 	flagPlayer = 0;
 }
+
+Level::~Level()
+{
+	delete player;
+	delete ui;
+}
 void Level::Update() 
 {
 	player->Update();

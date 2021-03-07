@@ -52,6 +52,12 @@ int InputManager::pressD(int x)
 	x += 32;
 	return x;
 }
+void move_RIGHT(SDL_Renderer* render, SDL_Texture* texture, SDL_Rect& destrect, int offset = 5)
+{
+	destrect.x += offset;
+	SDL_RenderClear(render);
+	SDL_RenderCopy(render, texture, NULL, &destrect);
+}
 
 void RenderManager::CopyToRender(SDL_Texture* texture, SDL_Renderer* ren, int x, int y, int w, int h, int dx, int dy, int dw, int dh) 
 {

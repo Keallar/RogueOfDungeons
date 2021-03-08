@@ -1,11 +1,24 @@
 #pragma once
 #include "SDL.h"
 
-class UI {
+class UIMenu 
+{
+private:
 	SDL_Renderer* ren;
 	SDL_Texture* Font1;
 	SDL_Texture* Font2;
 public:
-	UI(SDL_Renderer* renderer);
+	UIMenu(SDL_Renderer* renderer);
+	void start();
+};
+
+class UILevel
+{
+private:
+	SDL_Renderer* ren;
+	SDL_Texture* infoBLock;
+	SDL_Texture* inventoryBlock;
+public:
+	UILevel(SDL_Renderer* renderer);
 	void start();
 };

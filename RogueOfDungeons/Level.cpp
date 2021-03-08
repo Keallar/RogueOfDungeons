@@ -2,11 +2,6 @@
 #include "Level.h"
 #include "Managers.h"
 
-//turquoise = бирюзовый
-//vinous = винный, бордовый
-//lilac = сиреневый
-
-
 Level::Level(SDL_Renderer* renderer) 
 {
 	ren = renderer;
@@ -14,8 +9,9 @@ Level::Level(SDL_Renderer* renderer)
 	PlayBackground = textureManager::LoadTexture("images/Playback.png", ren);
 	flagTB = 0;
 	player = new Player("images/Hero.png", ren);
-	enemy = new Enemy("images/Turtle.png", ren, 10, 3, 4);
 	flagPlayer = 0;
+	enemy = new Enemy("images/Turtle.png", ren, 10, 3, 4);
+	flagEnemy = 0;
 }
 
 Level::~Level()
@@ -29,10 +25,12 @@ void Level::Update()
 	{
 		player->Update();
 		flagPlayer = 0;
+		flagEnemy = 1;
 	}
 	if (flagPlayer == 0)
 	{
 		enemy->Update();
+		flagEnemy = 0;
 		flagPlayer = 1;
 	}
 }
@@ -41,6 +39,7 @@ void Level::Start()
 {
 	flagTB = 1;
 	flagPlayer = 1;
+	flagEnemy = 0;
 }
 
 void Level::Render()

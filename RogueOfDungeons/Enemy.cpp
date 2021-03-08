@@ -29,17 +29,21 @@ void Enemy::Update()
 	{
 		EntityPosition::Coords[3] -= 32;
 		std::cout << EntityPosition::Coords[0] << " , " << EntityPosition::Coords[1] << std::endl;
+		SDL_Delay(400);
 	}
 	else if (EntityPosition::Coords [3] < (EntityPosition::Coords[1] - 32))
 	{
 		EntityPosition::Coords[3] += 32;
+		SDL_Delay(400);
 	}
 	else if (EntityPosition::Coords[2] < (EntityPosition::Coords[0] - 32) )
 	{
 		EntityPosition::Coords[2] += 32;
+		SDL_Delay(400);
 	}
 	else if (EntityPosition::Coords[2] > (EntityPosition::Coords[0] + 32) )
 	{
 		EntityPosition::Coords[2] -= 32;
+		SDL_Delay(400);
 	}
 }

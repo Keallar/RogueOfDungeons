@@ -45,10 +45,10 @@ private:
 public:
 	bool flagTB;
 	bool flagPlayer;
+	bool flagEnemy;
 	Level(SDL_Renderer* renderer);
 	~Level();
 	void Update();
 	void Start();
 	void Render();
-	void TileSet(int num, int x, int y);
 };

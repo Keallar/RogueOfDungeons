@@ -1,4 +1,4 @@
-#pragma once
+п»ї#pragma once
 #include <vector>
 #include "Enemy.h"
 #include "Player.h"
@@ -8,15 +8,15 @@
 class Level 
 {
 private:
-	//int Location[22][32];
+	int Location[22][32];
 	SDL_Texture* TileTexture;
 	SDL_Texture* PlayBackground;
 	SDL_Renderer* ren;
 	Player* player;
 	Enemy* enemy;
 	UIMenu* ui;
-	std::vector <Enemy> enemies; //здесь будет пул врагов
-	std::vector <GameObject> textures; //здесь будет пул тайлов и других объектов
+	std::vector <Enemy> enemies; //пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
+	std::vector <GameObject> textures; //пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 public:
 	bool flagTB;
 	bool flagPlayer;
@@ -26,4 +26,7 @@ public:
 	void Update();
 	void Start();
 	void Render();
+	void Generate();
+	void ChangeLocation(int x, int y);
+	int GetLocation(int x, int y);
 };

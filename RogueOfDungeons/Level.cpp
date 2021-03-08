@@ -91,8 +91,12 @@ int Level::GetLocation(int x, int y) {
 }
 
 void Level::Generate() {
+	//1 = стенки
+	//0 = дорога
+	//2 = граница мапы
+	//3 = вместо 0 
 	srand(time(0));
-	COORDS startPoint = { rand() % 32, rand() % 4 };
+	COORDS startPoint = { rand() % 32, rand() % 4 }; //пустой тайл, от котороо всё генерится
 	ChangeLocation(startPoint.x, startPoint.y);
 	for (int i = 0; i < 22; i++) {
 		for (int j = 0; j < 32; j++) {
@@ -148,11 +152,12 @@ void Level::Generate() {
 			}
 		}
 	}
-	int countPoints = 0;
+
+	int countPoints = 0; 
 	COORDS lastPoint = startPoint;
 	while (countPoints <= 200) {
 		int choose = rand() % 5;
-		if (choose = 5) {
+		if (choose = 4) {
 			if (32 - lastPoint.x < 32 / 2) {
 				if (22 - lastPoint.y < 22 / 2) {
 					if (rand() % 2) {
@@ -221,6 +226,8 @@ void Level::Generate() {
 		}
 		countPoints++;
 	}
+
+	//камушки и крпичи вокруг мапы
 	for (int i = 0; i < 32; i++) {
 		for (int j = 0; j < 22; j++) {
 			if ((i == 0) || (i == 31) || (j == 0) || (j == 21)) {

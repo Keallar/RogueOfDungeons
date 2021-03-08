@@ -27,30 +27,58 @@ void Player::Update()
 {
 		if (keys[SDL_SCANCODE_W])
 		{
-			EntityPosition::Coords[1] -= 32;
-			//std::cout << "w" << EntityPosition::Coords[0] << EntityPosition::Coords[1] << std::endl;
-			SDL_Delay(100);
+			if (EntityPosition::Coords[1] == 32)
+			{
+				//остановка при упоре в стену
+			}
+			else
+			{
+				EntityPosition::Coords[1] -= 32;
+				//std::cout << "w" << EntityPosition::Coords[0] << EntityPosition::Coords[1] << std::endl;
+				SDL_Delay(100);
+			}
 		}
 
 		else if (keys[SDL_SCANCODE_A])
 		{
-			EntityPosition::Coords[0] -= 32;
-			//sdt::cout << "a" << std::endl;
-			SDL_Delay(100);
+			if (EntityPosition::Coords[0] == 32)
+			{
+				//остановка при упоре в стену
+			}
+			else
+			{
+				EntityPosition::Coords[0] -= 32;
+				//sdt::cout << "a" << std::endl;
+				SDL_Delay(100);
+			}
 		}
 
 		else if (keys[SDL_SCANCODE_S])
 		{
-			EntityPosition::Coords[1] += 32;
-			//std::cout << "s" << std::endl;
-			SDL_Delay(100);
+			if (EntityPosition::Coords[1] == 640)
+			{
+				//остановка при упоре в стену
+			}
+			else
+			{
+				EntityPosition::Coords[1] += 32;
+				//std::cout << "s" << std::endl;
+				SDL_Delay(100);
+			}
 		}
 
 		else if (keys[SDL_SCANCODE_D])
 		{
-			EntityPosition::Coords[0] += 32;
-			//std::cout << "d" << std::endl;
-			SDL_Delay(100);
+			if (EntityPosition::Coords[0] == 1080)
+			{
+				//остановка при упоре в стену
+			}
+			else
+			{
+				EntityPosition::Coords[0] += 32;
+				//std::cout << "d" << std::endl;
+				SDL_Delay(100);
+			}
 		}
 }
 

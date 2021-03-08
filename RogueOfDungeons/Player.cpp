@@ -69,7 +69,7 @@ void Player::Update()
 
 		else if (keys[SDL_SCANCODE_D])
 		{
-			if (EntityPosition::Coords[0] == 1080)
+			if (EntityPosition::Coords[0] == 960)
 			{
 				//остановка при упоре в стену
 			}

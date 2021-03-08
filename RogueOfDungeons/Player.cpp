@@ -20,7 +20,7 @@ Player::~Player()
 
 void Player::Render()
 {
-	RenderManager::CopyToRender(PlayerTexture, ren, playerCoordx, playerCoordy, 32, 32, 0, 0, 32, 32);
+	RenderManager::CopyToRender(PlayerTexture, ren, EntityPosition::Coords[0], EntityPosition::Coords[1], 32, 32, 0, 0, 32, 32);
 }
 
 void Player::Update()

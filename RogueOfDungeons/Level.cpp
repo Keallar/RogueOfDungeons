@@ -11,14 +11,13 @@ Level::Level(SDL_Renderer* renderer)
 	flagTB = 0;
 	player = new Player("images/Hero.png", ren);
 	flagPlayer = 0;
+	enemy = new Enemy("images/Turtle.png", ren, 10, 3, 4);
+	flagEnemy = 0;
 	for (int i = 0; i < 22; i++) {
 		for (int j = 0; j < 32; j++) {
 			Location[i][j] = 1;
 		}
 	}
-}
-	enemy = new Enemy("images/Turtle.png", ren, 10, 3, 4);
-	flagEnemy = 0;
 }
 
 Level::~Level()
@@ -74,6 +73,7 @@ void Level::Render()
 		}
 	}
 	player->Render();
+	enemy->Render();
 }
 
 void Level::ChangeLocation(int x, int y) {
@@ -233,7 +233,4 @@ void Level::Generate() {
 			}
 		}
 	}
-}
-
-	enemy->Render();
 }

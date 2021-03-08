@@ -10,9 +10,7 @@ Level::Level(SDL_Renderer* renderer)
 	PlayBackground = textureManager::LoadTexture("images/Playback.png", ren);
 	flagTB = 0;
 	player = new Player("images/Hero.png", ren);
-	flagPlayer = 0;
 	enemy = new Enemy("images/Turtle.png", ren, 10, 3, 4);
-	flagEnemy = 0;
 	for (int i = 0; i < 22; i++) {
 		for (int j = 0; j < 32; j++) {
 			Location[i][j] = 1;
@@ -27,26 +25,24 @@ Level::~Level()
 }
 void Level::Update() 
 {
-	if (flagPlayer == 1)
+	if (FlagManager::flagPlayer == 1)
 	{
 		player->Update();
-		flagPlayer = 0;
-		flagEnemy = 1;
 	}
-	if (flagPlayer == 0)
+	if (FlagManager::flagPlayer == 0)
 	{
 		enemy->Update();
-		flagEnemy = 0;
-		flagPlayer = 1;
+		FlagManager::flagEnemy = 0;
+		FlagManager::flagPlayer = 1;
 	}
 }
 
 void Level::Start()
 {
 	flagTB = 1;
-	flagPlayer = 1;
+	FlagManager::flagPlayer = 1;
 	Generate();
-	flagEnemy = 0;
+	FlagManager::flagEnemy = 0;
 }
 
 void Level::Render()

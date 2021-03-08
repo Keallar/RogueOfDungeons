@@ -15,5 +15,6 @@ public:
 	~Enemy();
 	void Update();
 	void Render();
+	void Attack();
 };
 

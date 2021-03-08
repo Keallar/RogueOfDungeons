@@ -110,3 +110,6 @@ SDL_Texture* FontManager::renderText(const char* text, const char* fontFile, Uin
 	}
 	return fontTexture;
 }
+
+int FlagManager::flagPlayer = 0;
+int FlagManager::flagEnemy = 1;

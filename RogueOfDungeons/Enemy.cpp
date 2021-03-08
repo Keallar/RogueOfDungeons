@@ -20,7 +20,7 @@ Enemy::~Enemy()
 }
 void Enemy::Render() 
 {
-	RenderManager::CopyToRender(enemyTexture, ren, EntityPosition::Coords[2], EntityPosition::Coords[3], 64, 64, xanim, yanim, 32, 32);
+	RenderManager::CopyToRender(enemyTexture, ren, EntityPosition::Coords[2], EntityPosition::Coords[3], 32, 32, xanim, yanim, 32, 32);
 }
 
 void Enemy::Update()
@@ -45,5 +45,17 @@ void Enemy::Update()
 	{
 		EntityPosition::Coords[2] -= 32;
 		SDL_Delay(400);
+	}
+	else if (((EntityPosition::Coords[2] = EntityPosition::Coords[0]) && (EntityPosition::Coords[3] = EntityPosition::Coords[1] + 32)) ||
+		((EntityPosition::Coords[2] = EntityPosition::Coords[0]) && (EntityPosition::Coords[3] = EntityPosition::Coords[1] - 32)) ||
+		((EntityPosition::Coords[3] = EntityPosition::Coords[1]) && (EntityPosition::Coords[2] = EntityPosition::Coords[0] + 32)) ||
+		((EntityPosition::Coords[3] = EntityPosition::Coords[1]) && (EntityPosition::Coords[2] = EntityPosition::Coords[0] - 32)))
+	{
+		if (xanim == 128)
+		{
+			xanim = 0;
+		}
+			xanim += 32;
+
 	}
 }

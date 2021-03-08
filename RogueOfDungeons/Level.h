@@ -19,8 +19,6 @@ private:
 	std::vector <GameObject> textures; //����� ����� ��� ������ � ������ ��������
 public:
 	bool flagTB;
-	bool flagPlayer;
-	bool flagEnemy;
 	Level(SDL_Renderer* renderer);
 	~Level();
 	void Update();

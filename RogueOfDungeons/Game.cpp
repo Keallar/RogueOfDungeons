@@ -13,7 +13,7 @@
 Game::Game() 
 {
 	level = 0;
-	ui = 0;
+	uiMenu = 0;
 }
 
 Game::~Game()
@@ -73,7 +73,7 @@ void Game::handleEvents()
 				{
 					Menu->flag = 0;
 					level = new Level(renderer);
-					ui = new UI(renderer);
+					uiMenu = new UIMenu(renderer);
 					level->Start();
 					break;
 				}
@@ -115,7 +115,7 @@ void Game::render()
 	else if (level->flagPlayer == 1 && level->flagTB == 1)
 	{
 		level->Render();
-		ui->start();
+		uiMenu->Render();
 	}
 
 	SDL_RenderPresent(renderer);

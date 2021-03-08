@@ -28,7 +28,7 @@ void Enemy::Update()
 	if (EntityPosition::Coords[3] > (EntityPosition::Coords[1] + 32))
 	{
 		EntityPosition::Coords[3] -= 32;
-		std::cout << EntityPosition::Coords[0] << " , " << EntityPosition::Coords[1] << std::endl;
+		//std::cout << EntityPosition::Coords[0] << " , " << EntityPosition::Coords[1] << std::endl;
 		SDL_Delay(400);
 	}
 	else if (EntityPosition::Coords [3] < (EntityPosition::Coords[1] - 32))

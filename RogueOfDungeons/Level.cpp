@@ -17,7 +17,7 @@ Level::Level(SDL_Renderer* renderer)
 Level::~Level()
 {
 	delete player;
-	delete ui;
+	delete enemy;
 }
 void Level::Update() 
 {

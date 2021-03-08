@@ -14,7 +14,7 @@ private:
 	SDL_Renderer* ren;
 	Player* player;
 	Enemy* enemy;
-	UI* ui;
+	UIMenu* ui;
 	std::vector <Enemy> enemies; //здесь будет пул врагов
 	std::vector <GameObject> textures; //здесь будет пул тайлов и других объектов
 public:

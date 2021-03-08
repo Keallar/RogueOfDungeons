@@ -15,6 +15,11 @@ void UIMenu::Render()
 
 UILevel::UILevel(SDL_Renderer* renderer)
 {
+	ren = renderer;
+}
+
+void UILevel::Render()
+{
 
 }
 

@@ -10,6 +10,7 @@ private:
 	SDL_Texture* Font1;
 	SDL_Texture* Font2;
 public:
+	UIMenu();
 	UIMenu(SDL_Renderer* renderer);
 	void Render();
 };

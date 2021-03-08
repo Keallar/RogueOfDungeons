@@ -14,7 +14,7 @@ private:
 	SDL_Renderer* ren;
 	Player* player;
 	Enemy* enemy;
-	UIMenu* ui;
+	UILevel* uiLevel;
 	std::vector <Enemy> enemies; //����� ����� ��� ������
 	std::vector <GameObject> textures; //����� ����� ��� ������ � ������ ��������
 public:

@@ -3,17 +3,17 @@
 #include "SDL_image.h"
 #include "SDL_ttf.h"
 
-class UIMenu 
-{
-private:
-	SDL_Renderer* ren;
-	SDL_Texture* Font1;
-	SDL_Texture* Font2;
-public:
-	UIMenu();
-	UIMenu(SDL_Renderer* renderer);
-	void Render();
-};
+//class UIMenu 
+//{
+//private:
+//	SDL_Renderer* ren;
+//	SDL_Texture* Font1;
+//	SDL_Texture* Font2;
+//public:
+//	UIMenu();
+//	UIMenu(SDL_Renderer* renderer);
+//	void Render();
+//};
 
 class UILevel
 {

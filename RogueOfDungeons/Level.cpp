@@ -74,6 +74,7 @@ void Level::Render()
 	}
 	player->Render();
 	enemy->Render();
+	uiLevel->Render();
 }
 
 void Level::ChangeLocation(int x, int y) {

@@ -27,13 +27,12 @@ void Level::Update()
 {
 	if (FlagManager::flagPlayer == 1)
 	{
-		player->Update();
+		player->Update();	
 	}
 	if (FlagManager::flagPlayer == 0)
 	{
 		enemy->Update();
-		FlagManager::flagEnemy = 0;
-		FlagManager::flagPlayer = 1;
+		SDL_Delay(500);
 	}
 }
 

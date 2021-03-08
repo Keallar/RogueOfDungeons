@@ -35,9 +35,8 @@ void Player::Update()
 			{
 				EntityPosition::Coords[1] -= 32;
 				FlagManager::flagPlayer = 0;
-				FlagManager::flagEnemy = 1;
 				//std::cout << "w" << EntityPosition::Coords[0] << EntityPosition::Coords[1] << std::endl;
-				SDL_Delay(100);
+				//SDL_Delay(100);
 			}
 		}
 
@@ -51,9 +50,8 @@ void Player::Update()
 			{
 				EntityPosition::Coords[0] -= 32;
 				FlagManager::flagPlayer = 0;
-				FlagManager::flagEnemy = 1;
 				//sdt::cout << "a" << std::endl;
-				SDL_Delay(100);
+				//SDL_Delay(100);
 			}
 		}
 
@@ -67,9 +65,8 @@ void Player::Update()
 			{
 				EntityPosition::Coords[1] += 32;
 				FlagManager::flagPlayer = 0;
-				FlagManager::flagEnemy = 1;
 				//std::cout << "s" << std::endl;
-				SDL_Delay(100);
+				//SDL_Delay(100);
 			}
 		}
 
@@ -83,9 +80,8 @@ void Player::Update()
 			{
 				EntityPosition::Coords[0] += 32;
 				FlagManager::flagPlayer = 0;
-				FlagManager::flagEnemy = 1;
 				//std::cout << "d" << std::endl;
-				SDL_Delay(100);
+				//SDL_Delay(100);
 			}
 		}
 }

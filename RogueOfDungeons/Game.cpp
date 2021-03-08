@@ -98,7 +98,7 @@ void Game::update()
 	{
 		//Menu->Update();
 	}
-	else if (FlagManager::flagPlayer == 1 && level->flagTB == 1)
+	else if (level->flagTB == 1)
 		{
 			level->Update();
 		}
@@ -112,7 +112,7 @@ void Game::render()
 	{
 		Menu->Render();
 	}
-	else if (FlagManager::flagPlayer == 1 && level->flagTB == 1)
+	else if (level->flagTB == 1)
 	{
 		level->Render();
 		uiMenu->Render();

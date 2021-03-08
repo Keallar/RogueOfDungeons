@@ -28,34 +28,46 @@ void Enemy::Update()
 	if (EntityPosition::Coords[3] > (EntityPosition::Coords[1] + 32))
 	{
 		EntityPosition::Coords[3] -= 32;
+		FlagManager::flagPlayer = 1;
 		//std::cout << EntityPosition::Coords[0] << " , " << EntityPosition::Coords[1] << std::endl;
-		SDL_Delay(400);
+		//SDL_Delay(400);
 	}
 	else if (EntityPosition::Coords [3] < (EntityPosition::Coords[1] - 32))
 	{
 		EntityPosition::Coords[3] += 32;
-		SDL_Delay(400);
+		FlagManager::flagPlayer = 1;
+		//SDL_Delay(400);
 	}
 	else if (EntityPosition::Coords[2] < (EntityPosition::Coords[0] - 32) )
 	{
 		EntityPosition::Coords[2] += 32;
-		SDL_Delay(400);
+		FlagManager::flagPlayer = 1;
+		//SDL_Delay(400);
 	}
 	else if (EntityPosition::Coords[2] > (EntityPosition::Coords[0] + 32) )
 	{
 		EntityPosition::Coords[2] -= 32;
-		SDL_Delay(400);
+		FlagManager::flagPlayer = 1;
+		//SDL_Delay(400);
 	}
-	else if (((EntityPosition::Coords[2] = EntityPosition::Coords[0]) && (EntityPosition::Coords[3] = EntityPosition::Coords[1] + 32)) ||
-		((EntityPosition::Coords[2] = EntityPosition::Coords[0]) && (EntityPosition::Coords[3] = EntityPosition::Coords[1] - 32)) ||
-		((EntityPosition::Coords[3] = EntityPosition::Coords[1]) && (EntityPosition::Coords[2] = EntityPosition::Coords[0] + 32)) ||
-		((EntityPosition::Coords[3] = EntityPosition::Coords[1]) && (EntityPosition::Coords[2] = EntityPosition::Coords[0] - 32)))
+	else if (((EntityPosition::Coords[2] == EntityPosition::Coords[0]) && (EntityPosition::Coords[3] == EntityPosition::Coords[1] + 32)) ||
+		((EntityPosition::Coords[2] == EntityPosition::Coords[0]) && (EntityPosition::Coords[3] == EntityPosition::Coords[1] - 32)) ||
+		((EntityPosition::Coords[3] == EntityPosition::Coords[1]) && (EntityPosition::Coords[2] == EntityPosition::Coords[0] + 32)) ||
+		((EntityPosition::Coords[3] == EntityPosition::Coords[1]) && (EntityPosition::Coords[2] == EntityPosition::Coords[0] - 32)))
 	{
-		if (xanim == 128)
+		if (xanim == 96)
 		{
 			xanim = 0;
+			FlagManager::flagPlayer = 1;
 		}
+		else
+		{
 			xanim += 32;
-
+		}
 	}
+	else
+	{
+		FlagManager::flagPlayer = 1;
+	}
+	std::cout << EntityPosition::Coords[2] <<"," << EntityPosition::Coords[3] << "/"<< FlagManager::flagPlayer << std::endl;
 }

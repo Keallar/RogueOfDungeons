@@ -1,5 +1,7 @@
 #pragma once
 #include "SDL.h"
+#include "SDL_image.h"
+#include "SDL_ttf.h"
 
 class UIMenu 
 {
@@ -9,7 +11,7 @@ private:
 	SDL_Texture* Font2;
 public:
 	UIMenu(SDL_Renderer* renderer);
-	void start();
+	void Render();
 };
 
 class UILevel
@@ -20,5 +22,5 @@ private:
 	SDL_Texture* inventoryBlock;
 public:
 	UILevel(SDL_Renderer* renderer);
-	void start();
+	void Render();
 };

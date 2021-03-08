@@ -57,7 +57,7 @@ void Level::Render()
 				RenderManager::SetTile(j * 32, i * 32, 10, ren, TileTexture);
 			}
 			if (Location[i][j] == 3) {
-				RenderManager::SetTile(j * 32, i * 32, 3, ren, TileTexture);
+				RenderManager::SetTile(j * 32, i * 32, 9, ren, TileTexture);
 			}
 		}
 	}
@@ -78,37 +78,42 @@ int Level::GetLocation(int x, int y) {
 	}
 }
 
+int Level::Counter(int i, int j) {
+	int count = 0;
+	if (GetLocation(j, i + 1) == 0) {
+		count++;
+	}
+	if (GetLocation(j + 1, i + 1) == 0) {
+		count++;
+	}
+	if (GetLocation(j + 1, i) == 0) {
+		count++;
+	}
+	if (GetLocation(j + 1, i - 1) == 0) {
+		count++;
+	}
+	if (GetLocation(j, i - 1) == 0) {
+		count++;
+	}
+	if (GetLocation(j - 1, i - 1) == 0) {
+		count++;
+	}
+	if (GetLocation(j - 1, i) == 0) {
+		count++;
+	}
+	if (GetLocation(j - 1, i + 1) == 0) {
+		count++;
+	}
+	return count;
+}
+
 void Level::Generate() {
 	srand(time(0));
 	COORDS startPoint = { rand() % 32, rand() % 4 };
 	ChangeLocation(startPoint.x, startPoint.y);
 	for (int i = 0; i < 22; i++) {
 		for (int j = 0; j < 32; j++) {
-			int count = 0;
-			if (GetLocation(j, i + 1) == 0) {
-				count++;
-			}
-			if (GetLocation(j+1, i + 1) == 0) {
-				count++;
-			}
-			if (GetLocation(j+1, i) == 0) {
-				count++;
-			}
-			if (GetLocation(j+1, i - 1) == 0) {
-				count++;
-			}
-			if (GetLocation(j, i - 1) == 0) {
-				count++;
-			}
-			if (GetLocation(j-1, i - 1) == 0) {
-				count++;
-			}
-			if (GetLocation(j-1, i) == 0) {
-				count++;
-			}
-			if (GetLocation(j-1, i + 1) == 0) {
-				count++;
-			}
+			int count = Counter(i, j);
 			if (count == 1) {
 				if (rand() % 3) {
 					ChangeLocation(j, i);
@@ -140,7 +145,7 @@ void Level::Generate() {
 	COORDS lastPoint = startPoint;
 	while (countPoints <= 200) {
 		int choose = rand() % 5;
-		if (choose = 5) {
+		if (choose = 4) {
 			if (32 - lastPoint.x < 32 / 2) {
 				if (22 - lastPoint.y < 22 / 2) {
 					if (rand() % 2) {
@@ -186,7 +191,7 @@ void Level::Generate() {
 				break;
 			}
 		case 1:
-			if ((GetLocation(lastPoint.y, lastPoint.x - 1)) != 0) {
+			if ((GetLocation(lastPoint.y, lastPoint.x - 1)) != 00) {
 				ChangeLocation(lastPoint.y, lastPoint.x - 1);
 				lastPoint = { lastPoint.x - 1, lastPoint.y };
 				break;
@@ -214,11 +219,7 @@ void Level::Generate() {
 			if ((i == 0) || (i == 31) || (j == 0) || (j == 21)) {
 				Location[j][i] = 2;
 			}
-			if (Location[j][i] == 0) {
-				if (!(rand() % 6)) {
-					Location[j][i] = 3;
-				}
-			}
+			
 		}
 	}
 }

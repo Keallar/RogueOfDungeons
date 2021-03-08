@@ -22,4 +22,5 @@ public:
 	void Generate();
 	void ChangeLocation(int x, int y);
 	int GetLocation(int x, int y);
+	int Counter(int i, int j);
 };

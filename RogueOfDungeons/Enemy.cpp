@@ -3,6 +3,8 @@
 #include "Player.h"
 #include <iostream>
 #include "EntityPosition.h"
+
+
 Enemy::Enemy(const char* texturesheet, SDL_Renderer* renderer, int HealthP, int Damage, int EXPR) 
 {
 	expReward = EXPR;

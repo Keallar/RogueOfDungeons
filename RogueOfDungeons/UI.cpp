@@ -17,13 +17,13 @@ UILevel::UILevel(SDL_Renderer* renderer)
 {
 	//SDL_Color color = { 255, 255, 255, 255 };
 	ren = renderer;
-	infoBLock = FontManager::renderText("Rogue of dungeons", "fonts/manaspc.ttf", 255, 255, 255, 255, 64, ren);
+	versionBLock = FontManager::renderText("ROGUE OF DUNGEONS V-0.0.1", "fonts/manaspc.ttf", 255, 255, 255, 255, 32, ren);
 	inventoryBlock = FontManager::renderText("Inventory", "fonts/manaspc.ttf", 255, 255, 255, 255, 64, ren);
 }
 
 void UILevel::Render()
 {
-	RenderManager::CopyToRender(infoBLock, ren, EntityPosition::Coords[4], EntityPosition::Coords[5], 256, 32 );
+	RenderManager::CopyToRender(versionBLock, ren, EntityPosition::Coords[4], EntityPosition::Coords[5], 170, 10 );
 	RenderManager::CopyToRender(inventoryBlock, ren, EntityPosition::Coords[6], EntityPosition::Coords[7], 256, 32);
 }
 

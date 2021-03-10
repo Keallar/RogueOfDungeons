@@ -20,7 +20,7 @@ class UILevel
 {
 private:
 	SDL_Renderer* ren;
-	SDL_Texture* infoBLock;
+	SDL_Texture* versionBLock;
 	SDL_Texture* inventoryBlock;
 public:
 	UILevel( SDL_Renderer* renderer);

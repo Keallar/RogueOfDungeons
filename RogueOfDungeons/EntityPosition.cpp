@@ -9,8 +9,8 @@ int EntityPosition::Coords[10] =
 	32,  /*Player y position 1*/
 	512, /*Enemy x position 2*/
 	512, /*Enemy y position 3*/
-	1024, /*InfoBlock x position 4*/
-	32,  /*InfoBLock y postion 5*/
+	0, /*VersionBlock x position 4*/
+	705,  /*VersionBLock y postion 5*/
 	1024, /*InventoryBlock x position 6*/
 	540, /*InventoryBlock y position 7*/
 	0, 

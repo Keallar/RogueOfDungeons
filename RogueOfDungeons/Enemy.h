@@ -3,9 +3,9 @@
 class Enemy
 {
 private:
-	static int HP;
-	static int DMG;
-	static int expReward;
+	int HP;
+	int DMG;
+	int expReward;
 	SDL_Renderer* ren;
 	SDL_Texture* enemyTexture;
 	int xanim= 0, yanim = 0;

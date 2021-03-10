@@ -1,5 +1,5 @@
 #include "MainMenu.h"
-
+#include "Managers.h"
 
 MainMenu::MainMenu(const char* texturesheetMenu, const char* texturesheetPlay,
 	const char* texturesheetSettings, const char* texturesheetExit, SDL_Renderer* ren) 

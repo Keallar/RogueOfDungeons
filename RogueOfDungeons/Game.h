@@ -32,7 +32,7 @@ private:
 	COORDS mouseCoord;
 	MainMenu* Menu;
 	Level* level;
-	UIMenu* uiMenu;
+	UILevel* uiLevel;
 public:
 	Game();
 	~Game();

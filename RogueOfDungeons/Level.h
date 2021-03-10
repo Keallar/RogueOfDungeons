@@ -15,11 +15,14 @@ private:
 	SDL_Renderer* ren;
 	Player* player;
 	Enemy* enemy;
-	UIMenu* ui;
-	std::vector <Enemy> enemies; 
-	std::vector <GameObject> textures; 
+	UILevel* uiLevel;
+	std::vector <Enemy> enemies; //����� ����� ��� ������
+	std::vector <GameObject> textures; //����� ����� ��� ������ � ������ ��������
 public:
 	bool flagTB;
+	bool flagPlayer;
+	bool flagEnemy;
+	bool flagUI;
 	Level(SDL_Renderer* renderer);
 	~Level();
 	void Update();

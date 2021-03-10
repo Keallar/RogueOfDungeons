@@ -1,5 +1,6 @@
 #pragma once
 #include "Managers.h"
+
 class MainMenu
 {
 private:
@@ -14,6 +15,5 @@ public:
 		const char* texturesheetSettings, const char* texturesheetExit, SDL_Renderer* ren);
 	~MainMenu();
 	void Render();
-
 };
 

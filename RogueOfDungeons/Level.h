@@ -9,6 +9,7 @@ class Level
 {
 private:
 	int Location[22][32];
+	//int Location2[22][32];
 	SDL_Texture* TileTexture;
 	SDL_Texture* PlayBackground;
 	SDL_Renderer* ren;
@@ -25,6 +26,7 @@ public:
 	void Start();
 	void Render();
 	void Generate();
-	void ChangeLocation(int x, int y);
+	void CreateChunk(int x, int y);
 	int GetLocation(int x, int y);
+	void ChangeLocation(int x, int y);
 };

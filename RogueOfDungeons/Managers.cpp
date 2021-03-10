@@ -107,13 +107,9 @@ SDL_Texture* FontManager::renderText(const char* text, const char* fontFile, Uin
 	font = TTF_OpenFont(fontFile, fontSize);
 	if (font == NULL)
 	{
-<<<<<<< HEAD
 		std::cout << "Error TTF_OpenFont"<< std::endl;
 		std::cout << TTF_GetError() << std::endl;
-
 		return nullptr;
-=======
-		std::cout << "Error OpenFont!" << std::endl;
 	}
 	surf = TTF_RenderUNICODE_Blended(font, reinterpret_cast<Uint16 const*>(text), fontColor);
 	if (surf == NULL)
@@ -124,7 +120,6 @@ SDL_Texture* FontManager::renderText(const char* text, const char* fontFile, Uin
 	if (fontTexture) 
 	{
 		std::cout << "All right in fonts!" << std::endl;
->>>>>>> 167b19eb8a7ea9bdcfbb4a2d486a8644a27815ae
 	}
 	SDL_FreeSurface(surf);
 	TTF_CloseFont(font);

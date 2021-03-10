@@ -19,14 +19,17 @@ UILevel::UILevel(SDL_Renderer* renderer)
 	ren = renderer;
 	versionBLock = FontManager::renderText("ROGUE OF DUNGEONS V-0.0.1", "fonts/manaspc.ttf", 255, 255, 255, 255, 32, ren);
 	infoBlock = textureManager::LoadTexture("images/InfoBlock.png", ren);
-
-	inventoryBlock = FontManager::renderText("Info", "fonts/manaspc.ttf", 255, 255, 255, 255, 32, ren);
+	inventoryBlock = textureManager::LoadTexture("images/InfoBlock.png", ren);
+	info = FontManager::renderText("Info", "fonts/manaspc.ttf", 255, 255, 255, 255, 32, ren);
+	inventory = FontManager::renderText("Inventory", "fonts/manaspc.ttf", 255, 255, 255, 255, 32, ren);
 }
 
 void UILevel::Render()
 {
 	RenderManager::CopyToRender(versionBLock, ren, EntityPosition::Coords[4], EntityPosition::Coords[5], 170, 10 );
 	RenderManager::CopyToRender(infoBlock, ren, EntityPosition::Coords[8], EntityPosition::Coords[9], 256, 480);
-	RenderManager::CopyToRender(inventoryBlock, ren, EntityPosition::Coords[6], EntityPosition::Coords[7], 64, 32);
+	RenderManager::CopyToRender(inventoryBlock, ren, EntityPosition::Coords[10], EntityPosition::Coords[11], 256, 225);
+	RenderManager::CopyToRender(info, ren, EntityPosition::Coords[6], EntityPosition::Coords[7], 64, 32);
+	RenderManager::CopyToRender(inventory, ren, EntityPosition::Coords[12], EntityPosition::Coords[13], 128, 32);
 }
 

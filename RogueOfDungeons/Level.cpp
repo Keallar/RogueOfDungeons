@@ -18,10 +18,12 @@ Level::Level(SDL_Renderer* renderer)
 			Location[i][j] = 1;
 		}
 	}
+	uiLevel = new UILevel(renderer);
 }
 
 Level::~Level()
 {
+	delete uiLevel;
 	delete player;
 	delete enemy;
 }
@@ -78,12 +80,12 @@ void Level::Render()
 }
 
 void Level::ChangeLocation(int x, int y) {
-	if (x >= 0, x < 32, y >= 0, y < 22) {
+	if (x >= 0 && x < 32 && y >= 0 && y < 22) {
 		Location[y][x] = 0;
 	}
 }
 int Level::GetLocation(int x, int y) {
-	if (x >= 0, x < 32, y >= 0, y < 22) {
+	if (x >= 0 && x < 32 && y >= 0 && y < 22) {
 		return Location[y][x];
 	}
 	else {
@@ -158,7 +160,7 @@ void Level::Generate() {
 	COORDS lastPoint = startPoint;
 	while (countPoints <= 200) {
 		int choose = rand() % 5;
-		if (choose = 4) {
+		if (choose == 4) {
 			if (32 - lastPoint.x < 32 / 2) {
 				if (22 - lastPoint.y < 22 / 2) {
 					if (rand() % 2) {

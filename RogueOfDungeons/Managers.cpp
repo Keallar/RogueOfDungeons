@@ -101,7 +101,9 @@ SDL_Texture* FontManager::renderText(const char* text, const char* fontFile, SDL
 	TTF_Font* font = TTF_OpenFont(fontFile, fontSize);
 	if (font == nullptr)
 	{
-		std::cout << "Error TTF_OpenFont";
+		std::cout << "Error TTF_OpenFont"<< std::endl;
+		std::cout << TTF_GetError() << std::endl;
+
 		return nullptr;
 	}
 

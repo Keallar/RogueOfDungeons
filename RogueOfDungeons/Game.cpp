@@ -48,6 +48,10 @@ void Game::init(const char* title, int xpos, int ypos, int width, int height, bo
 			SDL_SetRenderDrawColor(renderer, 255, 0, 255, 255);
 			std::cout << "Renderer created!" << std::endl;
 		}
+		if (TTF_Init() != 0)
+		{
+			std::cout << "TTF lib init error: " << TTF_GetError()<<std::endl;
+		}
 		isRunning = true;
 	}
 	else

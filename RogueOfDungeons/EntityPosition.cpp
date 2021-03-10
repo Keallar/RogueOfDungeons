@@ -12,7 +12,7 @@ int EntityPosition::Coords[10] =
 	1024, /*InfoBlock x position 4*/
 	32,  /*InfoBLock y postion 5*/
 	1024, /*InventoryBlock x position 6*/
-	480, /*InventoryBlock y position 7*/
+	540, /*InventoryBlock y position 7*/
 	0, 
 	0 
 };

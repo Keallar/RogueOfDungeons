@@ -111,7 +111,7 @@ SDL_Texture* FontManager::renderText(const char* text, const char* fontFile, Uin
 		std::cout << TTF_GetError() << std::endl;
 		return nullptr;
 	}
-	surf = TTF_RenderUNICODE_Blended(font, reinterpret_cast<Uint16 const*>(text), fontColor);
+	surf = TTF_RenderText_Blended(font, text, fontColor);
 	if (surf == NULL)
 	{
 		std::cout << "Error surf!" << std::endl;

@@ -8,6 +8,11 @@ Player::Player(const char* texturesheet, SDL_Renderer* renderer)
 {
 	ren = renderer;
 	PlayerTexture = textureManager::LoadTexture(texturesheet, ren);
+	for (int i = 0; i < 22; i++) {
+		for (int j = 0; j < 32; j++) {
+			Location[i][j] = 0;
+		}
+	}
 }
 
 Player::~Player()
@@ -15,6 +20,25 @@ Player::~Player()
 	if (HP == 0)
 	{
 		SDL_DestroyTexture(PlayerTexture);
+	}
+}
+
+void Player::GetLevel(int arr[22][32]) {
+	for (int i = 0; i < 22; i++) {
+		for (int j = 0; j < 32; j++) {
+			Location[i][j] = arr[i][j];
+			std::cout << arr[i][j] << " ";
+			if (j == 31) { std::cout << std::endl; }
+		}
+	}
+}
+
+void Player::GetPlayerFirstCoords() {
+	EntityPosition::Coords[0] = (rand() % 1 +1) * 32;
+	EntityPosition::Coords[1] = (rand() % 20 +1) * 32;
+	while (Location[EntityPosition::Coords[0]][EntityPosition::Coords[1]] == 1) {
+		EntityPosition::Coords[0] = (rand() % 1 + 1) * 32;
+		EntityPosition::Coords[1] = (rand() % 20 + 1) * 32;
 	}
 }
 
@@ -33,10 +57,12 @@ void Player::Update()
 			}
 			else
 			{
-				EntityPosition::Coords[1] -= 32;
-				FlagManager::flagPlayer = 0;
-				//std::cout << "w" << EntityPosition::Coords[0] << EntityPosition::Coords[1] << std::endl;
-				//SDL_Delay(100);
+				if (Location[(EntityPosition::Coords[1]) / 32 - 1][(EntityPosition::Coords[0])/ 32] == 0) {
+					EntityPosition::Coords[1] -= 32;
+					FlagManager::flagPlayer = 0;
+					//std::cout << "w" << EntityPosition::Coords[0] << EntityPosition::Coords[1] << std::endl;
+					//SDL_Delay(100);
+				}
 			}
 		}
 
@@ -48,10 +74,12 @@ void Player::Update()
 			}
 			else
 			{
-				EntityPosition::Coords[0] -= 32;
-				FlagManager::flagPlayer = 0;
-				//sdt::cout << "a" << std::endl;
-				//SDL_Delay(100);
+				if (Location[(EntityPosition::Coords[1]) / 32][(EntityPosition::Coords[0]) / 32 - 1] == 0) {
+					EntityPosition::Coords[0] -= 32;
+					FlagManager::flagPlayer = 0;
+					//sdt::cout << "a" << std::endl;
+					//SDL_Delay(100);
+				}
 			}
 		}
 
@@ -63,10 +91,12 @@ void Player::Update()
 			}
 			else
 			{
-				EntityPosition::Coords[1] += 32;
-				FlagManager::flagPlayer = 0;
-				//std::cout << "s" << std::endl;
-				//SDL_Delay(100);
+				if (Location[(EntityPosition::Coords[1]) / 32 + 1][(EntityPosition::Coords[0]) / 32] == 0) {
+					EntityPosition::Coords[1] += 32;
+					FlagManager::flagPlayer = 0;
+					//std::cout << "s" << std::endl;
+					//SDL_Delay(100);
+				}
 			}
 		}
 
@@ -78,10 +108,12 @@ void Player::Update()
 			}
 			else
 			{
-				EntityPosition::Coords[0] += 32;
-				FlagManager::flagPlayer = 0;
-				//std::cout << "d" << std::endl;
-				//SDL_Delay(100);
+				if (Location[(EntityPosition::Coords[1]) / 32][(EntityPosition::Coords[0]) / 32 + 1] == 0) {
+					EntityPosition::Coords[0] += 32;
+					FlagManager::flagPlayer = 0;
+					//std::cout << "d" << std::endl;
+					//SDL_Delay(100);
+				}
 			}
 		}
 }

@@ -2,6 +2,7 @@
 #include "Game.h"
 #include "Level.h"
 #include "Managers.h"
+#include <ctime>
 
 Level::Level(SDL_Renderer* renderer)
 {
@@ -42,6 +43,8 @@ void Level::Start()
 	FlagManager::flagPlayer = 1;
 	Generate();
 	FlagManager::flagEnemy = 0;
+	player->GetLevel(Location);
+	player->GetPlayerFirstCoords();
 }
 
 void Level::Render()

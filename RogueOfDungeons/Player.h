@@ -5,6 +5,7 @@
 class Player
 {
 private:
+	int Location[22][32];
     SDL_Texture* PlayerTexture;
     SDL_Renderer* ren;
     int HP;
@@ -18,5 +19,6 @@ public:
     void Render();
     void Update();
     void clean();
-
+	void GetLevel(int arr[22][32]);
+	void GetPlayerFirstCoords();
 };

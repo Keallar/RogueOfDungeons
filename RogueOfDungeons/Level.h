@@ -16,8 +16,8 @@ private:
 	Player* player;
 	Enemy* enemy;
 	UIMenu* ui;
-	std::vector <Enemy> enemies; //����� ����� ��� ������
-	std::vector <GameObject> textures; //����� ����� ��� ������ � ������ ��������
+	std::vector <Enemy> enemies; 
+	std::vector <GameObject> textures; 
 public:
 	bool flagTB;
 	Level(SDL_Renderer* renderer);

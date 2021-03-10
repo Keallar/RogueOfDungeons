@@ -103,7 +103,7 @@ void Game::update()
 	{
 		//Menu->Update();
 	}
-	else if (level->flagTB == 1)
+	else if (Menu->flag == 0)
 		{
 			level->Update();
 		}
@@ -112,12 +112,12 @@ void Game::update()
 	
 void Game::render()
 {
-	SDL_RenderClear(renderer);
+	//SDL_RenderClear(renderer);
 	if (Menu->flag == 1)
 	{
 		Menu->Render();
 	}
-	else if (level->flagTB == 1)
+	else if (Menu->flag == 0)
 	{
 		level->Render();
 	}

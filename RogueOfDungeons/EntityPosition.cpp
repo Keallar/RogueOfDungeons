@@ -3,7 +3,7 @@ void EntityPosition::ChangeCoords(int i, int changePosition)
 {
 	EntityPosition::Coords[i] += changePosition;
 }
-int EntityPosition::Coords[10] =
+int EntityPosition::Coords[20] =
 { 
 	32,  /*Player x position 0*/
 	32,  /*Player y position 1*/

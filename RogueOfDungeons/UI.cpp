@@ -19,6 +19,7 @@ UILevel::UILevel(SDL_Renderer* renderer)
 	ren = renderer;
 	versionBLock = FontManager::renderText("ROGUE OF DUNGEONS V-0.0.1", "fonts/manaspc.ttf", 255, 255, 255, 255, 32, ren);
 	infoBlock = textureManager::LoadTexture("images/InfoBlock.png", ren);
+
 	inventoryBlock = FontManager::renderText("Info", "fonts/manaspc.ttf", 255, 255, 255, 255, 32, ren);
 }
 

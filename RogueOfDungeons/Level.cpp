@@ -2,6 +2,7 @@
 #include "Game.h"
 #include "Level.h"
 #include "Managers.h"
+#include "UI.h"
 
 Level::Level(SDL_Renderer* renderer) 
 {
@@ -13,6 +14,8 @@ Level::Level(SDL_Renderer* renderer)
 	flagPlayer = 0;
 	enemy = new Enemy("images/Turtle.png", ren, 10, 3, 4);
 	flagEnemy = 0;
+	uiLevel = new UILevel(ren);
+	flagUI = 0;
 	for (int i = 0; i < 22; i++) {
 		for (int j = 0; j < 32; j++) {
 			Location[i][j] = 1;
@@ -26,6 +29,7 @@ Level::~Level()
 	delete uiLevel;
 	delete player;
 	delete enemy;
+	delete uiLevel;
 }
 void Level::Update() 
 {
@@ -47,6 +51,7 @@ void Level::Start()
 {
 	flagTB = 1;
 	flagPlayer = 1;
+	flagUI = 1;
 	Generate();
 	flagEnemy = 0;
 }
@@ -66,10 +71,12 @@ void Level::Render()
 			{
 				RenderManager::SetTile(j * 32, i * 32, 7, ren, TileTexture);
 			}
-			if (Location[i][j] == 2) {
+			if (Location[i][j] == 2) 
+			{
 				RenderManager::SetTile(j * 32, i * 32, 10, ren, TileTexture);
 			}
-			if (Location[i][j] == 3) {
+			if (Location[i][j] == 3) 
+			{
 				RenderManager::SetTile(j * 32, i * 32, 3, ren, TileTexture);
 			}
 		}

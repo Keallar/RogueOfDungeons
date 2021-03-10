@@ -21,6 +21,7 @@ public:
 	bool flagTB;
 	bool flagPlayer;
 	bool flagEnemy;
+	bool flagUI;
 	Level(SDL_Renderer* renderer);
 	~Level();
 	void Update();

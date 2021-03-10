@@ -3,6 +3,7 @@
 #include "SDL_image.h"
 #include "SDL_ttf.h"
 
+
 //class UIMenu 
 //{
 //private:
@@ -22,6 +23,6 @@ private:
 	SDL_Texture* infoBLock;
 	SDL_Texture* inventoryBlock;
 public:
-	UILevel(SDL_Renderer* renderer);
+	UILevel( SDL_Renderer* renderer);
 	void Render();
 };

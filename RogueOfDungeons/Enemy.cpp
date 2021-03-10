@@ -4,9 +4,6 @@
 #include <iostream>
 #include "EntityPosition.h"
 
-int Enemy::HP;
-int Enemy::DMG;
-int Enemy::expReward;
 
 Enemy::Enemy(const char* texturesheet, SDL_Renderer* renderer, int HealthP, int Damage, int EXPR) 
 {

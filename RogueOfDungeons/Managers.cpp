@@ -112,15 +112,9 @@ SDL_Texture* FontManager::renderText(const char* text, const char* fontFile, Uin
 		return nullptr;
 	}
 	surf = TTF_RenderText_Blended(font, text, fontColor);
-	if (surf == NULL)
-	{
-		std::cout << "Error surf!" << std::endl;
-	}
+
 	fontTexture = SDL_CreateTextureFromSurface(renderer, surf);
-	if (fontTexture) 
-	{
-		std::cout << "All right in fonts!" << std::endl;
-	}
+
 	SDL_FreeSurface(surf);
 	TTF_CloseFont(font);
 	return fontTexture;

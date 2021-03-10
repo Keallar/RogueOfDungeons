@@ -10,18 +10,17 @@ Level::Level(SDL_Renderer* renderer)
 	ren = renderer;
 	TileTexture = textureManager::LoadTexture("images/Tiles.png", ren);
 	PlayBackground = textureManager::LoadTexture("images/Playback.png", ren);
-	flagTB = 0;
 	player = new Player("images/Hero.png", ren);
+	FlagManager::flagPlayer = 0;
 	enemy = new Enemy("images/Turtle.png", ren, 10, 3, 4);
-	flagEnemy = 0;
+	FlagManager::flagEnemy = 0;
 	uiLevel = new UILevel(ren);
-	flagUI = 0;
+	//FlagManager::flagUI = 0;
 	for (int i = 0; i < 22; i++) {
 		for (int j = 0; j < 32; j++) {
 			Location[i][j] = 1;
 		}
 	}
-	uiLevel = new UILevel(renderer);
 }
 
 Level::~Level()
@@ -29,7 +28,6 @@ Level::~Level()
 	delete uiLevel;
 	delete player;
 	delete enemy;
-	delete uiLevel;
 }
 void Level::Update()
 {
@@ -46,10 +44,7 @@ void Level::Update()
 
 void Level::Start()
 {
-	flagTB = 1;
 	FlagManager::flagPlayer = 1;
-	flagPlayer = 1;
-	flagUI = 1;
 	Generate();
 	FlagManager::flagEnemy = 0;
 	player->GetLevel(Location);

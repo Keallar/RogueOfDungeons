@@ -23,7 +23,8 @@ Player::~Player()
 	}
 }
 
-void Player::GetLevel(int arr[22][32]) {
+void Player::GetLevel(int arr[22][32]) 
+{
 	for (int i = 0; i < 22; i++) {
 		for (int j = 0; j < 32; j++) {
 			Location[i][j] = arr[i][j];
@@ -31,10 +32,12 @@ void Player::GetLevel(int arr[22][32]) {
 	}
 }
 
-void Player::GetPlayerFirstCoords() {
+void Player::GetPlayerFirstCoords() 
+{
 	EntityPosition::Coords[0] = (rand() % 1 +1) * 32;
 	EntityPosition::Coords[1] = (rand() % 20 +1) * 32;
-	while (Location[EntityPosition::Coords[0]][EntityPosition::Coords[1]] == 1) {
+	while (Location[EntityPosition::Coords[0]][EntityPosition::Coords[1]] == 1) 
+	{
 		EntityPosition::Coords[0] = (rand() % 1 + 1) * 32;
 		EntityPosition::Coords[1] = (rand() % 20 + 1) * 32;
 	}

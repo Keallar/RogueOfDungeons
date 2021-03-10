@@ -55,6 +55,9 @@ void Level::Render()
 			{
 				RenderManager::SetTile(j * 32, i * 32, 3, ren, TileTexture);
 			}
+			if (Location[i][j] == 2) {
+				RenderManager::SetTile(j * 32, i * 32, 7, ren, TileTexture);
+			}
 		}
 	}
 	player->Render();
@@ -89,8 +92,8 @@ void Level::Generate() {
 
 	srand(time(0));
 	for (int j = 0; j < 8; j++) {
-		int i = rand() % 5 + rand()%1; int count = 0;
-		while (count < (5 + rand()%2)) {
+		int i = rand() % 4 + rand()%3; int count = 0;
+		while (count < (5 + rand()%3)) {
 			if (i + count < 11) {
 				CreateChunk((i + count) * 2, j * 4);
 			}
@@ -101,7 +104,7 @@ void Level::Generate() {
 	for (int j = 0; j < 32; j++) {
 		for (int i = 0; i < 22; i++) {
 			int iteration = 0;
-			while (iteration < 100) {
+			while (iteration < 50) {
 				int count = 0;
 				if (GetLocation(j, i + 1) == 0) {
 					count++;
@@ -128,14 +131,29 @@ void Level::Generate() {
 					count++;
 				}
 				if (count > 3) {
-					if (rand() % 5) {
-						Location[i][j] = 0;
-					}
+					Location[i][j] = 0;
 				}
 				iteration++;
 			}
 		}
 	}
+
+
+	for (int j = 0; j < 32; j++) {
+		for (int i = 0; i < 22; i++) {
+			if (!(rand() % 16)) {
+				Location[i][j] = 1;
+			}
+			if (!(rand() % 32)) {
+				Location[i][j] = 0;
+			}
+			if ((j == 31) || (i == 21) || (j == 0) || (i == 0)) {
+				Location[i][j] = 2;
+			}
+		}
+	}
+
+
 	//Здесь можно добавить 2 генератор, потом соединить их на одном массиве и получить их совместный результат, звучит перспективно
 	/*for (int j = 0; j < 22; j++) {
 		for (int i = 0; i < 32; i++) {

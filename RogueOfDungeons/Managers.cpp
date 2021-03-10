@@ -4,6 +4,7 @@
 #include "SDL_image.h"
 #include "SDL_ttf.h"
 #include <iostream>
+#include <string>
 
 SDL_Texture* textureManager::LoadTexture(const char* texName, SDL_Renderer* ren) 
 {
@@ -96,18 +97,32 @@ void RenderManager::SetTile(int x, int y, int tile, SDL_Renderer* renderer, SDL_
 	}
 }
 
-SDL_Texture* FontManager::renderText(const char* text, const char* fontFile, SDL_Color color, int fontSize, SDL_Renderer* renderer)
+SDL_Texture* FontManager::renderText(const char* text, const char* fontFile, Uint8 rgb_r, Uint8 rgb_b, Uint8 rgb_g, Uint8 rgb_a, int fontSize, SDL_Renderer* renderer) 
 {
-	TTF_Font* font = TTF_OpenFont(fontFile, fontSize);
-	if (font == nullptr)
+	SDL_Surface* surf;
+	SDL_Color fontColor;
+	TTF_Font* font;
+	SDL_Texture* fontTexture;
+	fontColor = { rgb_r, rgb_b, rgb_g, rgb_a };
+	font = TTF_OpenFont(fontFile, fontSize);
+	if (font == NULL)
 	{
-		std::cout << "Error TTF_OpenFont";
-		return nullptr;
+		std::cout << "Error OpenFont!" << std::endl;
 	}
-
-	SDL_Surface* surf = TTF_RenderText_Blended(font, text, color);
-	SDL_Texture* texture = SDL_CreateTextureFromSurface(renderer, surf);
+	surf = TTF_RenderUNICODE_Blended(font, reinterpret_cast<Uint16 const*>(text), fontColor);
+	if (surf == NULL)
+	{
+		std::cout << "Error surf!" << std::endl;
+	}
+	fontTexture = SDL_CreateTextureFromSurface(renderer, surf);
+	if (fontTexture) 
+	{
+		std::cout << "All right in fonts!" << std::endl;
+	}
 	SDL_FreeSurface(surf);
 	TTF_CloseFont(font);
-	return texture;
+	return fontTexture;
 }
+
+int FlagManager::flagPlayer = 0;
+int FlagManager::flagEnemy = 1;

@@ -33,7 +33,7 @@ void Level::Update()
 	if (FlagManager::flagPlayer == 0)
 	{
 		enemy->Update();
-		SDL_Delay(500);
+		SDL_Delay(150);
 	}
 }
 

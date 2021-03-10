@@ -27,8 +27,6 @@ void Player::GetLevel(int arr[22][32]) {
 	for (int i = 0; i < 22; i++) {
 		for (int j = 0; j < 32; j++) {
 			Location[i][j] = arr[i][j];
-			std::cout << arr[i][j] << " ";
-			if (j == 31) { std::cout << std::endl; }
 		}
 	}
 }

@@ -25,9 +25,9 @@ Level::Level(SDL_Renderer* renderer)
 
 Level::~Level()
 {
-	delete uiLevel;
 	delete player;
 	delete enemy;
+	delete uiLevel;
 }
 void Level::Update()
 {
@@ -44,6 +44,7 @@ void Level::Update()
 
 void Level::Start()
 {
+	//FlagManager::flagUI = 1;
 	FlagManager::flagPlayer = 1;
 	Generate();
 	FlagManager::flagEnemy = 0;

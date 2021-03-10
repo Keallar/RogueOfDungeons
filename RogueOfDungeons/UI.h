@@ -22,6 +22,7 @@ private:
 	SDL_Renderer* ren;
 	SDL_Texture* versionBLock;
 	SDL_Texture* inventoryBlock;
+	SDL_Texture* infoBlock;
 public:
 	UILevel( SDL_Renderer* renderer);
 	void Render();

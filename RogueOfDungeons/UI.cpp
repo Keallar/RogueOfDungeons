@@ -15,15 +15,34 @@
 
 UILevel::UILevel(SDL_Renderer* renderer)
 {
-	//SDL_Color color = { 255, 255, 255, 255 };
+	pathInFont = "fonts/manaspc.ttf";
+	SDL_Color color = { 255, 255, 255, 255 };
 	ren = renderer;
-	infoBLock = FontManager::renderText("Rogue of dungeons", "fonts/manaspc.ttf", 255, 255, 255, 255, 64, ren);
-	inventoryBlock = FontManager::renderText("Inventory", "fonts/manaspc.ttf", 255, 255, 255, 255, 64, ren);
+	versionBLock = FontManager::renderText("ROGUE OF DUNGEONS V-0.0.2", pathInFont, color, 32, ren);
+	infoBlock = textureManager::LoadTexture("images/InfoBlock.png", ren);
+	inventoryBlock = textureManager::LoadTexture("images/InfoBlock.png", ren);
+	info = FontManager::renderText("Info", "fonts/manaspc.ttf", color, 32, ren);
+	inventory = FontManager::renderText("Inventory", pathInFont, color, 32, ren);
+	hpBar = textureManager::LoadTexture("images/hp.png", ren);
+	hpText = FontManager::renderText("HP", pathInFont, color, 64, ren);
+	hpInfo = FontManager::renderText("10/10", pathInFont, color, 32, ren);
+	xpBar = textureManager::LoadTexture("images/XP.png", ren);
+	xpText = FontManager::renderText("XP", pathInFont, color, 64, ren);
+	xpInfo = FontManager::renderText("100/100", pathInFont, color, 64, ren);
 }
 
 void UILevel::Render()
 {
-	RenderManager::CopyToRender(infoBLock, ren, EntityPosition::Coords[4], EntityPosition::Coords[5], 256, 32 );
-	RenderManager::CopyToRender(inventoryBlock, ren, EntityPosition::Coords[6], EntityPosition::Coords[7], 256, 32);
+	RenderManager::CopyToRender(versionBLock, ren, 0, 705, 170, 9 );
+	RenderManager::CopyToRender(infoBlock, ren, 1024, 0, 256, 480);
+	RenderManager::CopyToRender(inventoryBlock, ren, 1024, 480, 256, 225);
+	RenderManager::CopyToRender(info, ren, 1116, 15, 64, 32);
+	RenderManager::CopyToRender(inventory, ren, 1085, 490, 128, 32);
+	RenderManager::CopyToRender(hpBar, ren, 1080, 40, 140, 32, 0, 0, 128, 16);
+	RenderManager::CopyToRender(hpText, ren, 1050, 47, 25, 22);
+	RenderManager::CopyToRender(hpInfo, ren, 1116, 72, 64, 20);
+	RenderManager::CopyToRender(xpBar, ren, 1080, 95, 180, 32, 21, 10, 128, 16);
+	RenderManager::CopyToRender(xpText, ren, 1050, 97, 25, 22);
+	RenderManager::CopyToRender(xpInfo, ren, 1115, 122, 72, 20);
 }
 

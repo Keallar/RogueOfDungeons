@@ -5,6 +5,9 @@
 #include "UI.h"
 #include "GameObject.h"
 
+
+
+
 class Level 
 {
 private:
@@ -15,9 +18,10 @@ private:
 	SDL_Renderer* ren;
 	Player* player;
 	Enemy* enemy;
-	UILevel* uiLevel;
+	UIInfo* uiInfo;
 	std::vector <Enemy> enemies; //����� ����� ��� ������
 	std::vector <GameObject> textures; //����� ����� ��� ������ � ������ ��������
+
 public:
 	bool flagTB;
 	Level(SDL_Renderer* renderer);
@@ -25,6 +29,7 @@ public:
 	void Update();
 	void Start();
 	void Render();
+	//void handleEvents();
 	void Generate();
 	void CreateChunk(int x, int y);
 	int GetLocation(int x, int y);

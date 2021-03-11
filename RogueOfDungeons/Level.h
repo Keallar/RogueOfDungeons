@@ -5,8 +5,11 @@
 #include "UI.h"
 #include "GameObject.h"
 
-
-
+struct MouseCoords
+{
+	int x;
+	int y;
+}; 
 
 class Level 
 {
@@ -20,8 +23,9 @@ private:
 	Player* player;
 	Enemy* enemy;
 	UIInfo* uiInfo;
-	std::vector <Enemy> enemies;
-	std::vector <GameObject> textures;
+	UIInventory* uiInventory;
+	std::vector <Enemy> enemies; //����� ����� ��� ������
+	std::vector <GameObject> textures; //����� ����� ��� ������ � ������ ��������
 
 public:
 	bool flagTB;

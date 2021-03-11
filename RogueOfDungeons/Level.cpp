@@ -63,14 +63,20 @@ void Level::Render()
 		{
 			if (Location[i][j] == 0)
 			{
-				RenderManager::SetTile(j * 32, i * 32, 8, ren, TileTexture);
+				RenderManager::SetTile(j * 32, i * 32, 2, ren, TileTexture);
 			}
 			else
 			{
-				RenderManager::SetTile(j * 32, i * 32, 3, ren, TileTexture);
+				RenderManager::SetTile(j * 32, i * 32, 6, ren, TileTexture);
 			}
 			if (Location[i][j] == 2) {
 				RenderManager::SetTile(j * 32, i * 32, 7, ren, TileTexture);
+			}
+			if (Location[i][j] == 3) {
+				RenderManager::SetTile(j * 32, i * 32, 3, ren, TileTexture);
+			}
+			if (Location[i][j] == 4) {
+				RenderManager::SetTile(j * 32, i * 32, 1, ren, TileTexture);
 			}
 		}
 	}
@@ -158,10 +164,10 @@ void Level::Generate() {
 	for (int j = 0; j < 32; j++) {
 		for (int i = 0; i < 22; i++) {
 			if (!(rand() % 16)) {
-				Location[i][j] = 1;
+				Location[i][j] = 3;
 			}
-			if (!(rand() % 32)) {
-				Location[i][j] = 0;
+			if (!(rand() % 32)&&(Location[i][j]!=1) && (Location[i][j] != 3)) {
+				Location[i][j] = 4;
 			}
 			if ((j == 31) || (i == 21) || (j == 0) || (i == 0)) {
 				Location[i][j] = 2;

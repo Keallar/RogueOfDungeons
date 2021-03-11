@@ -36,11 +36,16 @@ void Player::GetPlayerFirstCoords()
 {
 	EntityPosition::Coords[0] = (rand() % 2 +1) * 32;
 	EntityPosition::Coords[1] = (rand() % 20 +1) * 32;
-	while ((Location[EntityPosition::Coords[1] / 32][EntityPosition::Coords[0]/32] == 1)||(
-		(Location[EntityPosition::Coords[1] / 32][EntityPosition::Coords[0] / 32 - 1] == 1)&&
-		(Location[EntityPosition::Coords[1] / 32][EntityPosition::Coords[0] / 32 + 1] == 1)&&
-		(Location[EntityPosition::Coords[1] / 32 - 1][EntityPosition::Coords[0] / 32] == 1)&&
-		(Location[EntityPosition::Coords[1] / 32 + 1][EntityPosition::Coords[0] / 32] == 1))) 
+	while ((Location[EntityPosition::Coords[1] / 32][EntityPosition::Coords[0]/32] == 1)||
+		(Location[EntityPosition::Coords[1] / 32][EntityPosition::Coords[0] / 32] == 3) ||(
+		((Location[EntityPosition::Coords[1] / 32][EntityPosition::Coords[0] / 32 - 1] == 1)||
+		(Location[EntityPosition::Coords[1] / 32][EntityPosition::Coords[0] / 32 - 1] == 3))&&
+		((Location[EntityPosition::Coords[1] / 32][EntityPosition::Coords[0] / 32 + 1] == 1)||
+		(Location[EntityPosition::Coords[1] / 32][EntityPosition::Coords[0] / 32 + 1] == 3))&&
+		((Location[EntityPosition::Coords[1] / 32 - 1][EntityPosition::Coords[0] / 32] == 1)|| 
+		(Location[EntityPosition::Coords[1] / 32 - 1][EntityPosition::Coords[0] / 32] == 3))&&
+		((Location[EntityPosition::Coords[1] / 32 + 1][EntityPosition::Coords[0] / 32] == 1)||
+		(Location[EntityPosition::Coords[1] / 32 + 1][EntityPosition::Coords[0] / 32] == 3))))
 	{
 		EntityPosition::Coords[0] = (rand() % 2 + 1) * 32;
 		EntityPosition::Coords[1] = (rand() % 20 + 1) * 32;
@@ -62,7 +67,7 @@ void Player::Update()
 		}
 		else
 		{
-			if (Location[(EntityPosition::Coords[1]) / 32 - 1][(EntityPosition::Coords[0])/ 32] == 0) {
+			if (Location[(EntityPosition::Coords[1]) / 32 - 1][(EntityPosition::Coords[0])/ 32] % 4 == 0) {
 				EntityPosition::Coords[1] -= 32;
 				FlagManager::flagPlayer = 0;
 				//std::cout << "w" << EntityPosition::Coords[0] << EntityPosition::Coords[1] << std::endl;
@@ -79,7 +84,7 @@ void Player::Update()
 		}
 		else
 		{
-			if (Location[(EntityPosition::Coords[1]) / 32][(EntityPosition::Coords[0]) / 32 - 1] == 0) {
+			if (Location[(EntityPosition::Coords[1]) / 32][(EntityPosition::Coords[0]) / 32 - 1] %4 == 0) {
 				EntityPosition::Coords[0] -= 32;
 				FlagManager::flagPlayer = 0;
 				//sdt::cout << "a" << std::endl;
@@ -96,7 +101,7 @@ void Player::Update()
 		}
 		else
 		{
-			if (Location[(EntityPosition::Coords[1]) / 32 + 1][(EntityPosition::Coords[0]) / 32] == 0) {
+			if (Location[(EntityPosition::Coords[1]) / 32 + 1][(EntityPosition::Coords[0]) / 32] %4== 0) {
 				EntityPosition::Coords[1] += 32;
 				FlagManager::flagPlayer = 0;
 				//std::cout << "s" << std::endl;
@@ -113,7 +118,7 @@ void Player::Update()
 		}
 		else
 		{
-			if (Location[(EntityPosition::Coords[1]) / 32][(EntityPosition::Coords[0]) / 32 + 1] == 0)
+			if (Location[(EntityPosition::Coords[1]) / 32][(EntityPosition::Coords[0]) / 32 + 1] %4== 0)
 			{
 				EntityPosition::Coords[0] += 32;
 				FlagManager::flagPlayer = 0;

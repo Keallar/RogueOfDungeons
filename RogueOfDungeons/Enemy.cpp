@@ -3,6 +3,7 @@
 #include "Player.h"
 #include <iostream>
 #include "EntityPosition.h"
+#include <algorithm>
 Enemy::Enemy(const char* texturesheet, SDL_Renderer* renderer, int HealthP, int Damage, int EXPR) 
 {
 	expReward = EXPR;
@@ -25,7 +26,9 @@ void Enemy::Render()
 
 void Enemy::Update()
 {
-	if (EntityPosition::Coords[3] > (EntityPosition::Coords[1] + 32))
+		int starttilex = EntityPosition::Coords[2];
+		int starttiley = EntityPosition::Coords[3];
+	/*if (EntityPosition::Coords[3] > (EntityPosition::Coords[1] + 32))
 	{
 		EntityPosition::Coords[3] -= 32;
 		FlagManager::flagPlayer = 1;
@@ -49,8 +52,8 @@ void Enemy::Update()
 		EntityPosition::Coords[2] -= 32;
 		FlagManager::flagPlayer = 1;
 		//SDL_Delay(400);
-	}
-	else if (((EntityPosition::Coords[2] == EntityPosition::Coords[0]) && (EntityPosition::Coords[3] == EntityPosition::Coords[1] + 32)) ||
+	}*/
+	if (((EntityPosition::Coords[2] == EntityPosition::Coords[0]) && (EntityPosition::Coords[3] == EntityPosition::Coords[1] + 32)) ||
 		((EntityPosition::Coords[2] == EntityPosition::Coords[0]) && (EntityPosition::Coords[3] == EntityPosition::Coords[1] - 32)) ||
 		((EntityPosition::Coords[3] == EntityPosition::Coords[1]) && (EntityPosition::Coords[2] == EntityPosition::Coords[0] + 32)) ||
 		((EntityPosition::Coords[3] == EntityPosition::Coords[1]) && (EntityPosition::Coords[2] == EntityPosition::Coords[0] - 32)))

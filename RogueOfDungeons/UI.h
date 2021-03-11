@@ -23,9 +23,7 @@ private:
 	SDL_Renderer* ren;
 	SDL_Texture* versionBLock;
 	SDL_Texture* infoBlock;
-	SDL_Texture* inventoryBlock;
 	SDL_Texture* info;
-	SDL_Texture* inventory;
 	//HP
 	SDL_Texture* hpBar;
 	SDL_Texture* hpText;
@@ -43,14 +41,23 @@ private:
 	static int manaInfo;
 	//Buttons
 	SDL_Texture* specButton;
-	//Specifications
+public:
+	UIInfo( SDL_Renderer* renderer);
+	void Render();
+};
+
+class UISpecifications
+{
+private:
+	const char* pathInFont;
+	SDL_Renderer* ren;
 	SDL_Texture* STR;
 	SDL_Texture* DEX;
 	SDL_Texture* INT;
 	SDL_Texture* PHS; //Physical Strength
 	SDL_Texture* LCK;
 public:
-	UIInfo( SDL_Renderer* renderer);
+	UISpecifications(SDL_Renderer* renderer);
 	void Render();
 };
 
@@ -58,9 +65,11 @@ public:
 class UIInventory
 {
 private:
+	const char* pathInFont;
+	SDL_Renderer* ren;
 	SDL_Texture* inventoryBlock;
 	SDL_Texture* inventory;
 public:
-	UIInventory(SDL_Renderer* rednerer);
-	void Rendere();
+	UIInventory(SDL_Renderer* renderer);
+	void Render();
 };

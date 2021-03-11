@@ -23,9 +23,7 @@ UIInfo::UIInfo(SDL_Renderer* renderer)
 	versionBLock = FontManager::renderText("ROGUE OF DUNGEONS V-0.0.2", pathInFont, color, 32, ren);
 	
 	infoBlock = textureManager::LoadTexture("images/InfoBlock.png", ren);
-	inventoryBlock = textureManager::LoadTexture("images/InfoBlock.png", ren);
 	info = FontManager::renderText("Info", "fonts/manaspc.ttf", color, 32, ren);
-	inventory = FontManager::renderText("Inventory", pathInFont, color, 32, ren);
 	
 	//HP
 	hpBar = textureManager::LoadTexture("images/hp.png", ren);
@@ -45,21 +43,14 @@ UIInfo::UIInfo(SDL_Renderer* renderer)
 	//Buttons
 	specButton = textureManager::LoadTexture("images/Button.png", ren);
 
-	//Specifications
-	STR = FontManager::renderText("STR", pathInFont, color, 64, ren);
-	DEX = FontManager::renderText("DEX", pathInFont, color, 64, ren);
-	INT = FontManager::renderText("INT", pathInFont, color, 64, ren);
-	PHS = FontManager::renderText("INT", pathInFont, color, 64, ren);
-	LCK = FontManager::renderText("LCK", pathInFont, color, 64, ren);
+	
 }
 
 void UIInfo::Render()
 {
 	RenderManager::CopyToRender(versionBLock, ren, 0, 705, 170, 9 );
 	RenderManager::CopyToRender(infoBlock, ren, 1024, 0, 256, 480);
-	RenderManager::CopyToRender(inventoryBlock, ren, 1024, 480, 256, 225);
 	RenderManager::CopyToRender(info, ren, 1116, 13, 64, 32);
-	RenderManager::CopyToRender(inventory, ren, 1085, 490, 128, 32);
 	
 	//HP
 	RenderManager::CopyToRender(hpBar, ren, 1080, 40, 160, 32, 0, 0, 128, 16);
@@ -79,7 +70,40 @@ void UIInfo::Render()
 	//Buttons
 	RenderManager::CopyToRender(specButton, ren, 1230, 200, 32, 32);
 
+}
+
+UISpecifications::UISpecifications(SDL_Renderer* renderer)
+{
+	pathInFont = "fonts/manaspc.ttf";
+	SDL_Color color = { 255, 255, 255, 255 };
+	ren = renderer;
+
+	//Specifications
+	STR = FontManager::renderText("STR", pathInFont, color, 64, ren);
+	DEX = FontManager::renderText("DEX", pathInFont, color, 64, ren);
+	INT = FontManager::renderText("INT", pathInFont, color, 64, ren);
+	PHS = FontManager::renderText("INT", pathInFont, color, 64, ren);
+	LCK = FontManager::renderText("LCK", pathInFont, color, 64, ren);
+}
+
+void UISpecifications::Render()
+{
 	//Specifications
 	//RenderManager::CopyToRender(STR, ren, 1050, 160, 64, 20);
 }
 
+UIInventory::UIInventory(SDL_Renderer* renderer)
+{
+	pathInFont = "fonts/manaspc.ttf";
+	SDL_Color color = { 255, 255, 255, 255 };
+	ren = renderer;
+
+	inventoryBlock = textureManager::LoadTexture("images/InfoBlock.png", ren);
+	inventory = FontManager::renderText("Inventory", pathInFont, color, 32, ren);
+}
+
+void UIInventory::Render()
+{
+	RenderManager::CopyToRender(inventoryBlock, ren, 1024, 480, 256, 225);
+	RenderManager::CopyToRender(inventory, ren, 1085, 490, 128, 32);
+}

@@ -18,7 +18,7 @@ Level::Level(SDL_Renderer* renderer)
 	//FlagManager::flagUI = 0;
 	for (int i = 0; i < 22; i++) {
 		for (int j = 0; j < 32; j++) {
-			Location[i][j] = 1;
+			textureLocation[i][j] = 1;
 		}
 	}
 }
@@ -61,7 +61,7 @@ void Level::Render()
 	{
 		for (int j = 0; j < 32; j++)
 		{
-			if (Location[i][j] == 0)
+			if (textureLocation[i][j] == 0)
 			{
 				RenderManager::SetTile(j * 32, i * 32, 2, ren, TileTexture);
 			}
@@ -69,13 +69,13 @@ void Level::Render()
 			{
 				RenderManager::SetTile(j * 32, i * 32, 6, ren, TileTexture);
 			}
-			if (Location[i][j] == 2) {
+			if (textureLocation[i][j] == 2) {
 				RenderManager::SetTile(j * 32, i * 32, 7, ren, TileTexture);
 			}
-			if (Location[i][j] == 3) {
+			if (textureLocation[i][j] == 3) {
 				RenderManager::SetTile(j * 32, i * 32, 3, ren, TileTexture);
 			}
-			if (Location[i][j] == 4) {
+			if (textureLocation[i][j] == 4) {
 				RenderManager::SetTile(j * 32, i * 32, 1, ren, TileTexture);
 			}
 		}
@@ -105,7 +105,7 @@ void Level::CreateChunk(int x, int y) {
 	for (int i = x; i < x + 2; i++) {
 		for (int j = y; j < y + 4; j++) {
 			if ((j <= 31) || (i <= 21)|| (j > 0) || (i > 0)) {
-				Location[i][j] = 0;
+				textureLocation[i][j] = 0;
 			}
 		}
 	}
@@ -113,7 +113,7 @@ void Level::CreateChunk(int x, int y) {
 
 int Level::GetLocation(int x, int y) {
 	if (x >= 0 && x < 32 && y >= 0 && y < 22) {
-		return Location[y][x];
+		return textureLocation[y][x];
 	}
 	else {
 		return 1;
@@ -122,7 +122,7 @@ int Level::GetLocation(int x, int y) {
 
 void Level::ChangeLocation(int x, int y) {
 	if (x >= 0, x < 32, y >= 0, y < 22) {
-		Location[y][x] = 0;
+		textureLocation[y][x] = 0;
 	}
 }
 
@@ -169,7 +169,7 @@ void Level::Generate() {
 					count++;
 				}
 				if (count > 3) {
-					Location[i][j] = 0;
+					textureLocation[i][j] = 0;
 				}
 				iteration++;
 			}
@@ -180,29 +180,42 @@ void Level::Generate() {
 	for (int j = 0; j < 32; j++) {
 		for (int i = 0; i < 22; i++) {
 			if (!(rand() % 16)) {
-				Location[i][j] = 3;
+				textureLocation[i][j] = 3;
 			}
-			if (!(rand() % 32)&&(Location[i][j]!=1) && (Location[i][j] != 3)) {
-				Location[i][j] = 4;
+			if (!(rand() % 32)&&(textureLocation[i][j]!=1) && (textureLocation[i][j] != 3)) {
+				textureLocation[i][j] = 4;
 			}
 			if ((j == 31) || (i == 21) || (j == 0) || (i == 0)) {
+				textureLocation[i][j] = 2;
+			}
+		}
+	}
+
+	for (int i = 0; i < 22; i++) {
+		for (int j = 0; j < 32; j++) {
+			if ((textureLocation[i][j] == 0)||(textureLocation[i][j] == 4)) {
+				Location[i][j] = 0;
+			}
+			if ((textureLocation[i][j] == 1) || (textureLocation[i][j] == 3)) {
+				Location[i][j] = 1;
+			}
+			if (textureLocation[i][j] == 2) {
 				Location[i][j] = 2;
 			}
 		}
 	}
 
-
 	//Здесь можно добавить 2 генератор, потом соединить их на одном массиве и получить их совместный результат, звучит перспективно
 	/*for (int j = 0; j < 22; j++) {
 		for (int i = 0; i < 32; i++) {
-			Location2[j][i] = Location[j][i];
+			Location2[j][i] = textureLocation[j][i];
 		}
 	}
 
 	for (int j = 0; j < 22; j++) {
 		for (int i = 0; i < 32; i++) {
 			if (Location2[j][i] == 0) {
-				Location[j][i] = Location2[j][i];
+				textureLocation[j][i] = Location2[j][i];
 			}
 		}
 	}*/

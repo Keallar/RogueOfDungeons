@@ -29,7 +29,9 @@ private:
 	SDL_Texture* hpBar;
 	SDL_Texture* hpText;
 	SDL_Texture* hpInfo;
-
+	SDL_Texture* xpBar;
+	SDL_Texture* xpText;
+	SDL_Texture* xpInfo;
 public:
 	UILevel( SDL_Renderer* renderer);
 	void Render();

@@ -25,7 +25,10 @@ UILevel::UILevel(SDL_Renderer* renderer)
 	inventory = FontManager::renderText("Inventory", pathInFont, color, 32, ren);
 	hpBar = textureManager::LoadTexture("images/hp.png", ren);
 	hpText = FontManager::renderText("HP", pathInFont, color, 64, ren);
-	hpInfo = FontManager::renderText("20/20", pathInFont, color, 32, ren);
+	hpInfo = FontManager::renderText("10/10", pathInFont, color, 32, ren);
+	xpBar = textureManager::LoadTexture("images/XP.png", ren);
+	xpText = FontManager::renderText("XP", pathInFont, color, 64, ren);
+	xpInfo = FontManager::renderText("100/100", pathInFont, color, 64, ren);
 }
 
 void UILevel::Render()
@@ -38,5 +41,8 @@ void UILevel::Render()
 	RenderManager::CopyToRender(hpBar, ren, 1080, 40, 140, 32, 0, 0, 128, 16);
 	RenderManager::CopyToRender(hpText, ren, 1050, 47, 25, 22);
 	RenderManager::CopyToRender(hpInfo, ren, 1116, 72, 64, 20);
+	RenderManager::CopyToRender(xpBar, ren, 1080, 95, 180, 32, 21, 10, 128, 16);
+	RenderManager::CopyToRender(xpText, ren, 1050, 97, 25, 22);
+	RenderManager::CopyToRender(xpInfo, ren, 1115, 122, 72, 20);
 }
 

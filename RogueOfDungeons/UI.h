@@ -16,7 +16,7 @@
 //	void Render();
 //};
 
-class UILevel
+class UIInfo
 {
 private:
 	const char* pathInFont;
@@ -50,6 +50,17 @@ private:
 	SDL_Texture* PHS; //Physical Strength
 	SDL_Texture* LCK;
 public:
-	UILevel( SDL_Renderer* renderer);
+	UIInfo( SDL_Renderer* renderer);
 	void Render();
+};
+
+
+class UIInventory
+{
+private:
+	SDL_Texture* inventoryBlock;
+	SDL_Texture* inventory;
+public:
+	UIInventory(SDL_Renderer* rednerer);
+	void Rendere();
 };

@@ -13,7 +13,7 @@
 //	RenderManager::CopyToRender(Font2, ren, 1024, 30, 256, 21);
 //}
 
-UILevel::UILevel(SDL_Renderer* renderer)
+UIInfo::UIInfo(SDL_Renderer* renderer)
 {
 	pathInFont = "fonts/manaspc.ttf";
 	SDL_Color color = { 255, 255, 255, 255 };
@@ -53,7 +53,7 @@ UILevel::UILevel(SDL_Renderer* renderer)
 	LCK = FontManager::renderText("LCK", pathInFont, color, 64, ren);
 }
 
-void UILevel::Render()
+void UIInfo::Render()
 {
 	RenderManager::CopyToRender(versionBLock, ren, 0, 705, 170, 9 );
 	RenderManager::CopyToRender(infoBlock, ren, 1024, 0, 256, 480);

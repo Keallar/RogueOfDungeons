@@ -14,7 +14,7 @@ Level::Level(SDL_Renderer* renderer)
 	FlagManager::flagPlayer = 0;
 	enemy = new Enemy("images/Turtle.png", ren, 10, 3, 4);
 	FlagManager::flagEnemy = 0;
-	uiLevel = new UILevel(ren);
+	uiInfo = new UIInfo(ren);
 	//FlagManager::flagUI = 0;
 	for (int i = 0; i < 22; i++) {
 		for (int j = 0; j < 32; j++) {
@@ -27,7 +27,7 @@ Level::~Level()
 {
 	delete player;
 	delete enemy;
-	delete uiLevel;
+	delete uiInfo;
 }
 void Level::Update()
 {
@@ -76,8 +76,24 @@ void Level::Render()
 	}
 	player->Render();
 	enemy->Render();
-	uiLevel->Render();
+	uiInfo->Render();
 }
+
+//Вызов окошка с характеристиками
+//void Level::handleEvents()
+//{
+//	SDL_Event eventSpecifications;
+//	while (SDL_PollEvent(&eventSpecifications))
+//	{
+//		switch (eventSpecifications.type)
+//		{
+//		case SDL_MOUSEBUTTONDOWN:
+//			SDL_GetMouseState(&mouseCoords.x, &mouseCoords.y);
+//		default:
+//			break;
+//		}
+//	}
+//}
 
 void Level::CreateChunk(int x, int y) {
 	for (int i = x; i < x + 2; i++) {

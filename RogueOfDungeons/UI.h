@@ -30,14 +30,19 @@ private:
 	SDL_Texture* hpBar;
 	SDL_Texture* hpText;
 	SDL_Texture* hpInfo;
+	static int healthInfo;
 	//XP
 	SDL_Texture* xpBar;
 	SDL_Texture* xpText;
 	SDL_Texture* xpInfo;
+	static int expInfo;
 	//MANA
-	SDL_Texture* manaBar;
-	SDL_Texture* manaText;
-	SDL_Texture* manaInfo;
+	SDL_Texture* mnBar;
+	SDL_Texture* mnText;
+	SDL_Texture* mnInfo;
+	static int manaInfo;
+	//Buttons
+	SDL_Texture* specButton;
 	//Specifications
 	SDL_Texture* STR;
 	SDL_Texture* DEX;

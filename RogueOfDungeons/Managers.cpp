@@ -97,13 +97,13 @@ void RenderManager::SetTile(int x, int y, int tile, SDL_Renderer* renderer, SDL_
 	}
 }
 
-SDL_Texture* FontManager::renderText(const char* text, const char* fontFile, Uint8 rgb_r, Uint8 rgb_b, Uint8 rgb_g, Uint8 rgb_a, int fontSize, SDL_Renderer* renderer) 
+SDL_Texture* FontManager::renderText(const char* text, const char* fontFile, SDL_Color textColor, int fontSize, SDL_Renderer* renderer) 
 {
 	SDL_Surface* surf;
 	SDL_Color fontColor;
 	TTF_Font* font;
 	SDL_Texture* fontTexture;
-	fontColor = { rgb_r, rgb_b, rgb_g, rgb_a };
+	fontColor = textColor;
 	font = TTF_OpenFont(fontFile, fontSize);
 	if (font == NULL)
 	{

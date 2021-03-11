@@ -19,12 +19,16 @@
 class UILevel
 {
 private:
+	const char* pathInFont;
 	SDL_Renderer* ren;
 	SDL_Texture* versionBLock;
 	SDL_Texture* infoBlock;
 	SDL_Texture* inventoryBlock;
 	SDL_Texture* info;
 	SDL_Texture* inventory;
+	SDL_Texture* hpBar;
+	SDL_Texture* hpText;
+	SDL_Texture* hpInfo;
 
 public:
 	UILevel( SDL_Renderer* renderer);

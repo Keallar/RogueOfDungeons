@@ -31,7 +31,7 @@ class FontManager
 private:
 	
 public:
-	static SDL_Texture* renderText(const char* text, const char * fontFile, Uint8 rgb_r, Uint8 rbg_b, Uint8 rgb_g, Uint8 rgb_a, int fontSize, SDL_Renderer* renderer);
+	static SDL_Texture* renderText(const char* text, const char * fontFile, SDL_Color textColor, int fontSize, SDL_Renderer* renderer);
 };
 
 class FlagManager

@@ -80,6 +80,12 @@ void Level::Render()
 			if (textureLocation[i][j] == 4) {
 				RenderManager::SetTile(j * 32, i * 32, 1, ren, TileTexture);
 			}
+			if (textureLocation[i][j] == 5) {
+				RenderManager::SetTile(j * 32, i * 32, 9, ren, TileTexture);
+			}
+			if (textureLocation[i][j] == 6) {
+				RenderManager::SetTile(j * 32, i * 32, 4, ren, TileTexture);
+			}
 		}
 	}
 	player->Render();
@@ -185,8 +191,22 @@ void Level::Generate() {
 			if (!(rand() % 16)) {
 				textureLocation[i][j] = 3;
 			}
-			if (!(rand() % 32)&&(textureLocation[i][j]!=1) && (textureLocation[i][j] != 3)) {
-				textureLocation[i][j] = 4;
+			if (textureLocation[i][j] == 1) {
+				if (rand() % 2) {
+					textureLocation[i][j] = 5;
+				}
+			}
+			if (textureLocation[i][j] == 0) {
+				switch (rand() % 3) {
+				case 0:
+					break;
+				case 1:
+					textureLocation[i][j] = 4;
+					break;
+				case 2:
+					textureLocation[i][j] = 6;
+					break;
+				}
 			}
 			if ((j == 31) || (i == 21) || (j == 0) || (i == 0)) {
 				textureLocation[i][j] = 2;
@@ -196,10 +216,10 @@ void Level::Generate() {
 
 	for (int i = 0; i < 22; i++) {
 		for (int j = 0; j < 32; j++) {
-			if ((textureLocation[i][j] == 0)||(textureLocation[i][j] == 4)) {
+			if ((textureLocation[i][j] == 0)||(textureLocation[i][j] == 4) || (textureLocation[i][j] == 6)) {
 				Location[i][j] = 0;
 			}
-			if ((textureLocation[i][j] == 1) || (textureLocation[i][j] == 3)) {
+			if ((textureLocation[i][j] == 1) || (textureLocation[i][j] == 3) || (textureLocation[i][j] == 5)) {
 				Location[i][j] = 1;
 			}
 			if (textureLocation[i][j] == 2) {

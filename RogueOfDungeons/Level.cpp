@@ -52,6 +52,7 @@ void Level::Start()
 	
 	player->GetLevel(Location);
 	player->GetPlayerFirstCoords();
+	enemy->GetLoc(Location);
 }
 
 void Level::Render()

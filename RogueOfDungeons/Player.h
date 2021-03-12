@@ -5,7 +5,7 @@
 class Player
 {
 private:
-	int Location[22][32];
+    int Location[22][32];
     SDL_Texture* PlayerTexture;
     SDL_Renderer* ren;
     int HP;

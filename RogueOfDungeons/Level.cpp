@@ -17,6 +17,7 @@ Level::Level(SDL_Renderer* renderer)
 	uiInfo = new UIInfo(ren);
 	//FlagManager::flagUI = 0;
 	uiInventory = new UIInventory(ren);
+	uiEnemy = new UIEnemyInfo(ren);
 	for (int i = 0; i < 22; i++) {
 		for (int j = 0; j < 32; j++) {
 			textureLocation[i][j] = 1;
@@ -30,6 +31,7 @@ Level::~Level()
 	delete enemy;
 	delete uiInfo;
 	delete uiInventory;
+	delete uiEnemy;
 }
 void Level::Update()
 {
@@ -92,6 +94,7 @@ void Level::Render()
 	enemy->Render();
 	uiInfo->Render();
 	uiInventory->Render();
+	uiEnemy->Render();
 }
 
 //Вызов окошка с характеристиками

@@ -20,7 +20,7 @@ UIInfo::UIInfo(SDL_Renderer* renderer)
 	ren = renderer;
 
 	//Version
-	versionBLock = FontManager::renderText("ROGUE OF DUNGEONS V-0.0.2", pathInFont, color, 32, ren);
+	versionBLock = FontManager::renderText("ROGUE OF DUNGEONS V-0.0.3", pathInFont, color, 32, ren);
 	
 	infoBlock = textureManager::LoadTexture("images/InfoBlock.png", ren);
 	info = FontManager::renderText("Info", "fonts/manaspc.ttf", color, 32, ren);
@@ -42,8 +42,6 @@ UIInfo::UIInfo(SDL_Renderer* renderer)
 
 	//Buttons
 	specButton = textureManager::LoadTexture("images/Button.png", ren);
-
-	
 }
 
 void UIInfo::Render()
@@ -89,7 +87,7 @@ UISpecifications::UISpecifications(SDL_Renderer* renderer)
 void UISpecifications::Render()
 {
 	//Specifications
-	//RenderManager::CopyToRender(STR, ren, 1050, 160, 64, 20);
+	RenderManager::CopyToRender(STR, ren, 1050, 160, 64, 20);
 }
 
 UIInventory::UIInventory(SDL_Renderer* renderer)
@@ -104,6 +102,28 @@ UIInventory::UIInventory(SDL_Renderer* renderer)
 
 void UIInventory::Render()
 {
+	
 	RenderManager::CopyToRender(inventoryBlock, ren, 1024, 480, 256, 225);
 	RenderManager::CopyToRender(inventory, ren, 1085, 490, 128, 32);
+}
+
+//EnemyInfo
+UIEnemyInfo::UIEnemyInfo(SDL_Renderer* renderer)
+{
+	pathInFont = "fonts/manaspc.ttf";
+	SDL_Color color = { 255, 255, 255, 255 };
+	ren = renderer;
+
+	enemy = FontManager::renderText("Enemy", pathInFont, color, 32, ren);
+	hpEmenyBar = textureManager::LoadTexture("images/hp.png", ren);
+	hpEnemyText = FontManager::renderText("HP", pathInFont, color, 64, ren);
+	hpEnemyInfo = FontManager::renderText("5/5", pathInFont, color, 32, ren);
+}
+
+void UIEnemyInfo::Render()
+{
+	RenderManager::CopyToRender(enemy, ren, 1116, 250, 64, 32);
+	RenderManager::CopyToRender(hpEmenyBar, ren, 1080, 283, 160, 32, 0, 0, 128, 16);
+	RenderManager::CopyToRender(hpEnemyText, ren, 1050, 300, 25, 22);
+	RenderManager::CopyToRender(hpEnemyInfo, ren, 1122, 320, 32, 20);
 }

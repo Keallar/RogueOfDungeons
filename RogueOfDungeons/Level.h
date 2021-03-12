@@ -24,6 +24,7 @@ private:
 	Enemy* enemy;
 	UIInfo* uiInfo;
 	UIInventory* uiInventory;
+	UIEnemyInfo* uiEnemy;
 	std::vector <Enemy> enemies; //����� ����� ��� ������
 	std::vector <GameObject> textures; //����� ����� ��� ������ � ������ ��������
 

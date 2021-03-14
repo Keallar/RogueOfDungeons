@@ -240,6 +240,15 @@ void Level::ChunkGenerationMethod() {
 	}
 }
 
+std::vector<std::pair<int, int>> Level::pop_front(std::vector<std::pair<int, int>> vec)
+{
+	for (int i = 0; i < vec.size() - 1; i++) {
+		vec[i] = vec[i + 1];
+	}
+	vec.pop_back();
+	return vec;
+}
+
 bool Level::Search(std::vector<std::pair<int, int>> vector, int x, int y) {
 	std::pair<int, int> coords = { x ,y };
 	bool result = false;
@@ -261,16 +270,16 @@ void Level::OtherGeneration() {
 		}
 	}
 	COORDS startPoint = { 1,1 };
-	COORDS endPoint = { 20, 20 };
+	COORDS endPoint = { rand()%20+1, rand()%31+1 };
 	bool HaveWay = false;
 	std::vector< std::pair<int, int> > used (9);
 	std::vector< std::pair<int, int> > queue;
 	queue.push_back({ startPoint.x, startPoint.y });
 	used.push_back({ startPoint.x, startPoint.y });
 	std::pair <int, int> current = { 0, 0 };
-	while (!queue.empty()) {
-		current = queue.back();
-		queue.pop_back();
+	while ((!queue.empty())||(HaveWay = false)) {
+		current = queue.front();
+		queue = pop_front(queue);
 		if ((current.first == endPoint.x)&&(current.second == endPoint.y)) {
 			HaveWay = true;
 			break;

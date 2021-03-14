@@ -13,6 +13,9 @@ Player::Player(const char* texturesheet, SDL_Renderer* renderer)
 			Location[i][j] = 0;
 		}
 	}
+
+	HP = 10;
+	exp = 0;
 }
 
 Player::~Player()

@@ -28,7 +28,7 @@ private:
 	UISpecifications* uiSpec;
 	std::vector <Enemy> enemies; //����� ����� ��� ������
 	std::vector <GameObject> textures; //����� ����� ��� ������ � ������ ��������
-
+	MouseCoords mouseCoord;
 public:
 	bool flagTB;
 	Level(SDL_Renderer* renderer);

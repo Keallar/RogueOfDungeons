@@ -77,6 +77,8 @@ UISpecifications::UISpecifications(SDL_Renderer* renderer)
 	ren = renderer;
 
 	//Specifications
+
+	specBlock = textureManager::LoadTexture("images/InfoBlock.png", ren);
 	STR = FontManager::renderText("STR", pathInFont, color, 64, ren);
 	DEX = FontManager::renderText("DEX", pathInFont, color, 64, ren);
 	INT = FontManager::renderText("INT", pathInFont, color, 64, ren);
@@ -87,7 +89,8 @@ UISpecifications::UISpecifications(SDL_Renderer* renderer)
 void UISpecifications::Render()
 {
 	//Specifications
-	RenderManager::CopyToRender(STR, ren, 1050, 160, 64, 20);
+	RenderManager::CopyToRender(STR, ren, 1024, 0, 256, 480);
+	RenderManager::CopyToRender(specBlock, ren, 1050, 160, 64, 20);
 }
 
 UIInventory::UIInventory(SDL_Renderer* renderer)
@@ -102,7 +105,6 @@ UIInventory::UIInventory(SDL_Renderer* renderer)
 
 void UIInventory::Render()
 {
-	
 	RenderManager::CopyToRender(inventoryBlock, ren, 1024, 480, 256, 225);
 	RenderManager::CopyToRender(inventory, ren, 1085, 490, 128, 32);
 }

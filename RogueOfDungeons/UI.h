@@ -51,7 +51,7 @@ class UISpecifications
 private:
 	const char* pathInFont;
 	SDL_Renderer* ren;
-	bool flag;
+	SDL_Texture* specBlock;
 	SDL_Texture* STR;
 	SDL_Texture* DEX;
 	SDL_Texture* INT;

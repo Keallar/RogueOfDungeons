@@ -8,8 +8,8 @@ private:
 	int Location[22][32];
     SDL_Texture* PlayerTexture;
     SDL_Renderer* ren;
-    int HP;
-    int exp;
+    static int HP;
+    static int exp;
     int damageInput;
     const Uint8* keys = SDL_GetKeyboardState(NULL);
 public:

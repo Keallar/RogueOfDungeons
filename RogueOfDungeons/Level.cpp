@@ -48,6 +48,34 @@ void Level::Update()
 		enemy->Update();
 		SDL_Delay(150);
 	}
+
+	SDL_Event eventSpecifications;
+	while (SDL_PollEvent(&eventSpecifications))
+	{
+		switch (eventSpecifications.type)
+		{
+		case SDL_MOUSEBUTTONDOWN:
+			SDL_GetMouseState(&mouseCoord.x, &mouseCoord.y);
+			if (FlagManager::flagUiSpec == 1)
+			{
+				if (InputManager::MouseInArea(1230, 200, 32, 32, mouseCoord.x, mouseCoord.y))
+				{
+					FlagManager::flagUiSpec = 0;
+					uiSpec->Render();
+				}
+			}
+			if (FlagManager::flagUiSpec == 0)
+			{
+				if (InputManager::MouseInArea(1230, 200, 32, 32, mouseCoord.x, mouseCoord.y))
+				{
+					FlagManager::flagUiSpec = 1;
+					uiInfo->Render();
+				}
+			}
+		default:
+			break;
+		}
+	}
 }
 
 void Level::Start()
@@ -101,25 +129,10 @@ void Level::Render()
 	uiEnemy->Render();
 }
 
-//Вызов окошка с характеристиками
-//void Level::handleEvents()
-//{
-//	SDL_Event eventSpecifications;
-//	while (SDL_PollEvent(&eventSpecifications))
-//	{
-//		switch (eventSpecifications.type)
-//		{
-//		case SDL_MOUSEBUTTONDOWN:
-//			SDL_GetMouseState(&mouseCoords.x, &mouseCoords.y);
-//			if (uiSpec->flag == 1)
-//			{
-//
-//			}
-//		default:
-//			break;
-//		}
-//	}
-//}
+void Level::handleEvents()
+{
+
+}
 
 void Level::CreateChunk(int x, int y) {
 	for (int i = x; i < x + 2; i++) {

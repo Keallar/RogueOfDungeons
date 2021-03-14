@@ -40,6 +40,7 @@ void Level::Update()
 	if (FlagManager::flagPlayer == 0)
 	{
 		enemy->Update();
+		enemy->GetLoc(Location);
 		SDL_Delay(150);
 	}
 }

@@ -10,7 +10,9 @@ private:
     SDL_Renderer* ren;
     static int HP;
     static int exp;
+    static int mana;
     int damageInput;
+    UIInfo* uiInfo;
     const Uint8* keys = SDL_GetKeyboardState(NULL);
 public:
     Player() = default;

@@ -3,6 +3,7 @@
 #include "Managers.h"
 #include <iostream>
 #include "EntityPosition.h"
+#include "UI.h"
 
 Player::Player(const char* texturesheet, SDL_Renderer* renderer)
 {
@@ -16,6 +17,7 @@ Player::Player(const char* texturesheet, SDL_Renderer* renderer)
 
 	HP = 10;
 	exp = 0;
+	mana = 50;
 }
 
 Player::~Player()
@@ -57,6 +59,7 @@ void Player::Render()
 
 void Player::Update()
 {
+
 	if (keys[SDL_SCANCODE_W])
 	{
 		if (EntityPosition::Coords[1] == 32)

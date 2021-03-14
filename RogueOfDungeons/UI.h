@@ -19,9 +19,10 @@
 class UIInfo
 {
 private:
-	const char* pathInFont;
-	SDL_Renderer* ren;
+	const char* pathInFont = "fonts/manaspc.ttf";
+	static SDL_Renderer* ren;
 	SDL_Texture* versionBLock;
+	static char* hp;
 	SDL_Texture* infoBlock;
 	SDL_Texture* info;
 	//HP
@@ -44,6 +45,7 @@ private:
 public:
 	UIInfo( SDL_Renderer* renderer);
 	void Render();
+	static void Update(int hp, int mana, int exp);
 };
 
 class UISpecifications

@@ -13,9 +13,9 @@
 //	RenderManager::CopyToRender(Font2, ren, 1024, 30, 256, 21);
 //}
 
+//InfoBlock
 UIInfo::UIInfo(SDL_Renderer* renderer)
 {
-	pathInFont = "fonts/manaspc.ttf";
 	SDL_Color color = { 255, 255, 255, 255 };
 	ren = renderer;
 
@@ -38,7 +38,7 @@ UIInfo::UIInfo(SDL_Renderer* renderer)
 	//XP
 	xpBar = textureManager::LoadTexture("images/XP.png", ren);
 	xpText = FontManager::renderText("XP", pathInFont, color, 64, ren);
-	xpInfo = FontManager::renderText("99/100", pathInFont, color, 32, ren);
+	xpInfo = FontManager::renderText("0/100", pathInFont, color, 32, ren);
 
 	//Buttons
 	specButton = textureManager::LoadTexture("images/Button.png", ren);
@@ -70,13 +70,17 @@ void UIInfo::Render()
 
 }
 
+void UIInfo::Update(int hp, int mana, int exp)
+{
+	
+}
+
+//Specifications
 UISpecifications::UISpecifications(SDL_Renderer* renderer)
 {
 	pathInFont = "fonts/manaspc.ttf";
 	SDL_Color color = { 255, 255, 255, 255 };
 	ren = renderer;
-
-	//Specifications
 
 	specBlock = textureManager::LoadTexture("images/InfoBlock.png", ren);
 	STR = FontManager::renderText("STR", pathInFont, color, 64, ren);
@@ -88,11 +92,11 @@ UISpecifications::UISpecifications(SDL_Renderer* renderer)
 
 void UISpecifications::Render()
 {
-	//Specifications
 	RenderManager::CopyToRender(STR, ren, 1024, 0, 256, 480);
 	RenderManager::CopyToRender(specBlock, ren, 1050, 160, 64, 20);
 }
 
+//Inventory
 UIInventory::UIInventory(SDL_Renderer* renderer)
 {
 	pathInFont = "fonts/manaspc.ttf";
@@ -108,6 +112,7 @@ void UIInventory::Render()
 	RenderManager::CopyToRender(inventoryBlock, ren, 1024, 480, 256, 225);
 	RenderManager::CopyToRender(inventory, ren, 1085, 490, 128, 32);
 }
+
 
 //EnemyInfo
 UIEnemyInfo::UIEnemyInfo(SDL_Renderer* renderer)

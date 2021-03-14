@@ -5,9 +5,16 @@
 #include "UI.h"
 #include "GameObject.h"
 
+struct MouseCoords
+{
+	int x;
+	int y;
+}; 
+
 class Level 
 {
 private:
+	int textureLocation[22][32];
 	int Location[22][32];
 	//int Location2[22][32];
 	SDL_Texture* TileTexture;
@@ -15,9 +22,11 @@ private:
 	SDL_Renderer* ren;
 	Player* player;
 	Enemy* enemy;
-	UILevel* uiLevel;
+	UIInfo* uiInfo;
+	UIInventory* uiInventory;
 	std::vector <Enemy> enemies; //����� ����� ��� ������
 	std::vector <GameObject> textures; //����� ����� ��� ������ � ������ ��������
+
 public:
 	bool flagTB;
 	Level(SDL_Renderer* renderer);
@@ -25,6 +34,7 @@ public:
 	void Update();
 	void Start();
 	void Render();
+	//void handleEvents();
 	void Generate();
 	void CreateChunk(int x, int y);
 	int GetLocation(int x, int y);

@@ -115,7 +115,7 @@ UIEnemyInfo::UIEnemyInfo(SDL_Renderer* renderer)
 	ren = renderer;
 
 	enemy = FontManager::renderText("Enemy", pathInFont, color, 32, ren);
-	hpEmenyBar = textureManager::LoadTexture("images/hp.png", ren);
+	hpEmenyBar = textureManager::LoadTexture("images/EnemyBar.png", ren);
 	hpEnemyText = FontManager::renderText("HP", pathInFont, color, 64, ren);
 	hpEnemyInfo = FontManager::renderText("5/5", pathInFont, color, 32, ren);
 }
@@ -123,7 +123,7 @@ UIEnemyInfo::UIEnemyInfo(SDL_Renderer* renderer)
 void UIEnemyInfo::Render()
 {
 	RenderManager::CopyToRender(enemy, ren, 1116, 250, 64, 32);
-	RenderManager::CopyToRender(hpEmenyBar, ren, 1080, 283, 160, 32, 0, 0, 128, 16);
+	RenderManager::CopyToRender(hpEmenyBar, ren, 1080, 290, 190, 45, 20, 5, 256, 32);
 	RenderManager::CopyToRender(hpEnemyText, ren, 1050, 300, 25, 22);
-	RenderManager::CopyToRender(hpEnemyInfo, ren, 1122, 320, 32, 20);
+	RenderManager::CopyToRender(hpEnemyInfo, ren, 1130, 325, 32, 20);
 }

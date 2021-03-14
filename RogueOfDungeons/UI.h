@@ -51,11 +51,13 @@ class UISpecifications
 private:
 	const char* pathInFont;
 	SDL_Renderer* ren;
+	bool flag;
 	SDL_Texture* STR;
 	SDL_Texture* DEX;
 	SDL_Texture* INT;
 	SDL_Texture* PHS; //Physical Strength
 	SDL_Texture* LCK;
+	SDL_Texture* button;
 public:
 	UISpecifications(SDL_Renderer* renderer);
 	void Render();
@@ -71,5 +73,20 @@ private:
 	SDL_Texture* inventory;
 public:
 	UIInventory(SDL_Renderer* renderer);
+	void Render();
+};
+
+class UIEnemyInfo
+{
+private:
+	const char* pathInFont;
+	SDL_Renderer* ren;
+	SDL_Texture* enemy;
+	SDL_Texture* hpEmenyBar;
+	SDL_Texture* hpEnemyText;
+	SDL_Texture* hpEnemyInfo;
+	SDL_Texture* specfifcationsEnemy;
+public:
+	UIEnemyInfo(SDL_Renderer* rendrerer);
 	void Render();
 };

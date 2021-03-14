@@ -19,8 +19,12 @@ Level::Level(SDL_Renderer* renderer)
 	uiInfo = new UIInfo(ren);
 	//FlagManager::flagUI = 0;
 	uiInventory = new UIInventory(ren);
-	for (int i = 0; i < 22; i++) {
-		for (int j = 0; j < 32; j++) {
+	uiEnemy = new UIEnemyInfo(ren);
+	uiSpec = new UISpecifications(ren);
+	for (int i = 0; i < 22; i++) 
+	{
+		for (int j = 0; j < 32; j++)
+		{
 			textureLocation[i][j] = 1;
 		}
 	}
@@ -32,6 +36,8 @@ Level::~Level()
 	delete enemy;
 	delete uiInfo;
 	delete uiInventory;
+	delete uiEnemy;
+	delete uiSpec;
 }
 void Level::Update()
 {
@@ -94,6 +100,7 @@ void Level::Render()
 	enemy->Render();
 	uiInfo->Render();
 	uiInventory->Render();
+	uiEnemy->Render();
 }
 
 //Вызов окошка с характеристиками
@@ -106,6 +113,10 @@ void Level::Render()
 //		{
 //		case SDL_MOUSEBUTTONDOWN:
 //			SDL_GetMouseState(&mouseCoords.x, &mouseCoords.y);
+//			if (uiSpec->flag == 1)
+//			{
+//
+//			}
 //		default:
 //			break;
 //		}

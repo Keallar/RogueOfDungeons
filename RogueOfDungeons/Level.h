@@ -24,8 +24,10 @@ private:
 	Enemy* enemy;
 	UIInfo* uiInfo;
 	UIInventory* uiInventory;
-	std::vector <Enemy> enemies; 
-	std::vector <GameObject> textures; 
+	UIEnemyInfo* uiEnemy;
+	UISpecifications* uiSpec;
+	std::vector <Enemy> enemies; //����� ����� ��� ������
+	std::vector <GameObject> textures; //����� ����� ��� ������ � ������ ��������
 	void CreateChunk(int x, int y);
 	void ChunkGenerationMethod();
 	void OtherGeneration();
@@ -38,7 +40,7 @@ public:
 	void Update();
 	void Start();
 	void Render();
-	//void handleEvents();
+	void handleEvents();
 	void Generate();
 	int GetLocation(int x, int y);
 	void ChangeLocation(int x, int y);

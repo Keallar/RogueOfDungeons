@@ -122,5 +122,7 @@ void Player::Update()
 			}
 		}
 	}
+
+
 }
 

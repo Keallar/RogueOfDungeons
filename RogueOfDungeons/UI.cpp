@@ -70,6 +70,11 @@ void UIInfo::Render()
 
 }
 
+void UIInfo::Update(int hp, int mana, int exp)
+{
+	uiHp = hp + '0';
+}
+
 UISpecifications::UISpecifications(SDL_Renderer* renderer)
 {
 	pathInFont = "fonts/manaspc.ttf";

@@ -28,6 +28,7 @@ private:
 	UISpecifications* uiSpec;
 	std::vector <Enemy> enemies; //����� ����� ��� ������
 	std::vector <GameObject> textures; //����� ����� ��� ������ � ������ ��������
+	MouseCoords mouseCoord;
 	void CreateChunk(int x, int y);
 	void ChunkGenerationMethod();
 	void OtherGeneration();

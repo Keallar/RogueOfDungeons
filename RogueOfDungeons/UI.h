@@ -20,6 +20,7 @@ class UIInfo
 {
 private:
 	const char* pathInFont;
+	char uiHp;
 	SDL_Renderer* ren;
 	SDL_Texture* versionBLock;
 	SDL_Texture* infoBlock;
@@ -44,6 +45,7 @@ private:
 public:
 	UIInfo( SDL_Renderer* renderer);
 	void Render();
+	void Update(int hp, int mana, int exp);
 };
 
 class UISpecifications

@@ -25,6 +25,7 @@ private:
 	UIInfo* uiInfo;
 	UIInventory* uiInventory;
 	UIEnemyInfo* uiEnemy;
+	UISpecifications* uiSpec;
 	std::vector <Enemy> enemies; //����� ����� ��� ������
 	std::vector <GameObject> textures; //����� ����� ��� ������ � ������ ��������
 
@@ -35,7 +36,7 @@ public:
 	void Update();
 	void Start();
 	void Render();
-	//void handleEvents();
+	void handleEvents();
 	void Generate();
 	void CreateChunk(int x, int y);
 	int GetLocation(int x, int y);

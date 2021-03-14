@@ -73,7 +73,8 @@ void Game::handleEvents()
 			break;
 		case SDL_MOUSEBUTTONDOWN:
 			SDL_GetMouseState(&mouseCoord.x, &mouseCoord.y);
-			if (Menu->flag == 1) {
+			if (Menu->flag == 1) 
+			{
 				if (InputManager::MouseInArea(640, 361, 250, 100, mouseCoord.x, mouseCoord.y))
 				{
 					Menu->flag = 0;

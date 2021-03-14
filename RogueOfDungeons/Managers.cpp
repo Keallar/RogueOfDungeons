@@ -24,6 +24,7 @@ bool InputManager::MouseInArea(int x, int y, int w, int h, int MouseX, int Mouse
 	}
 }
 
+
 void RenderManager::CopyToRender(SDL_Texture* texture, SDL_Renderer* ren, int x, int y, int w, int h, int dx, int dy, int dw, int dh) 
 {
 	SDL_Rect COORD; SDL_Rect dCOORD;

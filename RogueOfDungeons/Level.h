@@ -29,6 +29,7 @@ private:
 	std::vector <Enemy> enemies; //����� ����� ��� ������
 	std::vector <GameObject> textures; //����� ����� ��� ������ � ������ ��������
 	void CreateChunk(int x, int y);
+	std::vector<std::pair<int, int>> pop_front(std::vector<std::pair<int, int>> vec);
 	void ChunkGenerationMethod();
 	void OtherGeneration();
 	bool Search(std::vector<std::pair<int, int>> vector, int x, int y);

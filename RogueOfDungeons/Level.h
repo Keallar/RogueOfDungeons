@@ -24,8 +24,12 @@ private:
 	Enemy* enemy;
 	UIInfo* uiInfo;
 	UIInventory* uiInventory;
-	std::vector <Enemy> enemies; //����� ����� ��� ������
-	std::vector <GameObject> textures; //����� ����� ��� ������ � ������ ��������
+	std::vector <Enemy> enemies; 
+	std::vector <GameObject> textures; 
+	void CreateChunk(int x, int y);
+	void ChunkGenerationMethod();
+	void OtherGeneration();
+	bool Search(std::vector<std::pair<int, int>> vector, int x, int y);
 
 public:
 	bool flagTB;
@@ -36,7 +40,6 @@ public:
 	void Render();
 	//void handleEvents();
 	void Generate();
-	void CreateChunk(int x, int y);
 	int GetLocation(int x, int y);
 	void ChangeLocation(int x, int y);
 };

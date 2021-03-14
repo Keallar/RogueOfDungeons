@@ -4,6 +4,8 @@
 #include "Managers.h"
 #include <ctime>
 #include "UI.h"
+#include <vector>
+#include <iostream>
 
 Level::Level(SDL_Renderer* renderer)
 {
@@ -135,12 +137,10 @@ void Level::ChangeLocation(int x, int y) {
 	}
 }
 
-void Level::Generate() {
-
-	srand(time(0));
+void Level::ChunkGenerationMethod() {
 	for (int j = 0; j < 8; j++) {
-		int i = rand() % 4 + rand()%3; int count = 0;
-		while (count < (5 + rand()%3)) {
+		int i = rand() % 4 + rand() % 3; int count = 0;
+		while (count < (5 + rand() % 3)) {
 			if (i + count < 11) {
 				CreateChunk((i + count) * 2, j * 4);
 			}
@@ -216,7 +216,7 @@ void Level::Generate() {
 
 	for (int i = 0; i < 22; i++) {
 		for (int j = 0; j < 32; j++) {
-			if ((textureLocation[i][j] == 0)||(textureLocation[i][j] == 4) || (textureLocation[i][j] == 6)) {
+			if ((textureLocation[i][j] == 0) || (textureLocation[i][j] == 4) || (textureLocation[i][j] == 6)) {
 				Location[i][j] = 0;
 			}
 			if ((textureLocation[i][j] == 1) || (textureLocation[i][j] == 3) || (textureLocation[i][j] == 5)) {
@@ -226,6 +226,84 @@ void Level::Generate() {
 				Location[i][j] = 2;
 			}
 		}
+	}
+}
+
+bool Level::Search(std::vector<std::pair<int, int>> vector, int x, int y) {
+	std::pair<int, int> coords = { x ,y };
+	bool result = false;
+	for (int i = 0; i < vector.size(); i++) {
+		if (vector[i] == coords) {
+			result = true;
+		}
+	}
+	return result;
+}
+
+
+void Level::OtherGeneration() {
+	for (int i = 0; i < 22; i++) {
+		for (int j = 0; j < 32; j++) {
+			if ((j == 31) || (i == 21) || (j == 0) || (i == 0)) {
+				textureLocation[i][j] = 2;
+			}
+		}
+	}
+	COORDS startPoint = { 1,1 };
+	COORDS endPoint = { 20, 20 };
+	bool HaveWay = false;
+	std::vector< std::pair<int, int> > used (9);
+	std::vector< std::pair<int, int> > queue;
+	queue.push_back({ startPoint.x, startPoint.y });
+	used.push_back({ startPoint.x, startPoint.y });
+	std::pair <int, int> current = { 0, 0 };
+	while (!queue.empty()) {
+		current = queue.back();
+		queue.pop_back();
+		if ((current.first == endPoint.x)&&(current.second == endPoint.y)) {
+			HaveWay = true;
+			break;
+		}
+		if (textureLocation[current.first][current.second + 1] == 1) {
+			if (!(Search(used, current.first, current.second + 1))) {
+				queue.push_back({ current.first, current.second + 1 });
+				used.push_back({ current.first, current.second + 1 });
+			}
+		}
+		if (textureLocation[current.first - 1][current.second] == 1) {
+			if (!(Search(used, current.first - 1, current.second ))) {
+				queue.push_back({ current.first - 1, current.second });
+				used.push_back({ current.first - 1, current.second });
+			}
+		}
+		if (textureLocation[current.first][current.second - 1] == 1) {
+			if (!(Search(used, current.first, current.second - 1))) {
+				queue.push_back({ current.first, current.second - 1 });
+				used.push_back({ current.first, current.second - 1 });
+			}
+		}
+		if (textureLocation[current.first + 1][current.second] == 1) {
+			if (!(Search(used, current.first + 1, current.second))) {
+				queue.push_back({ current.first + 1, current.second });
+				used.push_back({ current.first + 1, current.second });
+			}
+		}
+	}
+	for (int i = 0; i < used.size(); i++) {
+		textureLocation[used[i].first][used[i].second] = 3;
+	}
+	textureLocation[startPoint.x][startPoint.y] = 0;
+	textureLocation[endPoint.x][endPoint.y] = 0;
+}
+
+void Level::Generate() {
+	int generateChoose = 1;
+	srand(time(0));
+	if (generateChoose == 0) {
+		ChunkGenerationMethod();
+	}
+	else {
+		OtherGeneration();
 	}
 
 	//Здесь можно добавить 2 генератор, потом соединить их на одном массиве и получить их совместный результат, звучит перспективно

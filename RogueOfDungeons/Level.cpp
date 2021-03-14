@@ -326,7 +326,11 @@ void Level::OtherGeneration() {
 		textureLocation[used[i].first][used[i].second] = 3;
 	}
 	std::vector< std::pair<int, int> > Way;
-	
+	Way.push_back({ endPoint.x, endPoint.y });
+	bool WayEnd = false;
+	while (WayEnd == false) {
+		current = {}
+	}
 	textureLocation[startPoint.x][startPoint.y] = 0;
 	textureLocation[endPoint.x][endPoint.y] = 0;
 }

@@ -112,7 +112,7 @@ void Level::Render()
 //		switch (eventSpecifications.type)
 //		{
 //		case SDL_MOUSEBUTTONDOWN:
-//			SDL_GetMouseState(&mouseCoords.x, &mouseCoords.y);
+//			SDL_GetMouseState(&mouseCoord.x, &mouseCoord.y);
 //			if (uiSpec->flag == 1)
 //			{
 //

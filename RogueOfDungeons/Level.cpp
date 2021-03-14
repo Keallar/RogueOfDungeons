@@ -260,6 +260,18 @@ bool Level::Search(std::vector<std::pair<int, int>> vector, int x, int y) {
 	return result;
 }
 
+int SearchNum(std::vector<std::pair<int, int>> vector, int x, int y) {
+	std::pair<int, int> coords = { x ,y };
+	bool result = false;
+	for (int i = 0; i < vector.size(); i++) {
+		if (vector[i] == coords) {
+			return i;
+		}
+		else {
+			return -1;
+		}
+	}
+}
 
 void Level::OtherGeneration() {
 	for (int i = 0; i < 22; i++) {
@@ -269,15 +281,15 @@ void Level::OtherGeneration() {
 			}
 		}
 	}
-	COORDS startPoint = { 1,1 };
+	COORDS startPoint = { 10,10 };
 	COORDS endPoint = { rand()%20+1, rand()%31+1 };
 	bool HaveWay = false;
-	std::vector< std::pair<int, int> > used (9);
+	std::vector< std::pair<int, int> > used;
 	std::vector< std::pair<int, int> > queue;
 	queue.push_back({ startPoint.x, startPoint.y });
 	used.push_back({ startPoint.x, startPoint.y });
 	std::pair <int, int> current = { 0, 0 };
-	while ((!queue.empty())||(HaveWay = false)) {
+	while ((!queue.empty())) {
 		current = queue.front();
 		queue = pop_front(queue);
 		if ((current.first == endPoint.x)&&(current.second == endPoint.y)) {
@@ -309,9 +321,12 @@ void Level::OtherGeneration() {
 			}
 		}
 	}
+
 	for (int i = 0; i < used.size(); i++) {
 		textureLocation[used[i].first][used[i].second] = 3;
 	}
+	std::vector< std::pair<int, int> > Way;
+	
 	textureLocation[startPoint.x][startPoint.y] = 0;
 	textureLocation[endPoint.x][endPoint.y] = 0;
 }

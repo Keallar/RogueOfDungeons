@@ -4,6 +4,8 @@
 #include "Managers.h"
 #include <ctime>
 #include "UI.h"
+#include <vector>
+#include <iostream>
 
 Level::Level(SDL_Renderer* renderer)
 {
@@ -17,8 +19,12 @@ Level::Level(SDL_Renderer* renderer)
 	uiInfo = new UIInfo(ren);
 	//FlagManager::flagUI = 0;
 	uiInventory = new UIInventory(ren);
-	for (int i = 0; i < 22; i++) {
-		for (int j = 0; j < 32; j++) {
+	uiEnemy = new UIEnemyInfo(ren);
+	uiSpec = new UISpecifications(ren);
+	for (int i = 0; i < 22; i++) 
+	{
+		for (int j = 0; j < 32; j++)
+		{
 			textureLocation[i][j] = 1;
 		}
 	}
@@ -30,6 +36,8 @@ Level::~Level()
 	delete enemy;
 	delete uiInfo;
 	delete uiInventory;
+	delete uiEnemy;
+	delete uiSpec;
 }
 void Level::Update()
 {
@@ -94,6 +102,7 @@ void Level::Render()
 	enemy->Render();
 	uiInfo->Render();
 	uiInventory->Render();
+	uiEnemy->Render();
 }
 
 //Вызов окошка с характеристиками
@@ -105,7 +114,11 @@ void Level::Render()
 //		switch (eventSpecifications.type)
 //		{
 //		case SDL_MOUSEBUTTONDOWN:
-//			SDL_GetMouseState(&mouseCoords.x, &mouseCoords.y);
+//			SDL_GetMouseState(&mouseCoord.x, &mouseCoord.y);
+//			if (uiSpec->flag == 1)
+//			{
+//
+//			}
 //		default:
 //			break;
 //		}
@@ -137,12 +150,10 @@ void Level::ChangeLocation(int x, int y) {
 	}
 }
 
-void Level::Generate() {
-
-	srand(time(0));
+void Level::ChunkGenerationMethod() {
 	for (int j = 0; j < 8; j++) {
-		int i = rand() % 4 + rand()%3; int count = 0;
-		while (count < (5 + rand()%3)) {
+		int i = rand() % 4 + rand() % 3; int count = 0;
+		while (count < (5 + rand() % 3)) {
 			if (i + count < 11) {
 				CreateChunk((i + count) * 2, j * 4);
 			}
@@ -218,7 +229,7 @@ void Level::Generate() {
 
 	for (int i = 0; i < 22; i++) {
 		for (int j = 0; j < 32; j++) {
-			if ((textureLocation[i][j] == 0)||(textureLocation[i][j] == 4) || (textureLocation[i][j] == 6)) {
+			if ((textureLocation[i][j] == 0) || (textureLocation[i][j] == 4) || (textureLocation[i][j] == 6)) {
 				Location[i][j] = 0;
 			}
 			if ((textureLocation[i][j] == 1) || (textureLocation[i][j] == 3) || (textureLocation[i][j] == 5)) {
@@ -228,6 +239,108 @@ void Level::Generate() {
 				Location[i][j] = 2;
 			}
 		}
+	}
+}
+
+std::vector<std::pair<int, int>> Level::pop_front(std::vector<std::pair<int, int>> vec)
+{
+	for (int i = 0; i < vec.size() - 1; i++) {
+		vec[i] = vec[i + 1];
+	}
+	vec.pop_back();
+	return vec;
+}
+
+bool Level::Search(std::vector<std::pair<int, int>> vector, int x, int y) {
+	std::pair<int, int> coords = { x ,y };
+	bool result = false;
+	for (int i = 0; i < vector.size(); i++) {
+		if (vector[i] == coords) {
+			result = true;
+		}
+	}
+	return result;
+}
+
+int SearchNum(std::vector<std::pair<int, int>> vector, int x, int y) {
+	std::pair<int, int> coords = { x ,y };
+	bool result = false;
+	for (int i = 0; i < vector.size(); i++) {
+		if (vector[i] == coords) {
+			return i;
+		}
+		else {
+			return -1;
+		}
+	}
+}
+
+void Level::OtherGeneration() {
+	for (int i = 0; i < 22; i++) {
+		for (int j = 0; j < 32; j++) {
+			if ((j == 31) || (i == 21) || (j == 0) || (i == 0)) {
+				textureLocation[i][j] = 2;
+			}
+		}
+	}
+	COORDS startPoint = { 10,10 };
+	COORDS endPoint = { rand()%20+1, rand()%31+1 };
+	bool HaveWay = false;
+	std::vector< std::pair<int, int> > used;
+	std::vector< std::pair<int, int> > queue;
+	queue.push_back({ startPoint.x, startPoint.y });
+	used.push_back({ startPoint.x, startPoint.y });
+	std::pair <int, int> current = { 0, 0 };
+	while ((!queue.empty())) {
+		current = queue.front();
+		queue = pop_front(queue);
+		if ((current.first == endPoint.x)&&(current.second == endPoint.y)) {
+			HaveWay = true;
+			break;
+		}
+		if (textureLocation[current.first][current.second + 1] == 1) {
+			if (!(Search(used, current.first, current.second + 1))) {
+				queue.push_back({ current.first, current.second + 1 });
+				used.push_back({ current.first, current.second + 1 });
+			}
+		}
+		if (textureLocation[current.first - 1][current.second] == 1) {
+			if (!(Search(used, current.first - 1, current.second ))) {
+				queue.push_back({ current.first - 1, current.second });
+				used.push_back({ current.first - 1, current.second });
+			}
+		}
+		if (textureLocation[current.first][current.second - 1] == 1) {
+			if (!(Search(used, current.first, current.second - 1))) {
+				queue.push_back({ current.first, current.second - 1 });
+				used.push_back({ current.first, current.second - 1 });
+			}
+		}
+		if (textureLocation[current.first + 1][current.second] == 1) {
+			if (!(Search(used, current.first + 1, current.second))) {
+				queue.push_back({ current.first + 1, current.second });
+				used.push_back({ current.first + 1, current.second });
+			}
+		}
+	}
+
+	for (int i = 0; i < used.size(); i++) {
+		textureLocation[used[i].first][used[i].second] = 3;
+	}
+	std::vector< std::pair<int, int> > Way;
+	
+	textureLocation[startPoint.x][startPoint.y] = 0;
+	textureLocation[endPoint.x][endPoint.y] = 0;
+}
+
+void Level::Generate() {
+	int generateChoose = 1;
+	srand(time(0));
+	if (generateChoose == 0) {
+		ChunkGenerationMethod();
+	}
+	else {
+		OtherGeneration();
 	}
 
 	//Здесь можно добавить 2 генератор, потом соединить их на одном массиве и получить их совместный результат, звучит перспективно

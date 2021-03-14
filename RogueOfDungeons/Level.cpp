@@ -48,6 +48,7 @@ void Level::Update()
 	if (FlagManager::flagPlayer == 0)
 	{
 		enemy->Update();
+		enemy->GetLoc(Location);
 		SDL_Delay(150);
 	}
 }
@@ -62,6 +63,7 @@ void Level::Start()
 	
 	player->GetLevel(Location);
 	player->GetPlayerFirstCoords();
+	enemy->GetLoc(Location);
 }
 
 void Level::Render()

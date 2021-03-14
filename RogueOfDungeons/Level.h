@@ -34,6 +34,7 @@ private:
 	void ChunkGenerationMethod();
 	void OtherGeneration();
 	bool Search(std::vector<std::pair<int, int>> vector, int x, int y);
+	int SearchNum(std::vector<std::pair<int, int>> vector, int x, int y);
 
 public:
 	bool flagTB;

@@ -240,7 +240,10 @@ void Level::ChunkGenerationMethod() {
 	}
 }
 
-std::vector<std::pair<int, int>> Level::pop_front(std::vector<std::pair<int, int>> vec)
+//здесь описан алгоритм поиска в ширину, я его сделал, потом понял, что он мне не нужен
+
+
+/*std::vector<std::pair<int, int>> Level::pop_front(std::vector<std::pair<int, int>> vec)
 {
 	for (int i = 0; i < vec.size() - 1; i++) {
 		vec[i] = vec[i + 1];
@@ -279,7 +282,7 @@ void Level::OtherGeneration() {
 			}
 		}
 	}
-	COORDS startPoint = { 10,12 };
+	COORDS startPoint = { 2,2 };
 	COORDS endPoint = { rand()%20+1, rand()%31+1 };
 	bool HaveWay = false;
 	std::vector< std::pair<int, int> > used;
@@ -367,11 +370,14 @@ void Level::OtherGeneration() {
 	}
 	std::cout << Way.size() << std::endl;
 	for (int i = 0; i < Way.size(); i++) {
-		std::cout << Way[i].first << " " << Way[i].second << std::endl;
 		textureLocation[Way[i].first][Way[i].second] = 3;
 	}
 	textureLocation[startPoint.x][startPoint.y] = 0;
 	textureLocation[endPoint.x][endPoint.y] = 0;
+}*/
+
+void RoomGenerationMethod() {
+
 }
 
 void Level::Generate() {
@@ -381,7 +387,7 @@ void Level::Generate() {
 		ChunkGenerationMethod();
 	}
 	else {
-		OtherGeneration();
+		RoomGenerationMethod();
 	}
 
 	//Здесь можно добавить 2 генератор, потом соединить их на одном массиве и получить их совместный результат, звучит перспективно

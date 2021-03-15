@@ -26,15 +26,16 @@ private:
 	UIInventory* uiInventory;
 	UIEnemyInfo* uiEnemy;
 	UISpecifications* uiSpec;
-	std::vector <Enemy> enemies; //����� ����� ��� ������
-	std::vector <GameObject> textures; //����� ����� ��� ������ � ������ ��������
+	std::vector <Enemy> enemies;
+	std::vector <GameObject> textures; 
 	MouseCoords mouseCoord;
 	void CreateChunk(int x, int y);
-	std::vector<std::pair<int, int>> pop_front(std::vector<std::pair<int, int>> vec);
+	//std::vector<std::pair<int, int>> pop_front(std::vector<std::pair<int, int>> vec);
 	void ChunkGenerationMethod();
-	void OtherGeneration();
-	bool Search(std::vector<std::pair<int, int>> vector, int x, int y);
-	int SearchNum(std::vector<std::pair<int, int>> vector, int x, int y);
+	void RoomGenerationMethod();
+	//void OtherGeneration();
+	//bool Search(std::vector<std::pair<int, int>> vector, int x, int y);
+	//int SearchNum(std::vector<std::pair<int, int>> vector, int x, int y);
 
 public:
 	bool flagTB;

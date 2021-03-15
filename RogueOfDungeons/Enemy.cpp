@@ -77,9 +77,7 @@ bool Enemy::WAY(int ax, int ay, int bx, int by)   // поиск пути из €чейки (ax, a
 					}
 
 				}
-				std::cout << enemyLoc[y][x];
 			}
-			std::cout << std::endl;
 		}
 		d++;
 	} while (!stop && enemyLoc[by][bx] == BLANK);
@@ -112,10 +110,10 @@ bool Enemy::WAY(int ax, int ay, int bx, int by)   // поиск пути из €чейки (ax, a
 	py[0] = ay;                    // теперь px[0..len] и py[0..len] - координаты €чеек пути
 	EntityPosition::Coords[2] = px[1] * 32;
 	EntityPosition::Coords[3] = py[1] * 32;
-	for (int i = 0; i < len; i++) {
+	/*for (int i = 0; i < len; i++) {
 		std::cout << "(" << px[i] << "," << py[i] << ")";
 	}
-	std::cout << x<<"," << y<<"  ";
+	std::cout << x<<"," << y<<"  ";*/
 	return true;
 }
 

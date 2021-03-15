@@ -24,6 +24,7 @@ bool InputManager::MouseInArea(int x, int y, int w, int h, int MouseX, int Mouse
 	}
 }
 
+
 void RenderManager::CopyToRender(SDL_Texture* texture, SDL_Renderer* ren, int x, int y, int w, int h, int dx, int dy, int dw, int dh) 
 {
 	SDL_Rect COORD; SDL_Rect dCOORD;
@@ -122,3 +123,5 @@ SDL_Texture* FontManager::renderText(const char* text, const char* fontFile, SDL
 
 int FlagManager::flagPlayer = 0;
 int FlagManager::flagEnemy = 1;
+int FlagManager::flagUI = 1;
+int FlagManager::flagUiSpec = 1;

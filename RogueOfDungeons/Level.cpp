@@ -260,17 +260,15 @@ bool Level::Search(std::vector<std::pair<int, int>> vector, int x, int y) {
 	return result;
 }
 
-int SearchNum(std::vector<std::pair<int, int>> vector, int x, int y) {
+int Level::SearchNum(std::vector<std::pair<int, int>> vector, int x, int y) {
 	std::pair<int, int> coords = { x ,y };
 	bool result = false;
 	for (int i = 0; i < vector.size(); i++) {
 		if (vector[i] == coords) {
 			return i;
 		}
-		else {
-			return -1;
-		}
 	}
+	return -1;
 }
 
 void Level::OtherGeneration() {
@@ -281,7 +279,7 @@ void Level::OtherGeneration() {
 			}
 		}
 	}
-	COORDS startPoint = { 10,10 };
+	COORDS startPoint = { 10,12 };
 	COORDS endPoint = { rand()%20+1, rand()%31+1 };
 	bool HaveWay = false;
 	std::vector< std::pair<int, int> > used;
@@ -321,12 +319,57 @@ void Level::OtherGeneration() {
 			}
 		}
 	}
-
-	for (int i = 0; i < used.size(); i++) {
-		textureLocation[used[i].first][used[i].second] = 3;
-	}
 	std::vector< std::pair<int, int> > Way;
-	
+	Way.push_back({endPoint.x, endPoint.y});
+	current = { endPoint.x, endPoint.y };
+	int min;
+	int minNum;
+	int Numbers[] = { -1, -1, -1, -1 };
+	while ((current.first != startPoint.x)||(current.second != startPoint.y)) {
+		minNum = 0;
+		min = 0;
+		int counter = 0;
+		Numbers[0] = SearchNum(used, current.first, current.second + 1);
+		Numbers[1] = SearchNum(used, current.first - 1, current.second);
+		Numbers[2] = SearchNum(used, current.first, current.second - 1);
+		Numbers[3] = SearchNum(used, current.first + 1, current.second);
+		for (int k = 0; k < 4; k++) {
+			if (Numbers[k] != -1) {
+				min = Numbers[k];
+				counter = k;
+				break;
+			}
+		}
+		for (int k = counter; k < 3; k++) {
+			if ((min > Numbers[k + 1])&&(Numbers[k + 1] != -1)) {
+				min = Numbers[k + 1];
+				minNum = k + 1;
+			}
+		}
+		switch (minNum) {
+		case 0:
+			current = { current.first, current.second + 1 };
+			Way.push_back(current);
+			break;
+		case 1:
+			current = { current.first - 1, current.second };
+			Way.push_back(current);
+			break;
+		case 2:
+			current = { current.first, current.second - 1 };
+			Way.push_back(current);
+			break;
+		case 3:
+			current = { current.first + 1, current.second };
+			Way.push_back(current);
+			break;
+		}
+	}
+	std::cout << Way.size() << std::endl;
+	for (int i = 0; i < Way.size(); i++) {
+		std::cout << Way[i].first << " " << Way[i].second << std::endl;
+		textureLocation[Way[i].first][Way[i].second] = 3;
+	}
 	textureLocation[startPoint.x][startPoint.y] = 0;
 	textureLocation[endPoint.x][endPoint.y] = 0;
 }

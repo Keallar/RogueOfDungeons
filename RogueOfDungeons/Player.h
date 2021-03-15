@@ -11,6 +11,7 @@ private:
     int HP;
     int exp;
     int damageInput;
+    int TypeOfAttack;
     const Uint8* keys = SDL_GetKeyboardState(NULL);
 public:
     Player() = default;

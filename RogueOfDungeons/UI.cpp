@@ -13,6 +13,9 @@
 //	RenderManager::CopyToRender(Font2, ren, 1024, 30, 256, 21);
 //}
 
+const char* UIInfo::pathInFont = "fonts / manaspc.ttf";
+char* UIInfo::HP = 0;
+
 //InfoBlock
 UIInfo::UIInfo(SDL_Renderer* renderer)
 {
@@ -70,10 +73,18 @@ void UIInfo::Render()
 
 }
 
-void UIInfo::Update(int hp, int mana, int exp)
+void UIInfo::Update(int hp, int mana, int exp, SDL_Renderer* renderer)
 {
-	
+	SDL_Color color = { 255, 255, 255, 255 };
+	healthInfo = hp;
+	expInfo = exp;
+	manaInfo = mana;
+	HP = reinterpret_cast<char*>(healthInfo);
+	//XP = static_cast<char>(expInfo);
+	//MANA = static_cast<char>(manaInfo);
+	hpText = FontManager::renderText(HP, pathInFont, color, 32, renderer);
 }
+
 
 //Specifications
 UISpecifications::UISpecifications(SDL_Renderer* renderer)
@@ -92,9 +103,19 @@ UISpecifications::UISpecifications(SDL_Renderer* renderer)
 
 void UISpecifications::Render()
 {
-	RenderManager::CopyToRender(STR, ren, 1024, 0, 256, 480);
 	RenderManager::CopyToRender(specBlock, ren, 1050, 160, 64, 20);
+	RenderManager::CopyToRender(STR, ren, 1024, 0, 256, 480);
 }
+
+//void UISpecifications::Start()
+//{
+//	
+//}
+
+//void UISpecifications::Close()
+//{
+//
+//}
 
 //Inventory
 UIInventory::UIInventory(SDL_Renderer* renderer)

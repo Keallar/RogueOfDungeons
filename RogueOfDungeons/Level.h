@@ -5,7 +5,7 @@
 #include "UI.h"
 #include "GameObject.h"
 
-struct MouseCoords
+struct MouseCoordinates
 {
 	int x;
 	int y;
@@ -28,7 +28,8 @@ private:
 	UISpecifications* uiSpec;
 	std::vector <Enemy> enemies; //����� ����� ��� ������
 	std::vector <GameObject> textures; //����� ����� ��� ������ � ������ ��������
-	MouseCoords mouseCoord;
+	MouseCoordinates mouseCoords;
+
 public:
 	bool flagTB;
 	Level(SDL_Renderer* renderer);

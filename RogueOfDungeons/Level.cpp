@@ -19,6 +19,7 @@ Level::Level(SDL_Renderer* renderer)
 	uiInventory = new UIInventory(ren);
 	uiEnemy = new UIEnemyInfo(ren);
 	uiSpec = new UISpecifications(ren);
+	
 	for (int i = 0; i < 22; i++) 
 	{
 		for (int j = 0; j < 32; j++)
@@ -48,33 +49,10 @@ void Level::Update()
 		enemy->Update();
 		SDL_Delay(150);
 	}
-
-	SDL_Event eventSpecifications;
-	while (SDL_PollEvent(&eventSpecifications))
+	if (FlagManager::flagUiSpec == 1)
 	{
-		switch (eventSpecifications.type)
-		{
-		case SDL_MOUSEBUTTONDOWN:
-			SDL_GetMouseState(&mouseCoord.x, &mouseCoord.y);
-			if (FlagManager::flagUiSpec == 1)
-			{
-				if (InputManager::MouseInArea(1230, 200, 32, 32, mouseCoord.x, mouseCoord.y))
-				{
-					FlagManager::flagUiSpec = 0;
-					uiSpec->Render();
-				}
-			}
-			if (FlagManager::flagUiSpec == 0)
-			{
-				if (InputManager::MouseInArea(1230, 200, 32, 32, mouseCoord.x, mouseCoord.y))
-				{
-					FlagManager::flagUiSpec = 1;
-					uiInfo->Render();
-				}
-			}
-		default:
-			break;
-		}
+		uiSpec->Render();
+		std::cout << "Spec" << std::endl;
 	}
 }
 
@@ -127,11 +105,36 @@ void Level::Render()
 	uiInfo->Render();
 	uiInventory->Render();
 	uiEnemy->Render();
+
+	//SDL_RenderPresent(ren);
 }
 
 void Level::handleEvents()
 {
-
+	SDL_Event eventWithSpec;
+	while (SDL_PollEvent(&eventWithSpec))
+	{
+		switch (eventWithSpec.type)
+		{
+		case SDL_MOUSEBUTTONDOWN:
+			SDL_GetMouseState(&mouseCoords.x, &mouseCoords.y);
+			if (InputManager::MouseInArea(1230, 200, 64, 64, mouseCoords.x, mouseCoords.y) && 
+				FlagManager::flagUiSpec == 0)
+			{
+				std::cout << "Check" << std::endl;
+				FlagManager::flagUiSpec = 1;
+				break;
+			}
+			else if (InputManager::MouseInArea(1230, 200, 32, 32, mouseCoords.x, mouseCoords.y) && 
+				FlagManager::flagUiSpec == 1)
+			{
+				FlagManager::flagUiSpec = 0;
+				break;
+			}
+		default:
+			break;
+		}
+	}
 }
 
 void Level::CreateChunk(int x, int y) {

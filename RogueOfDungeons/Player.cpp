@@ -5,6 +5,11 @@
 #include "EntityPosition.h"
 #include "UI.h"
 
+
+int Player::HP = 5;
+int Player::exp = 0;
+int Player::mana = 50;
+
 Player::Player(const char* texturesheet, SDL_Renderer* renderer)
 {
 	ren = renderer;
@@ -14,10 +19,6 @@ Player::Player(const char* texturesheet, SDL_Renderer* renderer)
 			Location[i][j] = 0;
 		}
 	}
-
-	HP = 10;
-	exp = 0;
-	mana = 50;
 }
 
 Player::~Player()
@@ -70,6 +71,7 @@ void Player::Update()
 		{
 			if (Location[(EntityPosition::Coords[1]) / 32 - 1][(EntityPosition::Coords[0])/ 32] == 0) {
 				EntityPosition::Coords[1] -= 32;
+				UIInfo::Update(HP, mana, exp, ren);
 				FlagManager::flagPlayer = 0;
 				//std::cout << "w" << EntityPosition::Coords[0] << EntityPosition::Coords[1] << std::endl;
 				//SDL_Delay(100);

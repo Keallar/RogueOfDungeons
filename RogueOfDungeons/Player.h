@@ -12,7 +12,7 @@ private:
     static int exp;
     static int mana;
     int damageInput;
-    UIInfo* uiInfo;
+    //UIInfo* uiInfo;
     const Uint8* keys = SDL_GetKeyboardState(NULL);
 public:
     Player() = default;

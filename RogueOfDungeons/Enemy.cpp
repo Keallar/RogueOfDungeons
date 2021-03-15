@@ -31,6 +31,13 @@ void Enemy::GetLoc(int arr[22][32])
 			enemyLoc[i][j] = arr[i][j];
 			if (arr[i][j] == 1) 
 			{
+				enemyLoc[i][j] = -2;
+			}
+			if (arr[i][j] == 2) {
+				enemyLoc[i][j] = -2;
+			}
+			if (arr[i][j] == 0)
+			{
 				enemyLoc[i][j] = -1;
 			}
 		}
@@ -41,38 +48,44 @@ bool Enemy::WAY(int ax, int ay, int bx, int by)   // поиск пути из €чейки (ax, a
 	int dx[4] = { 1, 0, -1, 0 };   // смещени€, соответствующие сосед€м €чейки
 	int dy[4] = { 0, 1, 0, -1 };   // справа, снизу, слева и сверху
 	int d, x, y, k;
-	bool stop;
+	bool stop = false;
 
-	if (enemyLoc[ax][ay] == -1 || enemyLoc[bx][by] == -1) return false;  // €чейка (ax, ay) или (bx, by) - стена
+	if (enemyLoc[ay][ax] == -2 || enemyLoc[by][bx] == -2) return false;  // €чейка (ax, ay) или (bx, by) - стена
 
 	// распространение волны
 	d = 0;
-	enemyLoc[ax][ay] = 0;            // стартова€ €чейка помечена 0
+	enemyLoc[ay][ax] = 0;            // стартова€ €чейка помечена 0
 	do {
 		stop = true;               // предполагаем, что все свободные клетки уже помечены
-		for (y = 0; y < 22; ++y)
+		for (y = 0; y < 22; ++y) 
+		{
 			for (x = 0; x < 32; ++x)
-				if (enemyLoc[x][y] == d)                         // €чейка (x, y) помечена числом d
+			{
+				if (enemyLoc[y][x] == d)                         // €чейка (x, y) помечена числом d
 				{
 					for (k = 0; k < 4; ++k)                    // проходим по всем непомеченным сосед€м
 					{
 						int iy = y + dy[k], ix = x + dx[k];
 						if (iy >= 0 && iy < H && ix >= 0 && ix < W &&
-							enemyLoc[ix][iy] == BLANK)
+							enemyLoc[iy][ix] == BLANK)
 						{
 							stop = false;              // найдены непомеченные клетки
-							enemyLoc[ix][iy] = d + 1;
-							std::cout << "A ";
-						}
-					}
-				}
-		d++;
-	} while (!stop && enemyLoc[bx][by] == BLANK);
+							enemyLoc[iy][ix] = d + 1;
 
-	if (enemyLoc[bx][by] == BLANK) return false;  // путь не найден
+						}
+
+					}
+
+				}
+			}
+		}
+		d++;
+	} while (!stop && enemyLoc[by][bx] == BLANK);
+
+	//if (enemyLoc[bx][by] == BLANK) return false;  // путь не найден
 
 	// восстановление пути
-	len = enemyLoc[bx][by];            // длина кратчайшего пути из (ax, ay) в (bx, by)
+	len = enemyLoc[by][bx];            // длина кратчайшего пути из (ax, ay) в (bx, by)
 	x = bx;
 	y = by;
 	d = len;
@@ -84,8 +97,8 @@ bool Enemy::WAY(int ax, int ay, int bx, int by)   // поиск пути из €чейки (ax, a
 		for (k = 0; k < 4; ++k)
 		{
 			int iy = y + dy[k], ix = x + dx[k];
-			if (iy >= 0 && iy < 22 && ix >= 0 && 32 < 13 &&
-				enemyLoc[ix][iy] == d)
+			if (iy >= 0 && iy < H && ix >= 0 && ix < W &&
+				enemyLoc[iy][ix] == d)
 			{
 				x = x + dx[k];
 				y = y + dy[k];           // переходим в €чейку, котора€ на 1 ближе к старту
@@ -95,7 +108,12 @@ bool Enemy::WAY(int ax, int ay, int bx, int by)   // поиск пути из €чейки (ax, a
 	}
 	px[0] = ax;
 	py[0] = ay;                    // теперь px[0..len] и py[0..len] - координаты €чеек пути
-
+	EntityPosition::Coords[2] = px[1] * 32;
+	EntityPosition::Coords[3] = py[1] * 32;
+	/*for (int i = 0; i < len; i++) {
+		std::cout << "(" << px[i] << "," << py[i] << ")";
+	}
+	std::cout << x<<"," << y<<"  ";*/
 	return true;
 }
 
@@ -265,7 +283,7 @@ void Enemy::GetWay()
 }
 void Enemy::Update()
 {
-	WAY(EntityPosition::Coords[2], EntityPosition::Coords[3], EntityPosition::Coords[0], EntityPosition::Coords[1]);
+	WAY(EntityPosition::Coords[2]/32, EntityPosition::Coords[3]/32, EntityPosition::Coords[0]/32, EntityPosition::Coords[1]/32);
 	if (((EntityPosition::Coords[2] == EntityPosition::Coords[0]) && (EntityPosition::Coords[3] == EntityPosition::Coords[1] + 32)) ||
 		((EntityPosition::Coords[2] == EntityPosition::Coords[0]) && (EntityPosition::Coords[3] == EntityPosition::Coords[1] - 32)) ||
 		((EntityPosition::Coords[3] == EntityPosition::Coords[1]) && (EntityPosition::Coords[2] == EntityPosition::Coords[0] + 32)) ||
@@ -289,5 +307,5 @@ void Enemy::Update()
 	{
 		FlagManager::flagPlayer = 1;
 	}
-	std::cout << EntityPosition::Coords[2] <<"," << EntityPosition::Coords[3] << "/"<< FlagManager::flagPlayer << std::endl;
+	
 }

@@ -13,12 +13,8 @@ private:
 	const int rows = 22, cols = 32;
 	int enemyLoc[22][32];
 	int count = 0;
-	int testCoordx;
-	int testCoordy;
-	int firstmovx;
-	int firstmovy;
 	int move;
-	int debugcount = 0;
+	int Attackflag = 1;
 	const int W = 32;         // ширина рабочего поля
 	const int H = 22;         // высота рабочего поля
 	const int WALL = -2;         // непроходимая ячейка

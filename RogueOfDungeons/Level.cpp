@@ -377,7 +377,7 @@ void Level::OtherGeneration() {
 }
 
 void Level::Generate() {
-	int generateChoose = 1;
+	int generateChoose = 0;
 	srand(time(0));
 	if (generateChoose == 0) {
 		ChunkGenerationMethod();

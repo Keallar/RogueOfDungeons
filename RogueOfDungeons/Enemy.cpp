@@ -81,9 +81,7 @@ bool Enemy::WAY(int ax, int ay, int bx, int by)   // поиск пути из €чейки (ax, a
 		}
 		d++;
 	} while (!stop && enemyLoc[by][bx] == BLANK);
-
 	//if (enemyLoc[bx][by] == BLANK) return false;  // путь не найден
-
 	// восстановление пути
 	len = enemyLoc[by][bx];            // длина кратчайшего пути из (ax, ay) в (bx, by)
 	x = bx;
@@ -107,187 +105,23 @@ bool Enemy::WAY(int ax, int ay, int bx, int by)   // поиск пути из €чейки (ax, a
 		}
 	}
 	px[0] = ax;
-	py[0] = ay;                    // теперь px[0..len] и py[0..len] - координаты €чеек пути
+	py[0] = ay;                    
 	EntityPosition::Coords[2] = px[1] * 32;
 	EntityPosition::Coords[3] = py[1] * 32;
-	/*for (int i = 0; i < len; i++) {
-		std::cout << "(" << px[i] << "," << py[i] << ")";
-	}
-	std::cout << x<<"," << y<<"  ";*/
 	return true;
 }
 
-void Enemy::GetWay()
-{
-
-		/*if (((abs(testCoordx - EntityPosition::Coords[0])) > 32) || ((abs(testCoordy - EntityPosition::Coords[1])) > 32))
-		{
-			int flag = rand() % 2;
-
-			if (flag == 0)
-			{
-				if ((testCoordx - EntityPosition::Coords[0]) > 32)
-				{
-					int i = 0, j = 0, whileflag = 0;
-					if (enemyLoc[(testCoordx / 32) - 1][testCoordy/32] == 0)
-					{
-						EntityPosition::Coords[2] -= 32;
-					}
-					else if (enemyLoc[(testCoordx / 32) - 1][testCoordy/32] != 0)
-					{
-						while ((enemyLoc[(testCoordx / 32) + 1][testCoordy / 32 + i] != 0) || whileflag == 0)
-						{
-							if (testCoordy / 32 + i + 1 > 22)
-							{
-								whileflag = 1;
-								i = 1000;
-							}
-							i += 1;
-						}
-						while ((enemyLoc[(testCoordx / 32) + 1][testCoordy / 32 - j] != 0) || whileflag == 0)
-						{
-							if (testCoordy / 32 - j - 1 < 0)
-							{
-								whileflag = 1;
-								j = 1000;
-							}
-							j += 1;
-						}
-						if (i < j)
-						{
-							EntityPosition::Coords[3] -= 32;
-						}
-						else
-						{
-							EntityPosition::Coords[3] += 32;
-						}
-					}
-				}
-				else if ((testCoordx - EntityPosition::Coords[0]) < -32)
-				{
-					int i = 0, j = 0, whileflag = 0;
-					if (enemyLoc[(testCoordx / 32) + 1][testCoordy/32] == 0)
-					{
-						EntityPosition::Coords[2] += 32;
-					}
-					else if (enemyLoc[(testCoordx / 32) + 1][testCoordy/32] != 0)
-					{
-						while ((enemyLoc[(testCoordx / 32) + 1][testCoordy/32 + i] != 0) || whileflag == 0)
-						{
-							if (testCoordy / 32 + i + 1 > 22) 
-							{
-								whileflag = 1;
-								i = 1000;
-							}
-							i += 1;
-						}
-						while ((enemyLoc[(testCoordx / 32) + 1][testCoordy / 32 - j] != 0) || whileflag == 0) 
-						{
-							if (testCoordy / 32 - j - 1 < 0)
-							{
-								whileflag = 1;
-								j = 1000;
-							}
-							j += 1;
-						}
-						if (i < j)
-						{
-							EntityPosition::Coords[3] -= 32;
-						}
-						else
-						{
-							EntityPosition::Coords[3] += 32;
-						}
-					}
-				}
-			}
-			else
-			{
-				if ((testCoordy - EntityPosition::Coords[1]) > 32)
-				{
-					if (enemyLoc[testCoordx/32][(testCoordy / 32) - 1] == 0)
-					{
-						EntityPosition::Coords[3] -= 32;
-					}
-					else if (enemyLoc[testCoordx/32][(testCoordy / 32) - 1] != 0)
-					{
-						int i = 0, j = 0, whileflag = 0;
-						while ((enemyLoc[(testCoordx / 32 + i)][testCoordy / 32 +1] != 0) || whileflag == 0)
-						{
-							if (testCoordx / 32 + i + 1 > 32)
-							{
-								whileflag = 1;
-								i = 1000;
-							}
-							i += 1;
-						}
-						while ((enemyLoc[(testCoordx / 32) - j][testCoordy / 32 +1] != 0) || whileflag == 0)
-						{
-							if (testCoordx / 32 - j - 1 < 0)
-							{
-								whileflag = 1;
-								j = 1000;
-							}
-							j += 1;
-						}
-						if (i < j)
-						{
-							EntityPosition::Coords[2] -= 32;
-						}
-						else
-						{
-							EntityPosition::Coords[2] += 32;
-						}
-					}
-				}
-				else if ((testCoordy - EntityPosition::Coords[1]) < -32)
-				{
-					if (enemyLoc[(testCoordx / 32)][testCoordy/32 + 1] == 0)
-					{
-						EntityPosition::Coords[3] += 32;
-					}
-					else if (enemyLoc[(testCoordx / 32) ][testCoordy/32 + 1] != 0)
-					{
-						int i = 0, j = 0, whileflag = 0;
-						while ((enemyLoc[(testCoordx / 32 + i)][testCoordy / 32 + 1] != 0) || whileflag == 0)
-						{
-							if (testCoordx / 32 + i + 1 > 32)
-							{
-								whileflag = 1;
-								i = 1000;
-							}
-							i += 1;
-						}
-						while ((enemyLoc[(testCoordx / 32) - j][testCoordy / 32 + 1] != 0) || whileflag == 0)
-						{
-							if (testCoordx / 32 - j - 1 < 0)
-							{
-								whileflag = 1;
-								j = 1000;
-							}
-							j += 1;
-						}
-						if (i < j)
-						{
-							EntityPosition::Coords[2] -= 32;
-						}
-						else
-						{
-							EntityPosition::Coords[2] += 32;
-						}
-					}
-				}
-			}
-			std::cout << flag << ", ";
-		}*/
-}
 void Enemy::Update()
 {
-	WAY(EntityPosition::Coords[2]/32, EntityPosition::Coords[3]/32, EntityPosition::Coords[0]/32, EntityPosition::Coords[1]/32);
-	if (((EntityPosition::Coords[2] == EntityPosition::Coords[0]) && (EntityPosition::Coords[3] == EntityPosition::Coords[1] + 32)) ||
+	if ((abs(EntityPosition::Coords[2]/32 - EntityPosition::Coords[0]/32) + abs(EntityPosition::Coords[3]/32 - EntityPosition::Coords[1]/32)) > 1)
+		{
+		WAY(EntityPosition::Coords[2] / 32, EntityPosition::Coords[3] / 32, EntityPosition::Coords[0] / 32, EntityPosition::Coords[1] / 32);
+		Attackflag = 0;
+		}
+	if ((((EntityPosition::Coords[2] == EntityPosition::Coords[0]) && (EntityPosition::Coords[3] == EntityPosition::Coords[1] + 32)) ||
 		((EntityPosition::Coords[2] == EntityPosition::Coords[0]) && (EntityPosition::Coords[3] == EntityPosition::Coords[1] - 32)) ||
 		((EntityPosition::Coords[3] == EntityPosition::Coords[1]) && (EntityPosition::Coords[2] == EntityPosition::Coords[0] + 32)) ||
-		((EntityPosition::Coords[3] == EntityPosition::Coords[1]) && (EntityPosition::Coords[2] == EntityPosition::Coords[0] - 32)))
+		((EntityPosition::Coords[3] == EntityPosition::Coords[1]) && (EntityPosition::Coords[2] == EntityPosition::Coords[0] - 32)))&&Attackflag == 1)
 	{
 		if (xanim == 96)
 		{
@@ -307,5 +141,5 @@ void Enemy::Update()
 	{
 		FlagManager::flagPlayer = 1;
 	}
-	
+	Attackflag = 1;
 }

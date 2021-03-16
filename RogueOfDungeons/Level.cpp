@@ -116,6 +116,20 @@ void Level::Render()
 //			SDL_GetMouseState(&mouseCoord.x, &mouseCoord.y);
 //			if (uiSpec->flag == 1)
 //			{
+//				SDL_GetMouseState(&mouseCoords.x, &mouseCoords.y);
+//				if (InputManager::MouseInArea(1230, 200, 64, 64, mouseCoords.x, mouseCoords.y) &&
+//					FlagManager::flagUiSpec == 0)
+//				{
+//					std::cout << "Check" << std::endl;
+//					FlagManager::flagUiSpec = 1;
+//					break;
+//				}
+//				else if (InputManager::MouseInArea(1230, 200, 32, 32, mouseCoords.x, mouseCoords.y) &&
+//					FlagManager::flagUiSpec == 1)
+//				{
+//					FlagManager::flagUiSpec = 0;
+//					break;
+//				}
 //
 //			}
 //		default:

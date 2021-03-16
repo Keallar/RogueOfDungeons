@@ -22,4 +22,5 @@ public:
     void clean();
 	void GetLevel(int arr[22][32]);
 	void GetPlayerFirstCoords();
+    void Attack();
 };

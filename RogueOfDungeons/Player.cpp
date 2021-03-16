@@ -127,3 +127,11 @@ void Player::Update()
 	}
 }
 
+/*void Player::Attack()
+{
+	if (ITEMTYPE.... = 0 типо ближний бой) {}
+	else if (ITEMTYPE.... = 1 типо дальний бой)
+	{
+		
+	}
+}*/

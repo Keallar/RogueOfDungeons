@@ -43,7 +43,7 @@ public:
 	void Update();
 	void Start();
 	void Render();
-	void handleEvents();
+	//void handleEvents(SDL_Event eventWIthSpec);
 	void Generate();
 	int GetLocation(int x, int y);
 	void ChangeLocation(int x, int y);

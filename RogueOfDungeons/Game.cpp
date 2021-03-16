@@ -9,6 +9,7 @@
 #include "UI.h"
 #include "Enemy.h"
 
+//Player Game::player = new Player("images/Hero.png", renderer);
 
 Game::Game() 
 {
@@ -79,6 +80,7 @@ void Game::handleEvents()
 				{
 					Menu->flag = 0;
 					level = new Level(renderer);
+					//level->handleEvents(event);
 					level->Start();
 					break;
 				}

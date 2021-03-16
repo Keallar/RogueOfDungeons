@@ -4,6 +4,9 @@
 #include <iostream>
 #include "EntityPosition.h"
 
+int Player::HP = 10;
+int Player::exp = 0;
+
 Player::Player(const char* texturesheet, SDL_Renderer* renderer)
 {
 	ren = renderer;

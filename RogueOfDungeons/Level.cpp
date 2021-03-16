@@ -106,12 +106,11 @@ void Level::Render()
 }
 
 //Вызов окошка с характеристиками
-//void Level::handleEvents()
+//void Level::handleEvents(SDL_Event eventWithSpec)
 //{
-//	SDL_Event eventSpecifications;
-//	while (SDL_PollEvent(&eventSpecifications))
+//	while (SDL_PollEvent(&eventWithSpec))
 //	{
-//		switch (eventSpecifications.type)
+//		switch (eventWithSpec.type)
 //		{
 //		case SDL_MOUSEBUTTONDOWN:
 //			SDL_GetMouseState(&mouseCoord.x, &mouseCoord.y);

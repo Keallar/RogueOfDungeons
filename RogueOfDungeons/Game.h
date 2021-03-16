@@ -5,6 +5,7 @@
 #include <iostream>
 #include "MainMenu.h"
 #include "Level.h"
+#include "Player.h"
 
 struct COORDS {
 	int x;
@@ -33,6 +34,8 @@ private:
 	MainMenu* Menu;
 	Level* level;
 	UIInfo* uiLevel;
+	//UNDONE
+	//static Player* player; 
 public:
 	Game();
 	~Game();

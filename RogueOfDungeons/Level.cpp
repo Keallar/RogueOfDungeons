@@ -53,20 +53,27 @@ void Level::Update()
 		enemy->GetLoc(Location);
 		SDL_Delay(150);
 	}
-	if (FlagManager::flagUiSpec == 1)
+	if (FlagManager::flagUiSpec == 0)
 	{
-		uiSpec->Render();
-		//std::cout << "Spec" << std::endl;
+		uiSpec->Update();
+		//SDL_Delay(100);
+	}
+	if (FlagManager::flagUI == 0)
+	{
+		uiInfo->Update();
+		//SDL_Delay(100);
 	}
 }
 
 void Level::Start()
 {
-	//FlagManager::flagUI = 1;
+	FlagManager::flagUI = 1;
+	//FlagManager::flagCheckHP = 0;
 	Level::flagTB = 1;
 	FlagManager::flagPlayer = 1;
 	Generate();
 	FlagManager::flagEnemy = 0;
+	FlagManager::flagUiSpec = 0;
 	
 	player->GetLevel(Location);
 	player->GetPlayerFirstCoords();
@@ -147,7 +154,6 @@ void Level::Render()
 	}
 	player->Render();
 	enemy->Render();
-	uiInfo->Render();
 	uiInventory->Render();
 	uiEnemy->Render();
 
@@ -174,10 +180,11 @@ void Level::Render()
 
 void Level::handleEvents(SDL_Event eventWIthSpec)
 {
-	SDL_Event eventWithSpec;
-	while (SDL_PollEvent(&eventWithSpec))
+	SDL_Event eventSpec = eventWIthSpec;
+
+	while (SDL_PollEvent(&eventSpec))
 	{
-		switch (eventWithSpec.type)
+		switch (eventSpec.type)
 		{
 		case SDL_MOUSEBUTTONDOWN:
 			SDL_GetMouseState(&mouseCoords.x, &mouseCoords.y);

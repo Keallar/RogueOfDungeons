@@ -30,7 +30,7 @@ private:
 	UISpecifications* uiSpec;
 	std::vector <Enemy> enemies;
 	std::vector <GameObject> textures; 
-	MouseCoords mouseCoord;
+	MouseCoords mouseCoords;
 	void CreateChunk(int x, int y);
 	//std::vector<std::pair<int, int>> pop_front(std::vector<std::pair<int, int>> vec);
 	void ChunkGenerationMethod();

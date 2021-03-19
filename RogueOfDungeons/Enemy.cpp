@@ -143,10 +143,6 @@ void Enemy::Update()
 			xanim = 0;
 			FlagManager::flagPlayer = 1;
 		}
-		/*else if (xanim == 64)
-		{
-			
-		}*/
 		else
 		{
 			xanim += 32;

@@ -33,7 +33,6 @@ public:
 class UIInfo
 {
 private:
-	const Uint8* keys = SDL_GetKeyboardState(NULL);
 	const char* pathInFont;
 	SDL_Color color = { 255, 255, 255, 255 };
 	SDL_Renderer* ren;
@@ -61,14 +60,12 @@ private:
 public:
 	UIInfo(SDL_Renderer* renderer);
 	void Render();
-	void Update();
 };
 
 class UISpecifications
 {
 private:
 	const char* pathInFont;
-	const Uint8* keys = SDL_GetKeyboardState(NULL);
 	const Uint32 MOUSE_CHECK = SDL_GetMouseState(NULL, NULL);
 	SDL_Renderer* ren;
 	bool flag;
@@ -85,7 +82,6 @@ private:
 public:
 	UISpecifications(SDL_Renderer* renderer);
 	void Render();
-	void Update();
 };
 
 

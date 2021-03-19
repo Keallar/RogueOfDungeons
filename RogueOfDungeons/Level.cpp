@@ -53,16 +53,22 @@ void Level::Update()
 		enemy->GetLoc(Location);
 		SDL_Delay(150);
 	}
-	if (FlagManager::flagUiSpec == 0)
+	if((keys[SDL_SCANCODE_Q] && FlagManager::flagUiSpec == 0))
 	{
-		uiSpec->Update();
-		//SDL_Delay(100);
+		std::cout << "Check Spec" << std::endl;
+		FlagManager::flagUiSpec = 1;
+		FlagManager::flagUI = 0;
+		SDL_Delay(200);
 	}
-	if (FlagManager::flagUI == 0)
+	else if (keys[SDL_SCANCODE_Q] && FlagManager::flagUI == 0)
 	{
-		uiInfo->Update();
-		//SDL_Delay(100);
+		std::cout << "Check Info" << std::endl;
+		FlagManager::flagUiSpec = 0;
+		FlagManager::flagUI = 1;
+		SDL_Delay(200);
 	}
+
+	
 }
 
 void Level::Start()

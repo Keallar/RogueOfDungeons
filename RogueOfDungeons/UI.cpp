@@ -89,16 +89,6 @@ void UIInfo::Render()
 
 }
 
-void UIInfo::Update()
-{
-	if (keys[SDL_SCANCODE_Q] && FlagManager::flagUI == 0)
-	{
-		std::cout << "Check Info" << std::endl;
-		FlagManager::flagUiSpec = 0;
-		FlagManager::flagUI = 1;
-	}
-}
-
 UISpecifications::UISpecifications(SDL_Renderer* renderer)
 {
 	pathInFont = "fonts/manaspc.ttf";
@@ -142,17 +132,6 @@ void UISpecifications::Render()
 	RenderManager::CopyToRender(LCK, ren, 1050, 200, 64, 20);
 	RenderManager::CopyToRender(plus, ren, 1230, 200, 16, 20);
 	RenderManager::CopyToRender(state, ren, 1180, 200, 16, 20);
-}
-
-void UISpecifications::Update()
-{
-	//UNDONE (to do bundle with mouse)
-	if ((keys[SDL_SCANCODE_C] && FlagManager::flagUiSpec == 0))
-	{
-		std::cout << "Check Spec" << std::endl;
-		FlagManager::flagUiSpec = 1;
-		FlagManager::flagUI = 0;
-	}
 }
 
 UIInventory::UIInventory(SDL_Renderer* renderer)

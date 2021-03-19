@@ -31,6 +31,7 @@ private:
 	std::vector <Enemy> enemies;
 	std::vector <GameObject> textures; 
 	MouseCoords mouseCoords;
+	const Uint8* keys = SDL_GetKeyboardState(NULL);
 	void CreateChunk(int x, int y);
 	//std::vector<std::pair<int, int>> pop_front(std::vector<std::pair<int, int>> vec);
 	void ChunkGenerationMethod();

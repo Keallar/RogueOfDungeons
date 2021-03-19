@@ -43,6 +43,21 @@ void Enemy::GetLoc(int arr[22][32])
 		}
 	}
 }
+
+void Enemy::GetEnemyFirstCoords() {
+	EntityPosition::Coords[2] = (rand() % 30 + 1) * 32;
+	EntityPosition::Coords[3] = (rand() % 20 + 1) * 32;
+	while ((enemyLoc[EntityPosition::Coords[2] / 32][EntityPosition::Coords[3] / 32] == -2) ||
+		((enemyLoc[EntityPosition::Coords[2] / 32][EntityPosition::Coords[3] / 32 - 1] != -1) &&
+		(enemyLoc[EntityPosition::Coords[2] / 32][EntityPosition::Coords[3] / 32 + 1] != -1) &&
+			(enemyLoc[EntityPosition::Coords[2] / 32 - 1][EntityPosition::Coords[3] / 32] != -1) &&
+			(enemyLoc[EntityPosition::Coords[2] / 32 + 1][EntityPosition::Coords[3] / 32] != -1)))
+	{
+		EntityPosition::Coords[2] = (rand() % 30 + 1) * 32;
+		EntityPosition::Coords[3] = (rand() % 20 + 1) * 32;
+	}
+}
+
 bool Enemy::WAY(int ax, int ay, int bx, int by)   // поиск пути из €чейки (ax, ay) в €чейку (bx, by)
 {
 	int dx[4] = { 1, 0, -1, 0 };   // смещени€, соответствующие сосед€м €чейки

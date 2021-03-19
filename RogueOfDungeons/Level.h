@@ -22,6 +22,7 @@ private:
 	SDL_Texture* TileTextureCastle;
 	SDL_Texture* PlayBackground;
 	SDL_Renderer* ren;
+	TextInfo* changingHP;
 	Player* player;
 	Enemy* enemy;
 	UIInfo* uiInfo;

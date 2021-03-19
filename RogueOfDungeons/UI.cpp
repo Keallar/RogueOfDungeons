@@ -24,7 +24,12 @@ TextInfo::TextInfo(SDL_Renderer* renderer, int changeTextValue) : ren(renderer)
 
 TextInfo::~TextInfo()
 {
+	
+}
 
+void TextInfo::Delete()
+{
+	delete this;
 }
 
 void TextInfo::Render()

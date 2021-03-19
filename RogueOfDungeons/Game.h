@@ -34,7 +34,7 @@ private:
 	MainMenu* Menu;
 	Level* level;
 	UIInfo* uiLevel;
-	//UNDONE
+	//UNDONE (сделать Player static во всей игре)
 	//static Player* player; 
 public:
 	Game();

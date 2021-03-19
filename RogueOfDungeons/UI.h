@@ -17,6 +17,8 @@
 //	void Render();
 //};
 
+
+//UNDONE (сделать общим классом для всех изменяемых текстов)
 class TextInfo
 {
 private:
@@ -28,6 +30,7 @@ public:
 	TextInfo(SDL_Renderer* renderer, int changeTextValue);
 	~TextInfo();
 	void Render();
+	void Delete();
 };
 
 class UIInfo

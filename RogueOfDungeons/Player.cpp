@@ -50,17 +50,17 @@ int Player::GetMana()
 
 void Player::CheckHP()
 {
-	if (Player::HP[0] != Player::HP[1] /*&& FlagManager::flagCheckHP ==  0*/)
+	if (Player::HP[0] != Player::HP[1] && FlagManager::flagCheckHP ==  0)
 	{
 		//std::cout << "Check HP 1" << std::endl;
-		//FlagManager::flagCheckHP = 1;
+		FlagManager::flagCheckHP = 1;
 		Player::HP[1] = Player::HP[0];
 	}
-	//else if (Player::HP[0] == Player::HP[1] /*&& FlagManager::flagCheckHP == 1*/)
-	//{
-	//	//std::cout << "Check HP 0" << std::endl;
-	//	FlagManager::flagCheckHP = 0;
-	//}
+	else if (Player::HP[0] == Player::HP[1] && FlagManager::flagCheckHP == 1)
+	{
+		//std::cout << "Check HP 0" << std::endl;
+		FlagManager::flagCheckHP = 0;
+	}
 }
 
 void Player::GetLevel(int arr[22][32]) 

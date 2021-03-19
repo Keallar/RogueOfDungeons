@@ -121,7 +121,8 @@ SDL_Texture* FontManager::renderText(const char* text, const char* fontFile, SDL
 	return fontTexture;
 }
 
-int FlagManager::flagPlayer = 0;
-int FlagManager::flagEnemy = 1;
-int FlagManager::flagUI = 1;
-int FlagManager::flagUiSpec = 1;
+bool FlagManager::flagPlayer = 0;
+bool FlagManager::flagEnemy = 1;
+bool FlagManager::flagUI = 1;
+bool FlagManager::flagUiSpec = 1;
+bool FlagManager::flagCheckHP = 0;

@@ -6,12 +6,13 @@
 #include "UI.h"
 
 
-int Player::HP = 5;
-int Player::exp = 0;
-int Player::mana = 50;
+int Player::HP[2] = {
+					 10, /*hp  now*/
+					 10  /*hp  previous*/
+};
+int Player::exp[2] = { 0,0 };
 
-int Player::HP = 10;
-int Player::exp = 0;
+int Player::mana[2] = { 0,0 };
 
 Player::Player(const char* texturesheet, SDL_Renderer* renderer)
 {
@@ -30,6 +31,36 @@ Player::~Player()
 	{
 		SDL_DestroyTexture(PlayerTexture);
 	}
+}
+
+int Player::GetHP()
+{
+	return HP[0];
+}
+
+int Player::GetEXP()
+{
+	return exp[0];
+}
+
+int Player::GetMana()
+{
+	return mana[0];
+}
+
+void Player::CheckHP()
+{
+	if (Player::HP[0] != Player::HP[1] /*&& FlagManager::flagCheckHP ==  0*/)
+	{
+		//std::cout << "Check HP 1" << std::endl;
+		//FlagManager::flagCheckHP = 1;
+		Player::HP[1] = Player::HP[0];
+	}
+	//else if (Player::HP[0] == Player::HP[1] /*&& FlagManager::flagCheckHP == 1*/)
+	//{
+	//	//std::cout << "Check HP 0" << std::endl;
+	//	FlagManager::flagCheckHP = 0;
+	//}
 }
 
 void Player::GetLevel(int arr[22][32]) 
@@ -74,7 +105,7 @@ void Player::Update()
 		{
 			if (Location[(EntityPosition::Coords[1]) / 32 - 1][(EntityPosition::Coords[0])/ 32] == 0) {
 				EntityPosition::Coords[1] -= 32;
-				UIInfo::Update(HP, mana, exp, ren);
+				Player::HP[0] -= 1;
 				FlagManager::flagPlayer = 0;
 				//std::cout << "w" << EntityPosition::Coords[0] << EntityPosition::Coords[1] << std::endl;
 				//SDL_Delay(100);
@@ -133,6 +164,7 @@ void Player::Update()
 			}
 		}
 	}
+	Player::CheckHP();
 }
 
 /*void Player::Attack()

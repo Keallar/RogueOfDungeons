@@ -17,58 +17,75 @@
 //	void Render();
 //};
 
+class TextInfo
+{
+private:
+	const char* PATH_IN_FONT;
+	SDL_Color color = { 255, 255, 255, 255 };
+	SDL_Renderer* ren;
+	SDL_Texture* infoText;
+public:
+	TextInfo(SDL_Renderer* renderer, int changeTextValue);
+	~TextInfo();
+	void Render();
+};
+
 class UIInfo
 {
 private:
-	static const char* pathInFont;
+	const Uint8* keys = SDL_GetKeyboardState(NULL);
+	const char* pathInFont;
+	SDL_Color color = { 255, 255, 255, 255 };
 	SDL_Renderer* ren;
 	SDL_Texture* versionBLock;
 	SDL_Texture* infoBlock;
 	SDL_Texture* info;
 	//HP
 	SDL_Texture* hpBar;
-	
 	SDL_Texture* hpText;
 	SDL_Texture* hpInfo;
-	static int healthInfo;
-	static char* HP;
+	SDL_Texture* updatedHP;
+	//static int healthInfo;
 	//XP
 	SDL_Texture* xpBar;
 	SDL_Texture* xpText;
 	SDL_Texture* xpInfo;
-	static int expInfo;
-	static std::string XP;
+	//static int expInfo;
 	//MANA
 	SDL_Texture* mnBar;
 	SDL_Texture* mnText;
 	SDL_Texture* mnInfo;
-	static int manaInfo;
-	static std::string MANA;
+	//static int manaInfo;
 	//Buttons
 	SDL_Texture* specButton;
 public:
-	UIInfo( SDL_Renderer* renderer);
+	UIInfo(SDL_Renderer* renderer);
 	void Render();
-	static void Update(int hp, int mana, int exp, SDL_Renderer* renderer);
+	void Update();
 };
 
 class UISpecifications
 {
 private:
 	const char* pathInFont;
+	const Uint8* keys = SDL_GetKeyboardState(NULL);
+	const Uint32 MOUSE_CHECK = SDL_GetMouseState(NULL, NULL);
 	SDL_Renderer* ren;
+	bool flag;
 	SDL_Texture* specBlock;
+	SDL_Texture* specifcation;
+	SDL_Texture* state;
 	SDL_Texture* STR;
 	SDL_Texture* DEX;
 	SDL_Texture* INT;
 	SDL_Texture* PHS; //Physical Strength
 	SDL_Texture* LCK;
 	SDL_Texture* button;
+	SDL_Texture* plus;
 public:
 	UISpecifications(SDL_Renderer* renderer);
 	void Render();
-	//void Start();
-	//void Close();
+	void Update();
 };
 
 

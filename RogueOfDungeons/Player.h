@@ -8,9 +8,9 @@ private:
     int Location[22][32];
     SDL_Texture* PlayerTexture;
     SDL_Renderer* ren;
-    static int HP;
-    static int exp;
-    static int mana;
+    static int HP[2];
+    static int exp[2];
+    static int mana[2];
     int damageInput;
     //UIInfo* uiInfo;
     const Uint8* keys = SDL_GetKeyboardState(NULL);
@@ -24,4 +24,8 @@ public:
 	void GetLevel(int arr[22][32]);
 	void GetPlayerFirstCoords();
     void Attack();
+    static int GetHP();
+    static int GetEXP();
+    static int GetMana();
+    static void CheckHP();
 };

@@ -5,7 +5,7 @@
 #include "UI.h"
 #include "GameObject.h"
 
-struct MouseCoords
+struct MouseCoordinates
 {
 	int x;
 	int y;
@@ -35,6 +35,7 @@ private:
 	void OtherGeneration();
 	bool Search(std::vector<std::pair<int, int>> vector, int x, int y);
 	int SearchNum(std::vector<std::pair<int, int>> vector, int x, int y);
+	MouseCoordinates mouseCoords;
 
 public:
 	bool flagTB;

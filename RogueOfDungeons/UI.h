@@ -2,6 +2,7 @@
 #include "SDL.h"
 #include "SDL_image.h"
 #include "SDL_ttf.h"
+#include "string"
 
 
 //class UIMenu 
@@ -19,33 +20,36 @@
 class UIInfo
 {
 private:
-	const char* pathInFont;
-	char uiHp;
+	static const char* pathInFont;
 	SDL_Renderer* ren;
 	SDL_Texture* versionBLock;
 	SDL_Texture* infoBlock;
 	SDL_Texture* info;
 	//HP
 	SDL_Texture* hpBar;
+	
 	SDL_Texture* hpText;
 	SDL_Texture* hpInfo;
 	static int healthInfo;
+	static char* HP;
 	//XP
 	SDL_Texture* xpBar;
 	SDL_Texture* xpText;
 	SDL_Texture* xpInfo;
 	static int expInfo;
+	static std::string XP;
 	//MANA
 	SDL_Texture* mnBar;
 	SDL_Texture* mnText;
 	SDL_Texture* mnInfo;
 	static int manaInfo;
+	static std::string MANA;
 	//Buttons
 	SDL_Texture* specButton;
 public:
 	UIInfo( SDL_Renderer* renderer);
 	void Render();
-	void Update(int hp, int mana, int exp);
+	static void Update(int hp, int mana, int exp, SDL_Renderer* renderer);
 };
 
 class UISpecifications
@@ -53,7 +57,7 @@ class UISpecifications
 private:
 	const char* pathInFont;
 	SDL_Renderer* ren;
-	bool flag;
+	SDL_Texture* specBlock;
 	SDL_Texture* STR;
 	SDL_Texture* DEX;
 	SDL_Texture* INT;
@@ -63,6 +67,8 @@ private:
 public:
 	UISpecifications(SDL_Renderer* renderer);
 	void Render();
+	//void Start();
+	//void Close();
 };
 
 

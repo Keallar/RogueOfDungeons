@@ -59,6 +59,7 @@ void Game::init(const char* title, int xpos, int ypos, int width, int height, bo
 	{
 		isRunning = false;
 	}
+	
 	Menu = new MainMenu("images/BackgroundMenu.png", "images/Play.png", "images/Settings.png","images/Exit.png", renderer);
 }
 
@@ -107,15 +108,13 @@ void Game::update()
 		//Menu->Update();
 	}
 	else if (Menu->flag == 0)
-		{
-			level->Update();
-		}
-	
+	{
+		level->Update();
+	}	
 }
 	
 void Game::render()
 {
-	//SDL_RenderClear(renderer);
 	if (Menu->flag == 1)
 	{
 		Menu->Render();

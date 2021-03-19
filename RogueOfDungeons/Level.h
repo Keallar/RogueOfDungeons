@@ -33,11 +33,7 @@ private:
 	std::vector <GameObject> textures; 
 	MouseCoords mouseCoords;
 	const Uint8* keys = SDL_GetKeyboardState(NULL);
-	void CreateChunk(int x, int y);
 	//std::vector<std::pair<int, int>> pop_front(std::vector<std::pair<int, int>> vec);
-	void ChunkGenerationMethod();
-	void RoomGenerationMethod1();
-	void RoomGenerationMethod2();
 	//void OtherGeneration(int startX, int startY, int endX, int endY);
 	//bool Search(std::vector<std::pair<int, int>> vector, int x, int y);
 	//int SearchNum(std::vector<std::pair<int, int>> vector, int x, int y);
@@ -53,6 +49,10 @@ public:
 	void Generate();
 	int GetLocation(int x, int y);
 	void ChangeLocation(int x, int y);
+	void ChunkGenerationMethod();
+	void RoomGenerationMethod1();
+	void RoomGenerationMethod2();
+	void CreateChunk(int x, int y);
 };
 
 

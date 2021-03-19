@@ -5,7 +5,7 @@
 #include "UI.h"
 #include "GameObject.h"
 
-struct MouseCoordinates
+struct MouseCoords
 {
 	int x;
 	int y;
@@ -35,7 +35,7 @@ private:
 	void OtherGeneration();
 	bool Search(std::vector<std::pair<int, int>> vector, int x, int y);
 	int SearchNum(std::vector<std::pair<int, int>> vector, int x, int y);
-	MouseCoordinates mouseCoords;
+	MouseCoords mouseCoords;
 
 public:
 	bool flagTB;
@@ -44,7 +44,7 @@ public:
 	void Update();
 	void Start();
 	void Render();
-	//void handleEvents(SDL_Event eventWIthSpec);
+	void handleEvents(SDL_Event eventWIthSpec);
 	void Generate();
 	int GetLocation(int x, int y);
 	void ChangeLocation(int x, int y);

@@ -113,7 +113,7 @@ void Level::Render()
 	//SDL_RenderPresent(ren);
 }
 
-void Level::handleEvents()
+void Level::handleEvents(SDL_Event eventWIthSpec)
 {
 	SDL_Event eventWithSpec;
 	while (SDL_PollEvent(&eventWithSpec))

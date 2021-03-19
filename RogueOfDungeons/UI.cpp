@@ -27,11 +27,6 @@ TextInfo::~TextInfo()
 	
 }
 
-void TextInfo::Delete()
-{
-	delete this;
-}
-
 void TextInfo::Render()
 {
 	RenderManager::CopyToRender(infoText, ren, 1116, 72, 32, 20);

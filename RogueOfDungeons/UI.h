@@ -30,7 +30,6 @@ public:
 	TextInfo(SDL_Renderer* renderer, int changeTextValue);
 	~TextInfo();
 	void Render();
-	void Delete();
 };
 
 class UIInfo

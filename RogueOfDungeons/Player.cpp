@@ -9,10 +9,16 @@
 int Player::HP[2] = {
 					 10, /*hp  now*/
 					 10  /*hp  previous*/
-};
-int Player::exp[2] = { 0,0 };
+					};
+int Player::exp[2] = { 
+					   0, /*exp  now*/
+					   0  /*exp  previous*/
+					 };
 
-int Player::mana[2] = { 0,0 };
+int Player::mana[2] = { 
+					    0, /*mana  now*/
+						0  /*mana  previous*/
+					  };
 
 Player::Player(const char* texturesheet, SDL_Renderer* renderer)
 {
@@ -164,6 +170,7 @@ void Player::Update()
 			}
 		}
 	}
+	
 	Player::CheckHP();
 }
 

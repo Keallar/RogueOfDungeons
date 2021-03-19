@@ -28,4 +28,6 @@ public:
     static int GetEXP();
     static int GetMana();
     static void CheckHP();
+    static void CheckEXP();
+    static void CheckMANA();
 };

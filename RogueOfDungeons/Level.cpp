@@ -55,7 +55,7 @@ void Level::Update()
 	if (FlagManager::flagUiSpec == 1)
 	{
 		uiSpec->Render();
-		std::cout << "Spec" << std::endl;
+		//std::cout << "Spec" << std::endl;
 	}
 }
 
@@ -110,7 +110,25 @@ void Level::Render()
 	uiInventory->Render();
 	uiEnemy->Render();
 
-	//SDL_RenderPresent(ren);
+	if (FlagManager::flagUiSpec == 1)
+	{
+		uiSpec->Render();
+	}
+	if (FlagManager::flagUI == 1)
+	{
+		uiInfo->Render();
+
+		//WTF (утечка памяти)
+		{
+			//TextInfo* changingHP = new TextInfo(ren, Player::GetHP());
+			std::unique_ptr<TextInfo> changingHP(new TextInfo(ren, Player::GetHP()));
+			changingHP->Render();
+			//std::cout << "Render HP" << std::endl;
+			//delete changingHP;
+			//changingHP = nullptr;
+		}
+		//std::cout << "Delete HP" << std::endl;
+	}
 }
 
 void Level::handleEvents(SDL_Event eventWIthSpec)

@@ -89,6 +89,7 @@ void Level::Start()
 void Level::Render()
 {
 	RenderManager::CopyToRender(PlayBackground, ren);
+	//в зависимости от метода генерации выбираются нужные паки текстур
 	if (generateChoose == 0) {
 		for (int i = 0; i < 22; i++)
 		{
@@ -210,6 +211,8 @@ void Level::handleEvents(SDL_Event eventWIthSpec)
 	}
 }
 
+
+
 void Level::CreateChunk(int x, int y) {
 	for (int i = x; i < x + 2; i++) {
 		for (int j = y; j < y + 4; j++) {
@@ -220,6 +223,7 @@ void Level::CreateChunk(int x, int y) {
 	}
 }
 
+//ф-я для безопасного получения инфы из массива
 int Level::GetLocation(int x, int y) {
 	if (x >= 0 && x < 32 && y >= 0 && y < 22) {
 		return textureLocation[y][x];
@@ -229,23 +233,30 @@ int Level::GetLocation(int x, int y) {
 	}
 }
 
+//ф-я для безопасного измменения массива
 void Level::ChangeLocation(int x, int y) {
 	if (x >= 0, x < 32, y >= 0, y < 22) {
 		textureLocation[y][x] = 0;
 	}
 }
 
+//при данном методе генерации карт делится на 8*11 чанков
+
 void Level::ChunkGenerationMethod() {
-	for (int j = 0; j < 8; j++) {
+	for (int j = 0; j < 8; j++) { //делим карту на 8 столбцов по 11 чанков, обрабатываем каждый отдельно
 		int i = rand() % 4 + rand() % 3; int count = 0;
-		while (count < (5 + rand() % 3)) {
+		//задумка такая: в каждом столбце создаем какое-то количество пустых чанков (в которых можно хоидть)
+		//начиная от какого-то чанка. После того, как мы совместим столбцы, мы получим, так сказать, угловатую пещеру
+		//например, в 1 столбце пустые от 4 по 7 чанки, а во 2 стобце от 5 по 9 чанки, представьте в голове
+		while (count < (5 + rand() % 3)) { //выбираем кол-во пустых чанков в столбце
 			if (i + count < 11) {
 				CreateChunk((i + count) * 2, j * 4);
 			}
 			count++;
 		}
 	}
-
+	 //цикл для сглаживания, превращает угловатую пещеру в нормальную
+	//для каждой клетки считаем пустые клетки- соседи. Если их больше 3, делаем клетку пустой
 	for (int j = 0; j < 32; j++) {
 		for (int i = 0; i < 22; i++) {
 			int iteration = 0;
@@ -283,6 +294,7 @@ void Level::ChunkGenerationMethod() {
 		}
 	}
 
+	//далее рандомно выбираем клетки и меняем им тектурку, чтобы уровень был разнообразнее
 
 	for (int j = 0; j < 32; j++) {
 		for (int i = 0; i < 22; i++) {
@@ -306,11 +318,14 @@ void Level::ChunkGenerationMethod() {
 					break;
 				}
 			}
+			//стены вокруг уровня
 			if ((j == 31) || (i == 21) || (j == 0) || (i == 0)) {
 				textureLocation[i][j] = 2;
 			}
 		}
 	}
+
+	//заполяем массив, которых хранит инфу, где стены, а где можно ходить
 
 	for (int i = 0; i < 22; i++) {
 		for (int j = 0; j < 32; j++) {
@@ -454,6 +469,8 @@ void Level::OtherGeneration(int startX, int startY, int endX, int endY) {
 	}
 }*/
 
+//метод плохо работает на данный момент, не юзайте
+
 void Level::RoomGenerationMethod1() {
 	for (int i = 0; i < 22; i++) {
 		for (int j = 0; j < 32; j++) {
@@ -534,8 +551,19 @@ void Level::RoomGenerationMethod1() {
 	}
 }
 
+//метод для генерации комнат, 2 вариант генерации
+
+//сначала делим карту на 8 чанков, 4 столбца по 2 чанка
+//в первом столбце выбираем, какой из чанков будет стартовым
+//в строке, в которой есть стартовый чанк, выбираем чанк номер 2 или 3, на котором произойдет поворот дороги
+//в последнем столбце выбираем конечный чанк
+//главная дорога идет от стартового чанка вправо, поворачивает наверх или вниз на чанке поворота
+//(то есть меняет строку), далее дальше вправо до последнего столбца
+//в каждом столбце есть дорога, которая соединяет чанки
+//чанков 8, но комнат не 8, один из циклов выбирает чанки, в которых не будет комнаты
 void Level::RoomGenerationMethod2() {
 	int RoomSectors[2][4] = { 0, 0, 0, 0, 0, 0, 0, 0 };
+	//выбираем старт чанк
 	switch (rand() % 2) {
 	case 0:
 		RoomSectors[0][0] = 1;
@@ -544,6 +572,8 @@ void Level::RoomGenerationMethod2() {
 		RoomSectors[1][0] = 1;
 		break;
 	}
+	//выбираем конечный чанк
+	//p.s. в стартовом и конечном чанке всегда есть комната
 	switch (rand() % 2) {
 	case 0:
 		RoomSectors[0][3] = 2;
@@ -552,6 +582,7 @@ void Level::RoomGenerationMethod2() {
 		RoomSectors[1][3] = 2;
 		break;
 	}
+	//выбираем чанк поворота. p.s. в нем тоже всегда есть комната
 	switch (rand() % 2) {
 	case 0:
 		if (RoomSectors[0][0] == 1) {
@@ -572,6 +603,7 @@ void Level::RoomGenerationMethod2() {
 			break;
 		}
 	}
+	//выбираем чанки, в которых не будет комнаты
 	int count = 0;
 	while (count < 1) {
 		for (int i = 0; i < 2; i++) {
@@ -584,11 +616,13 @@ void Level::RoomGenerationMethod2() {
 			}
 		}
 	}
+	//...
 	for (int i = 0; i < 2; i++) {
 		for (int j = 0; j < 4; j++) {
 			std::cout << RoomSectors[i][j] << " ";
 		}
 	}
+	//рисуем дороги, судя по инфе про чанки
 	for (int i = 0; i < 2; i++) {
 		for (int j = 0; j < 4; j++) {
 			if (RoomSectors[i][j] == 1) {
@@ -610,11 +644,13 @@ void Level::RoomGenerationMethod2() {
 			}
 		}
 	}
+	//строим дороги между чанками в столюцах
 	for (int i = 0; i < 4; i++) {
 		for (int k = 0; k < 11; k++) {
 			textureLocation[5 + k][8 * i + 4] = 0;
 		}
 	}
+	//рисуем комнаты
 	for (int i = 0; i < 2; i++) {
 		for (int j = 0; j < 4; j++) {
 			int start = rand() % 2;
@@ -628,11 +664,13 @@ void Level::RoomGenerationMethod2() {
 			}
 		}
 	}
+	//меняем текстурку центральных клеток комнат(мелочь, но приятно)
 	for (int i = 0; i < 2; i++) {
 		for (int j = 0; j < 4; j++) {
 			textureLocation[11 * i + 5][8 * j + 4] = 6;
 		}
 	}
+	//рисуем границы мапы
 	for (int i = 0; i < 22; i++) {
 		for (int j = 0; j < 32; j++) {
 			if ((i == 0) || (j == 0) || (i == 21) || (j == 31)) {
@@ -640,6 +678,7 @@ void Level::RoomGenerationMethod2() {
 			}
 		}
 	}
+	//добавляем разнообразие в текстурки
 	for (int i = 0; i < 22; i++) {
 		for (int j = 0; j < 32; j++) {
 			if ((textureLocation[i][j] == 1)&&(!(rand()%11))) {
@@ -664,6 +703,7 @@ void Level::RoomGenerationMethod2() {
 		}
 	}
 
+	//щагружаем инфу о том, где стены, а где можно ходить, в массив
 
 	for (int i = 0; i < 22; i++) {
 		for (int j = 0; j < 32; j++) {
@@ -680,9 +720,11 @@ void Level::RoomGenerationMethod2() {
 	}
 }
 
+//rand для рандомного выбора метода генерации
+
 void Level::Generate() {
 	srand(time(0));
-	generateChoose = rand()%2;
+	generateChoose = 1;
 	if (generateChoose == 0) {
 		ChunkGenerationMethod();
 	}

@@ -80,7 +80,6 @@ void Level::Start()
 	FlagManager::flagEnemy = 0;
 	FlagManager::flagUiSpec = 0;
 	FlagManager::flagCheckHP = 0;
-	
 	player->GetLevel(Location);
 	player->GetPlayerFirstCoords();
 	enemy->GetLoc(Location);

@@ -29,11 +29,8 @@ void Enemy::GetLoc(int arr[22][32])
 		for (int j = 0; j < 32; j++) 
 		{
 			enemyLoc[i][j] = arr[i][j];
-			if (arr[i][j] == 1) 
+			if (arr[i][j] >= 1) 
 			{
-				enemyLoc[i][j] = -2;
-			}
-			if (arr[i][j] == 2) {
 				enemyLoc[i][j] = -2;
 			}
 			if (arr[i][j] == 0)
@@ -45,16 +42,13 @@ void Enemy::GetLoc(int arr[22][32])
 }
 
 void Enemy::GetEnemyFirstCoords() {
-	EntityPosition::Coords[2] = (rand() % 30 + 1) * 32;
-	EntityPosition::Coords[3] = (rand() % 20 + 1) * 32;
-	while ((enemyLoc[EntityPosition::Coords[2] / 32][EntityPosition::Coords[3] / 32] == -2) ||
-		((enemyLoc[EntityPosition::Coords[2] / 32][EntityPosition::Coords[3] / 32 - 1] != -1) &&
-		(enemyLoc[EntityPosition::Coords[2] / 32][EntityPosition::Coords[3] / 32 + 1] != -1) &&
-			(enemyLoc[EntityPosition::Coords[2] / 32 - 1][EntityPosition::Coords[3] / 32] != -1) &&
-			(enemyLoc[EntityPosition::Coords[2] / 32 + 1][EntityPosition::Coords[3] / 32] != -1)))
+	EntityPosition::Coords[2] = (rand() % 30) * 32;
+	EntityPosition::Coords[3] = (rand() % 20) * 32;
+	while ((enemyLoc[EntityPosition::Coords[3] / 32][EntityPosition::Coords[2] / 32] == -2))
 	{
-		EntityPosition::Coords[2] = (rand() % 30 + 1) * 32;
-		EntityPosition::Coords[3] = (rand() % 20 + 1) * 32;
+		std::cout << "A";
+		EntityPosition::Coords[2] = (rand() % 30) * 32;
+		EntityPosition::Coords[3] = (rand() % 20) * 32;
 	}
 }
 

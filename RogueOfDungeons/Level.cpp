@@ -725,7 +725,7 @@ void Level::RoomGenerationMethod2() {
 
 void Level::Generate() {
 	srand(time(0));
-	generateChoose = rand()%2;
+	generateChoose = 1;
 	if (generateChoose == 0) {
 		ChunkGenerationMethod();
 	}

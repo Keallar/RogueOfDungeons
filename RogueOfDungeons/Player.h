@@ -1,10 +1,11 @@
 #pragma once
 #include "SDL.h"
-
+#include "inventory.h"
 
 class Player
 {
 private:
+	Inventory* inventory;
     int Location[22][32];
     SDL_Texture* PlayerTexture;
     SDL_Renderer* ren;

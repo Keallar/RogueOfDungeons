@@ -2,6 +2,7 @@
 #include "Managers.h"
 #include "EntityPosition.h"
 #include <iostream>
+#include "inventory.h"
 
 //UIMenu::UIMenu(SDL_Renderer* renderer) 
 //{
@@ -149,6 +150,11 @@ void UIInventory::Render()
 
 	RenderManager::CopyToRender(inventoryBlock, ren, 1024, 480, 256, 225);
 	RenderManager::CopyToRender(inventory, ren, 1085, 490, 128, 32);
+	for (int i = 0; i < 16; i++) {
+		if (Inventory::inventoryFace[i] != -1) {
+			item = textureManager::LoadTexture();
+		}
+	}
 }
 
 //EnemyInfo

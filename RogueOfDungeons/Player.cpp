@@ -4,7 +4,7 @@
 #include <iostream>
 #include "EntityPosition.h"
 #include "UI.h"
-
+#include "inventory.h"
 
 int Player::HP[2] = {
 					 10, /*hp  now*/
@@ -29,6 +29,9 @@ Player::Player(const char* texturesheet, SDL_Renderer* renderer)
 			Location[i][j] = 0;
 		}
 	}
+	inventory = new Inventory;
+	inventory->AddItem(0);
+	inventory->Update();
 }
 
 Player::~Player()
@@ -170,7 +173,7 @@ void Player::Update()
 			}
 		}
 	}
-	
+	inventory->Update();
 	Player::CheckHP();
 }
 

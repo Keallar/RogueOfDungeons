@@ -15,10 +15,20 @@ enum type {
 class Inventory {
 public:
 	Inventory();
-	std::map <int, InventoryItem> inventory;
-	std::map <int, InventoryItem> ExistingItems;
-
+	int inventory[16];
+	static int inventoryFace[16];
+	static std::map <int, InventoryItem> ExistingItems;
+	void AddItem(int id);
+	void Update();
 };
+
+
+
+
+
+
+
+
 
 class InventoryItem {
 public:

@@ -94,6 +94,7 @@ private:
 	SDL_Renderer* ren;
 	SDL_Texture* inventoryBlock;
 	SDL_Texture* inventory;
+	SDL_Texture* item;
 public:
 	UIInventory(SDL_Renderer* renderer);
 	void Render();

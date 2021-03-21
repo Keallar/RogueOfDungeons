@@ -1,30 +1,58 @@
 #include "Inventory.h"
 #include "Managers.h"
+#include <iostream>
 
-meleeWeapon::meleeWeapon(int Damage, int range, type type, const char* WeapTex)
-{
-	DMG = Damage;
-	RNG = range;
-	Type = type;
-	ItemTexture = textureManager::LoadTexture(WeapTex, ren);
-}
+int Inventory::inventoryFace[16];
 
 Inventory::Inventory()
 {
-	meleeWeapon *ShortSword = new meleeWeapon(2, 1, weapon, "ABOBA.png");
+	meleeWeapon *ShortSword = new meleeWeapon(2, 1, weapon, "ShortSword.png");
 	meleeWeapon* Spear = new meleeWeapon(3, 0, weapon, "ABOBA.png");
 	rangeWeapon* ShortBow = new rangeWeapon(1, 4, 60, 15, rWeapon, "ABOBA.png");
 	std::map <int, InventoryItem> ExistingItems
 	{ {0, *ShortSword},
 	  {1, *Spear},
 	  {101, *ShortBow} };
+	for (int i = 0; i < 16; i++) {
+		inventory[i] = -1;
+	}
 }
+
+void Inventory::AddItem(int id) {
+	int count = 0;
+	for (int i = 0; i < 16; i++) {
+		if (inventory[i] == -1) {
+			inventory[i] = id;
+			count = -1;
+		}
+		count++;
+		if (count == 16) {
+			std::cout << "ÍÅÒ ÌÅÑÒÀÀÀÀÀÀÀ!!!" << std::endl;
+		}
+	}
+}
+
+void Inventory::Update() {
+	for (int i = 0; i < 16; i++) {
+		inventoryFace[i] = inventory[i];
+	}
+}
+
+
 rangeWeapon::rangeWeapon(int Damage, int Range, int Chanse, int deltaChanse, type type, const char* WeapTex)
 {
 	DMG = Damage;
 	RNG = Range;
 	CHNS = Chanse;
 	DCHNS = deltaChanse;
+	Type = type;
+	ItemTexture = textureManager::LoadTexture(WeapTex, ren);
+}
+
+meleeWeapon::meleeWeapon(int Damage, int range, type type, const char* WeapTex)
+{
+	DMG = Damage;
+	RNG = range;
 	Type = type;
 	ItemTexture = textureManager::LoadTexture(WeapTex, ren);
 }

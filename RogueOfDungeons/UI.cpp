@@ -152,7 +152,7 @@ void UIInventory::Render()
 	RenderManager::CopyToRender(inventory, ren, 1085, 490, 128, 32);
 	for (int i = 0; i < 16; i++) {
 		if (Inventory::inventoryFace[i] != -1) {
-			item = textureManager::LoadTexture();
+			item = textureManager::LoadTexture(ItemTextureName[i], ren);
 		}
 	}
 }

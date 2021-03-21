@@ -10,14 +10,26 @@ Inventory::Inventory()
 	meleeWeapon* Spear = new meleeWeapon(3, 0, weapon, "ABOBA.png");
 	rangeWeapon* ShortBow = new rangeWeapon(1, 4, 60, 15, rWeapon, "ABOBA.png");
 	std::map <int, InventoryItem> ExistingItems
-	{ {0, *ShortSword},
-	  {1, *Spear},
-	  {101, *ShortBow} };
+	{ 
+		{0, *ShortSword},
+		{1, *Spear},
+		{101, *ShortBow} 
+	};
+	std::map <int, const char*> ItemTextureName
+	{
+		{0, "ShortSword.png"},
+		{1, "Spear.png"},
+		{101, "ShortBow.png"}
+	};
 	for (int i = 0; i < 16; i++) {
 		inventory[i] = -1;
 	}
 }
-
+void Inventory::EquipItem(int i, int j) 
+{
+	//EquipedArmor = ExistingItems[i];
+	//EquipedWeapon = ExistingItems[j];
+}
 void Inventory::AddItem(int id) {
 	int count = 0;
 	for (int i = 0; i < 16; i++) {

@@ -4,31 +4,12 @@
 #include <vector>
 #include "SDL.h"
 #include <map>
-
 enum type {
 	weapon,
 	rWeapon,
 	armor,
 	other
 };
-
-class Inventory {
-public:
-	Inventory();
-	int inventory[16];
-	static int inventoryFace[16];
-	static std::map <int, InventoryItem> ExistingItems;
-	void AddItem(int id);
-	void Update();
-};
-
-
-
-
-
-
-
-
 
 class InventoryItem {
 public:
@@ -56,3 +37,17 @@ private:
 public:
 	rangeWeapon(int Damage, int Range, int Chanse, int deltaChanse, type type, const char* WeapTex);
 };
+
+class Inventory {
+	//InventoryItem EquipedArmor;
+	//InventoryItem EquipedWeapon;
+public:
+	Inventory();
+	int inventory[16];
+	static int inventoryFace[16];
+	void AddItem(int id);
+	void EquipItem(int i, int j);
+	void Update();
+};
+static std::map <int, InventoryItem> ExistingItems;
+static std::map<int, const char*> ItemTextureName;

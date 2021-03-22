@@ -14,6 +14,10 @@ struct MouseCoords
 class Level 
 {
 private:
+	//TextInfo* changeState[3];
+	HpInfo* hp;
+	ManaInfo* mana;
+	ExpInfo* exp;
 	int generateChoose;
 	int textureLocation[22][32];
 	int Location[22][32];
@@ -22,7 +26,6 @@ private:
 	SDL_Texture* TileTextureCastle;
 	SDL_Texture* PlayBackground;
 	SDL_Renderer* ren;
-	TextInfo* changingHP;
 	Player* player;
 	Enemy* enemy;
 	UIInfo* uiInfo;

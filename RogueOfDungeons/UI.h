@@ -19,16 +19,56 @@
 
 
 //UNDONE (сделать общим классом для всех изменяемых текстов)
-class TextInfo
+//class TextInfo
+//{
+//private:
+//	SDL_Renderer* ren;
+//	SDL_Texture* infoText;
+//protected:
+//	const char* PATH_IN_FONT;
+//	SDL_Color color = { 255, 255, 255, 255 };
+//public:
+//	TextInfo(SDL_Renderer* renderer, int changeTextValue);
+//	~TextInfo();
+//	virtual void Render() = 0;
+//};
+
+class HpInfo  /*public TextInfo*/
 {
 private:
 	const char* PATH_IN_FONT;
 	SDL_Color color = { 255, 255, 255, 255 };
 	SDL_Renderer* ren;
-	SDL_Texture* infoText;
+	SDL_Texture* hpText;
 public:
-	TextInfo(SDL_Renderer* renderer, int changeTextValue);
-	~TextInfo();
+	HpInfo(SDL_Renderer* renderer, int changeTextValue);
+	~HpInfo();
+	void Render();
+};
+
+class ManaInfo  /*public TextInfo*/
+{
+private:
+	const char* PATH_IN_FONT;
+	SDL_Color color = { 255, 255, 255, 255 };
+	SDL_Renderer* ren;
+	SDL_Texture* manaText;
+public:
+	ManaInfo(SDL_Renderer* renderer, int changeTextValue);
+	~ManaInfo();
+	void Render();
+};
+
+class ExpInfo  /*public TextInfo*/
+{
+private:
+	const char* PATH_IN_FONT;
+	SDL_Color color = { 255, 255, 255, 255 };
+	SDL_Renderer* ren;
+	SDL_Texture* expText;
+public:
+	ExpInfo(SDL_Renderer* renderer, int changeTextValue);
+	~ExpInfo();
 	void Render();
 };
 

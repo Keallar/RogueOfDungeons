@@ -16,7 +16,7 @@ int Player::exp[2] = {
 					 };
 
 int Player::mana[2] = { 
-					    0, /*mana  now*/
+					    99, /*mana  now*/
 						0  /*mana  previous*/
 					  };
 
@@ -69,6 +69,36 @@ void Player::CheckHP()
 	{
 		//std::cout << "Check HP 0" << std::endl;
 		FlagManager::flagCheckHP = 0;
+	}
+}
+
+void Player::CheckMANA()
+{
+	if (Player::mana[0] != Player::mana[1] && FlagManager::flagCheckMana == 0)
+	{
+		//std::cout << "Check HP 1" << std::endl;
+		FlagManager::flagCheckMana = 1;
+		Player::mana[1] = Player::mana[0];
+	}
+	else if (Player::mana[0] == Player::mana[1] && FlagManager::flagCheckMana == 1)
+	{
+		//std::cout << "Check HP 0" << std::endl;
+		FlagManager::flagCheckMana = 0;
+	}
+}
+
+void Player::CheckEXP()
+{
+	if (Player::exp[0] != Player::exp[1] && FlagManager::flagCheckExp == 0)
+	{
+		//std::cout << "Check HP 1" << std::endl;
+		FlagManager::flagCheckExp = 1;
+		Player::exp[1] = Player::exp[0];
+	}
+	else if (Player::exp[0] == Player::exp[1] && FlagManager::flagCheckExp == 1)
+	{
+		//std::cout << "Check HP 0" << std::endl;
+		FlagManager::flagCheckExp = 0;
 	}
 }
 
@@ -132,6 +162,7 @@ void Player::Update()
 		{
 			if (Location[(EntityPosition::Coords[1]) / 32][(EntityPosition::Coords[0]) / 32 - 1] == 0) {
 				EntityPosition::Coords[0] -= 32;
+				Player::mana[0] -= 1;
 				FlagManager::flagPlayer = 0;
 				//sdt::cout << "a" << std::endl;
 				//SDL_Delay(100);
@@ -149,6 +180,7 @@ void Player::Update()
 		{
 			if (Location[(EntityPosition::Coords[1]) / 32 + 1][(EntityPosition::Coords[0]) / 32] == 0) {
 				EntityPosition::Coords[1] += 32;
+				Player::exp[0] -= 1;
 				FlagManager::flagPlayer = 0;
 				//std::cout << "s" << std::endl;
 				//SDL_Delay(100);
@@ -175,6 +207,8 @@ void Player::Update()
 	}
 	inventory->Update();
 	Player::CheckHP();
+	Player::CheckMANA();
+	Player::CheckEXP();
 }
 
 /*void Player::Attack()

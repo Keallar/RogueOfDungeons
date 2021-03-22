@@ -15,24 +15,69 @@
 //	RenderManager::CopyToRender(Font2, ren, 1024, 30, 256, 21);
 //}
 
-TextInfo::TextInfo(SDL_Renderer* renderer, int changeTextValue) : ren(renderer)
+//TextInfo::TextInfo(SDL_Renderer* renderer, int changeTextValue) : ren(renderer)
+//{
+//	PATH_IN_FONT = "fonts/manaspc.ttf";
+//}
+//
+//TextInfo::~TextInfo()
+//{
+//	
+//}
+
+HpInfo::HpInfo(SDL_Renderer* renderer, int changeTextValue)/* :TextInfo(renderer, changeTextValue)*/
 {
 	PATH_IN_FONT = "fonts/manaspc.ttf";
 	std::string stringValue = std::to_string(changeTextValue);
 	const char* TEXT_VALUE = stringValue.c_str();
-	infoText = FontManager::renderText(TEXT_VALUE, PATH_IN_FONT, color, 32, ren);
+	hpText = FontManager::renderText(TEXT_VALUE, PATH_IN_FONT, color, 32, ren);
 }
 
-TextInfo::~TextInfo()
+HpInfo::~HpInfo()
+{
+
+}
+
+void HpInfo::Render()
+{
+	RenderManager::CopyToRender(hpText, ren, 1116, 72, 32, 20);
+}
+
+ManaInfo::ManaInfo(SDL_Renderer* renderer, int changeTextValue) /*:TextInfo(renderer, changeTextValue)*/
+{
+	PATH_IN_FONT = "fonts/manaspc.ttf";
+	std::string stringValue = std::to_string(changeTextValue);
+	const char* TEXT_VALUE = stringValue.c_str();
+	manaText = FontManager::renderText(TEXT_VALUE, PATH_IN_FONT, color, 32, ren);
+}
+
+ManaInfo::~ManaInfo()
+{
+
+}
+
+void ManaInfo::Render()
+{
+	RenderManager::CopyToRender(manaText, ren, 1116, 122, 64, 20);
+}
+
+ExpInfo::ExpInfo(SDL_Renderer* renderer, int changeTextValue) /*: TextInfo(renderer, changeTextValue)*/
+{
+	PATH_IN_FONT = "fonts/manaspc.ttf";
+	std::string stringValue = std::to_string(changeTextValue);
+	const char* TEXT_VALUE = stringValue.c_str();
+	expText = FontManager::renderText(TEXT_VALUE, PATH_IN_FONT, color, 32, ren);
+}
+
+ExpInfo::~ExpInfo()
 {
 	
 }
 
-void TextInfo::Render()
+void ExpInfo::Render()
 {
-	RenderManager::CopyToRender(infoText, ren, 1116, 72, 32, 20);
+	RenderManager::CopyToRender(expText, ren, 1116, 175, 64, 20);
 }
-
 
 UIInfo::UIInfo(SDL_Renderer* renderer)
 {

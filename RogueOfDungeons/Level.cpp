@@ -19,7 +19,12 @@ Level::Level(SDL_Renderer* renderer)
 	uiInventory = new UIInventory(ren);
 	uiEnemy = new UIEnemyInfo(ren);
 	uiSpec = new UISpecifications(ren);
-	changingHP = new TextInfo(ren, Player::GetHP());
+	hp = new HpInfo(ren, Player::GetHP());
+	mana = new ManaInfo(ren, Player::GetMana());
+	exp = new ExpInfo(ren, Player::GetEXP());
+	//changeState[0] = hp;
+	//changeState[1] = mana;
+	//changeState[2] = exp;
 	
 	for (int i = 0; i < 22; i++) 
 	{
@@ -80,6 +85,8 @@ void Level::Start()
 	FlagManager::flagEnemy = 0;
 	FlagManager::flagUiSpec = 0;
 	FlagManager::flagCheckHP = 0;
+	FlagManager::flagCheckMana = 0;
+	FlagManager::flagCheckExp = 0;
 	player->GetLevel(Location);
 	player->GetPlayerFirstCoords();
 	enemy->GetLoc(Location);
@@ -170,14 +177,30 @@ void Level::Render()
 	if (FlagManager::flagUI == 1)
 	{
 		uiInfo->Render();
-		changingHP->Render();
+		hp->Render();
+		mana->Render();
+		exp->Render();
 
 		if (FlagManager::flagCheckHP == 1)
 		{
 			//std::cout << "Throw" << std::endl;
-			delete changingHP;
-			changingHP = nullptr;
-			changingHP = new TextInfo(ren, Player::GetHP());
+			delete hp;
+			hp = nullptr;
+			hp = new HpInfo(ren, Player::GetHP());
+		}
+
+		if (FlagManager::flagCheckMana == 1)
+		{
+			delete mana;
+			mana = nullptr;
+			mana = new ManaInfo(ren, Player::GetMana());
+		}
+
+		if (FlagManager::flagCheckExp == 1)
+		{
+			delete exp;
+			exp = nullptr;
+			exp = new ExpInfo(ren, Player::GetEXP());
 		}
 	}
 }

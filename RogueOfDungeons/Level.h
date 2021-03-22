@@ -18,7 +18,7 @@ private:
 	HpInfo* hp;
 	ManaInfo* mana;
 	ExpInfo* exp;
-	static int generateChoose ;
+	int generateChoose ;
 	int textureLocation[22][32];
 	int Location[22][32];
 	//int Location2[22][32];

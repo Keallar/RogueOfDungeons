@@ -33,6 +33,7 @@ private:
 	UIEnemyInfo* uiEnemy;
 	UISpecifications* uiSpec;
 	std::vector <Enemy> enemies;
+	UIInventory* uiInv;
 	//std::vector <GameObject> textures; 
 	MouseCoords mouseCoords;
 	const Uint8* keys = SDL_GetKeyboardState(NULL);

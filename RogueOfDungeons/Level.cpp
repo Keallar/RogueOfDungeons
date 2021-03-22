@@ -19,6 +19,7 @@ Level::Level(SDL_Renderer* renderer)
 	uiItem = new UIItem(ren);
 	uiEnemy = new UIEnemyInfo(ren);
 	uiSpec = new UISpecifications(ren);
+	uiInv = new UIInventory(ren);
 	hp = new HpInfo(ren, Player::GetHP());
 	mana = new ManaInfo(ren, Player::GetMana());
 	exp = new ExpInfo(ren, Player::GetEXP());
@@ -188,6 +189,9 @@ void Level::Render()
 	enemy->Render();
 	uiItem->Render();
 	uiEnemy->Render();
+	uiInv->Render();
+
+
 
 	if (FlagManager::flagUiSpec == 1)
 	{

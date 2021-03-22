@@ -96,17 +96,14 @@ UIInfo::UIInfo(SDL_Renderer* renderer)
 	//HP
 	hpBar = textureManager::LoadTexture("images/hp.png", ren);
 	hpText = FontManager::renderText("HP", pathInFont, color, 64, ren);
-	//hpInfo = FontManager::renderText("10/10", pathInFont, color, 32, ren);
 
 	//Mana
 	mnBar = textureManager::LoadTexture("images/ManaBar.png", ren);
 	mnText = FontManager::renderText("MN", pathInFont, color, 64, ren);
-	//mnInfo = FontManager::renderText("50/50", pathInFont, color, 32, ren);
 
 	//XP
 	xpBar = textureManager::LoadTexture("images/XP.png", ren);
 	xpText = FontManager::renderText("XP", pathInFont, color, 64, ren);
-	//xpInfo = FontManager::renderText("99/100", pathInFont, color, 32, ren);
 
 	//Buttons
 	specButton = textureManager::LoadTexture("images/Button.png", ren);
@@ -121,17 +118,14 @@ void UIInfo::Render()
 	//HP
 	RenderManager::CopyToRender(hpBar, ren, 1080, 40, 160, 32, 0, 0, 128, 16);
 	RenderManager::CopyToRender(hpText, ren, 1050, 47, 25, 22);
-	//RenderManager::CopyToRender(hpInfo, ren, 1116, 72, 64, 20);
 
 	//Mana
 	RenderManager::CopyToRender(mnBar, ren, 1080, 95, 230, 32, 21, 10, 128, 16);
 	RenderManager::CopyToRender(mnText, ren, 1050, 99, 25, 22);
-	//RenderManager::CopyToRender(mnInfo, ren, 1116, 122, 64, 20);
 
 	//XP
 	RenderManager::CopyToRender(xpBar, ren, 1080, 150, 200, 32, 21, 10, 128, 16);
 	RenderManager::CopyToRender(xpText, ren, 1050, 152, 25, 22);
-	RenderManager::CopyToRender(xpInfo, ren, 1116, 175, 64, 20);
 
 	//Buttons
 	RenderManager::CopyToRender(specButton, ren, 1230, 200, 32, 32);
@@ -216,6 +210,21 @@ void UIItem::Render()
 		}
 	}*/
 }
+
+UIInventory::UIInventory(SDL_Renderer* renderer) : ren(renderer)
+{
+	SDL_Color color = { 255, 255, 255, 255 };
+	const char* PATH_IN_FONT = "fonts/manaspc.ttf";
+	inventoryBlock = textureManager::LoadTexture("images/InfoBlock.png", ren);
+	inventoryText = FontManager::renderText("Inventory", PATH_IN_FONT, color, 64, ren);
+}
+
+void UIInventory::Render()
+{
+	RenderManager::CopyToRender(inventoryBlock, ren, 730, 0, 300, 710);
+	RenderManager::CopyToRender(inventoryText, ren, 780, 50, 160, 32);
+}
+
 
 //EnemyInfo
 UIEnemyInfo::UIEnemyInfo(SDL_Renderer* renderer)

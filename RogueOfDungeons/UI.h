@@ -84,19 +84,15 @@ private:
 	//HP
 	SDL_Texture* hpBar;
 	SDL_Texture* hpText;
-	SDL_Texture* hpInfo;
-	SDL_Texture* updatedHP;
-	//static int healthInfo;
+
 	//XP
 	SDL_Texture* xpBar;
 	SDL_Texture* xpText;
-	SDL_Texture* xpInfo;
-	//static int expInfo;
+
 	//MANA
 	SDL_Texture* mnBar;
 	SDL_Texture* mnText;
-	SDL_Texture* mnInfo;
-	//static int manaInfo;
+
 	//Buttons
 	SDL_Texture* specButton;
 public:
@@ -155,7 +151,14 @@ public:
 
 class UIInventory
 {
-
+private:
+	SDL_Renderer* ren;
+	SDL_Texture* inventoryBlock;
+	SDL_Texture* inventoryText;
+public:
+	UIInventory(SDL_Renderer* renderer);
+	~UIInventory();
+	void Render();
 };
 
 class UIEnemyInfo

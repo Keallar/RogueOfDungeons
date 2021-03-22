@@ -74,6 +74,17 @@ void Level::Update()
 		SDL_Delay(200);
 	}
 
+	if (keys[SDL_SCANCODE_I] && FlagManager::flagInv == 0)
+	{
+		FlagManager::flagInv = 1;
+		SDL_Delay(200);
+	}
+	else if (keys[SDL_SCANCODE_I] && FlagManager::flagInv == 1)
+	{
+		FlagManager::flagInv = 0;
+		SDL_Delay(200);
+	}
+
 	if (keys[SDL_SCANCODE_1] && FlagManager::flagUiSpec == 1)
 	{
 
@@ -189,9 +200,12 @@ void Level::Render()
 	enemy->Render();
 	uiItem->Render();
 	uiEnemy->Render();
-	uiInv->Render();
+	
 
-
+	if (FlagManager::flagInv == 1)
+	{
+		uiInv->Render();
+	}
 
 	if (FlagManager::flagUiSpec == 1)
 	{

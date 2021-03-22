@@ -44,7 +44,7 @@ void HpInfo::Render()
 	RenderManager::CopyToRender(hpText, ren, 1120, 72, 32, 20);
 }
 
-ManaInfo::ManaInfo(SDL_Renderer* renderer, int changeTextValue) :TextInfo(renderer, changeTextValue)
+ManaInfo::ManaInfo(SDL_Renderer* renderer, int changeTextValue) : TextInfo(renderer, changeTextValue)
 {
 	ren = renderer;
 	PATH_IN_FONT = "fonts/manaspc.ttf";

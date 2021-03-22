@@ -7,9 +7,8 @@
 #include <vector>
 #include <iostream>
 
-Level::Level(SDL_Renderer* renderer)
+Level::Level(SDL_Renderer* renderer) : ren (renderer)
 {
-	ren = renderer;
 	TileTexture = textureManager::LoadTexture("images/Tiles.png", ren);
 	TileTextureCastle = textureManager::LoadTexture("images/CaslteTiles.png", ren);
 	PlayBackground = textureManager::LoadTexture("images/Playback.png", ren);
@@ -110,7 +109,7 @@ void Level::Update()
 void Level::Start()
 {
 	FlagManager::flagUI = 1;
-	Level::flagTB = 1;
+	//Level::flagTB = 1;
 	FlagManager::flagPlayer = 1;
 	Generate();
 	FlagManager::flagEnemy = 0;
@@ -220,10 +219,12 @@ void Level::Render()
 
 		if (FlagManager::flagCheckHP == 1)
 		{
+			//WTF (сделать лучше метод Update)
 			//std::cout << "Throw HP" << std::endl;
 			delete changeState[0];
 			changeState[0] = nullptr;
 			changeState[0] = new HpInfo(ren, Player::GetHP());
+
 		}
 
 		if (FlagManager::flagCheckMana == 1)
@@ -244,32 +245,28 @@ void Level::Render()
 	}
 }
 
+//Обновление данных объектов
 void Level::handleEvents(SDL_Event eventWIthSpec)
 {
-	SDL_Event eventSpec = eventWIthSpec;
 
-	while (SDL_PollEvent(&eventSpec))
+	switch (eventWIthSpec.type)
 	{
-		switch (eventSpec.type)
+	case SDL_MOUSEBUTTONDOWN:
+		SDL_GetMouseState(&mouseCoords.x, &mouseCoords.y);
+		if (InputManager::MouseInArea(1230, 200, 64, 64, mouseCoords.x, mouseCoords.y) && FlagManager::flagUiSpec == 0)
 		{
-		case SDL_MOUSEBUTTONDOWN:
-			SDL_GetMouseState(&mouseCoords.x, &mouseCoords.y);
-			if (InputManager::MouseInArea(1230, 200, 64, 64, mouseCoords.x, mouseCoords.y) && 
-				FlagManager::flagUiSpec == 0)
-			{
-				std::cout << "Check" << std::endl;
-				FlagManager::flagUiSpec = 1;
-				break;
-			}
-			else if (InputManager::MouseInArea(1230, 200, 32, 32, mouseCoords.x, mouseCoords.y) && 
-				FlagManager::flagUiSpec == 1)
-			{
-				FlagManager::flagUiSpec = 0;
-				break;
-			}
-		default:
+			std::cout << "Check" << std::endl;
+			FlagManager::flagUiSpec = 1;
 			break;
 		}
+		else if (InputManager::MouseInArea(1230, 200, 32, 32, mouseCoords.x, mouseCoords.y) && 
+			FlagManager::flagUiSpec == 1)
+		{
+			FlagManager::flagUiSpec = 0;
+			break;
+		}
+	default:
+		break;
 	}
 }
 

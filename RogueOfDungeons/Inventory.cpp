@@ -21,7 +21,8 @@ Inventory::Inventory()
 		{1, "Spear.png"},
 		{101, "ShortBow.png"}
 	};
-	for (int i = 0; i < 16; i++) {
+	for (int i = 0; i < 16; i++) 
+	{
 		inventory[i] = -1;
 	}
 }
@@ -30,22 +31,28 @@ void Inventory::EquipItem(int i, int j)
 	//EquipedArmor = ExistingItems[i];
 	//EquipedWeapon = ExistingItems[j];
 }
-void Inventory::AddItem(int id) {
+void Inventory::AddItem(int id) 
+{
 	int count = 0;
-	for (int i = 0; i < 16; i++) {
-		if (inventory[i] == -1) {
+	for (int i = 0; i < 16; i++) 
+	{
+		if (inventory[i] == -1) 
+		{
 			inventory[i] = id;
 			count = -1;
 		}
 		count++;
-		if (count == 16) {
+		if (count == 16) 
+		{
 			std::cout << "ÍÅÒ ÌÅÑÒÀÀÀÀÀÀÀ!!!" << std::endl;
 		}
 	}
 }
 
-void Inventory::Update() {
-	for (int i = 0; i < 16; i++) {
+void Inventory::Update() 
+{
+	for (int i = 0; i < 16; i++) 
+	{
 		inventoryFace[i] = inventory[i];
 	}
 }

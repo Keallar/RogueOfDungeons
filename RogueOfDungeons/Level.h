@@ -14,7 +14,7 @@ struct MouseCoords
 class Level 
 {
 private:
-	//TextInfo* changeState[3];
+	TextInfo* changeState[3];
 	HpInfo* hp;
 	ManaInfo* mana;
 	ExpInfo* exp;
@@ -29,11 +29,11 @@ private:
 	Player* player;
 	Enemy* enemy;
 	UIInfo* uiInfo;
-	UIInventory* uiInventory;
+	UIItem* uiItem;
 	UIEnemyInfo* uiEnemy;
 	UISpecifications* uiSpec;
 	std::vector <Enemy> enemies;
-	std::vector <GameObject> textures; 
+	//std::vector <GameObject> textures; 
 	MouseCoords mouseCoords;
 	const Uint8* keys = SDL_GetKeyboardState(NULL);
 	//std::vector<std::pair<int, int>> pop_front(std::vector<std::pair<int, int>> vec);

@@ -16,15 +16,15 @@ Level::Level(SDL_Renderer* renderer)
 	player = new Player("images/Hero.png", ren);
 	enemy = new Enemy("images/Turtle.png", ren, 10, 3, 4);
 	uiInfo = new UIInfo(ren);
-	uiInventory = new UIInventory(ren);
+	uiItem = new UIItem(ren);
 	uiEnemy = new UIEnemyInfo(ren);
 	uiSpec = new UISpecifications(ren);
 	hp = new HpInfo(ren, Player::GetHP());
 	mana = new ManaInfo(ren, Player::GetMana());
 	exp = new ExpInfo(ren, Player::GetEXP());
-	//changeState[0] = hp;
-	//changeState[1] = mana;
-	//changeState[2] = exp;
+	changeState[0] = hp;
+	changeState[1] = mana;
+	changeState[2] = exp;
 	
 	for (int i = 0; i < 22; i++) 
 	{
@@ -40,7 +40,7 @@ Level::~Level()
 	delete player;
 	delete enemy;
 	delete uiInfo;
-	delete uiInventory;
+	delete uiItem;
 	delete uiEnemy;
 	delete uiSpec;
 }
@@ -58,7 +58,7 @@ void Level::Update()
 	}
 
 	//Смена окон (с Spec на Info и наоборот)
-	if((keys[SDL_SCANCODE_Q] && FlagManager::flagUiSpec == 0))
+	if(keys[SDL_SCANCODE_Q] && FlagManager::flagUiSpec == 0)
 	{
 		std::cout << "Check Spec" << std::endl;
 		FlagManager::flagUiSpec = 1;
@@ -73,7 +73,26 @@ void Level::Update()
 		SDL_Delay(200);
 	}
 
-	
+	if (keys[SDL_SCANCODE_1] && FlagManager::flagUiSpec == 1)
+	{
+
+	}
+	else if (keys[SDL_SCANCODE_2] && FlagManager::flagUiSpec == 1)
+	{
+
+	}
+	else if (keys[SDL_SCANCODE_3] && FlagManager::flagUiSpec == 1)
+	{
+
+	}
+	else if (keys[SDL_SCANCODE_4] && FlagManager::flagUiSpec == 1)
+	{
+
+	}
+	else if (keys[SDL_SCANCODE_5] && FlagManager::flagUiSpec == 1)
+	{
+
+	}
 }
 
 void Level::Start()
@@ -167,7 +186,7 @@ void Level::Render()
 	}
 	player->Render();
 	enemy->Render();
-	uiInventory->Render();
+	uiItem->Render();
 	uiEnemy->Render();
 
 	if (FlagManager::flagUiSpec == 1)
@@ -177,30 +196,32 @@ void Level::Render()
 	if (FlagManager::flagUI == 1)
 	{
 		uiInfo->Render();
-		hp->Render();
-		mana->Render();
-		exp->Render();
+		changeState[0]->Render();
+		changeState[1]->Render();
+		changeState[2]->Render();
 
 		if (FlagManager::flagCheckHP == 1)
 		{
-			//std::cout << "Throw" << std::endl;
-			delete hp;
-			hp = nullptr;
-			hp = new HpInfo(ren, Player::GetHP());
+			//std::cout << "Throw HP" << std::endl;
+			delete changeState[0];
+			changeState[0] = nullptr;
+			changeState[0] = new HpInfo(ren, Player::GetHP());
 		}
 
 		if (FlagManager::flagCheckMana == 1)
 		{
-			delete mana;
-			mana = nullptr;
-			mana = new ManaInfo(ren, Player::GetMana());
+			//std::cout << "Throw Mana" << std::endl;
+			delete changeState[1];
+			changeState[1] = nullptr;
+			changeState[1] = new ManaInfo(ren, Player::GetMana());
 		}
 
 		if (FlagManager::flagCheckExp == 1)
 		{
-			delete exp;
-			exp = nullptr;
-			exp = new ExpInfo(ren, Player::GetEXP());
+			//std::cout << "Throw Exp" << std::endl;
+			delete changeState[2];
+			changeState[2] = nullptr;
+			changeState[2] = new ExpInfo(ren, Player::GetEXP());
 		}
 	}
 }

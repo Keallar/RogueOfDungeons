@@ -19,25 +19,25 @@
 
 
 //UNDONE (сделать общим классом для всех изменяемых текстов)
-//class TextInfo
-//{
-//private:
-//	SDL_Renderer* ren;
-//	SDL_Texture* infoText;
-//protected:
-//	const char* PATH_IN_FONT;
-//	SDL_Color color = { 255, 255, 255, 255 };
-//public:
-//	TextInfo(SDL_Renderer* renderer, int changeTextValue);
-//	~TextInfo();
-//	virtual void Render() = 0;
-//};
-
-class HpInfo  /*public TextInfo*/
+class TextInfo
 {
 private:
+	SDL_Renderer* ren;
+	SDL_Texture* infoText;
+protected:
 	const char* PATH_IN_FONT;
 	SDL_Color color = { 255, 255, 255, 255 };
+public:
+	TextInfo(SDL_Renderer* renderer, int changeTextValue);
+	~TextInfo();
+	virtual void Render() = 0;
+};
+
+class HpInfo : public TextInfo
+{
+private:
+	/*const char* PATH_IN_FONT;
+	SDL_Color color = { 255, 255, 255, 255 };*/
 	SDL_Renderer* ren;
 	SDL_Texture* hpText;
 public:
@@ -46,11 +46,11 @@ public:
 	void Render();
 };
 
-class ManaInfo  /*public TextInfo*/
+class ManaInfo :public TextInfo
 {
 private:
-	const char* PATH_IN_FONT;
-	SDL_Color color = { 255, 255, 255, 255 };
+	/*const char* PATH_IN_FONT;
+	SDL_Color color = { 255, 255, 255, 255 };*/
 	SDL_Renderer* ren;
 	SDL_Texture* manaText;
 public:
@@ -59,7 +59,7 @@ public:
 	void Render();
 };
 
-class ExpInfo  /*public TextInfo*/
+class ExpInfo : public TextInfo
 {
 private:
 	const char* PATH_IN_FONT;
@@ -104,6 +104,14 @@ public:
 	void Render();
 };
 
+class Spec
+{
+private:
+	SDL_Texture* spec;
+public:
+	Spec();
+};
+
 class UISpecifications
 {
 private:
@@ -121,6 +129,12 @@ private:
 	SDL_Texture* LCK;
 	SDL_Texture* button;
 	SDL_Texture* plus;
+	SDL_Texture* one;
+	SDL_Texture* two;
+	SDL_Texture* three;
+	SDL_Texture* four;
+	SDL_Texture* five;
+
 public:
 	UISpecifications(SDL_Renderer* renderer);
 	void Render();

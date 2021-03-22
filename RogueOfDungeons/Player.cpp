@@ -162,7 +162,7 @@ void Player::Update()
 		{
 			if (Location[(EntityPosition::Coords[1]) / 32][(EntityPosition::Coords[0]) / 32 - 1] == 0) {
 				EntityPosition::Coords[0] -= 32;
-				Player::mana[0] -= 1;
+				Player::mana[0] += 1;
 				FlagManager::flagPlayer = 0;
 				//sdt::cout << "a" << std::endl;
 				//SDL_Delay(100);

@@ -180,26 +180,27 @@ void UISpecifications::Render()
 	RenderManager::CopyToRender(state, ren, 1180, 200, 16, 20);
 }
 
-UIInventory::UIInventory(SDL_Renderer* renderer)
+UIItem::UIItem(SDL_Renderer* renderer)
 {
 	pathInFont = "fonts/manaspc.ttf";
 	SDL_Color color = { 255, 255, 255, 255 };
 	ren = renderer;
 
-	inventoryBlock = textureManager::LoadTexture("images/InfoBlock.png", ren);
-	inventory = FontManager::renderText("Inventory", pathInFont, color, 32, ren);
+	itemBlock = textureManager::LoadTexture("images/InfoBlock.png", ren);
+	item = FontManager::renderText("Inventory", pathInFont, color, 32, ren);
 }
 
-void UIInventory::Render()
+void UIItem::Render()
 {
-
-	RenderManager::CopyToRender(inventoryBlock, ren, 1024, 480, 256, 225);
-	RenderManager::CopyToRender(inventory, ren, 1085, 490, 128, 32);
-	for (int i = 0; i < 16; i++) {
-		if (Inventory::inventoryFace[i] != -1) {
+	RenderManager::CopyToRender(itemBlock, ren, 1024, 480, 256, 225);
+	RenderManager::CopyToRender(item, ren, 1085, 490, 128, 32);
+	/*for (int i = 0; i < 16; i++)
+	{
+		if (Inventory::inventoryFace[i] != -1) 
+		{
 			item = textureManager::LoadTexture(ItemTextureName[i], ren);
 		}
-	}
+	}*/
 }
 
 //EnemyInfo

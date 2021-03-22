@@ -127,17 +127,21 @@ public:
 };
 
 
-class UIInventory
+class UIItem
 {
 private:
 	const char* pathInFont;
 	SDL_Renderer* ren;
-	SDL_Texture* inventoryBlock;
-	SDL_Texture* inventory;
+	SDL_Texture* itemBlock;
 	SDL_Texture* item;
 public:
-	UIInventory(SDL_Renderer* renderer);
+	UIItem(SDL_Renderer* renderer);
 	void Render();
+};
+
+class UIInventory
+{
+
 };
 
 class UIEnemyInfo

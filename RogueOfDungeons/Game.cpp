@@ -81,6 +81,7 @@ void Game::handleEvents()
 				{
 					Menu->flag = 0;
 					//level->handleEvents(event);
+					level = new Level(renderer);
 					level->Start();
 					break;
 				}
@@ -99,7 +100,10 @@ void Game::handleEvents()
 		}
 		
 		if (level)
+		{
 			level->handleEvents(event);
+		}
+		
 	}
 }
 

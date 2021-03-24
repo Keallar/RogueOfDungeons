@@ -57,53 +57,7 @@ void Level::Update()
 		SDL_Delay(150);
 	}
 
-	//Смена окон (с Spec на Info и наоборот)
-	if(keys[SDL_SCANCODE_Q] && FlagManager::flagUiSpec == 0)
-	{
-		std::cout << "Check Spec" << std::endl;
-		FlagManager::flagUiSpec = 1;
-		FlagManager::flagUI = 0;
-		SDL_Delay(200);
-	}
-	else if (keys[SDL_SCANCODE_Q] && FlagManager::flagUI == 0)
-	{
-		std::cout << "Check Info" << std::endl;
-		FlagManager::flagUiSpec = 0;
-		FlagManager::flagUI = 1;
-		SDL_Delay(200);
-	}
-
-	if (keys[SDL_SCANCODE_I] && FlagManager::flagInv == 0)
-	{
-		FlagManager::flagInv = 1;
-		SDL_Delay(200);
-	}
-	else if (keys[SDL_SCANCODE_I] && FlagManager::flagInv == 1)
-	{
-		FlagManager::flagInv = 0;
-		SDL_Delay(200);
-	}
-
-	if (keys[SDL_SCANCODE_1] && FlagManager::flagUiSpec == 1)
-	{
-
-	}
-	else if (keys[SDL_SCANCODE_2] && FlagManager::flagUiSpec == 1)
-	{
-
-	}
-	else if (keys[SDL_SCANCODE_3] && FlagManager::flagUiSpec == 1)
-	{
-
-	}
-	else if (keys[SDL_SCANCODE_4] && FlagManager::flagUiSpec == 1)
-	{
-
-	}
-	else if (keys[SDL_SCANCODE_5] && FlagManager::flagUiSpec == 1)
-	{
-
-	}
+	
 }
 
 void Level::Start()
@@ -248,25 +202,86 @@ void Level::Render()
 //Обновление данных объектов
 void Level::handleEvents(SDL_Event eventWIthSpec)
 {
-
 	switch (eventWIthSpec.type)
 	{
 	case SDL_MOUSEBUTTONDOWN:
 		SDL_GetMouseState(&mouseCoords.x, &mouseCoords.y);
-		if (InputManager::MouseInArea(1230, 200, 64, 64, mouseCoords.x, mouseCoords.y) && FlagManager::flagUiSpec == 0)
+		if (InputManager::MouseInArea(1230, 200, 64, 64, mouseCoords.x, mouseCoords.y) && 
+			FlagManager::flagUiSpec == 0)
 		{
-			std::cout << "Check" << std::endl;
+			std::cout << "Mouse spec" << std::endl;
 			FlagManager::flagUiSpec = 1;
+			FlagManager::flagUI = 0;
 			break;
 		}
 		else if (InputManager::MouseInArea(1230, 200, 32, 32, mouseCoords.x, mouseCoords.y) && 
 			FlagManager::flagUiSpec == 1)
 		{
+			std::cout << "Mouse info" << std::endl;
+			FlagManager::flagUI = 1;
 			FlagManager::flagUiSpec = 0;
 			break;
 		}
+	case SDL_KEYDOWN:
+		//Смена окон (с Spec на Info и наоборот)
+		if (keys[SDL_SCANCODE_Q] && FlagManager::flagUiSpec == 0)
+		{
+			std::cout << "Check Spec" << std::endl;
+			FlagManager::flagUiSpec = 1;
+			FlagManager::flagUI = 0;
+			SDL_Delay(200);
+			break;
+		}
+		else if (keys[SDL_SCANCODE_Q] && FlagManager::flagUI == 0)
+		{
+			std::cout << "Check Info" << std::endl;
+			FlagManager::flagUiSpec = 0;
+			FlagManager::flagUI = 1;
+			SDL_Delay(200);
+			break;
+		}
+
+		if (keys[SDL_SCANCODE_I] && FlagManager::flagInv == 0)
+		{
+			FlagManager::flagInv = 1;
+			SDL_Delay(200);
+			break;
+		}
+		else if (keys[SDL_SCANCODE_I] && FlagManager::flagInv == 1)
+		{
+			FlagManager::flagInv = 0;
+			SDL_Delay(200);
+			break;
+		}
+
+		if (keys[SDL_SCANCODE_1] && FlagManager::flagUiSpec == 1)
+		{
+			break;
+		}
+		else if (keys[SDL_SCANCODE_2] && FlagManager::flagUiSpec == 1)
+		{
+			break;
+		}
+		else if (keys[SDL_SCANCODE_3] && FlagManager::flagUiSpec == 1)
+		{
+			break;
+		}
+		else if (keys[SDL_SCANCODE_4] && FlagManager::flagUiSpec == 1)
+		{
+			break;
+		}
+		else if (keys[SDL_SCANCODE_5] && FlagManager::flagUiSpec == 1)
+		{
+			break;
+		}
+
 	default:
 		break;
+	}
+
+	if (player)
+	{
+		player->handleEvents(eventWIthSpec);
 	}
 }
 

@@ -14,7 +14,7 @@ struct MouseCoords
 class Level 
 {
 private:
-	TextInfo* changeState[3];
+	//TextInfo* changeState[3];
 	HpInfo* hp;
 	ManaInfo* mana;
 	ExpInfo* exp;

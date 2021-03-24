@@ -22,9 +22,9 @@ Level::Level(SDL_Renderer* renderer) : ren (renderer)
 	hp = new HpInfo(ren, Player::GetHP());
 	mana = new ManaInfo(ren, Player::GetMana());
 	exp = new ExpInfo(ren, Player::GetEXP());
-	changeState[0] = hp;
+	/*changeState[0] = hp;
 	changeState[1] = mana;
-	changeState[2] = exp;
+	changeState[2] = exp;*/
 	
 	for (int i = 0; i < 22; i++) 
 	{
@@ -165,34 +165,24 @@ void Level::Render()
 	if (FlagManager::flagUI == 1)
 	{
 		uiInfo->Render();
-		changeState[0]->Render();
-		changeState[1]->Render();
-		changeState[2]->Render();
+		//changeState[0]->Render();
+		hp->Render();
+		mana->Render();
+		exp->Render();
 
 		if (FlagManager::flagCheckHP == 1)
 		{
-			//WTF (сделать лучше метод Update)
-			//std::cout << "Throw HP" << std::endl;
-			delete changeState[0];
-			changeState[0] = nullptr;
-			changeState[0] = new HpInfo(ren, Player::GetHP());
-
+			hp->Update(Player::GetHP());
 		}
 
 		if (FlagManager::flagCheckMana == 1)
 		{
-			//std::cout << "Throw Mana" << std::endl;
-			delete changeState[1];
-			changeState[1] = nullptr;
-			changeState[1] = new ManaInfo(ren, Player::GetMana());
+			mana->Update(Player::GetMana());
 		}
 
 		if (FlagManager::flagCheckExp == 1)
 		{
-			//std::cout << "Throw Exp" << std::endl;
-			delete changeState[2];
-			changeState[2] = nullptr;
-			changeState[2] = new ExpInfo(ren, Player::GetEXP());
+			exp->Update(Player::GetEXP());
 		}
 	}
 }

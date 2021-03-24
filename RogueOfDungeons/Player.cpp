@@ -135,7 +135,7 @@ void Player::Render()
 
 void Player::Update()
 {
-	inventory->Update();
+	//inventory->Update();
 	Player::CheckHP();
 	Player::CheckMANA();
 	Player::CheckEXP();
@@ -154,9 +154,11 @@ void Player::handleEvents(SDL_Event playerEvent)
 			}
 			else
 			{
-				if (Location[(EntityPosition::Coords[1]) / 32 - 1][(EntityPosition::Coords[0]) / 32] == 0) {
+				if (Location[(EntityPosition::Coords[1]) / 32 - 1][(EntityPosition::Coords[0]) / 32] == 0) 
+				{
 					EntityPosition::Coords[1] -= 32;
-					Player::HP[0] -= 1;
+					if (Player::HP[0] != 0)
+						Player::HP[0] -= 1;
 					FlagManager::flagPlayer = 0;
 					//std::cout << "w" << EntityPosition::Coords[0] << EntityPosition::Coords[1] << std::endl;
 					//SDL_Delay(100);
@@ -172,7 +174,8 @@ void Player::handleEvents(SDL_Event playerEvent)
 			}
 			else
 			{
-				if (Location[(EntityPosition::Coords[1]) / 32][(EntityPosition::Coords[0]) / 32 - 1] == 0) {
+				if (Location[(EntityPosition::Coords[1]) / 32][(EntityPosition::Coords[0]) / 32 - 1] == 0) 
+				{
 					EntityPosition::Coords[0] -= 32;
 					Player::mana[0] += 1;
 					FlagManager::flagPlayer = 0;
@@ -190,7 +193,8 @@ void Player::handleEvents(SDL_Event playerEvent)
 			}
 			else
 			{
-				if (Location[(EntityPosition::Coords[1]) / 32 + 1][(EntityPosition::Coords[0]) / 32] == 0) {
+				if (Location[(EntityPosition::Coords[1]) / 32 + 1][(EntityPosition::Coords[0]) / 32] == 0) 
+				{
 					EntityPosition::Coords[1] += 32;
 					Player::exp[0] -= 1;
 					FlagManager::flagPlayer = 0;

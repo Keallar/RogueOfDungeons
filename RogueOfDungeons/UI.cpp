@@ -39,6 +39,13 @@ HpInfo::~HpInfo()
 
 }
 
+void HpInfo::Update(int value)
+{
+	std::string stringTemp = std::to_string(value);
+	const char* CHAR_VALUE = stringTemp.c_str();
+	hpText = FontManager::renderText(CHAR_VALUE, PATH_IN_FONT, color, 32, ren);
+}
+
 void HpInfo::Render()
 {
 	RenderManager::CopyToRender(hpText, ren, 1120, 72, 32, 20);
@@ -58,6 +65,13 @@ ManaInfo::~ManaInfo()
 
 }
 
+void ManaInfo::Update(int value)
+{
+	std::string stringTemp = std::to_string(value);
+	const char* CHAR_VALUE = stringTemp.c_str();
+	manaText = FontManager::renderText(CHAR_VALUE, PATH_IN_FONT, color, 32, ren);
+}
+
 void ManaInfo::Render()
 {
 	RenderManager::CopyToRender(manaText, ren, 1120, 122, 32, 20);
@@ -75,6 +89,13 @@ ExpInfo::ExpInfo(SDL_Renderer* renderer, int changeTextValue) : TextInfo(rendere
 ExpInfo::~ExpInfo()
 {
 	
+}
+
+void ExpInfo::Update(int value)
+{
+	std::string stringTemp = std::to_string(value);
+	const char* CHAR_VALUE = stringTemp.c_str();
+	expText = FontManager::renderText(CHAR_VALUE, PATH_IN_FONT, color, 32, ren);
 }
 
 void ExpInfo::Render()

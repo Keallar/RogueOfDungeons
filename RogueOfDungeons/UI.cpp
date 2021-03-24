@@ -202,13 +202,6 @@ void UIItem::Render()
 {
 	RenderManager::CopyToRender(itemBlock, ren, 1024, 480, 256, 225);
 	RenderManager::CopyToRender(item, ren, 1085, 490, 128, 32);
-	/*for (int i = 0; i < 16; i++)
-	{
-		if (Inventory::inventoryFace[i] != -1) 
-		{
-			item = textureManager::LoadTexture(ItemTextureName[i], ren);
-		}
-	}*/
 }
 
 UIInventory::UIInventory(SDL_Renderer* renderer) : ren(renderer)
@@ -217,6 +210,16 @@ UIInventory::UIInventory(SDL_Renderer* renderer) : ren(renderer)
 	const char* PATH_IN_FONT = "fonts/manaspc.ttf";
 	inventoryBlock = textureManager::LoadTexture("images/InfoBlock.png", ren);
 	inventoryText = FontManager::renderText("Inventory", PATH_IN_FONT, color, 64, ren);
+	for (int i = 1; i < 16; i++) {
+		if (Inventory::inventoryFace[i] != -1) {
+			Inventory::it = Inventory::ExistingItems.find(0);
+			std::cout << (Inventory::it->second).ItemTexture;
+			item = textureManager::LoadTexture((Inventory::it->second).ItemTexture, ren);
+		}
+		else {
+			std::cout << 0 << std::endl;
+		}
+	}
 }
 
 void UIInventory::Render()

@@ -67,7 +67,6 @@ void Game::handleEvents()
 	SDL_Event event;
 	while (SDL_PollEvent(&event))
 	{
-		
 		switch (event.type)
 		{
 		case SDL_QUIT:
@@ -103,7 +102,6 @@ void Game::handleEvents()
 		{
 			level->handleEvents(event);
 		}
-		
 	}
 }
 

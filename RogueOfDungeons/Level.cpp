@@ -209,24 +209,26 @@ void Level::handleEvents(SDL_Event eventWIthSpec)
 		if (InputManager::MouseInArea(1230, 200, 64, 64, mouseCoords.x, mouseCoords.y) && 
 			FlagManager::flagUiSpec == 0)
 		{
-			std::cout << "Mouse spec" << std::endl;
+			//std::cout << "Mouse spec" << std::endl;
 			FlagManager::flagUiSpec = 1;
 			FlagManager::flagUI = 0;
+			SDL_Delay(200);
 			break;
 		}
 		else if (InputManager::MouseInArea(1230, 200, 32, 32, mouseCoords.x, mouseCoords.y) && 
 			FlagManager::flagUiSpec == 1)
 		{
-			std::cout << "Mouse info" << std::endl;
+			//std::cout << "Mouse info" << std::endl;
 			FlagManager::flagUI = 1;
 			FlagManager::flagUiSpec = 0;
+			SDL_Delay(200);
 			break;
 		}
 	case SDL_KEYDOWN:
 		//Смена окон (с Spec на Info и наоборот)
 		if (keys[SDL_SCANCODE_Q] && FlagManager::flagUiSpec == 0)
 		{
-			std::cout << "Check Spec" << std::endl;
+			//std::cout << "Check Spec" << std::endl;
 			FlagManager::flagUiSpec = 1;
 			FlagManager::flagUI = 0;
 			SDL_Delay(200);
@@ -234,7 +236,7 @@ void Level::handleEvents(SDL_Event eventWIthSpec)
 		}
 		else if (keys[SDL_SCANCODE_Q] && FlagManager::flagUI == 0)
 		{
-			std::cout << "Check Info" << std::endl;
+			//std::cout << "Check Info" << std::endl;
 			FlagManager::flagUiSpec = 0;
 			FlagManager::flagUI = 1;
 			SDL_Delay(200);

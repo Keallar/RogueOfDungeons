@@ -7,19 +7,24 @@
 #include <vector>
 #include <iostream>
 
-Level::Level(SDL_Renderer* renderer)
+Level::Level(SDL_Renderer* renderer) : ren (renderer)
 {
-	ren = renderer;
 	TileTexture = textureManager::LoadTexture("images/Tiles.png", ren);
 	TileTextureCastle = textureManager::LoadTexture("images/CaslteTiles.png", ren);
 	PlayBackground = textureManager::LoadTexture("images/Playback.png", ren);
 	player = new Player("images/Hero.png", ren);
 	enemy = new Enemy("images/Turtle.png", ren, 10, 3, 4);
 	uiInfo = new UIInfo(ren);
-	uiInventory = new UIInventory(ren);
+	uiItem = new UIItem(ren);
 	uiEnemy = new UIEnemyInfo(ren);
 	uiSpec = new UISpecifications(ren);
-	changingHP = new TextInfo(ren, Player::GetHP());
+	uiInv = new UIInventory(ren);
+	hp = new HpInfo(ren, Player::GetHP());
+	mana = new ManaInfo(ren, Player::GetMana());
+	exp = new ExpInfo(ren, Player::GetEXP());
+	changeState[0] = hp;
+	changeState[1] = mana;
+	changeState[2] = exp;
 	
 	for (int i = 0; i < 22; i++) 
 	{
@@ -35,7 +40,7 @@ Level::~Level()
 	delete player;
 	delete enemy;
 	delete uiInfo;
-	delete uiInventory;
+	delete uiItem;
 	delete uiEnemy;
 	delete uiSpec;
 }
@@ -52,34 +57,20 @@ void Level::Update()
 		SDL_Delay(150);
 	}
 
-	//Смена окон (с Spec на Info и наоборот)
-	if((keys[SDL_SCANCODE_Q] && FlagManager::flagUiSpec == 0))
-	{
-		std::cout << "Check Spec" << std::endl;
-		FlagManager::flagUiSpec = 1;
-		FlagManager::flagUI = 0;
-		SDL_Delay(200);
-	}
-	else if (keys[SDL_SCANCODE_Q] && FlagManager::flagUI == 0)
-	{
-		std::cout << "Check Info" << std::endl;
-		FlagManager::flagUiSpec = 0;
-		FlagManager::flagUI = 1;
-		SDL_Delay(200);
-	}
-
 	
 }
 
 void Level::Start()
 {
 	FlagManager::flagUI = 1;
-	Level::flagTB = 1;
+	//Level::flagTB = 1;
 	FlagManager::flagPlayer = 1;
 	Generate();
 	FlagManager::flagEnemy = 0;
 	FlagManager::flagUiSpec = 0;
 	FlagManager::flagCheckHP = 0;
+	FlagManager::flagCheckMana = 0;
+	FlagManager::flagCheckExp = 0;
 	player->GetLevel(Location);
 	player->GetPlayerFirstCoords();
 	enemy->GetLoc(Location);
@@ -160,8 +151,14 @@ void Level::Render()
 	}
 	player->Render();
 	enemy->Render();
-	uiInventory->Render();
+	uiItem->Render();
 	uiEnemy->Render();
+	
+
+	if (FlagManager::flagInv == 1)
+	{
+		uiInv->Render();
+	}
 
 	if (FlagManager::flagUiSpec == 1)
 	{
@@ -170,44 +167,123 @@ void Level::Render()
 	if (FlagManager::flagUI == 1)
 	{
 		uiInfo->Render();
-		changingHP->Render();
+		changeState[0]->Render();
+		changeState[1]->Render();
+		changeState[2]->Render();
 
 		if (FlagManager::flagCheckHP == 1)
 		{
-			//std::cout << "Throw" << std::endl;
-			delete changingHP;
-			changingHP = nullptr;
-			changingHP = new TextInfo(ren, Player::GetHP());
+			//WTF (сделать лучше метод Update)
+			//std::cout << "Throw HP" << std::endl;
+			delete changeState[0];
+			changeState[0] = nullptr;
+			changeState[0] = new HpInfo(ren, Player::GetHP());
+
+		}
+
+		if (FlagManager::flagCheckMana == 1)
+		{
+			//std::cout << "Throw Mana" << std::endl;
+			delete changeState[1];
+			changeState[1] = nullptr;
+			changeState[1] = new ManaInfo(ren, Player::GetMana());
+		}
+
+		if (FlagManager::flagCheckExp == 1)
+		{
+			//std::cout << "Throw Exp" << std::endl;
+			delete changeState[2];
+			changeState[2] = nullptr;
+			changeState[2] = new ExpInfo(ren, Player::GetEXP());
 		}
 	}
 }
 
+//Обновление данных объектов
 void Level::handleEvents(SDL_Event eventWIthSpec)
 {
-	SDL_Event eventSpec = eventWIthSpec;
-
-	while (SDL_PollEvent(&eventSpec))
+	switch (eventWIthSpec.type)
 	{
-		switch (eventSpec.type)
+	case SDL_MOUSEBUTTONDOWN:
+		SDL_GetMouseState(&mouseCoords.x, &mouseCoords.y);
+		if (InputManager::MouseInArea(1230, 200, 64, 64, mouseCoords.x, mouseCoords.y) && 
+			FlagManager::flagUiSpec == 0)
 		{
-		case SDL_MOUSEBUTTONDOWN:
-			SDL_GetMouseState(&mouseCoords.x, &mouseCoords.y);
-			if (InputManager::MouseInArea(1230, 200, 64, 64, mouseCoords.x, mouseCoords.y) && 
-				FlagManager::flagUiSpec == 0)
-			{
-				std::cout << "Check" << std::endl;
-				FlagManager::flagUiSpec = 1;
-				break;
-			}
-			else if (InputManager::MouseInArea(1230, 200, 32, 32, mouseCoords.x, mouseCoords.y) && 
-				FlagManager::flagUiSpec == 1)
-			{
-				FlagManager::flagUiSpec = 0;
-				break;
-			}
-		default:
+			//std::cout << "Mouse spec" << std::endl;
+			FlagManager::flagUiSpec = 1;
+			FlagManager::flagUI = 0;
+			SDL_Delay(200);
 			break;
 		}
+		else if (InputManager::MouseInArea(1230, 200, 32, 32, mouseCoords.x, mouseCoords.y) && 
+			FlagManager::flagUiSpec == 1)
+		{
+			//std::cout << "Mouse info" << std::endl;
+			FlagManager::flagUI = 1;
+			FlagManager::flagUiSpec = 0;
+			SDL_Delay(200);
+			break;
+		}
+	case SDL_KEYDOWN:
+		//Смена окон (с Spec на Info и наоборот)
+		if (keys[SDL_SCANCODE_Q] && FlagManager::flagUiSpec == 0)
+		{
+			//std::cout << "Check Spec" << std::endl;
+			FlagManager::flagUiSpec = 1;
+			FlagManager::flagUI = 0;
+			SDL_Delay(200);
+			break;
+		}
+		else if (keys[SDL_SCANCODE_Q] && FlagManager::flagUI == 0)
+		{
+			//std::cout << "Check Info" << std::endl;
+			FlagManager::flagUiSpec = 0;
+			FlagManager::flagUI = 1;
+			SDL_Delay(200);
+			break;
+		}
+
+		if (keys[SDL_SCANCODE_I] && FlagManager::flagInv == 0)
+		{
+			FlagManager::flagInv = 1;
+			SDL_Delay(200);
+			break;
+		}
+		else if (keys[SDL_SCANCODE_I] && FlagManager::flagInv == 1)
+		{
+			FlagManager::flagInv = 0;
+			SDL_Delay(200);
+			break;
+		}
+
+		if (keys[SDL_SCANCODE_1] && FlagManager::flagUiSpec == 1)
+		{
+			break;
+		}
+		else if (keys[SDL_SCANCODE_2] && FlagManager::flagUiSpec == 1)
+		{
+			break;
+		}
+		else if (keys[SDL_SCANCODE_3] && FlagManager::flagUiSpec == 1)
+		{
+			break;
+		}
+		else if (keys[SDL_SCANCODE_4] && FlagManager::flagUiSpec == 1)
+		{
+			break;
+		}
+		else if (keys[SDL_SCANCODE_5] && FlagManager::flagUiSpec == 1)
+		{
+			break;
+		}
+
+	default:
+		break;
+	}
+
+	if (player)
+	{
+		player->handleEvents(eventWIthSpec);
 	}
 }
 

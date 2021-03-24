@@ -17,8 +17,6 @@
 //	void Render();
 //};
 
-
-//UNDONE (сделать общим классом для всех изменяемых текстов)
 class TextInfo
 {
 private:
@@ -31,6 +29,7 @@ public:
 	TextInfo(SDL_Renderer* renderer, int changeTextValue);
 	~TextInfo();
 	virtual void Render() = 0;
+//	virtual void Update(int value) = 0;
 };
 
 class HpInfo : public TextInfo
@@ -44,6 +43,7 @@ public:
 	HpInfo(SDL_Renderer* renderer, int changeTextValue);
 	~HpInfo();
 	void Render();
+	void Update(int value);
 };
 
 class ManaInfo :public TextInfo
@@ -57,6 +57,7 @@ public:
 	ManaInfo(SDL_Renderer* renderer, int changeTextValue);
 	~ManaInfo();
 	void Render();
+	void Update(int value);
 };
 
 class ExpInfo : public TextInfo
@@ -70,6 +71,7 @@ public:
 	ExpInfo(SDL_Renderer* renderer, int changeTextValue);
 	~ExpInfo();
 	void Render();
+	void Update(int value);
 };
 
 class UIInfo

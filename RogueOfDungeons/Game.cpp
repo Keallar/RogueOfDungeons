@@ -28,7 +28,6 @@ Game::~Game()
 
 void Game::init(const char* title, int xpos, int ypos, int width, int height, bool fullscreen)
 {
-	
 	int flags = 0;
 	if (fullscreen)
 	{
@@ -80,8 +79,8 @@ void Game::handleEvents()
 				if (InputManager::MouseInArea(640, 361, 250, 100, mouseCoord.x, mouseCoord.y))
 				{
 					Menu->flag = 0;
+					//level->handleEvents(event);
 					level = new Level(renderer);
-					level->handleEvents(event);
 					level->Start();
 					break;
 				}
@@ -97,6 +96,11 @@ void Game::handleEvents()
 			}
 		default:
 			break;
+		}
+		
+		if (level)
+		{
+			level->handleEvents(event);
 		}
 	}
 }

@@ -1,4 +1,4 @@
-#include "Player.h"
+п»ї#include "Player.h"
 #include "GameObject.h"
 #include "Managers.h"
 #include <iostream>
@@ -102,6 +102,36 @@ void Player::CheckEXP()
 	}
 }
 
+void Player::CheckMANA()
+{
+	if (Player::mana[0] != Player::mana[1] && FlagManager::flagCheckMana == 0)
+	{
+		//std::cout << "Check HP 1" << std::endl;
+		FlagManager::flagCheckMana = 1;
+		Player::mana[1] = Player::mana[0];
+	}
+	else if (Player::mana[0] == Player::mana[1] && FlagManager::flagCheckMana == 1)
+	{
+		//std::cout << "Check HP 0" << std::endl;
+		FlagManager::flagCheckMana = 0;
+	}
+}
+
+void Player::CheckEXP()
+{
+	if (Player::exp[0] != Player::exp[1] && FlagManager::flagCheckExp == 0)
+	{
+		//std::cout << "Check HP 1" << std::endl;
+		FlagManager::flagCheckExp = 1;
+		Player::exp[1] = Player::exp[0];
+	}
+	else if (Player::exp[0] == Player::exp[1] && FlagManager::flagCheckExp == 1)
+	{
+		//std::cout << "Check HP 0" << std::endl;
+		FlagManager::flagCheckExp = 0;
+	}
+}
+
 void Player::GetLevel(int arr[22][32]) 
 {
 	for (int i = 0; i < 22; i++) {
@@ -133,88 +163,97 @@ void Player::Render()
 
 void Player::Update()
 {
-
-	if (keys[SDL_SCANCODE_W])
-	{
-		if (EntityPosition::Coords[1] == 32)
-		{
-			//остановка при упоре в стену
-		}
-		else
-		{
-			if (Location[(EntityPosition::Coords[1]) / 32 - 1][(EntityPosition::Coords[0])/ 32] == 0) {
-				EntityPosition::Coords[1] -= 32;
-				Player::HP[0] -= 1;
-				FlagManager::flagPlayer = 0;
-				//std::cout << "w" << EntityPosition::Coords[0] << EntityPosition::Coords[1] << std::endl;
-				//SDL_Delay(100);
-			}
-		}
-	}
-
-	else if (keys[SDL_SCANCODE_A])
-	{
-		if (EntityPosition::Coords[0] == 32)
-		{
-			//остановка при упоре в стену
-		}
-		else
-		{
-			if (Location[(EntityPosition::Coords[1]) / 32][(EntityPosition::Coords[0]) / 32 - 1] == 0) {
-				EntityPosition::Coords[0] -= 32;
-				Player::mana[0] += 1;
-				FlagManager::flagPlayer = 0;
-				//sdt::cout << "a" << std::endl;
-				//SDL_Delay(100);
-			}
-		}
-	}
-
-	else if (keys[SDL_SCANCODE_S])
-	{
-		if (EntityPosition::Coords[1] == 640)
-		{
-			//остановка при упоре в стену
-		}
-		else
-		{
-			if (Location[(EntityPosition::Coords[1]) / 32 + 1][(EntityPosition::Coords[0]) / 32] == 0) {
-				EntityPosition::Coords[1] += 32;
-				Player::exp[0] -= 1;
-				FlagManager::flagPlayer = 0;
-				//std::cout << "s" << std::endl;
-				//SDL_Delay(100);
-			}
-		}
-	}
-
-	else if (keys[SDL_SCANCODE_D])
-	{
-		if (EntityPosition::Coords[0] == 960)
-		{
-			//остановка при упоре в стену
-		}
-		else
-		{
-			if (Location[(EntityPosition::Coords[1]) / 32][(EntityPosition::Coords[0]) / 32 + 1] == 0)
-			{
-				EntityPosition::Coords[0] += 32;
-				FlagManager::flagPlayer = 0;
-				//std::cout << "d" << std::endl;
-				//SDL_Delay(100);
-			}
-		}
-	}
 	inventory->Update();
 	Player::CheckHP();
 	Player::CheckMANA();
 	Player::CheckEXP();
 }
 
+void Player::handleEvents(SDL_Event playerEvent)
+{
+	switch (playerEvent.type)
+	{
+	case SDL_KEYDOWN:
+		if (keys[SDL_SCANCODE_W])
+		{
+			if (EntityPosition::Coords[1] == 32)
+			{
+				//пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅ
+			}
+			else
+			{
+				if (Location[(EntityPosition::Coords[1]) / 32 - 1][(EntityPosition::Coords[0]) / 32] == 0) {
+					EntityPosition::Coords[1] -= 32;
+					Player::HP[0] -= 1;
+					FlagManager::flagPlayer = 0;
+					//std::cout << "w" << EntityPosition::Coords[0] << EntityPosition::Coords[1] << std::endl;
+					//SDL_Delay(100);
+				}
+			}
+		}
+
+		else if (keys[SDL_SCANCODE_A])
+		{
+			if (EntityPosition::Coords[0] == 32)
+			{
+				//РѕСЃС‚Р°РЅРѕРІРєР° РїСЂРё СѓРїРѕСЂРµ РІ СЃС‚РµРЅСѓ
+			}
+			else
+			{
+				if (Location[(EntityPosition::Coords[1]) / 32][(EntityPosition::Coords[0]) / 32 - 1] == 0) {
+					EntityPosition::Coords[0] -= 32;
+					Player::mana[0] += 1;
+					FlagManager::flagPlayer = 0;
+					//sdt::cout << "a" << std::endl;
+					//SDL_Delay(100);
+				}
+			}
+		}
+
+		else if (keys[SDL_SCANCODE_S])
+		{
+			if (EntityPosition::Coords[1] == 640)
+			{
+				//РѕСЃС‚Р°РЅРѕРІРєР° РїСЂРё СѓРїРѕСЂРµ РІ СЃС‚РµРЅСѓ
+			}
+			else
+			{
+				if (Location[(EntityPosition::Coords[1]) / 32 + 1][(EntityPosition::Coords[0]) / 32] == 0) {
+					EntityPosition::Coords[1] += 32;
+					Player::exp[0] -= 1;
+					FlagManager::flagPlayer = 0;
+					//std::cout << "s" << std::endl;
+					//SDL_Delay(100);
+				}
+			}
+		}
+
+		else if (keys[SDL_SCANCODE_D])
+		{
+			if (EntityPosition::Coords[0] == 960)
+			{
+				//пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅ
+			}
+			else
+			{
+				if (Location[(EntityPosition::Coords[1]) / 32][(EntityPosition::Coords[0]) / 32 + 1] == 0)
+				{
+					EntityPosition::Coords[0] += 32;
+					FlagManager::flagPlayer = 0;
+					//std::cout << "d" << std::endl;
+					//SDL_Delay(100);
+				}
+			}
+		}
+	default:
+		break;
+	}
+}
+
 /*void Player::Attack()
 {
-	if (ITEMTYPE.... = 0 типо ближний бой) {}
-	else if (ITEMTYPE.... = 1 типо дальний бой)
+	if (ITEMTYPE.... = 0 пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ) {}
+	else if (ITEMTYPE.... = 1 пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ)
 	{
 		
 	}

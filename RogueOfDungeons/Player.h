@@ -21,6 +21,7 @@ public:
     ~Player();
     void Render();
     void Update();
+    void handleEvents(SDL_Event playerEvent);
     void clean();
 	void GetLevel(int arr[22][32]);
 	void GetPlayerFirstCoords();

@@ -14,7 +14,7 @@ enum type {
 class InventoryItem {
 public:
 	std::string name;
-	SDL_Texture* ItemTexture;
+	const char* ItemTexture;
 	SDL_Renderer* ren;
 	type Type;
 	std::string Description;
@@ -50,4 +50,5 @@ public:
 	void Update();
 };
 static std::map <int, InventoryItem> ExistingItems;
-static std::map<int, const char*> ItemTextureName;
+//static std::map <int, InventoryItem>::iterator it;
+static auto it = ExistingItems.begin();

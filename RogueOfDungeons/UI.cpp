@@ -145,17 +145,21 @@ UIInventory::UIInventory(SDL_Renderer* renderer)
 	inventory = FontManager::renderText("Inventory", pathInFont, color, 32, ren);
 }
 
-void UIInventory::Render()
-{
+//void UIInventory::Render()
+//{
+//
+//	RenderManager::CopyToRender(inventoryBlock, ren, 1024, 480, 256, 225);
+//	RenderManager::CopyToRender(inventory, ren, 1085, 490, 128, 32);
+//	for (int i = 1; i < 16; i++) {
+//		if (Inventory::inventoryFace[i] != -1) {
+//			it = ExistingItems.find(0);
+//			std::cout << (it->second).ItemTexture;
+//			item = textureManager::LoadTexture((it->second).ItemTexture, ren);
+//			
+//		}
+//		std::cout << (it->second).ItemTexture << ", ";
+//	}
 
-	RenderManager::CopyToRender(inventoryBlock, ren, 1024, 480, 256, 225);
-	RenderManager::CopyToRender(inventory, ren, 1085, 490, 128, 32);
-	for (int i = 0; i < 16; i++) {
-		if (Inventory::inventoryFace[i] != -1) {
-			item = textureManager::LoadTexture(ItemTextureName[i], ren);
-		}
-	}
-}
 
 //EnemyInfo
 UIEnemyInfo::UIEnemyInfo(SDL_Renderer* renderer)

@@ -6,20 +6,14 @@ int Inventory::inventoryFace[16];
 
 Inventory::Inventory()
 {
-	meleeWeapon *ShortSword = new meleeWeapon(2, 1, weapon, "ShortSword.png");
-	meleeWeapon* Spear = new meleeWeapon(3, 0, weapon, "ABOBA.png");
-	rangeWeapon* ShortBow = new rangeWeapon(1, 4, 60, 15, rWeapon, "ABOBA.png");
+	meleeWeapon *ShortSword = new meleeWeapon(2, 1, weapon, "images/ShortSword.png");
+	meleeWeapon* Spear = new meleeWeapon(3, 0, weapon, "images/ShortSword.png");
+	rangeWeapon* ShortBow = new rangeWeapon(1, 4, 60, 15, rWeapon, "images/ShortSword.png");
 	std::map <int, InventoryItem> ExistingItems
 	{ 
 		{0, *ShortSword},
 		{1, *Spear},
-		{101, *ShortBow} 
-	};
-	std::map <int, const char*> ItemTextureName
-	{
-		{0, "ShortSword.png"},
-		{1, "Spear.png"},
-		{101, "ShortBow.png"}
+		{2, *ShortBow} 
 	};
 	for (int i = 0; i < 16; i++) {
 		inventory[i] = -1;
@@ -58,7 +52,7 @@ rangeWeapon::rangeWeapon(int Damage, int Range, int Chanse, int deltaChanse, typ
 	CHNS = Chanse;
 	DCHNS = deltaChanse;
 	Type = type;
-	ItemTexture = textureManager::LoadTexture(WeapTex, ren);
+	ItemTexture = WeapTex;
 }
 
 meleeWeapon::meleeWeapon(int Damage, int range, type type, const char* WeapTex)
@@ -66,5 +60,5 @@ meleeWeapon::meleeWeapon(int Damage, int range, type type, const char* WeapTex)
 	DMG = Damage;
 	RNG = range;
 	Type = type;
-	ItemTexture = textureManager::LoadTexture(WeapTex, ren);
+	ItemTexture = WeapTex;
 }

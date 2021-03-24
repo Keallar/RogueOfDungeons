@@ -9,7 +9,7 @@ std::map <int, InventoryItem>::iterator Inventory::it;
 Inventory::Inventory()
 {
 	meleeWeapon *ShortSword = new meleeWeapon(2, 1, weapon, "images/ShortSword.png");
-	meleeWeapon* Spear = new meleeWeapon(3, 0, weapon, "images/ShortSword.png");
+	meleeWeapon* Spear = new meleeWeapon(3, 0, weapon, "images/ABOBA.png");
 	rangeWeapon* ShortBow = new rangeWeapon(1, 4, 60, 15, rWeapon, "images/ShortSword.png");
 	ExistingItems = 
 	{ 
@@ -36,6 +36,7 @@ void Inventory::AddItem(int id)
 		{
 			inventory[i] = id;
 			count = -1;
+			break;
 		}
 		count++;
 		if (count == 16) 

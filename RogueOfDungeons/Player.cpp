@@ -31,6 +31,8 @@ Player::Player(const char* texturesheet, SDL_Renderer* renderer)
 	}
 	inventory = new Inventory;
 	inventory->AddItem(0);
+	inventory->AddItem(1);
+	inventory->AddItem(0);
 	inventory->Update();
 }
 

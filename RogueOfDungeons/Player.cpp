@@ -102,36 +102,6 @@ void Player::CheckEXP()
 	}
 }
 
-void Player::CheckMANA()
-{
-	if (Player::mana[0] != Player::mana[1] && FlagManager::flagCheckMana == 0)
-	{
-		//std::cout << "Check HP 1" << std::endl;
-		FlagManager::flagCheckMana = 1;
-		Player::mana[1] = Player::mana[0];
-	}
-	else if (Player::mana[0] == Player::mana[1] && FlagManager::flagCheckMana == 1)
-	{
-		//std::cout << "Check HP 0" << std::endl;
-		FlagManager::flagCheckMana = 0;
-	}
-}
-
-void Player::CheckEXP()
-{
-	if (Player::exp[0] != Player::exp[1] && FlagManager::flagCheckExp == 0)
-	{
-		//std::cout << "Check HP 1" << std::endl;
-		FlagManager::flagCheckExp = 1;
-		Player::exp[1] = Player::exp[0];
-	}
-	else if (Player::exp[0] == Player::exp[1] && FlagManager::flagCheckExp == 1)
-	{
-		//std::cout << "Check HP 0" << std::endl;
-		FlagManager::flagCheckExp = 0;
-	}
-}
-
 void Player::GetLevel(int arr[22][32]) 
 {
 	for (int i = 0; i < 22; i++) {

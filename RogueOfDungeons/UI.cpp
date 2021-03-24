@@ -221,10 +221,20 @@ UIInventory::UIInventory(SDL_Renderer* renderer) : ren(renderer)
 
 void UIInventory::Render()
 {
-	RenderManager::CopyToRender(inventoryBlock, ren, 730, 0, 300, 710);
-	RenderManager::CopyToRender(inventoryText, ren, 780, 50, 160, 32);
-}
 
+	RenderManager::CopyToRender(inventoryBlock, ren, 1024, 480, 256, 225);
+	RenderManager::CopyToRender(inventory, ren, 1085, 490, 128, 32);
+	for (int i = 1; i < 16; i++) {
+		if (Inventory::inventoryFace[i] != -1) {
+			Inventory::it = Inventory::ExistingItems.find(0);
+			std::cout << (Inventory::it->second).ItemTexture;
+			item = textureManager::LoadTexture((Inventory::it->second).ItemTexture, ren);
+		}
+		else {
+			std::cout << 0 << std::endl;
+		}
+	}
+}
 
 //EnemyInfo
 UIEnemyInfo::UIEnemyInfo(SDL_Renderer* renderer)

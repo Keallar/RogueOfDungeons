@@ -3,13 +3,15 @@
 #include <iostream>
 
 int Inventory::inventoryFace[16];
+std::map <int, InventoryItem> Inventory::ExistingItems;
+std::map <int, InventoryItem>::iterator Inventory::it;
 
 Inventory::Inventory()
 {
 	meleeWeapon *ShortSword = new meleeWeapon(2, 1, weapon, "images/ShortSword.png");
 	meleeWeapon* Spear = new meleeWeapon(3, 0, weapon, "images/ShortSword.png");
 	rangeWeapon* ShortBow = new rangeWeapon(1, 4, 60, 15, rWeapon, "images/ShortSword.png");
-	std::map <int, InventoryItem> ExistingItems
+	ExistingItems = 
 	{ 
 		{0, *ShortSword},
 		{1, *Spear},

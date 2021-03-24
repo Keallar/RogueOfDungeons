@@ -48,7 +48,8 @@ public:
 	void AddItem(int id);
 	void EquipItem(int i, int j);
 	void Update();
+	static std::map <int, InventoryItem> ExistingItems;
+	static std::map <int, InventoryItem>::iterator it;
 };
-static std::map <int, InventoryItem> ExistingItems;
+
 //static std::map <int, InventoryItem>::iterator it;
-static auto it = ExistingItems.begin();

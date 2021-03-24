@@ -18,9 +18,6 @@
 TextInfo::TextInfo(SDL_Renderer* renderer, int changeTextValue) : ren(renderer)
 {
 	PATH_IN_FONT = "fonts/manaspc.ttf";
-	std::string stringValue = std::to_string(changeTextValue);
-	const char* TEXT_VALUE = stringValue.c_str();
-	infoText = FontManager::renderText(TEXT_VALUE, PATH_IN_FONT, color, 32, ren);
 }
 
 TextInfo::~TextInfo()
@@ -28,11 +25,62 @@ TextInfo::~TextInfo()
 	
 }
 
-void TextInfo::Render()
+HpInfo::HpInfo(SDL_Renderer* renderer, int changeTextValue) :TextInfo(renderer, changeTextValue)
 {
-	RenderManager::CopyToRender(infoText, ren, 1116, 72, 32, 20);
+	ren = renderer;
+	PATH_IN_FONT = "fonts/manaspc.ttf";
+	std::string stringValue = std::to_string(changeTextValue);
+	const char* TEXT_VALUE = stringValue.c_str();
+	hpText = FontManager::renderText(TEXT_VALUE, PATH_IN_FONT, color, 32, ren);
 }
 
+HpInfo::~HpInfo()
+{
+
+}
+
+void HpInfo::Render()
+{
+	RenderManager::CopyToRender(hpText, ren, 1120, 72, 32, 20);
+}
+
+ManaInfo::ManaInfo(SDL_Renderer* renderer, int changeTextValue) :TextInfo(renderer, changeTextValue)
+{
+	ren = renderer;
+	PATH_IN_FONT = "fonts/manaspc.ttf";
+	std::string stringValue = std::to_string(changeTextValue);
+	const char* TEXT_VALUE = stringValue.c_str();
+	manaText = FontManager::renderText(TEXT_VALUE, PATH_IN_FONT, color, 32, ren);
+}
+
+ManaInfo::~ManaInfo()
+{
+
+}
+
+void ManaInfo::Render()
+{
+	RenderManager::CopyToRender(manaText, ren, 1120, 122, 32, 20);
+}
+
+ExpInfo::ExpInfo(SDL_Renderer* renderer, int changeTextValue) : TextInfo(renderer, changeTextValue)
+{
+	ren = renderer;
+	PATH_IN_FONT = "fonts/manaspc.ttf";
+	std::string stringValue = std::to_string(changeTextValue);
+	const char* TEXT_VALUE = stringValue.c_str();
+	expText = FontManager::renderText(TEXT_VALUE, PATH_IN_FONT, color, 32, ren);
+}
+
+ExpInfo::~ExpInfo()
+{
+	
+}
+
+void ExpInfo::Render()
+{
+	RenderManager::CopyToRender(expText, ren, 1120, 175, 64, 20);
+}
 
 UIInfo::UIInfo(SDL_Renderer* renderer)
 {
@@ -48,17 +96,14 @@ UIInfo::UIInfo(SDL_Renderer* renderer)
 	//HP
 	hpBar = textureManager::LoadTexture("images/hp.png", ren);
 	hpText = FontManager::renderText("HP", pathInFont, color, 64, ren);
-	//hpInfo = FontManager::renderText("10/10", pathInFont, color, 32, ren);
 
 	//Mana
 	mnBar = textureManager::LoadTexture("images/ManaBar.png", ren);
 	mnText = FontManager::renderText("MN", pathInFont, color, 64, ren);
-	mnInfo = FontManager::renderText("50/50", pathInFont, color, 32, ren);
 
 	//XP
 	xpBar = textureManager::LoadTexture("images/XP.png", ren);
 	xpText = FontManager::renderText("XP", pathInFont, color, 64, ren);
-	xpInfo = FontManager::renderText("99/100", pathInFont, color, 32, ren);
 
 	//Buttons
 	specButton = textureManager::LoadTexture("images/Button.png", ren);
@@ -73,17 +118,14 @@ void UIInfo::Render()
 	//HP
 	RenderManager::CopyToRender(hpBar, ren, 1080, 40, 160, 32, 0, 0, 128, 16);
 	RenderManager::CopyToRender(hpText, ren, 1050, 47, 25, 22);
-	//RenderManager::CopyToRender(hpInfo, ren, 1116, 72, 64, 20);
 
 	//Mana
 	RenderManager::CopyToRender(mnBar, ren, 1080, 95, 230, 32, 21, 10, 128, 16);
 	RenderManager::CopyToRender(mnText, ren, 1050, 99, 25, 22);
-	RenderManager::CopyToRender(mnInfo, ren, 1116, 122, 64, 20);
 
 	//XP
 	RenderManager::CopyToRender(xpBar, ren, 1080, 150, 200, 32, 21, 10, 128, 16);
 	RenderManager::CopyToRender(xpText, ren, 1050, 152, 25, 22);
-	RenderManager::CopyToRender(xpInfo, ren, 1116, 175, 64, 20);
 
 	//Buttons
 	RenderManager::CopyToRender(specButton, ren, 1230, 200, 32, 32);
@@ -106,6 +148,12 @@ UISpecifications::UISpecifications(SDL_Renderer* renderer)
 	INT = FontManager::renderText("INT", pathInFont, color, 64, ren);
 	PHS = FontManager::renderText("PHS", pathInFont, color, 64, ren);
 	LCK = FontManager::renderText("LCK", pathInFont, color, 64, ren);
+	one = FontManager::renderText("(1)", pathInFont, color, 64, ren);
+	two = FontManager::renderText("(2)", pathInFont, color, 64, ren);
+	three = FontManager::renderText("(3)", pathInFont, color, 64, ren);
+	four = FontManager::renderText("(4)", pathInFont, color, 64, ren);
+	five = FontManager::renderText("(5)", pathInFont, color, 64, ren);
+
 }
 
 void UISpecifications::Render()
@@ -117,48 +165,65 @@ void UISpecifications::Render()
 	RenderManager::CopyToRender(STR, ren, 1050, 80, 64, 20);
 	RenderManager::CopyToRender(plus, ren, 1230, 80, 16, 20);
 	RenderManager::CopyToRender(state, ren, 1180, 80, 16, 20);
+	RenderManager::CopyToRender(one, ren, 1250, 80, 16, 20);
 
 	RenderManager::CopyToRender(DEX, ren, 1050, 110, 64, 20);
 	RenderManager::CopyToRender(plus, ren, 1230, 110, 16, 20);
 	RenderManager::CopyToRender(state, ren, 1180, 110, 16, 20);
+	RenderManager::CopyToRender(two, ren, 1250, 110, 16, 20);
 
 	RenderManager::CopyToRender(INT, ren, 1050, 140, 64, 20);
 	RenderManager::CopyToRender(plus, ren, 1230, 140, 16, 20);
 	RenderManager::CopyToRender(state, ren, 1180, 140, 16, 20);
+	RenderManager::CopyToRender(three, ren, 1250, 140, 16, 20);
 
 	RenderManager::CopyToRender(PHS, ren, 1050, 170, 64, 20);
 	RenderManager::CopyToRender(plus, ren, 1230, 170, 16, 20);
 	RenderManager::CopyToRender(state, ren, 1180, 170, 16, 20);
+	RenderManager::CopyToRender(four, ren, 1250, 170, 16, 20);
 
 	RenderManager::CopyToRender(LCK, ren, 1050, 200, 64, 20);
 	RenderManager::CopyToRender(plus, ren, 1230, 200, 16, 20);
 	RenderManager::CopyToRender(state, ren, 1180, 200, 16, 20);
+	RenderManager::CopyToRender(five, ren, 1250, 200, 16, 20);
 }
 
-UIInventory::UIInventory(SDL_Renderer* renderer)
+UIItem::UIItem(SDL_Renderer* renderer)
 {
 	pathInFont = "fonts/manaspc.ttf";
 	SDL_Color color = { 255, 255, 255, 255 };
 	ren = renderer;
 
-	inventoryBlock = textureManager::LoadTexture("images/InfoBlock.png", ren);
-	inventory = FontManager::renderText("Inventory", pathInFont, color, 32, ren);
+	itemBlock = textureManager::LoadTexture("images/InfoBlock.png", ren);
+	item = FontManager::renderText("Inventory", pathInFont, color, 32, ren);
 }
 
-//void UIInventory::Render()
-//{
-//
-//	RenderManager::CopyToRender(inventoryBlock, ren, 1024, 480, 256, 225);
-//	RenderManager::CopyToRender(inventory, ren, 1085, 490, 128, 32);
-//	for (int i = 1; i < 16; i++) {
-//		if (Inventory::inventoryFace[i] != -1) {
-//			it = ExistingItems.find(0);
-//			std::cout << (it->second).ItemTexture;
-//			item = textureManager::LoadTexture((it->second).ItemTexture, ren);
-//			
-//		}
-//		std::cout << (it->second).ItemTexture << ", ";
-//	}
+void UIItem::Render()
+{
+	RenderManager::CopyToRender(itemBlock, ren, 1024, 480, 256, 225);
+	RenderManager::CopyToRender(item, ren, 1085, 490, 128, 32);
+	/*for (int i = 0; i < 16; i++)
+	{
+		if (Inventory::inventoryFace[i] != -1) 
+		{
+			item = textureManager::LoadTexture(ItemTextureName[i], ren);
+		}
+	}*/
+}
+
+UIInventory::UIInventory(SDL_Renderer* renderer) : ren(renderer)
+{
+	SDL_Color color = { 255, 255, 255, 255 };
+	const char* PATH_IN_FONT = "fonts/manaspc.ttf";
+	inventoryBlock = textureManager::LoadTexture("images/InfoBlock.png", ren);
+	inventoryText = FontManager::renderText("Inventory", PATH_IN_FONT, color, 64, ren);
+}
+
+void UIInventory::Render()
+{
+	RenderManager::CopyToRender(inventoryBlock, ren, 730, 0, 300, 710);
+	RenderManager::CopyToRender(inventoryText, ren, 780, 50, 160, 32);
+}
 
 
 //EnemyInfo

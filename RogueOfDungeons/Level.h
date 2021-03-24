@@ -14,6 +14,10 @@ struct MouseCoords
 class Level 
 {
 private:
+	TextInfo* changeState[3];
+	HpInfo* hp;
+	ManaInfo* mana;
+	ExpInfo* exp;
 	int generateChoose;
 	int textureLocation[22][32];
 	int Location[22][32];
@@ -22,15 +26,15 @@ private:
 	SDL_Texture* TileTextureCastle;
 	SDL_Texture* PlayBackground;
 	SDL_Renderer* ren;
-	TextInfo* changingHP;
 	Player* player;
 	Enemy* enemy;
 	UIInfo* uiInfo;
-	UIInventory* uiInventory;
+	UIItem* uiItem;
 	UIEnemyInfo* uiEnemy;
 	UISpecifications* uiSpec;
 	std::vector <Enemy> enemies;
-	std::vector <GameObject> textures; 
+	UIInventory* uiInv;
+	//std::vector <GameObject> textures; 
 	MouseCoords mouseCoords;
 	const Uint8* keys = SDL_GetKeyboardState(NULL);
 	//std::vector<std::pair<int, int>> pop_front(std::vector<std::pair<int, int>> vec);

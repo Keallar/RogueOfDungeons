@@ -40,4 +40,7 @@ public:
 	static bool flagUI;
 	static bool flagUiSpec;
 	static bool flagCheckHP;
+	static bool flagCheckMana;
+	static bool flagCheckExp;
+	static bool flagInv;
 };

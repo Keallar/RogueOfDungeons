@@ -43,4 +43,5 @@ public:
 	static bool flagCheckMana;
 	static bool flagCheckExp;
 	static bool flagInv;
+	static bool flagUiEnemy;
 };

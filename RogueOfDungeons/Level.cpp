@@ -4,6 +4,7 @@
 #include "Managers.h"
 #include <ctime>
 #include "UI.h"
+#include "EntityPosition.h"
 #include <vector>
 #include <iostream>
 
@@ -69,6 +70,7 @@ void Level::Start()
 	FlagManager::flagCheckHP = 0;
 	FlagManager::flagCheckMana = 0;
 	FlagManager::flagCheckExp = 0;
+	FlagManager::flagUiEnemy = 0;
 	player->GetLevel(Location);
 	player->GetPlayerFirstCoords();
 	enemy->GetLoc(Location);
@@ -150,7 +152,7 @@ void Level::Render()
 	player->Render();
 	enemy->Render();
 	uiItem->Render();
-	uiEnemy->Render();
+
 	
 
 	if (FlagManager::flagInv == 1)
@@ -169,6 +171,11 @@ void Level::Render()
 		hp->Render();
 		mana->Render();
 		exp->Render();
+
+		if (FlagManager::flagUiEnemy == 1)
+		{
+			uiEnemy->Render();
+		}
 
 		if (FlagManager::flagCheckHP == 1)
 		{
@@ -211,6 +218,18 @@ void Level::handleEvents(SDL_Event eventWIthSpec)
 			FlagManager::flagUiSpec = 0;
 			SDL_Delay(200);
 			break;
+		}
+		if (InputManager::MouseInArea(EntityPosition::Coords[2], EntityPosition::Coords[3], 32, 32, mouseCoords.x, mouseCoords.y) &&
+			FlagManager::flagUiEnemy == 0)
+		{
+			FlagManager::flagUiEnemy = 1;
+			SDL_Delay(200);
+		}
+		else if (InputManager::MouseInArea(EntityPosition::Coords[2], EntityPosition::Coords[3], 32, 32, mouseCoords.x, mouseCoords.y) &&
+			FlagManager::flagUiEnemy == 1)
+		{
+			FlagManager::flagUiEnemy = 0;
+			SDL_Delay(200);
 		}
 	case SDL_KEYDOWN:
 		//Смена окон (с Spec на Info и наоборот)

@@ -41,6 +41,9 @@ public:
     static int GetPHS();
     static int GetLCK();
 
+    //WTF (костыль, так как хочу спать)
+    static void ChangeSTR();
+
     static void CheckHP();
     static void CheckEXP();
     static void CheckMANA();

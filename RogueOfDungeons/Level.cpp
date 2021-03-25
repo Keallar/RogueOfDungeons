@@ -257,6 +257,8 @@ void Level::handleEvents(SDL_Event eventWIthSpec)
 		if (FlagManager::flagUiSpec == 1 && InputManager::MouseInArea(1230, 80, 16, 20, mouseCoords.x, mouseCoords.y) &&
 			FlagManager::flagSTR == 0)
 		{
+			//Должно происходить изменение характеристик
+			player->ChangeSTR();
 			FlagManager::flagSTR = 1;
 			SDL_Delay(200);
 		}

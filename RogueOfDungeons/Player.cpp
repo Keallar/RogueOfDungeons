@@ -92,6 +92,11 @@ int Player::GetSTR()
 	return STR[0];
 }
 
+void Player::ChangeSTR()
+{
+	STR[0] += 1;
+}
+
 void Player::GetLevel(int arr[22][32])
 {
 	for (int i = 0; i < 22; i++) {
@@ -163,13 +168,13 @@ void Player::CheckEXP()
 
 void Player::CheckSTR()
 {
-	if (Player::STR[0] != Player::STR[1] && FlagManager::flagSTR == 0)
+	if (Player::STR[0] != Player::STR[1] && FlagManager::flagSTR == 1)
 	{
 		//std::cout << "Check HP 1" << std::endl;
 		FlagManager::flagSTR = 1;
 		Player::STR[1] = Player::STR[0];
 	}
-	else if (Player::STR[0] == Player::STR[1] && FlagManager::flagSTR == 1)
+	else if (Player::STR[0] == Player::STR[1] && FlagManager::flagSTR == 0)
 	{
 		//std::cout << "Check HP 0" << std::endl;
 		FlagManager::flagSTR = 0;
@@ -189,6 +194,7 @@ void Player::Update()
 	Player::CheckHP();
 	Player::CheckMANA();
 	Player::CheckEXP();
+	Player::CheckSTR();
 }
 
 void Player::handleEvents(SDL_Event playerEvent)
@@ -258,7 +264,7 @@ void Player::handleEvents(SDL_Event playerEvent)
 		{
 			if (EntityPosition::Coords[0] == 960)
 			{
-				//��������� ��� ����� � �����
+				//остановка при упоре в стену
 			}
 			else
 			{

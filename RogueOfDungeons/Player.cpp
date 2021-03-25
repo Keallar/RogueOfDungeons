@@ -6,18 +6,21 @@
 #include "UI.h"
 #include "inventory.h"
 
-int Player::HP[2] = {
+int Player::HP[3] = {
 					 10, /*hp  now*/
-					 10  /*hp  previous*/
+					 10, /*hp  previous*/
+					 10	 /*hp max*/
 					};
-int Player::exp[2] = { 
+int Player::exp[3] = { 
 					   99, /*exp  now*/
-					   0  /*exp  previous*/
+					   0,  /*exp  previous*/
+					   0   /*exp max */
 					 };
 
-int Player::mana[2] = { 
+int Player::mana[3] = { 
 					    0, /*mana  now*/
-						0  /*mana  previous*/
+						0, /*mana  previous*/
+						50 /*mana max */
 					  };
 
 Player::Player(const char* texturesheet, SDL_Renderer* renderer)

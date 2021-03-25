@@ -106,8 +106,16 @@ class Spec
 {
 private:
 	SDL_Texture* spec;
+	SDL_Texture* STR;
+	SDL_Texture* DEX;
+	SDL_Texture* INT;
+	SDL_Texture* PHS; //Physical Strength
+	SDL_Texture* LCK;
+	SDL_Texture* button;
+	SDL_Texture* plus;
 public:
 	Spec();
+	void Update(int value);
 };
 
 class UISpecifications

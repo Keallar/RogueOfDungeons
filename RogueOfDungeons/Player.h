@@ -9,9 +9,9 @@ private:
     int Location[22][32];
     SDL_Texture* PlayerTexture;
     SDL_Renderer* ren;
-    static int HP[2];
-    static int exp[2];
-    static int mana[2];
+    static int HP[3];
+    static int exp[3];
+    static int mana[3];
     int damageInput;
     //UIInfo* uiInfo;
     const Uint8* keys = SDL_GetKeyboardState(NULL);

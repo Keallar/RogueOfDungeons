@@ -128,7 +128,6 @@ private:
 	SDL_Color color;
 	SDL_Texture* specBlock;
 	SDL_Texture* specifcation;
-	SDL_Texture* button;
 	SDL_Texture* state;
 	SDL_Texture* STR;
 	SDL_Texture* DEX;

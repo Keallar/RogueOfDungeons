@@ -261,7 +261,7 @@ UIItem::UIItem(SDL_Renderer* renderer)
 	ren = renderer;
 
 	itemBlock = textureManager::LoadTexture("images/InfoBlock.png", ren);
-	item = FontManager::renderText("Inventory", PATH_IN_FONT, color, 32, ren);
+	item = FontManager::renderText("Items", PATH_IN_FONT, color, 32, ren);
 	buttonForInv = textureManager::LoadTexture("images/Button.png", ren);
 }
 

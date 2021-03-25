@@ -132,7 +132,6 @@ UIInfo::UIInfo(SDL_Renderer* renderer)
 
 void UIInfo::Render()
 {
-	RenderManager::CopyToRender(versionBLock, ren, 0, 705, 170, 9);
 	RenderManager::CopyToRender(infoBlock, ren, 1024, 0, 256, 480);
 	RenderManager::CopyToRender(info, ren, 1116, 13, 64, 32);
 
@@ -149,31 +148,37 @@ void UIInfo::Render()
 	RenderManager::CopyToRender(xpText, ren, 1050, 152, 25, 22);
 
 	//Buttons
-	RenderManager::CopyToRender(specButton, ren, 1230, 200, 32, 32);
+	RenderManager::CopyToRender(specButton, ren, 1230, 240, 32, 32);
 
+}
+
+void UIInfo::RenderVersion()
+{
+	RenderManager::CopyToRender(versionBLock, ren, 0, 705, 170, 9);
 }
 
 UISpecifications::UISpecifications(SDL_Renderer* renderer)
 {
-	pathInFont = "fonts/manaspc.ttf";
-	SDL_Color color = { 255, 255, 255, 255 };
+	PATH_IN_FONT = "fonts/manaspc.ttf";
+	color = { 255, 255, 255, 255 };
 	ren = renderer;
 
 	//Specifications
 	specBlock = textureManager::LoadTexture("images/InfoBlock.png", ren);
-	specifcation = FontManager::renderText("Specifications", pathInFont, color, 64, ren);
-	plus = FontManager::renderText("+", pathInFont, color, 32, ren);
-	state = FontManager::renderText("1", pathInFont, color, 32, ren);
-	STR = FontManager::renderText("STR", pathInFont, color, 64, ren);
-	DEX = FontManager::renderText("DEX", pathInFont, color, 64, ren);
-	INT = FontManager::renderText("INT", pathInFont, color, 64, ren);
-	PHS = FontManager::renderText("PHS", pathInFont, color, 64, ren);
-	LCK = FontManager::renderText("LCK", pathInFont, color, 64, ren);
-	one = FontManager::renderText("(1)", pathInFont, color, 64, ren);
-	two = FontManager::renderText("(2)", pathInFont, color, 64, ren);
-	three = FontManager::renderText("(3)", pathInFont, color, 64, ren);
-	four = FontManager::renderText("(4)", pathInFont, color, 64, ren);
-	five = FontManager::renderText("(5)", pathInFont, color, 64, ren);
+	specifcation = FontManager::renderText("Specifications", PATH_IN_FONT, color, 64, ren);
+	plus = FontManager::renderText("+", PATH_IN_FONT, color, 32, ren);
+	button = textureManager::LoadTexture("images/Button.png", ren);
+	state = FontManager::renderText("1", PATH_IN_FONT, color, 32, ren);
+	STR = FontManager::renderText("STR", PATH_IN_FONT, color, 64, ren);
+	DEX = FontManager::renderText("DEX", PATH_IN_FONT, color, 64, ren);
+	INT = FontManager::renderText("INT", PATH_IN_FONT, color, 64, ren);
+	PHS = FontManager::renderText("PHS", PATH_IN_FONT, color, 64, ren);
+	LCK = FontManager::renderText("LCK", PATH_IN_FONT, color, 64, ren);
+	one = FontManager::renderText("(1)", PATH_IN_FONT, color, 64, ren);
+	two = FontManager::renderText("(2)", PATH_IN_FONT, color, 64, ren);
+	three = FontManager::renderText("(3)", PATH_IN_FONT, color, 64, ren);
+	four = FontManager::renderText("(4)", PATH_IN_FONT, color, 64, ren);
+	five = FontManager::renderText("(5)", PATH_IN_FONT, color, 64, ren);
 
 }
 
@@ -182,6 +187,7 @@ void UISpecifications::Render()
 	//Specifications
 	RenderManager::CopyToRender(specBlock, ren, 1024, 0, 256, 480);
 	RenderManager::CopyToRender(specifcation, ren, 1075, 13, 160, 32);
+	RenderManager::CopyToRender(button, ren, 1230, 240, 32, 32);
 
 	RenderManager::CopyToRender(STR, ren, 1050, 80, 64, 20);
 	RenderManager::CopyToRender(plus, ren, 1230, 80, 16, 20);
@@ -209,20 +215,61 @@ void UISpecifications::Render()
 	RenderManager::CopyToRender(five, ren, 1250, 200, 16, 20);
 }
 
+void UISpecifications::UpdateSpec(int value, int num)
+{
+	if (num == 1 && FlagManager::flagSTR == 1)
+	{
+		std::string stringTemp = std::to_string(value);
+		const char* CHAR_VALUE = stringTemp.c_str();
+		STR = FontManager::renderText(CHAR_VALUE, PATH_IN_FONT, color, 32, ren);
+	}
+	
+	else if (num == 2 && FlagManager::flagDEX == 1)
+	{
+		std::string stringTemp = std::to_string(value);
+		const char* CHAR_VALUE = stringTemp.c_str();
+		DEX = FontManager::renderText(CHAR_VALUE, PATH_IN_FONT, color, 32, ren);
+	}
+	
+	else if (num == 3 && FlagManager::flagINT == 1)
+	{
+		std::string stringTemp = std::to_string(value);
+		const char* CHAR_VALUE = stringTemp.c_str();
+		INT = FontManager::renderText(CHAR_VALUE, PATH_IN_FONT, color, 32, ren);
+	}
+	
+	else if (num == 4 && FlagManager::flagPHS == 1)
+	{
+		std::string stringTemp = std::to_string(value);
+		const char* CHAR_VALUE = stringTemp.c_str();
+		PHS = FontManager::renderText(CHAR_VALUE, PATH_IN_FONT, color, 32, ren);
+	}
+	
+	else if (num == 5 && FlagManager::flagLCK == 1)
+	{
+		std::string stringTemp = std::to_string(value);
+		const char* CHAR_VALUE = stringTemp.c_str();
+		LCK = FontManager::renderText(CHAR_VALUE, PATH_IN_FONT, color, 32, ren);
+	}
+}
+
+
 UIItem::UIItem(SDL_Renderer* renderer)
 {
-	pathInFont = "fonts/manaspc.ttf";
-	SDL_Color color = { 255, 255, 255, 255 };
+	PATH_IN_FONT = "fonts/manaspc.ttf";
+	color = { 255, 255, 255, 255 };
 	ren = renderer;
 
 	itemBlock = textureManager::LoadTexture("images/InfoBlock.png", ren);
-	item = FontManager::renderText("Inventory", pathInFont, color, 32, ren);
+	item = FontManager::renderText("Inventory", PATH_IN_FONT, color, 32, ren);
+	buttonForInv = textureManager::LoadTexture("images/Button.png", ren);
 }
 
 void UIItem::Render()
 {
 	RenderManager::CopyToRender(itemBlock, ren, 1024, 480, 256, 225);
 	RenderManager::CopyToRender(item, ren, 1085, 490, 128, 32);
+	RenderManager::CopyToRender(buttonForInv, ren, 1050, 665, 25, 22);
 }
 
 UIInventory::UIInventory(SDL_Renderer* renderer) : ren(renderer)

@@ -100,6 +100,7 @@ private:
 public:
 	UIInfo(SDL_Renderer* renderer);
 	void Render();
+	void RenderVersion();
 };
 
 class Spec
@@ -121,12 +122,13 @@ public:
 class UISpecifications
 {
 private:
-	const char* pathInFont;
+	const char* PATH_IN_FONT;
 	const Uint32 MOUSE_CHECK = SDL_GetMouseState(NULL, NULL);
 	SDL_Renderer* ren;
-	bool flag;
+	SDL_Color color;
 	SDL_Texture* specBlock;
 	SDL_Texture* specifcation;
+	SDL_Texture* button;
 	SDL_Texture* state;
 	SDL_Texture* STR;
 	SDL_Texture* DEX;
@@ -144,16 +146,19 @@ private:
 public:
 	UISpecifications(SDL_Renderer* renderer);
 	void Render();
+	void UpdateSpec(int value, int num);
 };
 
 
 class UIItem
 {
 private:
-	const char* pathInFont;
+	const char* PATH_IN_FONT;
+	SDL_Color color;
 	SDL_Renderer* ren;
 	SDL_Texture* itemBlock;
 	SDL_Texture* item;
+	SDL_Texture* buttonForInv;
 public:
 	UIItem(SDL_Renderer* renderer);
 	void Render();

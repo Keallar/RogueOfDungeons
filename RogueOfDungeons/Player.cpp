@@ -13,7 +13,7 @@ int Player::HP[3] = {
 					};
 int Player::exp[3] = { 
 					   99, /*exp  now*/
-					   0,  /*exp  previous*/
+					   99,  /*exp  previous*/
 					   0   /*exp max */
 					 };
 
@@ -22,6 +22,31 @@ int Player::mana[3] = {
 						0, /*mana  previous*/
 						50 /*mana max */
 					  };
+
+int Player::STR[2] = {
+						1, /*STR  now*/
+						1, /*STR  previous*/
+					 };
+
+int Player::DEX[2] = {
+						1, /*STR  now*/
+						1, /*STR  previous*/
+					 };
+
+int Player::INT[2] = {
+						1, /*STR  now*/
+						1, /*STR  previous*/
+					 };
+
+int Player::PHS[2] = {
+						1, /*STR  now*/
+						1, /*STR  previous*/
+					 };
+
+int Player::LCK[2] = {
+						1, /*STR  now*/
+						1, /*STR  previous*/
+					 };
 
 Player::Player(const char* texturesheet, SDL_Renderer* renderer)
 {
@@ -60,6 +85,35 @@ int Player::GetEXP()
 int Player::GetMana()
 {
 	return mana[0];
+}
+
+int Player::GetSTR()
+{
+	return STR[0];
+}
+
+void Player::GetLevel(int arr[22][32])
+{
+	for (int i = 0; i < 22; i++) {
+		for (int j = 0; j < 32; j++) {
+			Location[i][j] = arr[i][j];
+		}
+	}
+}
+
+void Player::GetPlayerFirstCoords()
+{
+	EntityPosition::Coords[0] = (rand() % 2 + 1) * 32;
+	EntityPosition::Coords[1] = (rand() % 20 + 1) * 32;
+	while ((Location[EntityPosition::Coords[1] / 32][EntityPosition::Coords[0] / 32] == 1) ||
+		((Location[EntityPosition::Coords[1] / 32][EntityPosition::Coords[0] / 32 - 1] != 0) &&
+			(Location[EntityPosition::Coords[1] / 32][EntityPosition::Coords[0] / 32 + 1] != 0) &&
+			(Location[EntityPosition::Coords[1] / 32 - 1][EntityPosition::Coords[0] / 32] != 0) &&
+			(Location[EntityPosition::Coords[1] / 32 + 1][EntityPosition::Coords[0] / 32] != 0)))
+	{
+		EntityPosition::Coords[0] = (rand() % 2 + 1) * 32;
+		EntityPosition::Coords[1] = (rand() % 20 + 1) * 32;
+	}
 }
 
 void Player::CheckHP()
@@ -107,29 +161,22 @@ void Player::CheckEXP()
 	}
 }
 
-void Player::GetLevel(int arr[22][32]) 
+void Player::CheckSTR()
 {
-	for (int i = 0; i < 22; i++) {
-		for (int j = 0; j < 32; j++) {
-			Location[i][j] = arr[i][j];
-		}
+	if (Player::STR[0] != Player::STR[1] && FlagManager::flagSTR == 0)
+	{
+		//std::cout << "Check HP 1" << std::endl;
+		FlagManager::flagSTR = 1;
+		Player::STR[1] = Player::STR[0];
+	}
+	else if (Player::STR[0] == Player::STR[1] && FlagManager::flagSTR == 1)
+	{
+		//std::cout << "Check HP 0" << std::endl;
+		FlagManager::flagSTR = 0;
 	}
 }
 
-void Player::GetPlayerFirstCoords() 
-{
-	EntityPosition::Coords[0] = (rand() % 2 +1) * 32;
-	EntityPosition::Coords[1] = (rand() % 20 +1) * 32;
-	while ((Location[EntityPosition::Coords[1] / 32][EntityPosition::Coords[0] / 32] == 1)||
-		((Location[EntityPosition::Coords[1] / 32][EntityPosition::Coords[0] / 32 - 1] != 0)&&
-		(Location[EntityPosition::Coords[1] / 32][EntityPosition::Coords[0] / 32 + 1] != 0)&&
-		(Location[EntityPosition::Coords[1] / 32 - 1][EntityPosition::Coords[0] / 32] != 0)&&
-		(Location[EntityPosition::Coords[1] / 32 + 1][EntityPosition::Coords[0] / 32] != 0)))
-	{
-		EntityPosition::Coords[0] = (rand() % 2 + 1) * 32;
-		EntityPosition::Coords[1] = (rand() % 20 + 1) * 32;
-	}
-}
+
 
 void Player::Render()
 {

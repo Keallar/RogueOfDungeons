@@ -219,65 +219,55 @@ void Player::CheckSpecVaue(int numSpec)
 	case 1://Check STR
 		if (Player::STR[0] != Player::STR[1] && FlagManager::flagSTR == 0)
 		{
-			//std::cout << "Check HP 1" << std::endl;
 			FlagManager::flagSTR = 1;
 			Player::STR[1] = Player::STR[0];
 		}
 		else if (Player::STR[0] == Player::STR[1] && FlagManager::flagSTR == 1)
 		{
-			//std::cout << "Check HP 0" << std::endl;
 			FlagManager::flagSTR = 0;
 		}
 		break;
 	case 2://Check DEX
 		if (Player::DEX[0] != Player::DEX[1] && FlagManager::flagDEX == 0)
 		{
-			//std::cout << "Check HP 1" << std::endl;
 			FlagManager::flagDEX = 1;
 			Player::DEX[1] = Player::DEX[0];
 		}
 		else if (Player::DEX[0] == Player::DEX[1] && FlagManager::flagDEX == 1)
 		{
-			//std::cout << "Check HP 0" << std::endl;
 			FlagManager::flagDEX = 0;
 		}
 		break;
 	case 3://Check INT
 		if (Player::INT[0] != Player::INT[1] && FlagManager::flagINT == 0)
 		{
-			//std::cout << "Check HP 1" << std::endl;
 			FlagManager::flagINT = 1;
 			Player::INT[1] = Player::INT[0];
 		}
 		else if (Player::INT[0] == Player::INT[1] && FlagManager::flagINT == 1)
 		{
-			//std::cout << "Check HP 0" << std::endl;
 			FlagManager::flagINT = 0;
 		}
 		break;
 	case 4://Check PHS
 		if (Player::PHS[0] != Player::PHS[1] && FlagManager::flagPHS == 0)
 		{
-			//std::cout << "Check HP 1" << std::endl;
 			FlagManager::flagPHS = 1;
 			Player::PHS[1] = Player::PHS[0];
 		}
 		else if (Player::PHS[0] == Player::PHS[1] && FlagManager::flagPHS == 1)
 		{
-			//std::cout << "Check HP 0" << std::endl;
 			FlagManager::flagPHS = 0;
 		}
 		break;
 	case 5://Check LCK
 		if (Player::LCK[0] != Player::LCK[1] && FlagManager::flagLCK == 0)
 		{
-			//std::cout << "Check HP 1" << std::endl;
 			FlagManager::flagLCK = 1;
 			Player::LCK[1] = Player::LCK[0];
 		}
 		else if (Player::LCK[0] == Player::LCK[1] && FlagManager::flagLCK == 1)
 		{
-			//std::cout << "Check HP 0" << std::endl;
 			FlagManager::flagLCK = 0;
 		}
 		break;

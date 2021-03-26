@@ -343,24 +343,29 @@ void Level::handleEvents(SDL_Event eventWIthSpec)
 		}
 
 		//Увеличение характеристик Spec с помощью клавиш
-		if (keys[SDL_SCANCODE_1] && FlagManager::flagUiSpec == 1)
+		if (keys[SDL_SCANCODE_1] && FlagManager::flagUiSpec == 1 && FlagManager::flagSTR == 0)
 		{
+			player->ChangeValueSpecs(1);
 			break;
 		}
-		if (keys[SDL_SCANCODE_2] && FlagManager::flagUiSpec == 1)
+		if (keys[SDL_SCANCODE_2] && FlagManager::flagUiSpec == 1 && FlagManager::flagDEX == 0)
 		{
+			player->ChangeValueSpecs(2);
 			break;
 		}
-		if (keys[SDL_SCANCODE_3] && FlagManager::flagUiSpec == 1)
+		if (keys[SDL_SCANCODE_3] && FlagManager::flagUiSpec == 1 && FlagManager::flagINT == 0)
 		{
+			player->ChangeValueSpecs(3);
 			break;
 		}
-		if (keys[SDL_SCANCODE_4] && FlagManager::flagUiSpec == 1)
+		if (keys[SDL_SCANCODE_4] && FlagManager::flagUiSpec == 1 && FlagManager::flagPHS == 0)
 		{
+			player->ChangeValueSpecs(4);
 			break;
 		}
-		if (keys[SDL_SCANCODE_5] && FlagManager::flagUiSpec == 1)
+		if (keys[SDL_SCANCODE_5] && FlagManager::flagUiSpec == 1 && FlagManager::flagLCK == 0)
 		{
+			player->ChangeValueSpecs(5);
 			break;
 		}
 

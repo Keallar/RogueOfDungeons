@@ -21,7 +21,6 @@ private:
     //UIInfo* uiInfo;
     const Uint8* keys = SDL_GetKeyboardState(NULL);
 public:
-    Player() = default;
     Player(const char* texturesheet, SDL_Renderer* ren);
     ~Player();
     void Render();

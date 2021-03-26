@@ -87,14 +87,56 @@ int Player::GetMana()
 	return mana[0];
 }
 
-int Player::GetSTR()
+//Получение значения характеристик (STR, DEX, INT, PHS, LCK)
+int Player::GetSpecValue(int numSpec)
 {
-	return STR[0];
+	switch (numSpec)
+	{
+	case 1:
+		return STR[0];
+		break;
+	case 2:
+		return DEX[0];
+		break;
+	case 3:
+		return INT[0];
+		break;
+	case 4:
+		return PHS[0];
+		break;
+	case 5:
+		return LCK[0];
+		break;
+	default:
+		std::cout << "Error in GetSpecValue!" << std::endl;
+		break;
+	}
+
 }
 
-void Player::ChangeSTR()
+//Изменение значения характеристики (STR, DEX, INT, PHS, LCK) на +1
+void Player::ChangeValueSpecs(int numOfSpec)
 {
-	STR[0] += 1;
+	switch (numOfSpec)
+	{
+	case 1: //STR
+		STR[0] += 1;
+		break;
+	case 2: //DEX
+		DEX[0] += 1;
+		break;
+	case 3: //INT
+		INT[0] += 1;
+		break;
+	case 4: //PHS
+		PHS[0] += 1;
+		break;
+	case 5: //LCK
+		LCK[0] += 1;
+		break;
+	default:
+		break;
+	}
 }
 
 void Player::GetLevel(int arr[22][32])
@@ -121,6 +163,7 @@ void Player::GetPlayerFirstCoords()
 	}
 }
 
+//Проверка изменения HP
 void Player::CheckHP()
 {
 	if (Player::HP[0] != Player::HP[1] && FlagManager::flagCheckHP ==  0)
@@ -136,6 +179,7 @@ void Player::CheckHP()
 	}
 }
 
+//Проверка изменения MANA
 void Player::CheckMANA()
 {
 	if (Player::mana[0] != Player::mana[1] && FlagManager::flagCheckMana == 0)
@@ -151,6 +195,7 @@ void Player::CheckMANA()
 	}
 }
 
+//Проверка изменения EXP
 void Player::CheckEXP()
 {
 	if (Player::exp[0] != Player::exp[1] && FlagManager::flagCheckExp == 0)
@@ -166,22 +211,82 @@ void Player::CheckEXP()
 	}
 }
 
-void Player::CheckSTR()
+//Проверка изменения значений характеристик (STR, DEX, INT, PHS, LCK)
+void Player::CheckSpecVaue(int numSpec)
 {
-	if (Player::STR[0] != Player::STR[1] && FlagManager::flagSTR == 1)
+	switch (numSpec)
 	{
-		//std::cout << "Check HP 1" << std::endl;
-		FlagManager::flagSTR = 1;
-		Player::STR[1] = Player::STR[0];
+	case 1://Check STR
+		if (Player::STR[0] != Player::STR[1] && FlagManager::flagSTR == 0)
+		{
+			//std::cout << "Check HP 1" << std::endl;
+			FlagManager::flagSTR = 1;
+			Player::STR[1] = Player::STR[0];
+		}
+		else if (Player::STR[0] == Player::STR[1] && FlagManager::flagSTR == 1)
+		{
+			//std::cout << "Check HP 0" << std::endl;
+			FlagManager::flagSTR = 0;
+		}
+		break;
+	case 2://Check DEX
+		if (Player::DEX[0] != Player::DEX[1] && FlagManager::flagDEX == 0)
+		{
+			//std::cout << "Check HP 1" << std::endl;
+			FlagManager::flagDEX = 1;
+			Player::DEX[1] = Player::DEX[0];
+		}
+		else if (Player::DEX[0] == Player::DEX[1] && FlagManager::flagDEX == 1)
+		{
+			//std::cout << "Check HP 0" << std::endl;
+			FlagManager::flagDEX = 0;
+		}
+		break;
+	case 3://Check INT
+		if (Player::INT[0] != Player::INT[1] && FlagManager::flagINT == 0)
+		{
+			//std::cout << "Check HP 1" << std::endl;
+			FlagManager::flagINT = 1;
+			Player::INT[1] = Player::INT[0];
+		}
+		else if (Player::INT[0] == Player::INT[1] && FlagManager::flagINT == 1)
+		{
+			//std::cout << "Check HP 0" << std::endl;
+			FlagManager::flagINT = 0;
+		}
+		break;
+	case 4://Check PHS
+		if (Player::PHS[0] != Player::PHS[1] && FlagManager::flagPHS == 0)
+		{
+			//std::cout << "Check HP 1" << std::endl;
+			FlagManager::flagPHS = 1;
+			Player::PHS[1] = Player::PHS[0];
+		}
+		else if (Player::PHS[0] == Player::PHS[1] && FlagManager::flagPHS == 1)
+		{
+			//std::cout << "Check HP 0" << std::endl;
+			FlagManager::flagPHS = 0;
+		}
+		break;
+	case 5://Check LCK
+		if (Player::LCK[0] != Player::LCK[1] && FlagManager::flagLCK == 0)
+		{
+			//std::cout << "Check HP 1" << std::endl;
+			FlagManager::flagLCK = 1;
+			Player::LCK[1] = Player::LCK[0];
+		}
+		else if (Player::LCK[0] == Player::LCK[1] && FlagManager::flagLCK == 1)
+		{
+			//std::cout << "Check HP 0" << std::endl;
+			FlagManager::flagLCK = 0;
+		}
+		break;
+	default:
+		std::cout << "Error in CheckSpecValue" << std::endl;
+		break;
 	}
-	else if (Player::STR[0] == Player::STR[1] && FlagManager::flagSTR == 0)
-	{
-		//std::cout << "Check HP 0" << std::endl;
-		FlagManager::flagSTR = 0;
-	}
+	
 }
-
-
 
 void Player::Render()
 {
@@ -194,7 +299,11 @@ void Player::Update()
 	Player::CheckHP();
 	Player::CheckMANA();
 	Player::CheckEXP();
-	Player::CheckSTR();
+	Player::CheckSpecVaue(1);
+	Player::CheckSpecVaue(2);
+	Player::CheckSpecVaue(3);
+	Player::CheckSpecVaue(4);
+	Player::CheckSpecVaue(5);
 }
 
 void Player::handleEvents(SDL_Event playerEvent)
@@ -206,7 +315,7 @@ void Player::handleEvents(SDL_Event playerEvent)
 		{
 			if (EntityPosition::Coords[1] == 32)
 			{
-				//��������� ��� ����� � �����
+				//остановка при упоре в стену
 			}
 			else
 			{

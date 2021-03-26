@@ -35,21 +35,12 @@ public:
     static int GetHP();
     static int GetEXP();
     static int GetMana();
-    static int GetSTR();
-    static int GetDEX();
-    static int GetINT();
-    static int GetPHS();
-    static int GetLCK();
+    static int GetSpecValue(int numSpec);
 
-    //WTF (костыль, так как хочу спать)
-    static void ChangeSTR();
+    static void ChangeValueSpecs(int numOfSpec);
 
     static void CheckHP();
     static void CheckEXP();
     static void CheckMANA();
-    static void CheckSTR();
-    static void CheckDEX();
-    static void CheckINT();
-    static void CheckPHS();
-    static void CheckLCK();
+    static void CheckSpecVaue(int numSpec);
 };

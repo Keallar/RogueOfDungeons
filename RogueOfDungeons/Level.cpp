@@ -166,6 +166,26 @@ void Level::Render()
 	{
 		uiSpec->Render();
 
+		if (FlagManager::flagSTR == 1)
+		{
+			uiSpec->UpdateSpec(Player::GetSpecValue(1), 1);
+		}
+		if (FlagManager::flagDEX == 1)
+		{
+			uiSpec->UpdateSpec(Player::GetSpecValue(2), 2);
+		}
+		if (FlagManager::flagINT == 1)
+		{
+			uiSpec->UpdateSpec(Player::GetSpecValue(3), 3);
+		}
+		if (FlagManager::flagPHS == 1)
+		{
+			uiSpec->UpdateSpec(Player::GetSpecValue(4), 4);
+		}
+		if (FlagManager::flagLCK == 1)
+		{
+			uiSpec->UpdateSpec(Player::GetSpecValue(5), 5);
+		}
 	}
 	if (FlagManager::flagUI == 1)
 	{
@@ -257,9 +277,35 @@ void Level::handleEvents(SDL_Event eventWIthSpec)
 		if (FlagManager::flagUiSpec == 1 && InputManager::MouseInArea(1230, 80, 16, 20, mouseCoords.x, mouseCoords.y) &&
 			FlagManager::flagSTR == 0)
 		{
-			//Должно происходить изменение характеристик
-			player->ChangeSTR();
-			FlagManager::flagSTR = 1;
+			player->ChangeValueSpecs(1);
+			SDL_Delay(200);
+		}
+		//DEX
+		if (FlagManager::flagUiSpec == 1 && InputManager::MouseInArea(1230, 110, 16, 20, mouseCoords.x, mouseCoords.y) &&
+			FlagManager::flagDEX == 0)
+		{
+			player->ChangeValueSpecs(2);
+			SDL_Delay(200);
+		}
+		//INT
+		if (FlagManager::flagUiSpec == 1 && InputManager::MouseInArea(1230, 140, 16, 20, mouseCoords.x, mouseCoords.y) &&
+			FlagManager::flagINT == 0)
+		{
+			player->ChangeValueSpecs(3);
+			SDL_Delay(200);
+		}
+		//PHS
+		if (FlagManager::flagUiSpec == 1 && InputManager::MouseInArea(1230, 170, 16, 20, mouseCoords.x, mouseCoords.y) &&
+			FlagManager::flagPHS == 0)
+		{
+			player->ChangeValueSpecs(4);
+			SDL_Delay(200);
+		}
+		//LCK
+		if (FlagManager::flagUiSpec == 1 && InputManager::MouseInArea(1230, 200, 16, 20, mouseCoords.x, mouseCoords.y) &&
+			FlagManager::flagLCK == 0)
+		{
+			player->ChangeValueSpecs(5);
 			SDL_Delay(200);
 		}
 

@@ -168,12 +168,16 @@ UISpecifications::UISpecifications(SDL_Renderer* renderer)
 	specifcation = FontManager::renderText("Specifications", PATH_IN_FONT, color, 64, ren);
 	plus = FontManager::renderText("+", PATH_IN_FONT, color, 32, ren);
 	button = textureManager::LoadTexture("images/Button.png", ren);
-	state = FontManager::renderText("1", PATH_IN_FONT, color, 32, ren);
 	STR = FontManager::renderText("STR", PATH_IN_FONT, color, 64, ren);
+	valueSTR = FontManager::renderText("1", PATH_IN_FONT, color, 32, ren);
 	DEX = FontManager::renderText("DEX", PATH_IN_FONT, color, 64, ren);
+	valueDEX = FontManager::renderText("1", PATH_IN_FONT, color, 32, ren);
 	INT = FontManager::renderText("INT", PATH_IN_FONT, color, 64, ren);
+	valueINT = FontManager::renderText("1", PATH_IN_FONT, color, 32, ren);
 	PHS = FontManager::renderText("PHS", PATH_IN_FONT, color, 64, ren);
+	valuePHS = FontManager::renderText("1", PATH_IN_FONT, color, 32, ren);
 	LCK = FontManager::renderText("LCK", PATH_IN_FONT, color, 64, ren);
+	valueLCK = FontManager::renderText("1", PATH_IN_FONT, color, 32, ren);
 	one = FontManager::renderText("(1)", PATH_IN_FONT, color, 64, ren);
 	two = FontManager::renderText("(2)", PATH_IN_FONT, color, 64, ren);
 	three = FontManager::renderText("(3)", PATH_IN_FONT, color, 64, ren);
@@ -188,68 +192,74 @@ void UISpecifications::Render()
 	RenderManager::CopyToRender(specBlock, ren, 1024, 0, 256, 480);
 	RenderManager::CopyToRender(specifcation, ren, 1075, 13, 160, 32);
 	RenderManager::CopyToRender(button, ren, 1230, 240, 32, 32);
-
+	//STR
 	RenderManager::CopyToRender(STR, ren, 1050, 80, 64, 20);
 	RenderManager::CopyToRender(plus, ren, 1230, 80, 16, 20);
-	RenderManager::CopyToRender(state, ren, 1180, 80, 16, 20);
+	RenderManager::CopyToRender(valueSTR, ren, 1180, 80, 16, 20);
 	RenderManager::CopyToRender(one, ren, 1250, 80, 16, 20);
-
+	//DEX
 	RenderManager::CopyToRender(DEX, ren, 1050, 110, 64, 20);
 	RenderManager::CopyToRender(plus, ren, 1230, 110, 16, 20);
-	RenderManager::CopyToRender(state, ren, 1180, 110, 16, 20);
+	RenderManager::CopyToRender(valueDEX, ren, 1180, 110, 16, 20);
 	RenderManager::CopyToRender(two, ren, 1250, 110, 16, 20);
-
+	//INT
 	RenderManager::CopyToRender(INT, ren, 1050, 140, 64, 20);
 	RenderManager::CopyToRender(plus, ren, 1230, 140, 16, 20);
-	RenderManager::CopyToRender(state, ren, 1180, 140, 16, 20);
+	RenderManager::CopyToRender(valueINT, ren, 1180, 140, 16, 20);
 	RenderManager::CopyToRender(three, ren, 1250, 140, 16, 20);
-
+	//PHS
 	RenderManager::CopyToRender(PHS, ren, 1050, 170, 64, 20);
 	RenderManager::CopyToRender(plus, ren, 1230, 170, 16, 20);
-	RenderManager::CopyToRender(state, ren, 1180, 170, 16, 20);
+	RenderManager::CopyToRender(valuePHS, ren, 1180, 170, 16, 20);
 	RenderManager::CopyToRender(four, ren, 1250, 170, 16, 20);
-
+	//LCK
 	RenderManager::CopyToRender(LCK, ren, 1050, 200, 64, 20);
 	RenderManager::CopyToRender(plus, ren, 1230, 200, 16, 20);
-	RenderManager::CopyToRender(state, ren, 1180, 200, 16, 20);
+	RenderManager::CopyToRender(valueLCK, ren, 1180, 200, 16, 20);
 	RenderManager::CopyToRender(five, ren, 1250, 200, 16, 20);
 }
 
 void UISpecifications::UpdateSpec(int value, int num)
 {
-	if (num == 1 && FlagManager::flagSTR == 1)
+	switch (num)
+	{
+	case 1:
 	{
 		std::string stringTemp = std::to_string(value);
 		const char* CHAR_VALUE = stringTemp.c_str();
-		STR = FontManager::renderText(CHAR_VALUE, PATH_IN_FONT, color, 32, ren);
+		valueSTR = FontManager::renderText(CHAR_VALUE, PATH_IN_FONT, color, 32, ren);
+		break;
 	}
-	
-	else if (num == 2 && FlagManager::flagDEX == 1)
+	case 2:
 	{
 		std::string stringTemp = std::to_string(value);
 		const char* CHAR_VALUE = stringTemp.c_str();
-		DEX = FontManager::renderText(CHAR_VALUE, PATH_IN_FONT, color, 32, ren);
+		valueDEX = FontManager::renderText(CHAR_VALUE, PATH_IN_FONT, color, 32, ren);
+		break;
 	}
-	
-	else if (num == 3 && FlagManager::flagINT == 1)
+	case 3:
 	{
 		std::string stringTemp = std::to_string(value);
 		const char* CHAR_VALUE = stringTemp.c_str();
-		INT = FontManager::renderText(CHAR_VALUE, PATH_IN_FONT, color, 32, ren);
+		valueINT = FontManager::renderText(CHAR_VALUE, PATH_IN_FONT, color, 32, ren);
+		break;
 	}
-	
-	else if (num == 4 && FlagManager::flagPHS == 1)
+	case 4:
 	{
 		std::string stringTemp = std::to_string(value);
 		const char* CHAR_VALUE = stringTemp.c_str();
-		PHS = FontManager::renderText(CHAR_VALUE, PATH_IN_FONT, color, 32, ren);
+		valuePHS = FontManager::renderText(CHAR_VALUE, PATH_IN_FONT, color, 32, ren);
+		break;
 	}
-	
-	else if (num == 5 && FlagManager::flagLCK == 1)
+	case 5: 
 	{
 		std::string stringTemp = std::to_string(value);
 		const char* CHAR_VALUE = stringTemp.c_str();
-		LCK = FontManager::renderText(CHAR_VALUE, PATH_IN_FONT, color, 32, ren);
+		valueLCK = FontManager::renderText(CHAR_VALUE, PATH_IN_FONT, color, 32, ren);
+		break;
+	}
+	default:
+		break;
 	}
 }
 

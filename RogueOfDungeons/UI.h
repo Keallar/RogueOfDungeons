@@ -123,17 +123,20 @@ class UISpecifications
 {
 private:
 	const char* PATH_IN_FONT;
-	const Uint32 MOUSE_CHECK = SDL_GetMouseState(NULL, NULL);
 	SDL_Renderer* ren;
 	SDL_Color color;
 	SDL_Texture* specBlock;
 	SDL_Texture* specifcation;
-	SDL_Texture* state;
 	SDL_Texture* STR;
+	SDL_Texture* valueSTR;
 	SDL_Texture* DEX;
+	SDL_Texture* valueDEX;
 	SDL_Texture* INT;
+	SDL_Texture* valueINT;
 	SDL_Texture* PHS; //Physical Strength
+	SDL_Texture* valuePHS;
 	SDL_Texture* LCK;
+	SDL_Texture* valueLCK;
 	SDL_Texture* button;
 	SDL_Texture* plus;
 	SDL_Texture* one;

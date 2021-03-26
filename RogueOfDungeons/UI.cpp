@@ -198,31 +198,16 @@ UIItem::UIItem(SDL_Renderer* renderer)
 	item = FontManager::renderText("Inventory", pathInFont, color, 32, ren);
 }
 
-void UIItem::Render()
-{
-	RenderManager::CopyToRender(itemBlock, ren, 1024, 480, 256, 225);
-	RenderManager::CopyToRender(item, ren, 1085, 490, 128, 32);
-	/*for (int i = 0; i < 16; i++)
-	{
-		if (Inventory::inventoryFace[i] != -1) 
-		{
-			item = textureManager::LoadTexture(ItemTextureName[i], ren);
-		}
-	}*/
-}
-
-UIInventory::UIInventory(SDL_Renderer* renderer) : ren(renderer)
-{
-	SDL_Color color = { 255, 255, 255, 255 };
-	const char* PATH_IN_FONT = "fonts/manaspc.ttf";
-	inventoryBlock = textureManager::LoadTexture("images/InfoBlock.png", ren);
-	inventoryText = FontManager::renderText("Inventory", PATH_IN_FONT, color, 64, ren);
-}
-
 void UIInventory::Render()
 {
-	RenderManager::CopyToRender(inventoryBlock, ren, 730, 0, 300, 710);
-	RenderManager::CopyToRender(inventoryText, ren, 780, 50, 160, 32);
+
+	RenderManager::CopyToRender(inventoryBlock, ren, 1024, 480, 256, 225);
+	RenderManager::CopyToRender(inventory, ren, 1085, 490, 128, 32);
+	for (int i = 0; i < 16; i++) {
+		if (Inventory::inventoryFace[i] != -1) {
+			item = textureManager::LoadTexture(ItemTextureName[i], ren);
+		}
+	}
 }
 
 

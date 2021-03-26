@@ -25,6 +25,7 @@ TextInfo::~TextInfo()
 	
 }
 
+//UNDONE (изменить конструкторы для HpInfo, ManaInfo, ExpInfo)
 HpInfo::HpInfo(SDL_Renderer* renderer, int changeTextValue) :TextInfo(renderer, changeTextValue)
 {
 	ren = renderer;
@@ -32,6 +33,7 @@ HpInfo::HpInfo(SDL_Renderer* renderer, int changeTextValue) :TextInfo(renderer, 
 	std::string stringValue = std::to_string(changeTextValue);
 	const char* TEXT_VALUE = stringValue.c_str();
 	hpText = FontManager::renderText(TEXT_VALUE, PATH_IN_FONT, color, 32, ren);
+	hpMax = FontManager::renderText("10", PATH_IN_FONT, color, 32, ren);
 }
 
 HpInfo::~HpInfo()
@@ -46,9 +48,15 @@ void HpInfo::Update(int value)
 	hpText = FontManager::renderText(CHAR_VALUE, PATH_IN_FONT, color, 32, ren);
 }
 
+void HpInfo::UpdateMax()
+{
+	//UNDONE (изменение текстурки текста максимального значения)
+}
+
 void HpInfo::Render()
 {
 	RenderManager::CopyToRender(hpText, ren, 1120, 72, 32, 20);
+	RenderManager::CopyToRender(hpMax, ren, 1180, 72, 32, 20);
 }
 
 ManaInfo::ManaInfo(SDL_Renderer* renderer, int changeTextValue) : TextInfo(renderer, changeTextValue)
@@ -58,6 +66,7 @@ ManaInfo::ManaInfo(SDL_Renderer* renderer, int changeTextValue) : TextInfo(rende
 	std::string stringValue = std::to_string(changeTextValue);
 	const char* TEXT_VALUE = stringValue.c_str();
 	manaText = FontManager::renderText(TEXT_VALUE, PATH_IN_FONT, color, 32, ren);
+	manaMax = FontManager::renderText("50", PATH_IN_FONT, color, 32, ren);
 }
 
 ManaInfo::~ManaInfo()
@@ -75,6 +84,7 @@ void ManaInfo::Update(int value)
 void ManaInfo::Render()
 {
 	RenderManager::CopyToRender(manaText, ren, 1120, 122, 32, 20);
+	RenderManager::CopyToRender(manaMax, ren, 1180, 122, 32, 20);
 }
 
 ExpInfo::ExpInfo(SDL_Renderer* renderer, int changeTextValue) : TextInfo(renderer, changeTextValue)
@@ -100,31 +110,33 @@ void ExpInfo::Update(int value)
 
 void ExpInfo::Render()
 {
-	RenderManager::CopyToRender(expText, ren, 1120, 175, 64, 20);
+	RenderManager::CopyToRender(expText, ren, 1120, 175, 32, 20);
 }
 
 UIInfo::UIInfo(SDL_Renderer* renderer)
 {
-	pathInFont = "fonts/manaspc.ttf";
+	PATH_IN_FONT = "fonts/manaspc.ttf";
 	ren = renderer;
 
 	//Version
-	versionBLock = FontManager::renderText("ROGUE OF DUNGEONS V-0.0.4", pathInFont, color, 32, ren);
+	versionBLock = FontManager::renderText("ROGUE OF DUNGEONS V-0.0.5", PATH_IN_FONT, color, 32, ren);
 
 	infoBlock = textureManager::LoadTexture("images/InfoBlock.png", ren);
-	info = FontManager::renderText("Info", "fonts/manaspc.ttf", color, 32, ren);
+	info = FontManager::renderText("Info", PATH_IN_FONT, color, 32, ren);
+
+	slashhhhhhhhh = FontManager::renderText("/", PATH_IN_FONT, color, 32, ren);
 
 	//HP
 	hpBar = textureManager::LoadTexture("images/hp.png", ren);
-	hpText = FontManager::renderText("HP", pathInFont, color, 64, ren);
+	hpText = FontManager::renderText("HP", PATH_IN_FONT, color, 64, ren);
 
 	//Mana
 	mnBar = textureManager::LoadTexture("images/ManaBar.png", ren);
-	mnText = FontManager::renderText("MN", pathInFont, color, 64, ren);
+	mnText = FontManager::renderText("MN", PATH_IN_FONT, color, 64, ren);
 
 	//XP
 	xpBar = textureManager::LoadTexture("images/XP.png", ren);
-	xpText = FontManager::renderText("XP", pathInFont, color, 64, ren);
+	xpText = FontManager::renderText("XP", PATH_IN_FONT, color, 64, ren);
 
 	//Buttons
 	specButton = textureManager::LoadTexture("images/Button.png", ren);
@@ -134,6 +146,9 @@ void UIInfo::Render()
 {
 	RenderManager::CopyToRender(infoBlock, ren, 1024, 0, 256, 480);
 	RenderManager::CopyToRender(info, ren, 1116, 13, 64, 32);
+	RenderManager::CopyToRender(slashhhhhhhhh, ren, 1152, 72, 32, 20);
+	RenderManager::CopyToRender(slashhhhhhhhh, ren, 1152, 122, 32, 20);
+	RenderManager::CopyToRender(slashhhhhhhhh, ren, 1152, 175, 32, 20);
 
 	//HP
 	RenderManager::CopyToRender(hpBar, ren, 1080, 40, 160, 32, 0, 0, 128, 16);

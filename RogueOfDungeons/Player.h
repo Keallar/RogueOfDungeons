@@ -27,6 +27,7 @@ public:
     void Update();
     void handleEvents(SDL_Event playerEvent);
     void clean();
+
 	void GetLevel(int arr[22][32]);
 	void GetPlayerFirstCoords();
     void Attack();
@@ -37,6 +38,8 @@ public:
     static int GetSpecValue(int numSpec);
 
     static void ChangeValueSpecs(int numOfSpec);
+    static void ChangeMaxHpValue();
+    static void ChangeMaxManaValue();
 
     static void CheckHP();
     static void CheckEXP();

@@ -39,11 +39,13 @@ private:
 	SDL_Color color = { 255, 255, 255, 255 };*/
 	SDL_Renderer* ren;
 	SDL_Texture* hpText;
+	SDL_Texture* hpMax;
 public:
 	HpInfo(SDL_Renderer* renderer, int changeTextValue);
 	~HpInfo();
 	void Render();
 	void Update(int value);
+	void UpdateMax();
 };
 
 class ManaInfo :public TextInfo
@@ -53,6 +55,7 @@ private:
 	SDL_Color color = { 255, 255, 255, 255 };*/
 	SDL_Renderer* ren;
 	SDL_Texture* manaText;
+	SDL_Texture* manaMax;
 public:
 	ManaInfo(SDL_Renderer* renderer, int changeTextValue);
 	~ManaInfo();
@@ -77,12 +80,13 @@ public:
 class UIInfo
 {
 private:
-	const char* pathInFont;
+	const char* PATH_IN_FONT;
 	SDL_Color color = { 255, 255, 255, 255 };
 	SDL_Renderer* ren;
 	SDL_Texture* versionBLock;
 	SDL_Texture* infoBlock;
 	SDL_Texture* info;
+	SDL_Texture* slashhhhhhhhh;
 	//HP
 	SDL_Texture* hpBar;
 	SDL_Texture* hpText;

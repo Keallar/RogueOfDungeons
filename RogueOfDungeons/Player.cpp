@@ -163,6 +163,18 @@ void Player::GetPlayerFirstCoords()
 	}
 }
 
+//Изменение максимального значения hp
+void Player::ChangeMaxHpValue()
+{
+	HP[2] += 1;
+}
+
+//Изменение максимального значения маны
+void Player::ChangeMaxManaValue()
+{
+	mana[2] += 1;
+}
+
 //Проверка изменения HP
 void Player::CheckHP()
 {

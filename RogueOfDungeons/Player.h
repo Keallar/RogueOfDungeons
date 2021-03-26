@@ -32,7 +32,7 @@ public:
 	void GetPlayerFirstCoords();
     void Attack();
 
-    static int GetHP();
+    static int GetHP(int numOfArr);
     static int GetEXP();
     static int GetMana();
     static int GetSpecValue(int numSpec);

@@ -29,7 +29,8 @@ public:
 	TextInfo(SDL_Renderer* renderer, int changeTextValue);
 	~TextInfo();
 	virtual void Render() = 0;
-//	virtual void Update(int value) = 0;
+	virtual void Update(int value) = 0;
+	virtual void UpdateMax() = 0;
 };
 
 class HpInfo : public TextInfo
@@ -61,6 +62,7 @@ public:
 	~ManaInfo();
 	void Render();
 	void Update(int value);
+	void UpdateMax();
 };
 
 class ExpInfo : public TextInfo
@@ -75,6 +77,7 @@ public:
 	~ExpInfo();
 	void Render();
 	void Update(int value);
+	void UpdateMax();
 };
 
 class UIInfo

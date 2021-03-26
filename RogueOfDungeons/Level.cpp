@@ -20,7 +20,7 @@ Level::Level(SDL_Renderer* renderer) : ren (renderer)
 	uiEnemy = new UIEnemyInfo(ren);
 	uiSpec = new UISpecifications(ren);
 	uiInv = new UIInventory(ren);
-	hp = new HpInfo(ren, Player::GetHP());
+	hp = new HpInfo(ren, Player::GetHP(0));
 	mana = new ManaInfo(ren, Player::GetMana());
 	exp = new ExpInfo(ren, Player::GetEXP());
 	/*changeState[0] = hp;
@@ -181,6 +181,7 @@ void Level::Render()
 		if (FlagManager::flagPHS == 1)
 		{
 			uiSpec->UpdateSpec(Player::GetSpecValue(4), 4);
+			hp->UpdateMax();
 		}
 		if (FlagManager::flagLCK == 1)
 		{
@@ -203,7 +204,7 @@ void Level::Render()
 		//Update значений hp, mana и  exp
 		if (FlagManager::flagCheckHP == 1)
 		{
-			hp->Update(Player::GetHP());
+			hp->Update(Player::GetHP(0));
 		}
 
 		if (FlagManager::flagCheckMana == 1)

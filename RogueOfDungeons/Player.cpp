@@ -72,9 +72,20 @@ Player::~Player()
 	}
 }
 
-int Player::GetHP()
+int Player::GetHP(int numOfArr)
 {
-	return HP[0];
+	switch (numOfArr)
+	{
+	case 0:
+		return HP[0];
+	case 1:
+		return HP[1];
+	case 2:
+		return HP[2];
+	default:
+		break;
+	}
+	
 }
 
 int Player::GetEXP()

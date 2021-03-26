@@ -3,6 +3,7 @@
 #include "EntityPosition.h"
 #include <iostream>
 #include "inventory.h"
+#include "Player.h"
 
 //UIMenu::UIMenu(SDL_Renderer* renderer) 
 //{
@@ -50,7 +51,9 @@ void HpInfo::Update(int value)
 
 void HpInfo::UpdateMax()
 {
-	//UNDONE (изменение текстурки текста максимального значения)
+	std::string stringTemp = std::to_string(Player::GetHP(2));
+	const char* CHAR_VALUE = stringTemp.c_str();
+	hpMax = FontManager::renderText(CHAR_VALUE, PATH_IN_FONT, color, 32, ren);
 }
 
 void HpInfo::Render()
@@ -81,6 +84,11 @@ void ManaInfo::Update(int value)
 	manaText = FontManager::renderText(CHAR_VALUE, PATH_IN_FONT, color, 32, ren);
 }
 
+void ManaInfo::UpdateMax()
+{
+
+}
+
 void ManaInfo::Render()
 {
 	RenderManager::CopyToRender(manaText, ren, 1120, 122, 32, 20);
@@ -106,6 +114,11 @@ void ExpInfo::Update(int value)
 	std::string stringTemp = std::to_string(value);
 	const char* CHAR_VALUE = stringTemp.c_str();
 	expText = FontManager::renderText(CHAR_VALUE, PATH_IN_FONT, color, 32, ren);
+}
+
+void ExpInfo::UpdateMax()
+{
+
 }
 
 void ExpInfo::Render()

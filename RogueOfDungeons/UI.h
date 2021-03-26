@@ -17,8 +17,6 @@
 //	void Render();
 //};
 
-
-//UNDONE (сделать общим классом для всех изменяемых текстов)
 class TextInfo
 {
 private:
@@ -31,6 +29,8 @@ public:
 	TextInfo(SDL_Renderer* renderer, int changeTextValue);
 	~TextInfo();
 	virtual void Render() = 0;
+	virtual void Update(int value) = 0;
+	virtual void UpdateMax() = 0;
 };
 
 class HpInfo : public TextInfo
@@ -40,10 +40,13 @@ private:
 	SDL_Color color = { 255, 255, 255, 255 };*/
 	SDL_Renderer* ren;
 	SDL_Texture* hpText;
+	SDL_Texture* hpMax;
 public:
 	HpInfo(SDL_Renderer* renderer, int changeTextValue);
 	~HpInfo();
 	void Render();
+	void Update(int value);
+	void UpdateMax();
 };
 
 class ManaInfo :public TextInfo
@@ -53,10 +56,13 @@ private:
 	SDL_Color color = { 255, 255, 255, 255 };*/
 	SDL_Renderer* ren;
 	SDL_Texture* manaText;
+	SDL_Texture* manaMax;
 public:
 	ManaInfo(SDL_Renderer* renderer, int changeTextValue);
 	~ManaInfo();
 	void Render();
+	void Update(int value);
+	void UpdateMax();
 };
 
 class ExpInfo : public TextInfo
@@ -70,17 +76,20 @@ public:
 	ExpInfo(SDL_Renderer* renderer, int changeTextValue);
 	~ExpInfo();
 	void Render();
+	void Update(int value);
+	void UpdateMax();
 };
 
 class UIInfo
 {
 private:
-	const char* pathInFont;
+	const char* PATH_IN_FONT;
 	SDL_Color color = { 255, 255, 255, 255 };
 	SDL_Renderer* ren;
 	SDL_Texture* versionBLock;
 	SDL_Texture* infoBlock;
 	SDL_Texture* info;
+	SDL_Texture* slashhhhhhhhh;
 	//HP
 	SDL_Texture* hpBar;
 	SDL_Texture* hpText;
@@ -98,31 +107,43 @@ private:
 public:
 	UIInfo(SDL_Renderer* renderer);
 	void Render();
+	void RenderVersion();
 };
 
 class Spec
 {
 private:
 	SDL_Texture* spec;
-public:
-	Spec();
-};
-
-class UISpecifications
-{
-private:
-	const char* pathInFont;
-	const Uint32 MOUSE_CHECK = SDL_GetMouseState(NULL, NULL);
-	SDL_Renderer* ren;
-	bool flag;
-	SDL_Texture* specBlock;
-	SDL_Texture* specifcation;
-	SDL_Texture* state;
 	SDL_Texture* STR;
 	SDL_Texture* DEX;
 	SDL_Texture* INT;
 	SDL_Texture* PHS; //Physical Strength
 	SDL_Texture* LCK;
+	SDL_Texture* button;
+	SDL_Texture* plus;
+public:
+	Spec();
+	void Update(int value);
+};
+
+class UISpecifications
+{
+private:
+	const char* PATH_IN_FONT;
+	SDL_Renderer* ren;
+	SDL_Color color;
+	SDL_Texture* specBlock;
+	SDL_Texture* specifcation;
+	SDL_Texture* STR;
+	SDL_Texture* valueSTR;
+	SDL_Texture* DEX;
+	SDL_Texture* valueDEX;
+	SDL_Texture* INT;
+	SDL_Texture* valueINT;
+	SDL_Texture* PHS; //Physical Strength
+	SDL_Texture* valuePHS;
+	SDL_Texture* LCK;
+	SDL_Texture* valueLCK;
 	SDL_Texture* button;
 	SDL_Texture* plus;
 	SDL_Texture* one;
@@ -134,16 +155,19 @@ private:
 public:
 	UISpecifications(SDL_Renderer* renderer);
 	void Render();
+	void UpdateSpec(int value, int num);
 };
 
 
 class UIItem
 {
 private:
-	const char* pathInFont;
+	const char* PATH_IN_FONT;
+	SDL_Color color;
 	SDL_Renderer* ren;
 	SDL_Texture* itemBlock;
 	SDL_Texture* item;
+	SDL_Texture* buttonForInv;
 public:
 	UIItem(SDL_Renderer* renderer);
 	void Render();
@@ -155,6 +179,8 @@ private:
 	SDL_Renderer* ren;
 	SDL_Texture* inventoryBlock;
 	SDL_Texture* inventoryText;
+	SDL_Texture* inventory;
+	SDL_Texture* item;
 public:
 	UIInventory(SDL_Renderer* renderer);
 	~UIInventory();

@@ -129,6 +129,7 @@ bool FlagManager::flagCheckHP = 0;
 bool FlagManager::flagCheckMana = 0;
 bool FlagManager::flagCheckExp = 0;
 bool FlagManager::flagInv = 0;
+int FlagManager::flagChest = 0;
 bool FlagManager::flagUiEnemy = 0;
 bool FlagManager::flagSTR = 0;
 bool FlagManager::flagDEX = 0;

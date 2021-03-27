@@ -146,6 +146,7 @@
     <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="EntityPosition.cpp" />
     <ClCompile Include="Game.cpp" />
+    <ClCompile Include="GenerationMethods.cpp" />
     <ClCompile Include="Inventory.cpp" />
     <ClCompile Include="Level.cpp" />
     <ClCompile Include="GameObject.cpp" />

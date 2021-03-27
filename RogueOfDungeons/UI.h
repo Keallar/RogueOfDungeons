@@ -17,69 +17,6 @@
 //	void Render();
 //};
 
-class TextInfo
-{
-private:
-	SDL_Renderer* ren;
-	SDL_Texture* infoText;
-protected:
-	const char* PATH_IN_FONT;
-	SDL_Color color = { 255, 255, 255, 255 };
-public:
-	TextInfo(SDL_Renderer* renderer, int changeTextValue);
-	~TextInfo();
-	virtual void Render() = 0;
-	virtual void Update(int value) = 0;
-	virtual void UpdateMax() = 0;
-};
-
-class HpInfo : public TextInfo
-{
-private:
-	/*const char* PATH_IN_FONT;
-	SDL_Color color = { 255, 255, 255, 255 };*/
-	SDL_Renderer* ren;
-	SDL_Texture* hpText;
-	SDL_Texture* hpMax;
-public:
-	HpInfo(SDL_Renderer* renderer, int changeTextValue);
-	~HpInfo();
-	void Render();
-	void Update(int value);
-	void UpdateMax();
-};
-
-class ManaInfo :public TextInfo
-{
-private:
-	/*const char* PATH_IN_FONT;
-	SDL_Color color = { 255, 255, 255, 255 };*/
-	SDL_Renderer* ren;
-	SDL_Texture* manaText;
-	SDL_Texture* manaMax;
-public:
-	ManaInfo(SDL_Renderer* renderer, int changeTextValue);
-	~ManaInfo();
-	void Render();
-	void Update(int value);
-	void UpdateMax();
-};
-
-class ExpInfo : public TextInfo
-{
-private:
-	const char* PATH_IN_FONT;
-	SDL_Color color = { 255, 255, 255, 255 };
-	SDL_Renderer* ren;
-	SDL_Texture* expText;
-public:
-	ExpInfo(SDL_Renderer* renderer, int changeTextValue);
-	~ExpInfo();
-	void Render();
-	void Update(int value);
-	void UpdateMax();
-};
-
 class UIInfo
 {
 private:
@@ -110,26 +47,67 @@ public:
 	void RenderVersion();
 };
 
-class Spec
+class TextInfo
 {
 private:
-	SDL_Texture* spec;
-	SDL_Texture* STR;
-	SDL_Texture* DEX;
-	SDL_Texture* INT;
-	SDL_Texture* PHS; //Physical Strength
-	SDL_Texture* LCK;
-	SDL_Texture* button;
-	SDL_Texture* plus;
+	SDL_Renderer* ren;
+	SDL_Texture* infoText;
+protected:
+	const char* PATH_IN_FONT;
+	SDL_Color color = { 255, 255, 255, 255 };
 public:
-	Spec();
-	void Update(int value);
+	TextInfo(SDL_Renderer* renderer, int changeTextValue);
+	virtual ~TextInfo();
+	virtual void Render() = 0;
+	virtual void Update(int value) = 0;
+	virtual void UpdateMax() = 0;
 };
 
-class UISpecifications
+class HpInfo : public TextInfo
 {
 private:
-	const char* PATH_IN_FONT;
+	SDL_Renderer* ren;
+	SDL_Texture* hpText;
+	SDL_Texture* hpMax;
+public:
+	HpInfo(SDL_Renderer* renderer, int changeTextValue);
+	~HpInfo();
+	void Render();
+	void Update(int value);
+	void UpdateMax();
+};
+
+class ManaInfo :public TextInfo
+{
+private:
+	SDL_Renderer* ren;
+	SDL_Texture* manaText;
+	SDL_Texture* manaMax;
+public:
+	ManaInfo(SDL_Renderer* renderer, int changeTextValue);
+	~ManaInfo();
+	void Render();
+	void Update(int value);
+	void UpdateMax();
+};
+
+class ExpInfo : public TextInfo
+{
+private:
+	SDL_Color color = { 255, 255, 255, 255 };
+	SDL_Renderer* ren;
+	SDL_Texture* expText;
+public:
+	ExpInfo(SDL_Renderer* renderer, int changeTextValue);
+	~ExpInfo();
+	void Render();
+	void Update(int value);
+	void UpdateMax();
+};
+
+class UISpecifications : public TextInfo
+{
+private:
 	SDL_Renderer* ren;
 	SDL_Color color;
 	SDL_Texture* specBlock;
@@ -153,9 +131,12 @@ private:
 	SDL_Texture* five;
 
 public:
-	UISpecifications(SDL_Renderer* renderer);
+	UISpecifications(SDL_Renderer* renderer, int changeTextValue);
+	~UISpecifications();
 	void Render();
-	void UpdateSpec(int value, int num);
+	void Update(int value);
+	void Update(int value, int num);
+	void UpdateMax();
 };
 
 

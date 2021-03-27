@@ -4,6 +4,7 @@
 #include "Managers.h"
 #include <ctime>
 #include "UI.h"
+#include "EntityPosition.h"
 #include <vector>
 #include <iostream>
 #include "EntityPosition.h"
@@ -21,12 +22,12 @@ Level::Level(SDL_Renderer* renderer) : ren (renderer)
 	uiEnemy = new UIEnemyInfo(ren);
 	uiSpec = new UISpecifications(ren);
 	uiInv = new UIInventory(ren);
-	hp = new HpInfo(ren, Player::GetHP());
+	hp = new HpInfo(ren, Player::GetHP(0));
 	mana = new ManaInfo(ren, Player::GetMana());
 	exp = new ExpInfo(ren, Player::GetEXP());
-	changeState[0] = hp;
+	/*changeState[0] = hp;
 	changeState[1] = mana;
-	changeState[2] = exp;
+	changeState[2] = exp;*/
 	
 	for (int i = 0; i < 22; i++) 
 	{
@@ -71,6 +72,7 @@ void Level::Start()
 	FlagManager::flagCheckHP = 0;
 	FlagManager::flagCheckMana = 0;
 	FlagManager::flagCheckExp = 0;
+	FlagManager::flagUiEnemy = 0;
 	player->GetLevel(Location);
 	player->GetPlayerFirstCoords();
 	enemy->GetLoc(Location);
@@ -115,6 +117,7 @@ void Level::Render()
 			}
 		}
 	}
+
 	if ((generateChoose == 1)||(generateChoose == 2)) {
 		for (int i = 0; i < 22; i++)
 		{
@@ -155,10 +158,11 @@ void Level::Render()
 			}
 		}
 	}
+	
 	player->Render();
 	enemy->Render();
 	uiItem->Render();
-	uiEnemy->Render();
+	uiInfo->RenderVersion();
 	
 
 	if (FlagManager::flagInv == 1)
@@ -169,38 +173,56 @@ void Level::Render()
 	if (FlagManager::flagUiSpec == 1)
 	{
 		uiSpec->Render();
+
+		if (FlagManager::flagSTR == 1)
+		{
+			uiSpec->UpdateSpec(Player::GetSpecValue(1), 1);
+		}
+		if (FlagManager::flagDEX == 1)
+		{
+			uiSpec->UpdateSpec(Player::GetSpecValue(2), 2);
+		}
+		if (FlagManager::flagINT == 1)
+		{
+			uiSpec->UpdateSpec(Player::GetSpecValue(3), 3);
+		}
+		if (FlagManager::flagPHS == 1)
+		{
+			uiSpec->UpdateSpec(Player::GetSpecValue(4), 4);
+			hp->UpdateMax();
+		}
+		if (FlagManager::flagLCK == 1)
+		{
+			uiSpec->UpdateSpec(Player::GetSpecValue(5), 5);
+		}
 	}
 	if (FlagManager::flagUI == 1)
 	{
 		uiInfo->Render();
-		changeState[0]->Render();
-		changeState[1]->Render();
-		changeState[2]->Render();
+		//changeState[0]->Render();
+		hp->Render();
+		mana->Render();
+		exp->Render();
 
+		if (FlagManager::flagUiEnemy == 1)
+		{
+			uiEnemy->Render();
+		}
+
+		//Update значений hp, mana и  exp
 		if (FlagManager::flagCheckHP == 1)
 		{
-			//WTF (сделать лучше метод Update)
-			//std::cout << "Throw HP" << std::endl;
-			delete changeState[0];
-			changeState[0] = nullptr;
-			changeState[0] = new HpInfo(ren, Player::GetHP());
-
+			hp->Update(Player::GetHP(0));
 		}
 
 		if (FlagManager::flagCheckMana == 1)
 		{
-			//std::cout << "Throw Mana" << std::endl;
-			delete changeState[1];
-			changeState[1] = nullptr;
-			changeState[1] = new ManaInfo(ren, Player::GetMana());
+			mana->Update(Player::GetMana());
 		}
 
 		if (FlagManager::flagCheckExp == 1)
 		{
-			//std::cout << "Throw Exp" << std::endl;
-			delete changeState[2];
-			changeState[2] = nullptr;
-			changeState[2] = new ExpInfo(ren, Player::GetEXP());
+			exp->Update(Player::GetEXP());
 		}
 	}
 	if (FlagManager::flagChest != 0) {
@@ -244,7 +266,9 @@ void Level::handleEvents(SDL_Event eventWIthSpec)
 	{
 	case SDL_MOUSEBUTTONDOWN:
 		SDL_GetMouseState(&mouseCoords.x, &mouseCoords.y);
-		if (InputManager::MouseInArea(1230, 200, 64, 64, mouseCoords.x, mouseCoords.y) && 
+
+		//Вызов окна Spec по нажатию мыши
+		if (InputManager::MouseInArea(1230, 240, 64, 64, mouseCoords.x, mouseCoords.y) && 
 			FlagManager::flagUiSpec == 0)
 		{
 			//std::cout << "Mouse spec" << std::endl;
@@ -253,7 +277,7 @@ void Level::handleEvents(SDL_Event eventWIthSpec)
 			SDL_Delay(200);
 			break;
 		}
-		else if (InputManager::MouseInArea(1230, 200, 32, 32, mouseCoords.x, mouseCoords.y) && 
+		else if (InputManager::MouseInArea(1230, 240, 32, 32, mouseCoords.x, mouseCoords.y) && 
 			FlagManager::flagUiSpec == 1)
 		{
 			//std::cout << "Mouse info" << std::endl;
@@ -262,7 +286,72 @@ void Level::handleEvents(SDL_Event eventWIthSpec)
 			SDL_Delay(200);
 			break;
 		}
+		
+		//Вызов окна Inventory по нажатию мыши
+		if (InputManager::MouseInArea(1050, 665, 25, 22, mouseCoords.x, mouseCoords.y) &&
+			FlagManager::flagInv == 0)
+		{
+			FlagManager::flagInv = 1;
+		}
+		else if (InputManager::MouseInArea(1050, 665, 25, 22, mouseCoords.x, mouseCoords.y) && 
+			FlagManager::flagInv == 1)
+		{
+			FlagManager::flagInv = 0;
+		}
+
+		//Вызов infoEnemy по нажатию мыши
+		if (InputManager::MouseInArea(EntityPosition::Coords[2], EntityPosition::Coords[3], 32, 32, mouseCoords.x, mouseCoords.y) &&
+			FlagManager::flagUiEnemy == 0)
+		{
+			FlagManager::flagUiEnemy = 1;
+			SDL_Delay(200);
+		}
+		else if (InputManager::MouseInArea(EntityPosition::Coords[2], EntityPosition::Coords[3], 32, 32, mouseCoords.x, mouseCoords.y) &&
+			FlagManager::flagUiEnemy == 1)
+		{
+			FlagManager::flagUiEnemy = 0;
+			SDL_Delay(200);
+		}
+
+		//Увеличение значения характеристик по нажатию мыши
+		//STR
+		if (FlagManager::flagUiSpec == 1 && InputManager::MouseInArea(1230, 80, 16, 20, mouseCoords.x, mouseCoords.y) &&
+			FlagManager::flagSTR == 0)
+		{
+			player->ChangeValueSpecs(1);
+			SDL_Delay(200);
+		}
+		//DEX
+		if (FlagManager::flagUiSpec == 1 && InputManager::MouseInArea(1230, 110, 16, 20, mouseCoords.x, mouseCoords.y) &&
+			FlagManager::flagDEX == 0)
+		{
+			player->ChangeValueSpecs(2);
+			SDL_Delay(200);
+		}
+		//INT
+		if (FlagManager::flagUiSpec == 1 && InputManager::MouseInArea(1230, 140, 16, 20, mouseCoords.x, mouseCoords.y) &&
+			FlagManager::flagINT == 0)
+		{
+			player->ChangeValueSpecs(3);
+			SDL_Delay(200);
+		}
+		//PHS
+		if (FlagManager::flagUiSpec == 1 && InputManager::MouseInArea(1230, 170, 16, 20, mouseCoords.x, mouseCoords.y) &&
+			FlagManager::flagPHS == 0)
+		{
+			player->ChangeValueSpecs(4);
+			SDL_Delay(200);
+		}
+		//LCK
+		if (FlagManager::flagUiSpec == 1 && InputManager::MouseInArea(1230, 200, 16, 20, mouseCoords.x, mouseCoords.y) &&
+			FlagManager::flagLCK == 0)
+		{
+			player->ChangeValueSpecs(5);
+			SDL_Delay(200);
+		}
+
 	case SDL_KEYDOWN:
+
 		//Смена окон (с Spec на Info и наоборот)
 		if (keys[SDL_SCANCODE_Q] && FlagManager::flagUiSpec == 0)
 		{
@@ -294,24 +383,30 @@ void Level::handleEvents(SDL_Event eventWIthSpec)
 			break;
 		}
 
-		if (keys[SDL_SCANCODE_1] && FlagManager::flagUiSpec == 1)
+		//Увеличение характеристик Spec с помощью клавиш
+		if (keys[SDL_SCANCODE_1] && FlagManager::flagUiSpec == 1 && FlagManager::flagSTR == 0)
 		{
+			player->ChangeValueSpecs(1);
 			break;
 		}
-		else if (keys[SDL_SCANCODE_2] && FlagManager::flagUiSpec == 1)
+		if (keys[SDL_SCANCODE_2] && FlagManager::flagUiSpec == 1 && FlagManager::flagDEX == 0)
 		{
+			player->ChangeValueSpecs(2);
 			break;
 		}
-		else if (keys[SDL_SCANCODE_3] && FlagManager::flagUiSpec == 1)
+		if (keys[SDL_SCANCODE_3] && FlagManager::flagUiSpec == 1 && FlagManager::flagINT == 0)
 		{
+			player->ChangeValueSpecs(3);
 			break;
 		}
-		else if (keys[SDL_SCANCODE_4] && FlagManager::flagUiSpec == 1)
+		if (keys[SDL_SCANCODE_4] && FlagManager::flagUiSpec == 1 && FlagManager::flagPHS == 0)
 		{
+			player->ChangeValueSpecs(4);
 			break;
 		}
-		else if (keys[SDL_SCANCODE_5] && FlagManager::flagUiSpec == 1)
+		if (keys[SDL_SCANCODE_5] && FlagManager::flagUiSpec == 1 && FlagManager::flagLCK == 0)
 		{
+			player->ChangeValueSpecs(5);
 			break;
 		}
 

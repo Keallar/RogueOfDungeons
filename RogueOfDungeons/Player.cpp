@@ -195,6 +195,11 @@ void Player::ChangeMaxManaValue()
 	mana[2] += 10;
 }
 
+void Player::ChangeMaxExpValue()
+{
+	exp[2] += 100;
+}
+
 //Проверка изменения HP
 void Player::CheckHP()
 {

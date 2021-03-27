@@ -40,6 +40,7 @@ public:
     static void ChangeValueSpecs(int numOfSpec);
     static void ChangeMaxHpValue();
     static void ChangeMaxManaValue();
+    static void ChangeMaxExpValue();
 
     static void CheckHP();
     static void CheckEXP();

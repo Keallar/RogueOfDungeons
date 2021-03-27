@@ -327,7 +327,7 @@ void Player::Render()
 
 void Player::Update()
 {
-	//inventory->Update();
+	inventory->Update();
 	Player::CheckHP();
 	Player::CheckMANA();
 	Player::CheckEXP();

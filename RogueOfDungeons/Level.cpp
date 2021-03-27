@@ -59,6 +59,8 @@ void Level::Update()
 		enemy->GetLoc(Location);
 		SDL_Delay(150);
 	}
+	player->GetLevel(Location);
+	enemy->GetLoc(Location);
 }
 
 void Level::Start()

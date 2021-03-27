@@ -2,7 +2,7 @@
 #include "Managers.h"
 #include <iostream>
 
-int Inventory::inventoryFace[16];
+int Inventory::inventoryFace[16]; //хранит в себе всё, что хранит inventory, но в static
 std::map <int, InventoryItem> Inventory::ExistingItems;
 std::map <int, InventoryItem>::iterator Inventory::it;
 
@@ -22,11 +22,13 @@ Inventory::Inventory()
 		inventory[i] = -1;
 	}
 }
+
 void Inventory::EquipItem(int i, int j) 
 {
 	//EquipedArmor = ExistingItems[i];
 	//EquipedWeapon = ExistingItems[j];
 }
+
 void Inventory::AddItem(int id) 
 {
 	int count = 0;
@@ -72,6 +74,7 @@ meleeWeapon::meleeWeapon(int Damage, int range, type type, const char* WeapTex)
 	Type = type;
 	ItemTexture = WeapTex;
 }
+
 void EquipedItems::EquipItem() 
 {
 	

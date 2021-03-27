@@ -312,22 +312,6 @@ void Player::GetItemOnLvl(int id) {
 	inventory->AddItem(id);
 }
 
-/*void Player::GetPlayerFirstCoords() 
-{
-	EntityPosition::Coords[0] = (rand() % 2 +1) * 32;
-	EntityPosition::Coords[1] = (rand() % 20 +1) * 32;
-	while ((Location[EntityPosition::Coords[1] / 32][EntityPosition::Coords[0] / 32] == 1)||
-		((Location[EntityPosition::Coords[1] / 32][EntityPosition::Coords[0] / 32 - 1] != 0)&&
-		(Location[EntityPosition::Coords[1] / 32][EntityPosition::Coords[0] / 32 + 1] != 0)&&
-		(Location[EntityPosition::Coords[1] / 32 - 1][EntityPosition::Coords[0] / 32] != 0)&&
-		(Location[EntityPosition::Coords[1] / 32 + 1][EntityPosition::Coords[0] / 32] != 0)))
-	{
-		EntityPosition::Coords[0] = (rand() % 2 + 1) * 32;
-		EntityPosition::Coords[1] = (rand() % 20 + 1) * 32;
-	}
-	
-}*/
-
 void Player::Render()
 {
 	RenderManager::CopyToRender(PlayerTexture, ren, EntityPosition::Coords[0], EntityPosition::Coords[1], 32, 32, 0, 0, 32, 32);

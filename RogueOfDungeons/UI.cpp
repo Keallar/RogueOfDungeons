@@ -43,6 +43,8 @@ HpInfo::~HpInfo()
 
 void HpInfo::Update(int value)
 {
+	SDL_DestroyTexture(hpText);
+	hpText = 0;
 	std::string stringTemp = std::to_string(value);
 	const char* CHAR_VALUE = stringTemp.c_str();
 	hpText = FontManager::renderText(CHAR_VALUE, PATH_IN_FONT, color, 32, ren);
@@ -50,6 +52,8 @@ void HpInfo::Update(int value)
 
 void HpInfo::UpdateMax()
 {
+	SDL_DestroyTexture(hpMax);
+	hpMax = 0;
 	Player::ChangeMaxHpValue();
 	std::string stringTemp = std::to_string(Player::GetHP(2));
 	const char* CHAR_VALUE = stringTemp.c_str();
@@ -79,13 +83,17 @@ ManaInfo::~ManaInfo()
 
 void ManaInfo::Update(int value)
 {
-	std::string stringTemp = std::to_string(value);
+	SDL_DestroyTexture(manaText);
+	manaText = 0;
+	std::string stringTemp = std::to_string(Player::GetMana(0));
 	const char* CHAR_VALUE = stringTemp.c_str();
 	manaText = FontManager::renderText(CHAR_VALUE, PATH_IN_FONT, color, 32, ren);
 }
 
 void ManaInfo::UpdateMax()
 {
+	SDL_DestroyTexture(manaMax);
+	manaMax = 0;
 	Player::ChangeMaxManaValue();
 	std::string stringTemp = std::to_string(Player::GetMana(2));
 	const char* CHAR_VALUE = stringTemp.c_str();
@@ -114,6 +122,8 @@ ExpInfo::~ExpInfo()
 
 void ExpInfo::Update(int value)
 {
+	SDL_DestroyTexture(expText);
+	expText = 0;
 	std::string stringTemp = std::to_string(value);
 	const char* CHAR_VALUE = stringTemp.c_str();
 	expText = FontManager::renderText(CHAR_VALUE, PATH_IN_FONT, color, 32, ren);
@@ -266,6 +276,8 @@ void UISpecifications::Update(int value, int num)
 	{
 	case 1:
 	{
+		SDL_DestroyTexture(valueSTR);
+		valueSTR = 0;
 		std::string stringTemp = std::to_string(value);
 		const char* CHAR_VALUE = stringTemp.c_str();
 		valueSTR = FontManager::renderText(CHAR_VALUE, PATH_IN_FONT, color, 32, ren);
@@ -273,6 +285,8 @@ void UISpecifications::Update(int value, int num)
 	}
 	case 2:
 	{
+		SDL_DestroyTexture(valueDEX);
+		valueDEX = 0;
 		std::string stringTemp = std::to_string(value);
 		const char* CHAR_VALUE = stringTemp.c_str();
 		valueDEX = FontManager::renderText(CHAR_VALUE, PATH_IN_FONT, color, 32, ren);
@@ -280,6 +294,8 @@ void UISpecifications::Update(int value, int num)
 	}
 	case 3:
 	{
+		SDL_DestroyTexture(valueINT);
+		valueINT = 0;
 		std::string stringTemp = std::to_string(value);
 		const char* CHAR_VALUE = stringTemp.c_str();
 		valueINT = FontManager::renderText(CHAR_VALUE, PATH_IN_FONT, color, 32, ren);
@@ -287,6 +303,8 @@ void UISpecifications::Update(int value, int num)
 	}
 	case 4:
 	{
+		SDL_DestroyTexture(valuePHS);
+		valuePHS = 0;
 		std::string stringTemp = std::to_string(value);
 		const char* CHAR_VALUE = stringTemp.c_str();
 		valuePHS = FontManager::renderText(CHAR_VALUE, PATH_IN_FONT, color, 32, ren);
@@ -294,6 +312,8 @@ void UISpecifications::Update(int value, int num)
 	}
 	case 5: 
 	{
+		SDL_DestroyTexture(valueLCK);
+		valueLCK = 0;
 		std::string stringTemp = std::to_string(value);
 		const char* CHAR_VALUE = stringTemp.c_str();
 		valueLCK = FontManager::renderText(CHAR_VALUE, PATH_IN_FONT, color, 32, ren);
@@ -340,14 +360,15 @@ void UIInventory::Render()
 {
 	RenderManager::CopyToRender(inventoryBlock, ren, 730, 0, 300, 710);
 	RenderManager::CopyToRender(inventoryText, ren, 780, 50, 160, 32);
-	for (int i = 0; i < 16; i++) {
-		if (Inventory::inventoryFace[i] != -1) {
+	for (int i = 0; i < 16; i++) 
+	{
+		if (Inventory::inventoryFace[i] != -1) 
+		{
 			Inventory::it = Inventory::ExistingItems.find(Inventory::inventoryFace[i]);
 			item = textureManager::LoadTexture((Inventory::it->second).ItemTexture, ren);
 			RenderManager::CopyToRender(item, ren, (780 + 36 * (i % 4)), (100 + ((i / 4) * 50)), 32, 32);
-		}
-		else {
-			std::cout << 0;
+			SDL_DestroyTexture(item);
+			item = 0;
 		}
 	}
 }

@@ -4,6 +4,7 @@
 #include "Player.h"
 #include "UI.h"
 #include "GameObject.h"
+#include "Buttons.h"
 
 struct MouseCoords
 {
@@ -14,6 +15,8 @@ struct MouseCoords
 class Level 
 {
 private:
+	MouseButton* mouseButtons;
+	KeyboardButtons* keyboardButtons;
 	TextInfo* changeState[3];
 	int itemsOnLvl[3];
 	int itemsHave;

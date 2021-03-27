@@ -72,3 +72,7 @@ meleeWeapon::meleeWeapon(int Damage, int range, type type, const char* WeapTex)
 	Type = type;
 	ItemTexture = WeapTex;
 }
+void EquipedItems::EquipItem() 
+{
+	
+}

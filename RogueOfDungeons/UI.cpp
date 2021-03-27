@@ -325,8 +325,8 @@ void UIInventory::Render()
 	for (int i = 0; i < 16; i++) {
 		if (Inventory::inventoryFace[i] != -1) {
 			Inventory::it = Inventory::ExistingItems.find(Inventory::inventoryFace[i]);
-			std::cout << (Inventory::it->second).ItemTexture;
 			item = textureManager::LoadTexture((Inventory::it->second).ItemTexture, ren);
+			RenderManager::CopyToRender(item, ren, (780 + 36 * (i % 4)), (100 + ((i / 4) * 50)), 32, 32);
 		}
 		else {
 			std::cout << 0;

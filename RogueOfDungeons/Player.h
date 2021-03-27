@@ -34,7 +34,7 @@ public:
 
     static int GetHP(int numOfArr);
     static int GetEXP();
-    static int GetMana();
+    static int GetMana(int numOfArr);
     static int GetSpecValue(int numSpec);
 
     static void ChangeValueSpecs(int numOfSpec);

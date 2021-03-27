@@ -21,7 +21,7 @@ Level::Level(SDL_Renderer* renderer) : ren (renderer)
 	uiSpec = new UISpecifications(ren, 1);
 	uiInv = new UIInventory(ren);
 	hp = new HpInfo(ren, Player::GetHP(0));
-	mana = new ManaInfo(ren, Player::GetMana());
+	mana = new ManaInfo(ren, Player::GetMana(0));
 	exp = new ExpInfo(ren, Player::GetEXP());
 	
 	for (int i = 0; i < 22; i++) 
@@ -174,6 +174,7 @@ void Level::Render()
 		if (FlagManager::flagINT == 1)
 		{
 			uiSpec->Update(Player::GetSpecValue(3), 3);
+			mana->UpdateMax();
 		}
 		if (FlagManager::flagPHS == 1)
 		{
@@ -188,7 +189,6 @@ void Level::Render()
 	if (FlagManager::flagUI == 1)
 	{
 		uiInfo->Render();
-		//changeState[0]->Render();
 		hp->Render();
 		mana->Render();
 		exp->Render();
@@ -206,7 +206,7 @@ void Level::Render()
 
 		if (FlagManager::flagCheckMana == 1)
 		{
-			mana->Update(Player::GetMana());
+			mana->Update(Player::GetMana(0));
 		}
 
 		if (FlagManager::flagCheckExp == 1)

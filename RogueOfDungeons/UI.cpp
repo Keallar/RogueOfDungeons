@@ -30,7 +30,7 @@ TextInfo::~TextInfo()
 HpInfo::HpInfo(SDL_Renderer* renderer, int changeTextValue) : TextInfo (renderer, changeTextValue)
 {
 	ren = renderer;
-	std::string stringValue = std::to_string(changeTextValue);
+	std::string stringValue = std::to_string(Player::GetHP(0));
 	const char* TEXT_VALUE = stringValue.c_str();
 	hpText = FontManager::renderText(TEXT_VALUE, PATH_IN_FONT, color, 32, ren);
 	hpMax = FontManager::renderText("10", PATH_IN_FONT, color, 32, ren);
@@ -50,6 +50,7 @@ void HpInfo::Update(int value)
 
 void HpInfo::UpdateMax()
 {
+	Player::ChangeMaxHpValue();
 	std::string stringTemp = std::to_string(Player::GetHP(2));
 	const char* CHAR_VALUE = stringTemp.c_str();
 	hpMax = FontManager::renderText(CHAR_VALUE, PATH_IN_FONT, color, 32, ren);
@@ -85,7 +86,10 @@ void ManaInfo::Update(int value)
 
 void ManaInfo::UpdateMax()
 {
-
+	Player::ChangeMaxManaValue();
+	std::string stringTemp = std::to_string(Player::GetMana(2));
+	const char* CHAR_VALUE = stringTemp.c_str();
+	manaMax = FontManager::renderText(CHAR_VALUE, PATH_IN_FONT, color, 32, ren);
 }
 
 void ManaInfo::Render()

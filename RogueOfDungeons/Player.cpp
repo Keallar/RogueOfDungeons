@@ -92,9 +92,20 @@ int Player::GetEXP()
 	return exp[0];
 }
 
-int Player::GetMana()
+int Player::GetMana(int numOfArr)
 {
-	return mana[0];
+	switch (numOfArr)
+	{
+	case 0:
+		return mana[0];
+	case 1:
+		return mana[1];
+	case 2:
+		return mana[2];
+	default:
+		break;
+	}
+
 }
 
 //Получение значения характеристик (STR, DEX, INT, PHS, LCK)
@@ -181,7 +192,7 @@ void Player::ChangeMaxHpValue()
 //Изменение максимального значения маны
 void Player::ChangeMaxManaValue()
 {
-	mana[2] += 1;
+	mana[2] += 10;
 }
 
 //Проверка изменения HP

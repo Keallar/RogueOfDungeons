@@ -20,14 +20,11 @@ Level::Level(SDL_Renderer* renderer) : ren (renderer)
 	uiInfo = new UIInfo(ren);
 	uiItem = new UIItem(ren);
 	uiEnemy = new UIEnemyInfo(ren);
-	uiSpec = new UISpecifications(ren);
+	uiSpec = new UISpecifications(ren, 1);
 	uiInv = new UIInventory(ren);
 	hp = new HpInfo(ren, Player::GetHP(0));
-	mana = new ManaInfo(ren, Player::GetMana());
+	mana = new ManaInfo(ren, Player::GetMana(0));
 	exp = new ExpInfo(ren, Player::GetEXP());
-	/*changeState[0] = hp;
-	changeState[1] = mana;
-	changeState[2] = exp;*/
 	
 	for (int i = 0; i < 22; i++) 
 	{
@@ -178,30 +175,30 @@ void Level::Render()
 
 		if (FlagManager::flagSTR == 1)
 		{
-			uiSpec->UpdateSpec(Player::GetSpecValue(1), 1);
+			uiSpec->Update(Player::GetSpecValue(1), 1);
 		}
 		if (FlagManager::flagDEX == 1)
 		{
-			uiSpec->UpdateSpec(Player::GetSpecValue(2), 2);
+			uiSpec->Update(Player::GetSpecValue(2), 2);
 		}
 		if (FlagManager::flagINT == 1)
 		{
-			uiSpec->UpdateSpec(Player::GetSpecValue(3), 3);
+			uiSpec->Update(Player::GetSpecValue(3), 3);
+			mana->UpdateMax();
 		}
 		if (FlagManager::flagPHS == 1)
 		{
-			uiSpec->UpdateSpec(Player::GetSpecValue(4), 4);
+			uiSpec->Update(Player::GetSpecValue(4), 4);
 			hp->UpdateMax();
 		}
 		if (FlagManager::flagLCK == 1)
 		{
-			uiSpec->UpdateSpec(Player::GetSpecValue(5), 5);
+			uiSpec->Update(Player::GetSpecValue(5), 5);
 		}
 	}
 	if (FlagManager::flagUI == 1)
 	{
 		uiInfo->Render();
-		//changeState[0]->Render();
 		hp->Render();
 		mana->Render();
 		exp->Render();
@@ -219,7 +216,7 @@ void Level::Render()
 
 		if (FlagManager::flagCheckMana == 1)
 		{
-			mana->Update(Player::GetMana());
+			mana->Update(Player::GetMana(0));
 		}
 
 		if (FlagManager::flagCheckExp == 1)

@@ -27,11 +27,10 @@ TextInfo::~TextInfo()
 }
 
 //UNDONE (изменить конструкторы для HpInfo, ManaInfo, ExpInfo)
-HpInfo::HpInfo(SDL_Renderer* renderer, int changeTextValue) :TextInfo(renderer, changeTextValue)
+HpInfo::HpInfo(SDL_Renderer* renderer, int changeTextValue) : TextInfo (renderer, changeTextValue)
 {
 	ren = renderer;
-	PATH_IN_FONT = "fonts/manaspc.ttf";
-	std::string stringValue = std::to_string(changeTextValue);
+	std::string stringValue = std::to_string(Player::GetHP(0));
 	const char* TEXT_VALUE = stringValue.c_str();
 	hpText = FontManager::renderText(TEXT_VALUE, PATH_IN_FONT, color, 32, ren);
 	hpMax = FontManager::renderText("10", PATH_IN_FONT, color, 32, ren);
@@ -51,6 +50,7 @@ void HpInfo::Update(int value)
 
 void HpInfo::UpdateMax()
 {
+	Player::ChangeMaxHpValue();
 	std::string stringTemp = std::to_string(Player::GetHP(2));
 	const char* CHAR_VALUE = stringTemp.c_str();
 	hpMax = FontManager::renderText(CHAR_VALUE, PATH_IN_FONT, color, 32, ren);
@@ -86,7 +86,10 @@ void ManaInfo::Update(int value)
 
 void ManaInfo::UpdateMax()
 {
-
+	Player::ChangeMaxManaValue();
+	std::string stringTemp = std::to_string(Player::GetMana(2));
+	const char* CHAR_VALUE = stringTemp.c_str();
+	manaMax = FontManager::renderText(CHAR_VALUE, PATH_IN_FONT, color, 32, ren);
 }
 
 void ManaInfo::Render()
@@ -185,7 +188,7 @@ void UIInfo::RenderVersion()
 	RenderManager::CopyToRender(versionBLock, ren, 0, 705, 170, 9);
 }
 
-UISpecifications::UISpecifications(SDL_Renderer* renderer)
+UISpecifications::UISpecifications(SDL_Renderer* renderer, int changeTextValue) : TextInfo (renderer, changeTextValue)
 {
 	PATH_IN_FONT = "fonts/manaspc.ttf";
 	color = { 255, 255, 255, 255 };
@@ -211,6 +214,11 @@ UISpecifications::UISpecifications(SDL_Renderer* renderer)
 	three = FontManager::renderText("(3)", PATH_IN_FONT, color, 64, ren);
 	four = FontManager::renderText("(4)", PATH_IN_FONT, color, 64, ren);
 	five = FontManager::renderText("(5)", PATH_IN_FONT, color, 64, ren);
+
+}
+
+UISpecifications::~UISpecifications()
+{
 
 }
 
@@ -247,7 +255,12 @@ void UISpecifications::Render()
 	RenderManager::CopyToRender(five, ren, 1250, 200, 16, 20);
 }
 
-void UISpecifications::UpdateSpec(int value, int num)
+void UISpecifications::Update(int value)
+{
+
+}
+
+void UISpecifications::Update(int value, int num)
 {
 	switch (num)
 	{
@@ -289,6 +302,11 @@ void UISpecifications::UpdateSpec(int value, int num)
 	default:
 		break;
 	}
+}
+
+void UISpecifications::UpdateMax()
+{
+
 }
 
 

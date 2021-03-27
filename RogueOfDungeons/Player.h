@@ -26,6 +26,7 @@ public:
 	void GetLevel(int arr[22][32]);
 	void GetPlayerFirstCoords();
     void Attack();
+	void GetItemOnLvl(int id);
     static int GetHP();
     static int GetEXP();
     static int GetMana();

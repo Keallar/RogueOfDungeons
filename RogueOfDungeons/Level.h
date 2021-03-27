@@ -15,6 +15,10 @@ class Level
 {
 private:
 	TextInfo* changeState[3];
+	int itemsOnLvl[3];
+	int itemsHave;
+	int chests[3][2];
+	int floorLvl;
 	HpInfo* hp;
 	ManaInfo* mana;
 	ExpInfo* exp;

@@ -42,12 +42,13 @@ public:
 
     static int GetHP(int numOfArr);
     static int GetEXP();
-    static int GetMana();
+    static int GetMana(int numOfArr);
     static int GetSpecValue(int numSpec);
 
     static void ChangeValueSpecs(int numOfSpec);
     static void ChangeMaxHpValue();
     static void ChangeMaxManaValue();
+    static void ChangeMaxExpValue();
 
     static void CheckHP();
     static void CheckEXP();

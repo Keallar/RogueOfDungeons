@@ -8,6 +8,7 @@
 #include <vector>
 #include <iostream>
 #include "EntityPosition.h"
+#include "Buttons.h"
 
 Level::Level(SDL_Renderer* renderer) : ren (renderer)
 {
@@ -20,15 +21,14 @@ Level::Level(SDL_Renderer* renderer) : ren (renderer)
 	uiInfo = new UIInfo(ren);
 	uiItem = new UIItem(ren);
 	uiEnemy = new UIEnemyInfo(ren);
-	uiSpec = new UISpecifications(ren);
+	uiSpec = new UISpecifications(ren, 1);
 	uiInv = new UIInventory(ren);
 	hp = new HpInfo(ren, Player::GetHP(0));
-	mana = new ManaInfo(ren, Player::GetMana());
+	mana = new ManaInfo(ren, Player::GetMana(0));
 	exp = new ExpInfo(ren, Player::GetEXP());
-	/*changeState[0] = hp;
-	changeState[1] = mana;
-	changeState[2] = exp;*/
-	
+	mouseButtons = new MouseButton();
+	keyboardButtons = new KeyboardButtons();
+
 	for (int i = 0; i < 22; i++) 
 	{
 		for (int j = 0; j < 32; j++)
@@ -178,30 +178,30 @@ void Level::Render()
 
 		if (FlagManager::flagSTR == 1)
 		{
-			uiSpec->UpdateSpec(Player::GetSpecValue(1), 1);
+			uiSpec->Update(Player::GetSpecValue(1), 1);
 		}
 		if (FlagManager::flagDEX == 1)
 		{
-			uiSpec->UpdateSpec(Player::GetSpecValue(2), 2);
+			uiSpec->Update(Player::GetSpecValue(2), 2);
 		}
 		if (FlagManager::flagINT == 1)
 		{
-			uiSpec->UpdateSpec(Player::GetSpecValue(3), 3);
+			uiSpec->Update(Player::GetSpecValue(3), 3);
+			mana->UpdateMax();
 		}
 		if (FlagManager::flagPHS == 1)
 		{
-			uiSpec->UpdateSpec(Player::GetSpecValue(4), 4);
+			uiSpec->Update(Player::GetSpecValue(4), 4);
 			hp->UpdateMax();
 		}
 		if (FlagManager::flagLCK == 1)
 		{
-			uiSpec->UpdateSpec(Player::GetSpecValue(5), 5);
+			uiSpec->Update(Player::GetSpecValue(5), 5);
 		}
 	}
 	if (FlagManager::flagUI == 1)
 	{
 		uiInfo->Render();
-		//changeState[0]->Render();
 		hp->Render();
 		mana->Render();
 		exp->Render();
@@ -219,7 +219,7 @@ void Level::Render()
 
 		if (FlagManager::flagCheckMana == 1)
 		{
-			mana->Update(Player::GetMana());
+			mana->Update(Player::GetMana(0));
 		}
 
 		if (FlagManager::flagCheckExp == 1)
@@ -269,6 +269,8 @@ void Level::handleEvents(SDL_Event eventWIthSpec)
 	case SDL_MOUSEBUTTONDOWN:
 		SDL_GetMouseState(&mouseCoords.x, &mouseCoords.y);
 
+		mouseButtons->buttonsForItemsInInv(eventWIthSpec);
+
 		//Вызов окна Spec по нажатию мыши
 		if (InputManager::MouseInArea(1230, 240, 64, 64, mouseCoords.x, mouseCoords.y) && 
 			FlagManager::flagUiSpec == 0)
@@ -276,7 +278,6 @@ void Level::handleEvents(SDL_Event eventWIthSpec)
 			//std::cout << "Mouse spec" << std::endl;
 			FlagManager::flagUiSpec = 1;
 			FlagManager::flagUI = 0;
-			SDL_Delay(200);
 			break;
 		}
 		else if (InputManager::MouseInArea(1230, 240, 32, 32, mouseCoords.x, mouseCoords.y) && 
@@ -285,7 +286,6 @@ void Level::handleEvents(SDL_Event eventWIthSpec)
 			//std::cout << "Mouse info" << std::endl;
 			FlagManager::flagUI = 1;
 			FlagManager::flagUiSpec = 0;
-			SDL_Delay(200);
 			break;
 		}
 		
@@ -306,13 +306,11 @@ void Level::handleEvents(SDL_Event eventWIthSpec)
 			FlagManager::flagUiEnemy == 0)
 		{
 			FlagManager::flagUiEnemy = 1;
-			SDL_Delay(200);
 		}
 		else if (InputManager::MouseInArea(EntityPosition::Coords[2], EntityPosition::Coords[3], 32, 32, mouseCoords.x, mouseCoords.y) &&
 			FlagManager::flagUiEnemy == 1)
 		{
 			FlagManager::flagUiEnemy = 0;
-			SDL_Delay(200);
 		}
 
 		//Увеличение значения характеристик по нажатию мыши
@@ -321,35 +319,30 @@ void Level::handleEvents(SDL_Event eventWIthSpec)
 			FlagManager::flagSTR == 0)
 		{
 			player->ChangeValueSpecs(1);
-			SDL_Delay(200);
 		}
 		//DEX
 		if (FlagManager::flagUiSpec == 1 && InputManager::MouseInArea(1230, 110, 16, 20, mouseCoords.x, mouseCoords.y) &&
 			FlagManager::flagDEX == 0)
 		{
 			player->ChangeValueSpecs(2);
-			SDL_Delay(200);
 		}
 		//INT
 		if (FlagManager::flagUiSpec == 1 && InputManager::MouseInArea(1230, 140, 16, 20, mouseCoords.x, mouseCoords.y) &&
 			FlagManager::flagINT == 0)
 		{
 			player->ChangeValueSpecs(3);
-			SDL_Delay(200);
 		}
 		//PHS
 		if (FlagManager::flagUiSpec == 1 && InputManager::MouseInArea(1230, 170, 16, 20, mouseCoords.x, mouseCoords.y) &&
 			FlagManager::flagPHS == 0)
 		{
 			player->ChangeValueSpecs(4);
-			SDL_Delay(200);
 		}
 		//LCK
 		if (FlagManager::flagUiSpec == 1 && InputManager::MouseInArea(1230, 200, 16, 20, mouseCoords.x, mouseCoords.y) &&
 			FlagManager::flagLCK == 0)
 		{
 			player->ChangeValueSpecs(5);
-			SDL_Delay(200);
 		}
 
 	case SDL_KEYDOWN:
@@ -360,7 +353,6 @@ void Level::handleEvents(SDL_Event eventWIthSpec)
 			//std::cout << "Check Spec" << std::endl;
 			FlagManager::flagUiSpec = 1;
 			FlagManager::flagUI = 0;
-			SDL_Delay(200);
 			break;
 		}
 		else if (keys[SDL_SCANCODE_Q] && FlagManager::flagUI == 0)
@@ -368,20 +360,17 @@ void Level::handleEvents(SDL_Event eventWIthSpec)
 			//std::cout << "Check Info" << std::endl;
 			FlagManager::flagUiSpec = 0;
 			FlagManager::flagUI = 1;
-			SDL_Delay(200);
 			break;
 		}
 
 		if (keys[SDL_SCANCODE_I] && FlagManager::flagInv == 0)
 		{
 			FlagManager::flagInv = 1;
-			SDL_Delay(200);
 			break;
 		}
 		else if (keys[SDL_SCANCODE_I] && FlagManager::flagInv == 1)
 		{
 			FlagManager::flagInv = 0;
-			SDL_Delay(200);
 			break;
 		}
 

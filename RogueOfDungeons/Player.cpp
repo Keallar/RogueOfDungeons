@@ -85,7 +85,6 @@ int Player::GetHP(int numOfArr)
 	default:
 		break;
 	}
-	
 }
 
 int Player::GetEXP()
@@ -93,9 +92,20 @@ int Player::GetEXP()
 	return exp[0];
 }
 
-int Player::GetMana()
+int Player::GetMana(int numOfArr)
 {
-	return mana[0];
+	switch (numOfArr)
+	{
+	case 0:
+		return mana[0];
+	case 1:
+		return mana[1];
+	case 2:
+		return mana[2];
+	default:
+		break;
+	}
+
 }
 
 //Получение значения характеристик (STR, DEX, INT, PHS, LCK)
@@ -122,7 +132,6 @@ int Player::GetSpecValue(int numSpec)
 		std::cout << "Error in GetSpecValue!" << std::endl;
 		break;
 	}
-
 }
 
 //Изменение значения характеристики (STR, DEX, INT, PHS, LCK) на +1
@@ -183,7 +192,12 @@ void Player::ChangeMaxHpValue()
 //Изменение максимального значения маны
 void Player::ChangeMaxManaValue()
 {
-	mana[2] += 1;
+	mana[2] += 10;
+}
+
+void Player::ChangeMaxExpValue()
+{
+	exp[2] += 100;
 }
 
 //Проверка изменения HP
@@ -191,13 +205,11 @@ void Player::CheckHP()
 {
 	if (Player::HP[0] != Player::HP[1] && FlagManager::flagCheckHP ==  0)
 	{
-		//std::cout << "Check HP 1" << std::endl;
 		FlagManager::flagCheckHP = 1;
 		Player::HP[1] = Player::HP[0];
 	}
 	else if (Player::HP[0] == Player::HP[1] && FlagManager::flagCheckHP == 1)
 	{
-		//std::cout << "Check HP 0" << std::endl;
 		FlagManager::flagCheckHP = 0;
 	}
 }
@@ -207,13 +219,11 @@ void Player::CheckMANA()
 {
 	if (Player::mana[0] != Player::mana[1] && FlagManager::flagCheckMana == 0)
 	{
-		//std::cout << "Check HP 1" << std::endl;
 		FlagManager::flagCheckMana = 1;
 		Player::mana[1] = Player::mana[0];
 	}
 	else if (Player::mana[0] == Player::mana[1] && FlagManager::flagCheckMana == 1)
 	{
-		//std::cout << "Check HP 0" << std::endl;
 		FlagManager::flagCheckMana = 0;
 	}
 }
@@ -223,13 +233,11 @@ void Player::CheckEXP()
 {
 	if (Player::exp[0] != Player::exp[1] && FlagManager::flagCheckExp == 0)
 	{
-		//std::cout << "Check HP 1" << std::endl;
 		FlagManager::flagCheckExp = 1;
 		Player::exp[1] = Player::exp[0];
 	}
 	else if (Player::exp[0] == Player::exp[1] && FlagManager::flagCheckExp == 1)
 	{
-		//std::cout << "Check HP 0" << std::endl;
 		FlagManager::flagCheckExp = 0;
 	}
 }
@@ -304,22 +312,6 @@ void Player::GetItemOnLvl(int id) {
 	inventory->AddItem(id);
 }
 
-/*void Player::GetPlayerFirstCoords() 
-{
-	EntityPosition::Coords[0] = (rand() % 2 +1) * 32;
-	EntityPosition::Coords[1] = (rand() % 20 +1) * 32;
-	while ((Location[EntityPosition::Coords[1] / 32][EntityPosition::Coords[0] / 32] == 1)||
-		((Location[EntityPosition::Coords[1] / 32][EntityPosition::Coords[0] / 32 - 1] != 0)&&
-		(Location[EntityPosition::Coords[1] / 32][EntityPosition::Coords[0] / 32 + 1] != 0)&&
-		(Location[EntityPosition::Coords[1] / 32 - 1][EntityPosition::Coords[0] / 32] != 0)&&
-		(Location[EntityPosition::Coords[1] / 32 + 1][EntityPosition::Coords[0] / 32] != 0)))
-	{
-		EntityPosition::Coords[0] = (rand() % 2 + 1) * 32;
-		EntityPosition::Coords[1] = (rand() % 20 + 1) * 32;
-	}
-	
-}*/
-
 void Player::Render()
 {
 	RenderManager::CopyToRender(PlayerTexture, ren, EntityPosition::Coords[0], EntityPosition::Coords[1], 32, 32, 0, 0, 32, 32);
@@ -357,8 +349,6 @@ void Player::handleEvents(SDL_Event playerEvent)
 					if (Player::HP[0] != 0)
 						Player::HP[0] -= 1;
 					FlagManager::flagPlayer = 0;
-					//std::cout << "w" << EntityPosition::Coords[0] << EntityPosition::Coords[1] << std::endl;
-					//SDL_Delay(100);
 				}
 				if (Location[(EntityPosition::Coords[1]) / 32 - 1][(EntityPosition::Coords[0]) / 32] == 3) {
 					FlagManager::flagChest = 1;
@@ -379,8 +369,6 @@ void Player::handleEvents(SDL_Event playerEvent)
 					EntityPosition::Coords[0] -= 32;
 					Player::mana[0] += 1;
 					FlagManager::flagPlayer = 0;
-					//sdt::cout << "a" << std::endl;
-					//SDL_Delay(100);
 				}
 				if (Location[(EntityPosition::Coords[1]) / 32][(EntityPosition::Coords[0]) / 32 - 1] == 3) {
 					FlagManager::flagChest = 2;
@@ -401,8 +389,6 @@ void Player::handleEvents(SDL_Event playerEvent)
 					EntityPosition::Coords[1] += 32;
 					Player::exp[0] -= 1;
 					FlagManager::flagPlayer = 0;
-					//std::cout << "s" << std::endl;
-					//SDL_Delay(100);
 				}
 				if (Location[(EntityPosition::Coords[1]) / 32 + 1][(EntityPosition::Coords[0]) / 32] == 3) {
 					FlagManager::flagChest = 3;
@@ -422,8 +408,6 @@ void Player::handleEvents(SDL_Event playerEvent)
 				{
 					EntityPosition::Coords[0] += 32;
 					FlagManager::flagPlayer = 0;
-					//std::cout << "d" << std::endl;
-					//SDL_Delay(100);
 				}
 				if (Location[(EntityPosition::Coords[1]) / 32][(EntityPosition::Coords[0]) / 32 + 1] == 3) {
 					FlagManager::flagChest = 4;

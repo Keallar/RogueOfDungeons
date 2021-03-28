@@ -280,10 +280,10 @@ void Level::handleEvents(SDL_Event eventInLvl)
 		KeyboardButtonsInLevel::keyForCallSpecWin(keys);
 
 		//Вызов окна Inventory на I
-		keyboardButtonsInLevel->keyForCallInvWin(keys);
+		KeyboardButtonsInLevel::keyForCallInvWin(keys);
 
 		//Увеличение характеристик Spec с помощью клавиш
-		keyboardButtonsInLevel->keyForIncPlayerSpec(keys);
+		KeyboardButtonsInLevel::keyForIncPlayerSpec(keys);
 
 	default:
 		break;

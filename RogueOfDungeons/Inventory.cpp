@@ -8,9 +8,6 @@ std::map <int, InventoryItem>::iterator Inventory::it;
 
 Inventory::Inventory()
 {
-	meleeWeapon *ShortSword = new meleeWeapon(2, 1, weapon, "images/ShortSword.png");
-	meleeWeapon* Spear = new meleeWeapon(3, 0, weapon, "images/ABOBA.png");
-	rangeWeapon* ShortBow = new rangeWeapon(1, 4, 60, 15, rWeapon, "images/ShortSword.png");
 	ExistingItems = 
 	{ 
 		{0, *ShortSword},
@@ -56,6 +53,21 @@ void Inventory::Update()
 	}
 }
 
+meleeWeapon* Inventory::GetRealMelee(int id) {
+	switch (id) {
+	case 0:
+		return ShortSword;
+	case 2:
+		return Spear;
+	}
+}
+
+rangeWeapon* Inventory::GetRealRange(int id) {
+	switch (id) {
+	case 1:
+		return ShortBow;
+	}
+}
 
 rangeWeapon::rangeWeapon(int Damage, int Range, int Chanse, int deltaChanse, type type, const char* WeapTex)
 {
@@ -73,7 +85,7 @@ meleeWeapon::meleeWeapon(int Damage, int range, type type, const char* WeapTex)
 	ItemTexture = WeapTex;
 }
 
-void EquipedItems::EquipItem() 
+/*void EquipedItems::EquipItem() 
 {
 	
-}
+}*/

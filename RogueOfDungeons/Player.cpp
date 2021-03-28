@@ -57,6 +57,7 @@ Player::Player(const char* texturesheet, SDL_Renderer* renderer)
 			Location[i][j] = 0;
 		}
 	}
+	EqItems = {-1, nullptr, nullptr};
 	inventory = new Inventory;
 	inventory->AddItem(0);
 	inventory->AddItem(1);
@@ -181,6 +182,35 @@ void Player::GetPlayerFirstCoords()
 		EntityPosition::Coords[0] = (rand() % 2 + 1) * 32;
 		EntityPosition::Coords[1] = (rand() % 20 + 1) * 32;
 	}
+}
+
+void Player::GetItemEquip(int id) {
+	if (id != -1) {
+		int ItemId = inventory->inventory[id];
+		if (Inventory::ExistingItems[ItemId].Type = weapon) {
+			if (EqItems.WeaponId != -1) {
+				inventory->inventory[id] = EqItems.WeaponId;
+			}
+			else {
+				inventory->inventory[id] = -1;
+			}
+			EqItems.WeaponId = ItemId;
+			EqItems.equipedMeleeW = inventory->GetRealMelee(ItemId);
+			EqItems.equipedRangeW = nullptr;
+		}
+		if (Inventory::ExistingItems[ItemId].Type = rWeapon) {
+			if (EqItems.WeaponId != -1) {
+				inventory->inventory[id] = EqItems.WeaponId;
+			}
+			else {
+				inventory->inventory[id] = -1;
+			}
+			EqItems.WeaponId = ItemId;
+			EqItems.equipedRangeW = inventory->GetRealRange(ItemId);
+			EqItems.equipedMeleeW = nullptr;
+		}
+	}
+	FlagManager::flagEquip = -1;
 }
 
 //Изменение максимального значения hp
@@ -315,10 +345,12 @@ void Player::GetItemOnLvl(int id) {
 void Player::Render()
 {
 	RenderManager::CopyToRender(PlayerTexture, ren, EntityPosition::Coords[0], EntityPosition::Coords[1], 32, 32, 0, 0, 32, 32);
+	std::cout << EqItems.equipedMeleeW << " "<< EqItems.equipedRangeW << " "<<EqItems.WeaponId << std::endl;
 }
 
 void Player::Update()
 {
+	Player::GetItemEquip(FlagManager::flagEquip);
 	inventory->Update();
 	Player::CheckHP();
 	Player::CheckMANA();

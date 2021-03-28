@@ -21,6 +21,7 @@ void MouseButton::buttonsForItemsInInv(SDL_Event eventForItemsInInv)
 				Inventory::inventoryFace[i] != -1 && FlagManager::flagInv == 1)
 			{
 				std::cout << "Item " + i << std::endl;
+				FlagManager::flagEquip = i;
 			}
 		}
 	}

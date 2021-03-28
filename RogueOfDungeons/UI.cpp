@@ -370,9 +370,9 @@ void UIInventory::Render()
 			SDL_DestroyTexture(item);
 			item = 0;
 		}
-		else {
+		/*else {
 			std::cout << 0;
-		}
+		}*/
 	}
 }
 

@@ -50,4 +50,5 @@ public:
 	static bool flagINT;
 	static bool flagPHS;
 	static bool flagLCK;
+	static int flagEquip;
 };

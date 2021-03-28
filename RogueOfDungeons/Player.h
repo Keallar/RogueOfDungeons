@@ -3,6 +3,7 @@
 #include "inventory.h"
 
 struct Equiped {
+	int WeaponId;
 	meleeWeapon* equipedMeleeW;
 	rangeWeapon* equipedRangeW;
 };
@@ -38,6 +39,7 @@ public:
 	void GetPlayerFirstCoords();
     void Attack();
 	void GetItemOnLvl(int id);
+	void GetItemEquip(int id);
     //static int GetHP();
 
     static int GetHP(int numOfArr);
@@ -54,4 +56,5 @@ public:
     static void CheckEXP();
     static void CheckMANA();
     static void CheckSpecVaue(int numSpec);
+	
 };

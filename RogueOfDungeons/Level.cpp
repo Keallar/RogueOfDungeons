@@ -277,13 +277,13 @@ void Level::handleEvents(SDL_Event eventInLvl)
 	case SDL_KEYDOWN:
 
 		//Смена окон (с Spec на Info и наоборот) на Q
-		keyboardButtonsInLevel->keyForCallSpecWin();
+		KeyboardButtonsInLevel::keyForCallSpecWin(keys);
 
 		//Вызов окна Inventory на I
-		keyboardButtonsInLevel->keyForCallInvWin();
+		keyboardButtonsInLevel->keyForCallInvWin(keys);
 
 		//Увеличение характеристик Spec с помощью клавиш
-		keyboardButtonsInLevel->keyForIncPlayerSpec();
+		keyboardButtonsInLevel->keyForIncPlayerSpec(keys);
 
 	default:
 		break;

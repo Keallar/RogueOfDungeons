@@ -10,7 +10,7 @@ KeyboardButtonsInLevel::KeyboardButtonsInLevel()
 
 }
 
-void KeyboardButtonsInLevel::keyForCallSpecWin()
+void KeyboardButtonsInLevel::keyForCallSpecWin(const Uint8* keys)
 {
 	if (keys[SDL_SCANCODE_Q] && FlagManager::flagUiSpec == 0)
 	{
@@ -24,7 +24,7 @@ void KeyboardButtonsInLevel::keyForCallSpecWin()
 	}
 }
 
-void KeyboardButtonsInLevel::keyForCallInvWin()
+void KeyboardButtonsInLevel::keyForCallInvWin(const Uint8* keys)
 {
 	if (keys[SDL_SCANCODE_I] && FlagManager::flagInv == 0)
 	{
@@ -37,7 +37,7 @@ void KeyboardButtonsInLevel::keyForCallInvWin()
 
 }
 
-void KeyboardButtonsInLevel::keyForIncPlayerSpec()
+void KeyboardButtonsInLevel::keyForIncPlayerSpec(const Uint8* keys)
 {
 	if (keys[SDL_SCANCODE_1] && FlagManager::flagUiSpec == 1 && FlagManager::flagSTR == 0)
 	{

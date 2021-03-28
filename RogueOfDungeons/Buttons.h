@@ -13,9 +13,9 @@ private:
 	const Uint8* keys = SDL_GetKeyboardState(NULL);
 public:
 	KeyboardButtonsInLevel();
-	void keyForCallSpecWin();
-	void keyForCallInvWin();
-	void keyForIncPlayerSpec();
+	static void keyForCallSpecWin(const Uint8* keys);
+	static void keyForCallInvWin(const Uint8* keys);
+	static void keyForIncPlayerSpec(const Uint8* keys);
 };
 
 class MouseButtonsInLevel

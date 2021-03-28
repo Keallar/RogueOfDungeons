@@ -26,7 +26,7 @@ Level::Level(SDL_Renderer* renderer) : ren (renderer)
 	hp = new HpInfo(ren, Player::GetHP(0));
 	mana = new ManaInfo(ren, Player::GetMana(0));
 	exp = new ExpInfo(ren, Player::GetEXP());
-
+	keyboardButtonsInLevel = new KeyboardButtonsInLevel();
 	for (int i = 0; i < 22; i++) 
 	{
 		for (int j = 0; j < 32; j++)
@@ -277,13 +277,13 @@ void Level::handleEvents(SDL_Event eventInLvl)
 	case SDL_KEYDOWN:
 
 		//Смена окон (с Spec на Info и наоборот) на Q
-		KeyboardButtonsInLevel::keyForCallSpecWin();
+		keyboardButtonsInLevel->keyForCallSpecWin();
 
 		//Вызов окна Inventory на I
-		KeyboardButtonsInLevel::keyForCallInvWin();
+		keyboardButtonsInLevel->keyForCallInvWin();
 
 		//Увеличение характеристик Spec с помощью клавиш
-		KeyboardButtonsInLevel::keyForIncPlayerSpec();
+		keyboardButtonsInLevel->keyForIncPlayerSpec();
 
 	default:
 		break;

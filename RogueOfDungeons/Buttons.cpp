@@ -12,7 +12,6 @@ KeyboardButtonsInLevel::KeyboardButtonsInLevel()
 
 void KeyboardButtonsInLevel::keyForCallSpecWin()
 {
-	
 	if (keys[SDL_SCANCODE_Q] && FlagManager::flagUiSpec == 0)
 	{
 		FlagManager::flagUiSpec = 1;
@@ -61,6 +60,8 @@ void KeyboardButtonsInLevel::keyForIncPlayerSpec()
 		Player::ChangeValueSpecs(5);
 	}
 }
+
+MCoord MouseButtonsInLevel::mouseCoords;
 
 MouseButtonsInLevel::MouseButtonsInLevel()
 {

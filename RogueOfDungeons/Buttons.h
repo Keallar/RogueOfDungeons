@@ -13,15 +13,15 @@ private:
 	const Uint8* keys = SDL_GetKeyboardState(NULL);
 public:
 	KeyboardButtonsInLevel();
-	static void keyForCallSpecWin();
-	static void keyForCallInvWin();
-	static void keyForIncPlayerSpec();
+	void keyForCallSpecWin();
+	void keyForCallInvWin();
+	void keyForIncPlayerSpec();
 };
 
 class MouseButtonsInLevel
 {
 private:
-	MCoord mouseCoords;
+	static MCoord mouseCoords;
 	
 public:
 	MouseButtonsInLevel();

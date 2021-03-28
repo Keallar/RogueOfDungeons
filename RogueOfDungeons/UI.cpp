@@ -327,6 +327,8 @@ void UIInventory::Render()
 			Inventory::it = Inventory::ExistingItems.find(Inventory::inventoryFace[i]);
 			item = textureManager::LoadTexture((Inventory::it->second).ItemTexture, ren);
 			RenderManager::CopyToRender(item, ren, (780 + 36 * (i % 4)), (100 + ((i / 4) * 50)), 32, 32);
+			SDL_DestroyTexture(item);
+			item = 0;
 		}
 		else {
 			std::cout << 0;

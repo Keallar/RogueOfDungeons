@@ -61,7 +61,6 @@ rangeWeapon::rangeWeapon(int Damage, int Range, int Chanse, int deltaChanse, typ
 	RNG = Range;
 	CHNS = Chanse;
 	DCHNS = deltaChanse;
-	Type = type;
 	ItemTexture = WeapTex;
 }
 
@@ -69,7 +68,6 @@ meleeWeapon::meleeWeapon(int Damage, int range, type type, const char* WeapTex)
 {
 	DMG = Damage;
 	RNG = range;
-	Type = type;
 	ItemTexture = WeapTex;
 }
 void EquipedItems::EquipItem() 

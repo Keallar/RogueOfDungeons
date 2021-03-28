@@ -2,9 +2,15 @@
 #include "SDL.h"
 #include "inventory.h"
 
+struct Equiped {
+	meleeWeapon* equipedMeleeW;
+	rangeWeapon* equipedRangeW;
+};
+
 class Player
 {
 private:
+	Equiped EqItems;
 	Inventory* inventory;
     int Location[22][32];
     SDL_Texture* PlayerTexture;

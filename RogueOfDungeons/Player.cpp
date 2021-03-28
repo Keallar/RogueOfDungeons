@@ -381,6 +381,12 @@ void Player::handleEvents(SDL_Event playerEvent)
 			{
 				//остановка при упоре в стену
 			}
+			else if (EntityPosition::Coords[0] == EntityPosition::Coords[2] &&
+				(EntityPosition::Coords[1] - 32) == EntityPosition::Coords[3])
+			{
+				std::cout << "Stop Enemy W" << std::endl;
+				//остановка при попытке пройти сквозь enemy
+			}
 			else
 			{
 				if (Location[(EntityPosition::Coords[1]) / 32 - 1][(EntityPosition::Coords[0]) / 32] == 0) 
@@ -400,6 +406,12 @@ void Player::handleEvents(SDL_Event playerEvent)
 			if (EntityPosition::Coords[0] == 32)
 			{
 				//остановка при упоре в стену
+			}
+			else if ((EntityPosition::Coords[0] - 32) == EntityPosition::Coords[2] &&
+				EntityPosition::Coords[1] == EntityPosition::Coords[3])
+			{
+				std::cout << "Stop Enemy W" << std::endl;
+				//остановка при попытке пройти сквозь enemy
 			}
 			else
 			{
@@ -422,6 +434,12 @@ void Player::handleEvents(SDL_Event playerEvent)
 			{
 				//остановка при упоре в стену
 			}
+			else if (EntityPosition::Coords[0] == EntityPosition::Coords[2] && 
+				(EntityPosition::Coords[1] + 32) == EntityPosition::Coords[3])
+			{
+				std::cout << "Stop Enemy S" << std::endl;
+				//остановка при попытке пройти сквозь enemy
+			}
 			else
 			{
 				if (Location[(EntityPosition::Coords[1]) / 32 + 1][(EntityPosition::Coords[0]) / 32] == 0) 
@@ -442,6 +460,12 @@ void Player::handleEvents(SDL_Event playerEvent)
 			if (EntityPosition::Coords[0] == 960)
 			{
 				//остановка при упоре в стену
+			}
+			else if ((EntityPosition::Coords[0] + 32) == EntityPosition::Coords[2] &&
+				EntityPosition::Coords[1] == EntityPosition::Coords[3])
+			{
+				std::cout << "Stop Enemy W" << std::endl;
+				//остановка при попытке пройти сквозь enemy
 			}
 			else
 			{

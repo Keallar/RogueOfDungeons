@@ -138,7 +138,10 @@ void Enemy::Update()
 		if (xanim == 96)
 		{
 			if (Player::GetHP(0) != 0)
+			{
 				Player::ChangeHpValue();
+				std::cout << "Heat" << std::endl;
+			}
 			xanim = 0;
 			FlagManager::flagPlayer = 1;
 		}

@@ -2,15 +2,12 @@
 #include "Managers.h"
 #include <iostream>
 
-int Inventory::inventoryFace[16];
+int Inventory::inventoryFace[16]; //хранит в себе всё, что хранит inventory, но в static
 std::map <int, InventoryItem> Inventory::ExistingItems;
 std::map <int, InventoryItem>::iterator Inventory::it;
 
 Inventory::Inventory()
 {
-	meleeWeapon *ShortSword = new meleeWeapon(2, 1, weapon, "images/ShortSword.png");
-	meleeWeapon* Spear = new meleeWeapon(3, 0, weapon, "images/ABOBA.png");
-	rangeWeapon* ShortBow = new rangeWeapon(1, 4, 60, 15, rWeapon, "images/ShortSword.png");
 	ExistingItems = 
 	{ 
 		{0, *ShortSword},
@@ -22,11 +19,13 @@ Inventory::Inventory()
 		inventory[i] = -1;
 	}
 }
+
 void Inventory::EquipItem(int i, int j) 
 {
 	//EquipedArmor = ExistingItems[i];
 	//EquipedWeapon = ExistingItems[j];
 }
+
 void Inventory::AddItem(int id) 
 {
 	int count = 0;
@@ -54,6 +53,21 @@ void Inventory::Update()
 	}
 }
 
+meleeWeapon* Inventory::GetRealMelee(int id) {
+	switch (id) {
+	case 0:
+		return ShortSword;
+	case 2:
+		return Spear;
+	}
+}
+
+rangeWeapon* Inventory::GetRealRange(int id) {
+	switch (id) {
+	case 1:
+		return ShortBow;
+	}
+}
 
 rangeWeapon::rangeWeapon(int Damage, int Range, int Chanse, int deltaChanse, type type, const char* WeapTex)
 {
@@ -61,7 +75,6 @@ rangeWeapon::rangeWeapon(int Damage, int Range, int Chanse, int deltaChanse, typ
 	RNG = Range;
 	CHNS = Chanse;
 	DCHNS = deltaChanse;
-	Type = type;
 	ItemTexture = WeapTex;
 }
 
@@ -69,6 +82,10 @@ meleeWeapon::meleeWeapon(int Damage, int range, type type, const char* WeapTex)
 {
 	DMG = Damage;
 	RNG = range;
-	Type = type;
 	ItemTexture = WeapTex;
 }
+
+/*void EquipedItems::EquipItem() 
+{
+	
+}*/

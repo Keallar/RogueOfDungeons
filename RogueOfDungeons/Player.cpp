@@ -57,6 +57,7 @@ Player::Player(const char* texturesheet, SDL_Renderer* renderer)
 			Location[i][j] = 0;
 		}
 	}
+	EqItems = {-1, nullptr, nullptr};
 	inventory = new Inventory;
 	inventory->AddItem(0);
 	inventory->AddItem(1);
@@ -85,7 +86,6 @@ int Player::GetHP(int numOfArr)
 	default:
 		break;
 	}
-	
 }
 
 int Player::GetEXP()
@@ -93,9 +93,20 @@ int Player::GetEXP()
 	return exp[0];
 }
 
-int Player::GetMana()
+int Player::GetMana(int numOfArr)
 {
-	return mana[0];
+	switch (numOfArr)
+	{
+	case 0:
+		return mana[0];
+	case 1:
+		return mana[1];
+	case 2:
+		return mana[2];
+	default:
+		break;
+	}
+
 }
 
 //Получение значения характеристик (STR, DEX, INT, PHS, LCK)
@@ -122,7 +133,6 @@ int Player::GetSpecValue(int numSpec)
 		std::cout << "Error in GetSpecValue!" << std::endl;
 		break;
 	}
-
 }
 
 //Изменение значения характеристики (STR, DEX, INT, PHS, LCK) на +1
@@ -174,6 +184,41 @@ void Player::GetPlayerFirstCoords()
 	}
 }
 
+void Player::GetItemEquip(int id) {
+	if (id != -1) {
+		int ItemId = inventory->inventory[id];
+		if (Inventory::ExistingItems[ItemId].Type = weapon) {
+			if (EqItems.WeaponId != -1) {
+				inventory->inventory[id] = EqItems.WeaponId;
+			}
+			else {
+				inventory->inventory[id] = -1;
+			}
+			EqItems.WeaponId = ItemId;
+			EqItems.equipedMeleeW = inventory->GetRealMelee(ItemId);
+			EqItems.equipedRangeW = nullptr;
+		}
+		if (Inventory::ExistingItems[ItemId].Type = rWeapon) {
+			if (EqItems.WeaponId != -1) {
+				inventory->inventory[id] = EqItems.WeaponId;
+			}
+			else {
+				inventory->inventory[id] = -1;
+			}
+			EqItems.WeaponId = ItemId;
+			EqItems.equipedRangeW = inventory->GetRealRange(ItemId);
+			EqItems.equipedMeleeW = nullptr;
+		}
+	}
+	FlagManager::flagEquip = -1;
+}
+
+//WTF костыль на изменение значения hp player
+void Player::ChangeHpValue()
+{
+	HP[0] -= 1;
+}
+
 //Изменение максимального значения hp
 void Player::ChangeMaxHpValue()
 {
@@ -183,7 +228,13 @@ void Player::ChangeMaxHpValue()
 //Изменение максимального значения маны
 void Player::ChangeMaxManaValue()
 {
-	mana[2] += 1;
+	mana[2] += 10;
+}
+
+//Изменение максимального значения exp
+void Player::ChangeMaxExpValue()
+{
+	exp[2] += 100;
 }
 
 //Проверка изменения HP
@@ -191,13 +242,11 @@ void Player::CheckHP()
 {
 	if (Player::HP[0] != Player::HP[1] && FlagManager::flagCheckHP ==  0)
 	{
-		//std::cout << "Check HP 1" << std::endl;
 		FlagManager::flagCheckHP = 1;
 		Player::HP[1] = Player::HP[0];
 	}
 	else if (Player::HP[0] == Player::HP[1] && FlagManager::flagCheckHP == 1)
 	{
-		//std::cout << "Check HP 0" << std::endl;
 		FlagManager::flagCheckHP = 0;
 	}
 }
@@ -207,13 +256,11 @@ void Player::CheckMANA()
 {
 	if (Player::mana[0] != Player::mana[1] && FlagManager::flagCheckMana == 0)
 	{
-		//std::cout << "Check HP 1" << std::endl;
 		FlagManager::flagCheckMana = 1;
 		Player::mana[1] = Player::mana[0];
 	}
 	else if (Player::mana[0] == Player::mana[1] && FlagManager::flagCheckMana == 1)
 	{
-		//std::cout << "Check HP 0" << std::endl;
 		FlagManager::flagCheckMana = 0;
 	}
 }
@@ -223,13 +270,11 @@ void Player::CheckEXP()
 {
 	if (Player::exp[0] != Player::exp[1] && FlagManager::flagCheckExp == 0)
 	{
-		//std::cout << "Check HP 1" << std::endl;
 		FlagManager::flagCheckExp = 1;
 		Player::exp[1] = Player::exp[0];
 	}
 	else if (Player::exp[0] == Player::exp[1] && FlagManager::flagCheckExp == 1)
 	{
-		//std::cout << "Check HP 0" << std::endl;
 		FlagManager::flagCheckExp = 0;
 	}
 }
@@ -298,17 +343,23 @@ void Player::CheckSpecVaue(int numSpec)
 		std::cout << "Error in CheckSpecValue" << std::endl;
 		break;
 	}
-	
+}
+
+void Player::GetItemOnLvl(int id) 
+{
+	inventory->AddItem(id);
 }
 
 void Player::Render()
 {
 	RenderManager::CopyToRender(PlayerTexture, ren, EntityPosition::Coords[0], EntityPosition::Coords[1], 32, 32, 0, 0, 32, 32);
+	std::cout << EqItems.equipedMeleeW << " "<< EqItems.equipedRangeW << " "<<EqItems.WeaponId << std::endl;
 }
 
 void Player::Update()
 {
-	//inventory->Update();
+	Player::GetItemEquip(FlagManager::flagEquip);
+	inventory->Update();
 	Player::CheckHP();
 	Player::CheckMANA();
 	Player::CheckEXP();
@@ -330,16 +381,22 @@ void Player::handleEvents(SDL_Event playerEvent)
 			{
 				//остановка при упоре в стену
 			}
+			else if (EntityPosition::Coords[0] == EntityPosition::Coords[2] &&
+				(EntityPosition::Coords[1] - 32) == EntityPosition::Coords[3])
+			{
+				std::cout << "Stop Enemy W" << std::endl;
+				//остановка при попытке пройти сквозь enemy
+			}
 			else
 			{
 				if (Location[(EntityPosition::Coords[1]) / 32 - 1][(EntityPosition::Coords[0]) / 32] == 0) 
 				{
 					EntityPosition::Coords[1] -= 32;
-					if (Player::HP[0] != 0)
-						Player::HP[0] -= 1;
 					FlagManager::flagPlayer = 0;
-					//std::cout << "w" << EntityPosition::Coords[0] << EntityPosition::Coords[1] << std::endl;
-					//SDL_Delay(100);
+				}
+				if (Location[(EntityPosition::Coords[1]) / 32 - 1][(EntityPosition::Coords[0]) / 32] == 3) 
+				{
+					FlagManager::flagChest = 1;
 				}
 			}
 		}
@@ -350,6 +407,12 @@ void Player::handleEvents(SDL_Event playerEvent)
 			{
 				//остановка при упоре в стену
 			}
+			else if ((EntityPosition::Coords[0] - 32) == EntityPosition::Coords[2] &&
+				EntityPosition::Coords[1] == EntityPosition::Coords[3])
+			{
+				std::cout << "Stop Enemy W" << std::endl;
+				//остановка при попытке пройти сквозь enemy
+			}
 			else
 			{
 				if (Location[(EntityPosition::Coords[1]) / 32][(EntityPosition::Coords[0]) / 32 - 1] == 0) 
@@ -357,8 +420,10 @@ void Player::handleEvents(SDL_Event playerEvent)
 					EntityPosition::Coords[0] -= 32;
 					Player::mana[0] += 1;
 					FlagManager::flagPlayer = 0;
-					//sdt::cout << "a" << std::endl;
-					//SDL_Delay(100);
+				}
+				if (Location[(EntityPosition::Coords[1]) / 32][(EntityPosition::Coords[0]) / 32 - 1] == 3)
+				{
+					FlagManager::flagChest = 2;
 				}
 			}
 		}
@@ -369,6 +434,12 @@ void Player::handleEvents(SDL_Event playerEvent)
 			{
 				//остановка при упоре в стену
 			}
+			else if (EntityPosition::Coords[0] == EntityPosition::Coords[2] && 
+				(EntityPosition::Coords[1] + 32) == EntityPosition::Coords[3])
+			{
+				std::cout << "Stop Enemy S" << std::endl;
+				//остановка при попытке пройти сквозь enemy
+			}
 			else
 			{
 				if (Location[(EntityPosition::Coords[1]) / 32 + 1][(EntityPosition::Coords[0]) / 32] == 0) 
@@ -376,8 +447,10 @@ void Player::handleEvents(SDL_Event playerEvent)
 					EntityPosition::Coords[1] += 32;
 					Player::exp[0] -= 1;
 					FlagManager::flagPlayer = 0;
-					//std::cout << "s" << std::endl;
-					//SDL_Delay(100);
+				}
+				if (Location[(EntityPosition::Coords[1]) / 32 + 1][(EntityPosition::Coords[0]) / 32] == 3)
+				{
+					FlagManager::flagChest = 3;
 				}
 			}
 		}
@@ -388,14 +461,22 @@ void Player::handleEvents(SDL_Event playerEvent)
 			{
 				//остановка при упоре в стену
 			}
+			else if ((EntityPosition::Coords[0] + 32) == EntityPosition::Coords[2] &&
+				EntityPosition::Coords[1] == EntityPosition::Coords[3])
+			{
+				std::cout << "Stop Enemy W" << std::endl;
+				//остановка при попытке пройти сквозь enemy
+			}
 			else
 			{
 				if (Location[(EntityPosition::Coords[1]) / 32][(EntityPosition::Coords[0]) / 32 + 1] == 0)
 				{
 					EntityPosition::Coords[0] += 32;
 					FlagManager::flagPlayer = 0;
-					//std::cout << "d" << std::endl;
-					//SDL_Delay(100);
+				}
+				if (Location[(EntityPosition::Coords[1]) / 32][(EntityPosition::Coords[0]) / 32 + 1] == 3) 
+				{
+					FlagManager::flagChest = 4;
 				}
 			}
 		}

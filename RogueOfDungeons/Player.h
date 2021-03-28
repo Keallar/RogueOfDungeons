@@ -2,9 +2,16 @@
 #include "SDL.h"
 #include "inventory.h"
 
+struct Equiped {
+	int WeaponId;
+	meleeWeapon* equipedMeleeW;
+	rangeWeapon* equipedRangeW;
+};
+
 class Player
 {
 private:
+	Equiped EqItems;
 	Inventory* inventory;
     int Location[22][32];
     SDL_Texture* PlayerTexture;
@@ -18,7 +25,6 @@ private:
     static int PHS[2];
     static int LCK[2];
     int damageInput;
-    //UIInfo* uiInfo;
     const Uint8* keys = SDL_GetKeyboardState(NULL);
 public:
     Player(const char* texturesheet, SDL_Renderer* ren);
@@ -31,18 +37,24 @@ public:
 	void GetLevel(int arr[22][32]);
 	void GetPlayerFirstCoords();
     void Attack();
+	void GetItemOnLvl(int id);
+	void GetItemEquip(int id);
+    //static int GetHP();
 
     static int GetHP(int numOfArr);
     static int GetEXP();
-    static int GetMana();
+    static int GetMana(int numOfArr);
     static int GetSpecValue(int numSpec);
 
+    static void ChangeHpValue();
     static void ChangeValueSpecs(int numOfSpec);
     static void ChangeMaxHpValue();
     static void ChangeMaxManaValue();
+    static void ChangeMaxExpValue();
 
     static void CheckHP();
     static void CheckEXP();
     static void CheckMANA();
     static void CheckSpecVaue(int numSpec);
+	
 };

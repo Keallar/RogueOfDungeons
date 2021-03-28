@@ -143,9 +143,11 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Buttons.cpp" />
     <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="EntityPosition.cpp" />
     <ClCompile Include="Game.cpp" />
+    <ClCompile Include="GenerationMethods.cpp" />
     <ClCompile Include="Inventory.cpp" />
     <ClCompile Include="Level.cpp" />
     <ClCompile Include="GameObject.cpp" />
@@ -156,6 +158,7 @@
     <ClCompile Include="UI.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Buttons.h" />
     <ClInclude Include="Enemy.h" />
     <ClInclude Include="EntityPosition.h" />
     <ClInclude Include="Game.h" />

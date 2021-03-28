@@ -43,10 +43,12 @@ public:
 	static bool flagCheckMana;
 	static bool flagCheckExp;
 	static bool flagInv;
+	static int flagChest;
 	static bool flagUiEnemy;
 	static bool flagSTR;
 	static bool flagDEX;
 	static bool flagINT;
 	static bool flagPHS;
 	static bool flagLCK;
+	static int flagEquip;
 };

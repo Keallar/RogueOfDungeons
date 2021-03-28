@@ -7,7 +7,8 @@
 #include "Level.h"
 #include "Player.h"
 
-struct COORDS {
+struct COORDS 
+{
 	int x;
 	int y;
 };

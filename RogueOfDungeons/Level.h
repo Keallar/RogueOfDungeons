@@ -4,6 +4,7 @@
 #include "Player.h"
 #include "UI.h"
 #include "GameObject.h"
+#include "Buttons.h"
 
 struct MouseCoords
 {
@@ -14,7 +15,12 @@ struct MouseCoords
 class Level 
 {
 private:
-	//TextInfo* changeState[3];
+	KeyboardButtonsInLevel* keyboardButtonsInLevel;
+	TextInfo* changeState[3];
+	int itemsOnLvl[3];
+	int itemsHave;
+	int chests[3][2];
+	int floorLvl;
 	HpInfo* hp;
 	ManaInfo* mana;
 	ExpInfo* exp;
@@ -49,7 +55,7 @@ public:
 	void Update();
 	void Start();
 	void Render();
-	void handleEvents(SDL_Event eventWIthSpec);
+	void handleEvents(SDL_Event eventInLvl);
 	void Generate();
 	int GetLocation(int x, int y);
 	void ChangeLocation(int x, int y);

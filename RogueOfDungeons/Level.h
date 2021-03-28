@@ -15,8 +15,6 @@ struct MouseCoords
 class Level 
 {
 private:
-	MouseButton* mouseButtons;
-	KeyboardButtons* keyboardButtons;
 	TextInfo* changeState[3];
 	int itemsOnLvl[3];
 	int itemsHave;
@@ -56,7 +54,7 @@ public:
 	void Update();
 	void Start();
 	void Render();
-	void handleEvents(SDL_Event eventWIthSpec);
+	void handleEvents(SDL_Event eventInLvl);
 	void Generate();
 	int GetLocation(int x, int y);
 	void ChangeLocation(int x, int y);

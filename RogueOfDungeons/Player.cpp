@@ -195,6 +195,7 @@ void Player::ChangeMaxManaValue()
 	mana[2] += 10;
 }
 
+//Изменение максимального значения exp
 void Player::ChangeMaxExpValue()
 {
 	exp[2] += 100;
@@ -308,7 +309,8 @@ void Player::CheckSpecVaue(int numSpec)
 	}
 }
 
-void Player::GetItemOnLvl(int id) {
+void Player::GetItemOnLvl(int id) 
+{
 	inventory->AddItem(id);
 }
 
@@ -350,7 +352,8 @@ void Player::handleEvents(SDL_Event playerEvent)
 						Player::HP[0] -= 1;
 					FlagManager::flagPlayer = 0;
 				}
-				if (Location[(EntityPosition::Coords[1]) / 32 - 1][(EntityPosition::Coords[0]) / 32] == 3) {
+				if (Location[(EntityPosition::Coords[1]) / 32 - 1][(EntityPosition::Coords[0]) / 32] == 3) 
+				{
 					FlagManager::flagChest = 1;
 				}
 			}
@@ -370,7 +373,8 @@ void Player::handleEvents(SDL_Event playerEvent)
 					Player::mana[0] += 1;
 					FlagManager::flagPlayer = 0;
 				}
-				if (Location[(EntityPosition::Coords[1]) / 32][(EntityPosition::Coords[0]) / 32 - 1] == 3) {
+				if (Location[(EntityPosition::Coords[1]) / 32][(EntityPosition::Coords[0]) / 32 - 1] == 3)
+				{
 					FlagManager::flagChest = 2;
 				}
 			}
@@ -390,7 +394,8 @@ void Player::handleEvents(SDL_Event playerEvent)
 					Player::exp[0] -= 1;
 					FlagManager::flagPlayer = 0;
 				}
-				if (Location[(EntityPosition::Coords[1]) / 32 + 1][(EntityPosition::Coords[0]) / 32] == 3) {
+				if (Location[(EntityPosition::Coords[1]) / 32 + 1][(EntityPosition::Coords[0]) / 32] == 3)
+				{
 					FlagManager::flagChest = 3;
 				}
 			}
@@ -409,7 +414,8 @@ void Player::handleEvents(SDL_Event playerEvent)
 					EntityPosition::Coords[0] += 32;
 					FlagManager::flagPlayer = 0;
 				}
-				if (Location[(EntityPosition::Coords[1]) / 32][(EntityPosition::Coords[0]) / 32 + 1] == 3) {
+				if (Location[(EntityPosition::Coords[1]) / 32][(EntityPosition::Coords[0]) / 32 + 1] == 3) 
+				{
 					FlagManager::flagChest = 4;
 				}
 			}

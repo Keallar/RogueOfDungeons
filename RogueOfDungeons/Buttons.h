@@ -7,20 +7,38 @@ struct MCoord
 	int y;
 };
 
-class KeyboardButtons
+class KeyboardButtonsInLevel
 {
 private:
 	const Uint8* keys = SDL_GetKeyboardState(NULL);
 public:
-
+	KeyboardButtonsInLevel();
+	static void keyForCallSpecWin();
+	static void keyForCallInvWin();
+	static void keyForIncPlayerSpec();
 };
 
-class MouseButton
+class MouseButtonsInLevel
 {
 private:
 	MCoord mouseCoords;
+	
 public:
-	MouseButton();
-	void buttonsForItemsInInv(SDL_Event eventForItemsInInv);
+	MouseButtonsInLevel();
+	static void buttonsForItemsInInv();
+	static void buttonForCallSpecWin();
+	static void buttonForCallInvWin();
+	static void buttonForCallEnemyInfo();
+	static void buttonForIncPlayerSpec();
 };
+
+//class KeyboardButtonInPlayer
+//{
+//private:
+//	MCoord mouseCoords;
+//	const Uint8* keys = SDL_GetKeyboardState(NULL);
+//public:
+//	KeyboardButtonInPlayer();
+//	void movePlayer(SDL_Event &eventForMovePlayer);
+//};
 

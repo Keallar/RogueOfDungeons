@@ -137,6 +137,8 @@ void Enemy::Update()
 	{
 		if (xanim == 96)
 		{
+			if (Player::GetHP(0) != 0)
+				Player::ChangeHpValue();
 			xanim = 0;
 			FlagManager::flagPlayer = 1;
 		}

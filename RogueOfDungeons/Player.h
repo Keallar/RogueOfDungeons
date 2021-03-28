@@ -25,7 +25,6 @@ private:
     static int PHS[2];
     static int LCK[2];
     int damageInput;
-    //UIInfo* uiInfo;
     const Uint8* keys = SDL_GetKeyboardState(NULL);
 public:
     Player(const char* texturesheet, SDL_Renderer* ren);
@@ -47,6 +46,7 @@ public:
     static int GetMana(int numOfArr);
     static int GetSpecValue(int numSpec);
 
+    static void ChangeHpValue();
     static void ChangeValueSpecs(int numOfSpec);
     static void ChangeMaxHpValue();
     static void ChangeMaxManaValue();

@@ -213,6 +213,12 @@ void Player::GetItemEquip(int id) {
 	FlagManager::flagEquip = -1;
 }
 
+//WTF костыль на изменение значения hp player
+void Player::ChangeHpValue()
+{
+	HP[0] -= 1;
+}
+
 //Изменение максимального значения hp
 void Player::ChangeMaxHpValue()
 {
@@ -380,8 +386,6 @@ void Player::handleEvents(SDL_Event playerEvent)
 				if (Location[(EntityPosition::Coords[1]) / 32 - 1][(EntityPosition::Coords[0]) / 32] == 0) 
 				{
 					EntityPosition::Coords[1] -= 32;
-					if (Player::HP[0] != 0)
-						Player::HP[0] -= 1;
 					FlagManager::flagPlayer = 0;
 				}
 				if (Location[(EntityPosition::Coords[1]) / 32 - 1][(EntityPosition::Coords[0]) / 32] == 3) 

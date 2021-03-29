@@ -2,7 +2,8 @@
 #include "SDL.h"
 #include "inventory.h"
 
-struct Equiped {
+struct Equiped 
+{
 	int WeaponId;
 	meleeWeapon* equipedMeleeW;
 	rangeWeapon* equipedRangeW;
@@ -57,6 +58,5 @@ public:
     static void CheckHP();
     static void CheckEXP();
     static void CheckMANA();
-    static void CheckSpecVaue(int numSpec);
-	
+    static void CheckSpecVaue(int numSpec);	
 };

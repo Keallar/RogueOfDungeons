@@ -50,7 +50,7 @@ int Player::LCK[2] = {
 
 Player::Player(const char* texturesheet, SDL_Renderer* renderer)
 {
-	EqItems = { -1, nullptr, nullptr };
+	//EqItems = { -1, nullptr, nullptr };
 	ren = renderer;
 	PlayerTexture = textureManager::LoadTexture(texturesheet, ren);
 	for (int i = 0; i < 22; i++) {
@@ -356,6 +356,7 @@ void Player::Render()
 {
 	RenderManager::CopyToRender(PlayerTexture, ren, EntityPosition::Coords[0], EntityPosition::Coords[1], 32, 32, 0, 0, 32, 32);
 	std::cout << EqItems.equipedMeleeW << " "<< EqItems.equipedRangeW << " "<<EqItems.WeaponId << std::endl;
+	Player::Id = EqItems.WeaponId;
 }
 
 void Player::Update()
@@ -495,3 +496,5 @@ void Player::handleEvents(SDL_Event playerEvent)
 		
 	}
 }*/
+int Player::Id = -2;
+Equiped Player::EqItems = { -1, nullptr, nullptr };

@@ -50,6 +50,7 @@ int Player::LCK[2] = {
 
 Player::Player(const char* texturesheet, SDL_Renderer* renderer)
 {
+	Equiped EqItems = { -1, nullptr, nullptr };
 	ren = renderer;
 	PlayerTexture = textureManager::LoadTexture(texturesheet, ren);
 	for (int i = 0; i < 22; i++) {
@@ -58,6 +59,7 @@ Player::Player(const char* texturesheet, SDL_Renderer* renderer)
 		}
 	}
 	inventory = new Inventory;
+	
 	inventory->AddItem(0);
 	inventory->AddItem(1);
 	inventory->AddItem(0);
@@ -186,7 +188,7 @@ void Player::GetPlayerFirstCoords()
 void Player::GetItemEquip(int id) {
 	if (id != -1) {
 		int ItemId = inventory->inventory[id];
-		if (Inventory::ExistingItems[ItemId].Type = weapon) {
+		if (Inventory::ExistingItems[ItemId].Type == weapon) {
 			if (EqItems.WeaponId != -1) {
 				inventory->inventory[id] = EqItems.WeaponId;
 			}
@@ -197,7 +199,7 @@ void Player::GetItemEquip(int id) {
 			EqItems.equipedMeleeW = inventory->GetRealMelee(ItemId);
 			EqItems.equipedRangeW = nullptr;
 		}
-		if (Inventory::ExistingItems[ItemId].Type = rWeapon) {
+		if (Inventory::ExistingItems[ItemId].Type == rWeapon) {
 			if (EqItems.WeaponId != -1) {
 				inventory->inventory[id] = EqItems.WeaponId;
 			}
@@ -205,6 +207,7 @@ void Player::GetItemEquip(int id) {
 				inventory->inventory[id] = -1;
 			}
 			EqItems.WeaponId = ItemId;
+			
 			EqItems.equipedRangeW = inventory->GetRealRange(ItemId);
 			EqItems.equipedMeleeW = nullptr;
 		}

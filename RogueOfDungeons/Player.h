@@ -3,9 +3,9 @@
 #include "inventory.h"
 
 struct Equiped {
-	int WeaponId = -1;
-	meleeWeapon* equipedMeleeW = nullptr;
-	rangeWeapon* equipedRangeW = nullptr;
+	int WeaponId;
+	meleeWeapon* equipedMeleeW;
+	rangeWeapon* equipedRangeW;
 };
 static Equiped EqItems;
 class Player

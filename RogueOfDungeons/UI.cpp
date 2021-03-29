@@ -334,7 +334,9 @@ UIEquipedItem::UIEquipedItem(SDL_Renderer* renderer)
 }
 void UIEquipedItem::Render()
 {
-	Inventory::it = Inventory::ExistingItems.find(Inventory::inventoryFace[EqItems.WeaponId]);
+	std::cout << "A" << EqItems.WeaponId << "A";
+	Inventory::it = Inventory::ExistingItems.find(EqItems.WeaponId);
+	std::cout << "A" << EqItems.WeaponId << "A";
 	EquipedItem = textureManager::LoadTexture((Inventory::it->second).ItemTexture, ren);
 	RenderManager::CopyToRender(EquipedItem, ren, 1070, 550, 32, 32);
 	SDL_DestroyTexture(EquipedItem);

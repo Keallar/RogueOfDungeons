@@ -50,7 +50,7 @@ void Level::Update()
 {
 	if (FlagManager::flagPlayer == 1)
 	{
-		player->Update();	
+		player->Update();
 	}
 	if (FlagManager::flagPlayer == 0)
 	{
@@ -158,7 +158,7 @@ void Level::Render()
 	enemy->Render();
 	uiItem->Render();
 	uiInfo->RenderVersion();
-	
+	uiEquiped->Render();
 	if (FlagManager::flagInv == 1)
 	{
 		uiInv->Render();
@@ -197,7 +197,6 @@ void Level::Render()
 		hp->Render();
 		mana->Render();
 		exp->Render();
-		uiEquiped->Render();
 
 		if (FlagManager::flagUiEnemy == 1)
 		{

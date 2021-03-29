@@ -315,5 +315,4 @@ void Level::Generate() {
 	}
 	itemsHave = 2;
 	floorLvl++;
-
 }

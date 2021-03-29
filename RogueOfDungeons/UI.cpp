@@ -334,7 +334,7 @@ UIEquipedItem::UIEquipedItem(SDL_Renderer* renderer)
 }
 void UIEquipedItem::Render()
 {
-	std::cout << "A" << Player::Id << "A";
+	//std::cout << "A" << Player::Id << "A";
 	Inventory::it = Inventory::ExistingItems.find(Player::EqItems.WeaponId);
 	std::cout << "A" << Player::EqItems.WeaponId << "A";
 	if (Player::EqItems.WeaponId != -1) {

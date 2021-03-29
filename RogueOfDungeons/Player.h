@@ -28,7 +28,7 @@ private:
     const Uint8* keys = SDL_GetKeyboardState(NULL);
 public: 
     static Equiped EqItems;
-    static int Id; // UNDONE сделать getid
+    //static int Id; // UNDONE сделать getid
     Player(const char* texturesheet, SDL_Renderer* ren);
     ~Player();
     void Render();

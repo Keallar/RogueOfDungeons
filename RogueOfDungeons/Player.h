@@ -2,12 +2,15 @@
 #include "SDL.h"
 #include "inventory.h"
 
-struct Equiped {
+struct Equiped 
+{
 	int WeaponId;
 	meleeWeapon* equipedMeleeW;
 	rangeWeapon* equipedRangeW;
 };
+
 static Equiped EqItems;
+
 class Player
 {
 private:
@@ -26,6 +29,7 @@ private:
     int damageInput;
     const Uint8* keys = SDL_GetKeyboardState(NULL);
 public: 
+
     Player(const char* texturesheet, SDL_Renderer* ren);
     ~Player();
     void Render();
@@ -54,6 +58,5 @@ public:
     static void CheckHP();
     static void CheckEXP();
     static void CheckMANA();
-    static void CheckSpecVaue(int numSpec);
-	
+    static void CheckSpecVaue(int numSpec);	
 };

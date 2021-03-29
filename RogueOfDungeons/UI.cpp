@@ -328,10 +328,12 @@ void UISpecifications::UpdateMax()
 {
 
 }
-UIEquipedItem::UIEquipedItem(SDL_Renderer* renderer)
+
+UIEquipedItem::UIEquipedItem(SDL_Renderer* renderer) : ren (renderer)
 {
-	ren = renderer;
+
 }
+
 void UIEquipedItem::Render()
 {
 	std::cout << "A" << EqItems.WeaponId << "A";

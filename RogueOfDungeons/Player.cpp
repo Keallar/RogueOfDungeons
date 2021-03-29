@@ -50,7 +50,7 @@ int Player::LCK[2] = {
 
 Player::Player(const char* texturesheet, SDL_Renderer* renderer)
 {
-	Equiped EqItems = { -1, nullptr, nullptr };
+	EqItems = { -1, nullptr, nullptr };
 	ren = renderer;
 	PlayerTexture = textureManager::LoadTexture(texturesheet, ren);
 	for (int i = 0; i < 22; i++) {

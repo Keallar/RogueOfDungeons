@@ -3,15 +3,14 @@
 #include "inventory.h"
 
 struct Equiped {
-	int WeaponId;
-	meleeWeapon* equipedMeleeW;
-	rangeWeapon* equipedRangeW;
+	int WeaponId = -1;
+	meleeWeapon* equipedMeleeW = nullptr;
+	rangeWeapon* equipedRangeW = nullptr;
 };
-
+static Equiped EqItems;
 class Player
 {
 private:
-	Equiped EqItems;
 	Inventory* inventory;
     int Location[22][32];
     SDL_Texture* PlayerTexture;
@@ -26,7 +25,7 @@ private:
     static int LCK[2];
     int damageInput;
     const Uint8* keys = SDL_GetKeyboardState(NULL);
-public:
+public: 
     Player(const char* texturesheet, SDL_Renderer* ren);
     ~Player();
     void Render();

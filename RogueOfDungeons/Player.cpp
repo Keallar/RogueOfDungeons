@@ -57,7 +57,6 @@ Player::Player(const char* texturesheet, SDL_Renderer* renderer)
 			Location[i][j] = 0;
 		}
 	}
-	EqItems = {-1, nullptr, nullptr};
 	inventory = new Inventory;
 	inventory->AddItem(0);
 	inventory->AddItem(1);

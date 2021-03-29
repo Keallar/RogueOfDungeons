@@ -38,6 +38,7 @@ private:
 	UIItem* uiItem;
 	UIEnemyInfo* uiEnemy;
 	UISpecifications* uiSpec;
+	UIEquipedItem* uiEquiped;
 	std::vector <Enemy> enemies;
 	UIInventory* uiInv;
 	//std::vector <GameObject> textures; 

@@ -26,6 +26,7 @@ Level::Level(SDL_Renderer* renderer) : ren (renderer)
 	hp = new HpInfo(ren, Player::GetHP(0));
 	mana = new ManaInfo(ren, Player::GetMana(0));
 	exp = new ExpInfo(ren, Player::GetEXP());
+	uiEquiped = new UIEquipedItem(ren);
 	keyboardButtonsInLevel = new KeyboardButtonsInLevel();
 	for (int i = 0; i < 22; i++) 
 	{
@@ -196,6 +197,7 @@ void Level::Render()
 		hp->Render();
 		mana->Render();
 		exp->Render();
+		uiEquiped->Render();
 
 		if (FlagManager::flagUiEnemy == 1)
 		{

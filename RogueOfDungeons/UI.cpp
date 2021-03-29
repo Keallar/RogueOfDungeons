@@ -328,6 +328,18 @@ void UISpecifications::UpdateMax()
 {
 
 }
+UIEquipedItem::UIEquipedItem(SDL_Renderer* renderer)
+{
+	ren = renderer;
+}
+void UIEquipedItem::Render()
+{
+	Inventory::it = Inventory::ExistingItems.find(Inventory::inventoryFace[EqItems.WeaponId]);
+	EquipedItem = textureManager::LoadTexture((Inventory::it->second).ItemTexture, ren);
+	RenderManager::CopyToRender(EquipedItem, ren, 1070, 550, 32, 32);
+	SDL_DestroyTexture(EquipedItem);
+	EquipedItem = 0;
+}
 
 
 UIItem::UIItem(SDL_Renderer* renderer)

@@ -182,3 +182,14 @@ public:
 	UIEnemyInfo(SDL_Renderer* rendrerer);
 	void Render();
 };
+
+class UIEquipedItem 
+{
+private:
+	SDL_Texture* EquipedItem;
+	SDL_Renderer* ren;
+public:
+	UIEquipedItem(SDL_Renderer* renderer);
+	UIEquipedItem();
+	void Render();
+};

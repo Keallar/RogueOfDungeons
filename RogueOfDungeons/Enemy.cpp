@@ -46,17 +46,20 @@ int Enemy::GetHpEnemy(int numOfHp)
 
 void Enemy::CheckHpEnemy()
 {
-	if (Enemy::HP != Enemy::HpMax && FlagManager::flagAttackPlayer == 1 && FlagManager::flagPlayer == 1)
+	if (Enemy::HP != Enemy::HpMax &&
+		FlagManager::flagAttackPlayer == 1 && 
+		FlagManager::flagPlayer == 1)
 	{
 		FlagManager::flagEnemy = 0;
 	}
-	else if (Enemy::HP == Enemy::HpMax && FlagManager::flagAttackPlayer == 0 && FlagManager::flagPlayer == 0)
+	else if (Enemy::HP == Enemy::HpMax && 
+		FlagManager::flagAttackPlayer == 0 &&
+		FlagManager::flagPlayer == 0)
 	{
 		FlagManager::flagEnemy = 1;
 	}
 }
 
-//WTF костыль на изменение значени€ hp enemy
 void Enemy::ChahgeHpEnemy(int valueOfChangingHp)
 {
 	Enemy::HP -= valueOfChangingHp;
@@ -166,15 +169,15 @@ bool Enemy::WAY(int ax, int ay, int bx, int by)   // поиск пути из €чейки (ax, a
 
 void Enemy::Update()
 {
-	Enemy::CheckHpEnemy();
-
 	if ((abs(EntityPosition::Coords[2]/32 - EntityPosition::Coords[0]/32) +
 		abs(EntityPosition::Coords[3]/32 - EntityPosition::Coords[1]/32)) > 1)
 		{
 		WAY(EntityPosition::Coords[2] / 32, EntityPosition::Coords[3] / 32,
 			EntityPosition::Coords[0] / 32, EntityPosition::Coords[1] / 32);
+
 		FlagManager::flagAttackEnemy = 1;
 		}
+
 	if ((((EntityPosition::Coords[2] == EntityPosition::Coords[0]) &&
 		(EntityPosition::Coords[3] == EntityPosition::Coords[1] + 32)) ||
 		((EntityPosition::Coords[2] == EntityPosition::Coords[0]) && 
@@ -185,32 +188,40 @@ void Enemy::Update()
 			(EntityPosition::Coords[2] == EntityPosition::Coords[0] - 32))) && 
 		FlagManager::flagAttackEnemy == 1)
 	{
+		FlagManager::flagPlayer = 0;
+		FlagManager::flagAttackPlayer = 0;
+		FlagManager::flagEnemy = 1;
+		FlagManager::flagAttackEnemy = 1;
 		Enemy::animOfAttack();
 	}
 	else
 	{
+		FlagManager::flagEnemy = 0;
+		FlagManager::flagAttackEnemy = 0;
 		FlagManager::flagPlayer = 1;
+		FlagManager::flagAttackPlayer = 1;
 	}
-	FlagManager::flagAttackEnemy = 1;
+
+	//UNDONE придумать где лучше делать чек HP enemy
+	Enemy::CheckHpEnemy();
 }
 
 void Enemy::animOfAttack()
 {
+	FlagManager::flagAttackPlayer = 0;
+
 	if (xanim == 96)
 	{
-		Enemy::ChahgeHpEnemy(1);
-		if (Player::GetHP(0) != 0)
-		{
-			Player::ChangeHpValue();
-			std::cout << "Heat" << std::endl;
-		}
+		Player::ChangeHpValue(1);
+		std::cout << "Heat" << std::endl;
 		xanim = 0;
-		FlagManager::flagPlayer = 1;
-		FlagManager::flagAttackPlayer = 1;
+	}
+	if (xanim == 64)
+	{
+		xanim += 32;
 	}
 	else
 	{
-		FlagManager::flagAttackPlayer = 0;
 		xanim += 32;
 	}
 }

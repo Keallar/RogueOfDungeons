@@ -4,7 +4,6 @@
 #include "SDL_ttf.h"
 #include "string"
 
-
 //class UIMenu 
 //{
 //private:
@@ -47,16 +46,14 @@ public:
 	void RenderVersion();
 };
 
+//Interface
 class TextInfo
 {
-private:
-	SDL_Renderer* ren;
-	SDL_Texture* infoText;
 protected:
 	const char* PATH_IN_FONT;
 	SDL_Color color = { 255, 255, 255, 255 };
 public:
-	TextInfo(SDL_Renderer* renderer);
+	TextInfo();
 	virtual ~TextInfo();
 	virtual void Render() = 0;
 	virtual void Update() = 0;

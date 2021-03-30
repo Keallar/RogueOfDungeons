@@ -7,6 +7,9 @@
 #include "inventory.h"
 #include "Enemy.h"
 
+int Player::Id = -2;
+Equiped Player::EqItems = { -1, nullptr, nullptr };
+
 int Player::HP[3] = {
 					 10, /*hp  now*/
 					 10, /*hp  previous*/
@@ -216,10 +219,9 @@ void Player::GetItemEquip(int id) {
 	FlagManager::flagEquip = -1;
 }
 
-//WTF костыль на изменение значения hp player
-void Player::ChangeHpValue()
+void Player::ChangeHpValue(int valueOfChangingHp)
 {
-	HP[0] -= 1;
+	HP[0] -= valueOfChangingHp;
 }
 
 //Изменение максимального значения hp
@@ -514,13 +516,25 @@ void Player::handleEvents(SDL_Event playerEvent)
 	}
 }
 
-/*void Player::Attack()
-{
-	if (ITEMTYPE.... = 0 ���� ������� ���) {}
-	else if (ITEMTYPE.... = 1 ���� ������� ���)
-	{
-		
-	}
-}*/
-int Player::Id = -2;
-Equiped Player::EqItems = { -1, nullptr, nullptr };
+//void Player::Attack(Equiped typeOfEqItem)
+//{
+//	if (typeOfEqItem.equipedMeleeW = 1 && typeOfEqItem.equipedRangeW = 0)
+//	{
+//		//UNDONE сделать условие для всех позиций enemy
+//		if ((EntityPosition::Coords[0] + 32) == EntityPosition::Coords[2] &&
+//			EntityPosition::Coords[1] == EntityPosition::Coords[3] &&
+//			FlagManager::flagAttackPlayer == 1 &&
+//			FlagManager::flagAttackEnemy == 0 &&
+//			FlagManager::flagPlayer == 1 &&
+//			FlagManager::flagEnemy == 0)
+//		{
+//			std::cout << "Player attack enemy" << std::endl;
+//			Enemy::ChahgeHpEnemy(3);
+//		}
+//	}
+//	else if (typeOfEqItem.equipedMeleeW = 0 && typeOfEqItem.equipedRangeW = 1)
+//	{
+//		
+//	}
+//}
+

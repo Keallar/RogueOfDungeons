@@ -33,6 +33,7 @@ public:
 	bool WAY(int ax, int ay, int bx, int by);
 	void GetEnemyFirstCoords();
 	void animOfAttack();
+
 	static int HP;
 	static int HpMax;
 	static int GetHpEnemy(int numOfHp);

@@ -187,9 +187,10 @@ class UiHpEnemyInfo : public TextInfo
 {
 private:
 	SDL_Renderer* ren;
-	SDL_Texture* hpText;
-	SDL_Texture* hpCurrentText;
-	SDL_Texture* hpMax;
+	SDL_Texture* hpTextEnemy;
+	SDL_Texture* hpCurrentTextEnemy;
+	SDL_Texture* hpMaxEnemy;
+	SDL_Texture* slashhhhhhhhh;
 public:
 	UiHpEnemyInfo(SDL_Renderer* renderer, int changeTextValue);
 	~UiHpEnemyInfo();

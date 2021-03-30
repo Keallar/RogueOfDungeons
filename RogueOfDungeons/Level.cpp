@@ -46,7 +46,6 @@ Level::~Level()
 	delete uiItem;
 	delete uiEnemy;
 	delete uiSpec;
-	delete uiInv;
 	delete hp;
 	delete mana;
 	delete exp;
@@ -209,7 +208,7 @@ void Level::Render()
 		if (FlagManager::flagUiEnemy == 1)
 		{
 			uiEnemy->Render();
-
+			enemyHpInfo->Render();
 		}
 
 		//Update значений hp, mana и  exp

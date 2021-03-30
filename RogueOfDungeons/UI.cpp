@@ -176,7 +176,7 @@ void UIInfo::Render()
 	RenderManager::CopyToRender(slashhhhhhhhh, ren, 1152, 72, 32, 20);
 	RenderManager::CopyToRender(slashhhhhhhhh, ren, 1152, 122, 32, 20);
 	RenderManager::CopyToRender(slashhhhhhhhh, ren, 1152, 175, 32, 20);
-	RenderManager::CopyToRender(slashhhhhhhhh, ren, 1152, 325, 32, 20);
+
 
 	//HP
 	RenderManager::CopyToRender(hpBar, ren, 1080, 40, 160, 32, 0, 0, 128, 16);
@@ -338,7 +338,7 @@ UIEquipedItem::UIEquipedItem(SDL_Renderer* renderer) : ren (renderer)
 
 void UIEquipedItem::Render()
 {
-	std::cout << "A" << Player::Id << "A";
+	//std::cout << "A" << Player::Id << "A";
 	Inventory::it = Inventory::ExistingItems.find(Player::EqItems.WeaponId);
 	std::cout << "A" << Player::EqItems.WeaponId << "A";
 	if (Player::EqItems.WeaponId != -1) {
@@ -351,11 +351,10 @@ void UIEquipedItem::Render()
 }
 
 
-UIItem::UIItem(SDL_Renderer* renderer)
+UIItem::UIItem(SDL_Renderer* renderer) : ren(renderer)
 {
 	PATH_IN_FONT = "fonts/manaspc.ttf";
 	color = { 255, 255, 255, 255 };
-	ren = renderer;
 
 	itemBlock = textureManager::LoadTexture("images/InfoBlock.png", ren);
 	item = FontManager::renderText("Items", PATH_IN_FONT, color, 32, ren);
@@ -405,7 +404,6 @@ UIEnemyInfo::UIEnemyInfo(SDL_Renderer* renderer) : ren(renderer)
 
 	enemy = FontManager::renderText("Enemy", pathInFont, color, 32, ren);
 	hpEmenyBar = textureManager::LoadTexture("images/EnemyBar.png", ren);
-
 }
 
 void UIEnemyInfo::Render()
@@ -421,9 +419,10 @@ UiHpEnemyInfo::UiHpEnemyInfo(SDL_Renderer* renderer, int changeTextValue): TextI
 	ren = renderer;
 	std::string stringValue = std::to_string(Enemy::GetHpEnemy(0));
 	const char* TEXT_VALUE = stringValue.c_str();
-	hpText = FontManager::renderText("HP", PATH_IN_FONT, color, 64, ren);
-	hpCurrentText = FontManager::renderText(TEXT_VALUE, PATH_IN_FONT, color, 32, ren);
-	hpMax = FontManager::renderText("5", PATH_IN_FONT, color, 32, ren);
+	hpTextEnemy = FontManager::renderText("HP", PATH_IN_FONT, color, 64, ren);
+	hpCurrentTextEnemy = FontManager::renderText(TEXT_VALUE, PATH_IN_FONT, color, 32, ren);
+	slashhhhhhhhh = FontManager::renderText("/", PATH_IN_FONT, color, 32, ren);
+	hpMaxEnemy = FontManager::renderText("5", PATH_IN_FONT, color, 32, ren);
 }
 
 UiHpEnemyInfo::~UiHpEnemyInfo()
@@ -433,14 +432,19 @@ UiHpEnemyInfo::~UiHpEnemyInfo()
 
 void UiHpEnemyInfo::Render()
 {
-	RenderManager::CopyToRender(hpText, ren, 1050, 300, 25, 22);
-	RenderManager::CopyToRender(hpCurrentText, ren, 1120, 325, 32, 20);
-	RenderManager::CopyToRender(hpMax, ren, 1180, 325, 32, 20);
+	RenderManager::CopyToRender(hpTextEnemy, ren, 1050, 300, 25, 22);
+	RenderManager::CopyToRender(hpCurrentTextEnemy, ren, 1120, 325, 32, 20);
+	RenderManager::CopyToRender(slashhhhhhhhh, ren, 1152, 325, 32, 20);
+	RenderManager::CopyToRender(hpMaxEnemy, ren, 1180, 325, 32, 20);
 }
 
 void UiHpEnemyInfo::Update()
 {
-
+	SDL_DestroyTexture(hpTextEnemy);
+	hpTextEnemy = 0;
+	std::string stringTemp = std::to_string(Player::GetHP(0));
+	const char* CHAR_VALUE = stringTemp.c_str();
+	hpTextEnemy = FontManager::renderText(CHAR_VALUE, PATH_IN_FONT, color, 32, ren);
 }
 
 void UiHpEnemyInfo::UpdateMax()

@@ -152,19 +152,25 @@ void Timer::add(std::chrono::milliseconds delay, std::function<void()> callback,
 
 bool FlagManager::flagPlayer = 0;
 bool FlagManager::flagEnemy = 1;
+
 bool FlagManager::flagUI = 1;
 bool FlagManager::flagUiSpec = 0;
+bool FlagManager::flagUiEnemy = 0;
+bool FlagManager::flagInv = 0;
+
 bool FlagManager::flagCheckHP = 0;
 bool FlagManager::flagCheckMana = 0;
 bool FlagManager::flagCheckExp = 0;
-bool FlagManager::flagInv = 0;
+
 int FlagManager::flagChest = 0;
 int FlagManager::flagEquip = -1;
-bool FlagManager::flagUiEnemy = 0;
+
 bool FlagManager::flagSTR = 0;
 bool FlagManager::flagDEX = 0;
 bool FlagManager::flagINT = 0;
 bool FlagManager::flagPHS = 0;
 bool FlagManager::flagLCK = 0;
+
 int FlagManager::flagAttackPlayer = 0;
 int FlagManager::flagAttackEnemy = 1;
+bool FlagManager::flagCheckHpEnemy = 0;

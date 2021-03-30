@@ -17,7 +17,7 @@
 //	RenderManager::CopyToRender(Font2, ren, 1024, 30, 256, 21);
 //}
 
-TextInfo::TextInfo(SDL_Renderer* renderer, int changeTextValue) : ren(renderer)
+TextInfo::TextInfo(SDL_Renderer* renderer) : ren(renderer)
 {
 	PATH_IN_FONT = "fonts/manaspc.ttf";
 }
@@ -28,7 +28,7 @@ TextInfo::~TextInfo()
 }
 
 //UNDONE (изменить конструкторы для HpInfo, ManaInfo, ExpInfo)
-HpInfo::HpInfo(SDL_Renderer* renderer, int changeTextValue) : TextInfo (renderer, changeTextValue)
+HpInfo::HpInfo(SDL_Renderer* renderer) : TextInfo (renderer)
 {
 	ren = renderer;
 	std::string stringValue = std::to_string(Player::GetHP(0));
@@ -67,7 +67,7 @@ void HpInfo::Render()
 	RenderManager::CopyToRender(hpMax, ren, 1180, 72, 32, 20);
 }
 
-ManaInfo::ManaInfo(SDL_Renderer* renderer, int changeTextValue) : TextInfo(renderer, changeTextValue)
+ManaInfo::ManaInfo(SDL_Renderer* renderer) : TextInfo(renderer)
 {
 	ren = renderer;
 	PATH_IN_FONT = "fonts/manaspc.ttf";
@@ -107,11 +107,11 @@ void ManaInfo::Render()
 	RenderManager::CopyToRender(manaMax, ren, 1180, 122, 32, 20);
 }
 
-ExpInfo::ExpInfo(SDL_Renderer* renderer, int changeTextValue) : TextInfo(renderer, changeTextValue)
+ExpInfo::ExpInfo(SDL_Renderer* renderer) : TextInfo(renderer)
 {
 	ren = renderer;
 	PATH_IN_FONT = "fonts/manaspc.ttf";
-	std::string stringValue = std::to_string(changeTextValue);
+	std::string stringValue = std::to_string(Player::GetEXP());
 	const char* TEXT_VALUE = stringValue.c_str();
 	expText = FontManager::renderText(TEXT_VALUE, PATH_IN_FONT, color, 32, ren);
 }
@@ -200,7 +200,7 @@ void UIInfo::RenderVersion()
 	RenderManager::CopyToRender(versionBLock, ren, 0, 705, 170, 9);
 }
 
-UISpecifications::UISpecifications(SDL_Renderer* renderer, int changeTextValue) : TextInfo (renderer, changeTextValue)
+UISpecifications::UISpecifications(SDL_Renderer* renderer) : TextInfo (renderer)
 {
 	PATH_IN_FONT = "fonts/manaspc.ttf";
 	color = { 255, 255, 255, 255 };
@@ -414,15 +414,17 @@ void UIEnemyInfo::Render()
 	RenderManager::CopyToRender(hpEnemyInfo, ren, 1130, 325, 32, 20);
 }
 
-UiHpEnemyInfo::UiHpEnemyInfo(SDL_Renderer* renderer, int changeTextValue): TextInfo(renderer, changeTextValue)
+UiHpEnemyInfo::UiHpEnemyInfo(SDL_Renderer* renderer): TextInfo(renderer)
 {
 	ren = renderer;
-	std::string stringValue = std::to_string(Enemy::GetHpEnemy(0));
-	const char* TEXT_VALUE = stringValue.c_str();
+	std::string stringValue1 = std::to_string(Enemy::GetHpEnemy(0));
+	const char* TEXT_VALUE_CURRENT = stringValue1.c_str();
 	hpTextEnemy = FontManager::renderText("HP", PATH_IN_FONT, color, 64, ren);
-	hpCurrentTextEnemy = FontManager::renderText(TEXT_VALUE, PATH_IN_FONT, color, 32, ren);
+	hpCurrentTextEnemy = FontManager::renderText(TEXT_VALUE_CURRENT, PATH_IN_FONT, color, 32, ren);
 	slashhhhhhhhh = FontManager::renderText("/", PATH_IN_FONT, color, 32, ren);
-	hpMaxEnemy = FontManager::renderText("5", PATH_IN_FONT, color, 32, ren);
+	std::string stringValue2 = std::to_string(Enemy::GetHpEnemy(1));
+	const char* TEXT_VALUE_MAX = stringValue2.c_str();
+	hpMaxEnemy = FontManager::renderText(TEXT_VALUE_MAX, PATH_IN_FONT, color, 32, ren);
 }
 
 UiHpEnemyInfo::~UiHpEnemyInfo()
@@ -440,11 +442,11 @@ void UiHpEnemyInfo::Render()
 
 void UiHpEnemyInfo::Update()
 {
-	SDL_DestroyTexture(hpTextEnemy);
-	hpTextEnemy = 0;
+	SDL_DestroyTexture(hpCurrentTextEnemy);
+	hpCurrentTextEnemy = 0;
 	std::string stringTemp = std::to_string(Player::GetHP(0));
 	const char* CHAR_VALUE = stringTemp.c_str();
-	hpTextEnemy = FontManager::renderText(CHAR_VALUE, PATH_IN_FONT, color, 32, ren);
+	hpCurrentTextEnemy = FontManager::renderText(CHAR_VALUE, PATH_IN_FONT, color, 32, ren);
 }
 
 void UiHpEnemyInfo::UpdateMax()

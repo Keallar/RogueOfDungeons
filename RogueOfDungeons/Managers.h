@@ -60,5 +60,6 @@ public:
 	static int flagEquip;
 	static int flagAttackPlayer;
 	static int flagAttackEnemy;
+	static bool flagCheckHpEnemy;
 };
 

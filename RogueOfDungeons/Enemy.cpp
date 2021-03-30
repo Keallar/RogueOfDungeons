@@ -4,6 +4,8 @@
 #include <iostream>
 #include "EntityPosition.h"
 
+using namespace std;
+
 int Enemy::HP = 0;
 int Enemy::HpMax = 0;
 
@@ -29,9 +31,9 @@ void Enemy::Render()
 	RenderManager::CopyToRender(enemyTexture, ren, EntityPosition::Coords[2], EntityPosition::Coords[3], 32, 32, xanim, yanim, 32, 32);
 }
 
-int Enemy::GetHpEnemy(int num)
+int Enemy::GetHpEnemy(int numOfHp)
 {
-	switch (num)
+	switch (numOfHp)
 	{
 	case 0:
 		return HP;
@@ -40,6 +42,26 @@ int Enemy::GetHpEnemy(int num)
 	default:
 		break;
 	}
+}
+
+void Enemy::CheckHpEnemy()
+{
+	if (Enemy::HP != Enemy::HpMax && FlagManager::flagAttackPlayer == 1)
+	{
+		FlagManager::flagEnemy = 1;
+		
+	}
+	else if (Enemy::HP == Enemy::HpMax && FlagManager::flagAttackPlayer == 0)
+	{
+		FlagManager::flagEnemy = 0;
+	}
+}
+
+//WTF костыль на изменение значени€ hp enemy
+void Enemy::ChahgeHpEnemy()
+{
+	Enemy::HP -= 1;
+	cout << "HpEnemy Changing" << endl;
 }
 
 void Enemy::GetLoc(int arr[22][32]) 
@@ -145,6 +167,8 @@ bool Enemy::WAY(int ax, int ay, int bx, int by)   // поиск пути из €чейки (ax, a
 
 void Enemy::Update()
 {
+	Enemy::CheckHpEnemy();
+
 	if ((abs(EntityPosition::Coords[2]/32 - EntityPosition::Coords[0]/32) +
 		abs(EntityPosition::Coords[3]/32 - EntityPosition::Coords[1]/32)) > 1)
 		{
@@ -159,7 +183,8 @@ void Enemy::Update()
 		((EntityPosition::Coords[3] == EntityPosition::Coords[1]) && 
 			(EntityPosition::Coords[2] == EntityPosition::Coords[0] + 32)) ||
 		((EntityPosition::Coords[3] == EntityPosition::Coords[1]) && 
-			(EntityPosition::Coords[2] == EntityPosition::Coords[0] - 32))) && FlagManager::flagAttackEnemy == 1)
+			(EntityPosition::Coords[2] == EntityPosition::Coords[0] - 32))) && 
+		FlagManager::flagAttackEnemy == 1)
 	{
 		Enemy::animOfAttack();
 	}
@@ -185,5 +210,6 @@ void Enemy::animOfAttack()
 	else
 	{
 		xanim += 32;
+		Enemy::ChahgeHpEnemy();
 	}
 }

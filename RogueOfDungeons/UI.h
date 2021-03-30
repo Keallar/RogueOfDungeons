@@ -56,7 +56,7 @@ protected:
 	const char* PATH_IN_FONT;
 	SDL_Color color = { 255, 255, 255, 255 };
 public:
-	TextInfo(SDL_Renderer* renderer, int changeTextValue);
+	TextInfo(SDL_Renderer* renderer);
 	virtual ~TextInfo();
 	virtual void Render() = 0;
 	virtual void Update() = 0;
@@ -70,7 +70,7 @@ private:
 	SDL_Texture* hpText;
 	SDL_Texture* hpMax;
 public:
-	HpInfo(SDL_Renderer* renderer, int changeTextValue);
+	HpInfo(SDL_Renderer* renderer);
 	~HpInfo();
 	void Render();
 	void Update();
@@ -84,7 +84,7 @@ private:
 	SDL_Texture* manaText;
 	SDL_Texture* manaMax;
 public:
-	ManaInfo(SDL_Renderer* renderer, int changeTextValue);
+	ManaInfo(SDL_Renderer* renderer);
 	~ManaInfo();
 	void Render();
 	void Update();
@@ -98,7 +98,7 @@ private:
 	SDL_Renderer* ren;
 	SDL_Texture* expText;
 public:
-	ExpInfo(SDL_Renderer* renderer, int changeTextValue);
+	ExpInfo(SDL_Renderer* renderer);
 	~ExpInfo();
 	void Render();
 	void Update();
@@ -131,7 +131,7 @@ private:
 	SDL_Texture* five;
 
 public:
-	UISpecifications(SDL_Renderer* renderer, int changeTextValue);
+	UISpecifications(SDL_Renderer* renderer);
 	~UISpecifications();
 	void Render();
 	void Update();
@@ -192,7 +192,7 @@ private:
 	SDL_Texture* hpMaxEnemy;
 	SDL_Texture* slashhhhhhhhh;
 public:
-	UiHpEnemyInfo(SDL_Renderer* renderer, int changeTextValue);
+	UiHpEnemyInfo(SDL_Renderer* renderer);
 	~UiHpEnemyInfo();
 	void Render();
 	void Update();

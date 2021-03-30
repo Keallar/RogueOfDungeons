@@ -18,15 +18,15 @@ Level::Level(SDL_Renderer* renderer) : ren (renderer)
 	PlayBackground = textureManager::LoadTexture("images/Playback.png", ren);
 	player = new Player("images/Hero.png", ren);
 	enemy = new Enemy("images/Turtle.png", ren, 5, 5, 3, 4);
-	enemyHpInfo = new UiHpEnemyInfo(ren, Enemy::GetHpEnemy(0));
+	enemyHpInfo = new UiHpEnemyInfo(ren);
 	uiInfo = new UIInfo(ren);
 	uiItem = new UIItem(ren);
 	uiEnemy = new UIEnemyInfo(ren);
-	uiSpec = new UISpecifications(ren, 1);
+	uiSpec = new UISpecifications(ren);
 	uiInv = new UIInventory(ren);
-	hp = new HpInfo(ren, Player::GetHP(0));
-	mana = new ManaInfo(ren, Player::GetMana(0));
-	exp = new ExpInfo(ren, Player::GetEXP());
+	hp = new HpInfo(ren);
+	mana = new ManaInfo(ren);
+	exp = new ExpInfo(ren);
 	uiEquiped = new UIEquipedItem(ren);
 	keyboardButtonsInLevel = new KeyboardButtonsInLevel();
 	for (int i = 0; i < 22; i++) 
@@ -83,6 +83,7 @@ void Level::Start()
 void Level::Render()
 {
 	RenderManager::CopyToRender(PlayBackground, ren);
+	
 	//в зависимости от метода генерации выбираются нужные паки текстур
 	if (generateChoose == 0) {
 		for (int i = 0; i < 22; i++)
@@ -171,6 +172,11 @@ void Level::Render()
 		uiInv->Render();
 	}
 
+	if (FlagManager::flagEnemy == 1)
+	{
+		enemyHpInfo->Update();
+	}
+
 	if (FlagManager::flagUiSpec == 1)
 	{
 		uiSpec->Render();
@@ -198,6 +204,7 @@ void Level::Render()
 			uiSpec->Update(Player::GetSpecValue(5), 5);
 		}
 	}
+
 	if (FlagManager::flagUI == 1)
 	{
 		uiInfo->Render();
@@ -227,7 +234,9 @@ void Level::Render()
 			exp->Update();
 		}
 	}
+
 	if (FlagManager::flagChest != 0) {
+
 		switch (FlagManager::flagChest) {
 		case 1:
 			textureLocation[(EntityPosition::Coords[1]) / 32 - 1][(EntityPosition::Coords[0]) / 32] = 0;

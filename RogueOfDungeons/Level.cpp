@@ -209,7 +209,7 @@ void Level::Render()
 
 		if (FlagManager::flagUiEnemy == 1)
 		{
-			if (FlagManager::flagEnemy == 1)
+			if (FlagManager::flagEnemy == 0)
 			{
 				enemyHpInfo->Update();
 			}

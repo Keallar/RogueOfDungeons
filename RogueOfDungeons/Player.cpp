@@ -5,6 +5,7 @@
 #include "EntityPosition.h"
 #include "UI.h"
 #include "inventory.h"
+#include "Enemy.h"
 
 int Player::HP[3] = {
 					 10, /*hp  now*/
@@ -401,6 +402,11 @@ void Player::handleEvents(SDL_Event playerEvent)
 				{
 					FlagManager::flagChest = 1;
 				}
+				if (EntityPosition::Coords[0] == EntityPosition::Coords[2] &&
+					(EntityPosition::Coords[1] - 32) == EntityPosition::Coords[3])
+				{
+					//удар при определённой позиции Enemy
+				}
 			}
 		}
 
@@ -427,6 +433,11 @@ void Player::handleEvents(SDL_Event playerEvent)
 				if (Location[(EntityPosition::Coords[1]) / 32][(EntityPosition::Coords[0]) / 32 - 1] == 3)
 				{
 					FlagManager::flagChest = 2;
+				}
+				if ((EntityPosition::Coords[0] - 32) == EntityPosition::Coords[2] &&
+					EntityPosition::Coords[1] == EntityPosition::Coords[3])
+				{
+					//удар при определённой позиции Enemy
 				}
 			}
 		}
@@ -455,6 +466,11 @@ void Player::handleEvents(SDL_Event playerEvent)
 				{
 					FlagManager::flagChest = 3;
 				}
+				if (EntityPosition::Coords[0] == EntityPosition::Coords[2] &&
+					(EntityPosition::Coords[1] + 32) == EntityPosition::Coords[3])
+				{
+					//удар при определённой позиции Enemy
+				}
 			}
 		}
 
@@ -480,6 +496,16 @@ void Player::handleEvents(SDL_Event playerEvent)
 				if (Location[(EntityPosition::Coords[1]) / 32][(EntityPosition::Coords[0]) / 32 + 1] == 3) 
 				{
 					FlagManager::flagChest = 4;
+				}
+				if ((EntityPosition::Coords[0] + 32) == EntityPosition::Coords[2] &&
+					EntityPosition::Coords[1] == EntityPosition::Coords[3] && 
+					FlagManager::flagAttackPlayer == 1 && 
+					FlagManager::flagAttackEnemy == 0 &&
+					FlagManager::flagPlayer == 1 && 
+					FlagManager::flagEnemy == 0)
+				{
+					std::cout << "Player attack enemy" << std::endl;
+					Enemy::ChahgeHpEnemy(3);
 				}
 			}
 		}

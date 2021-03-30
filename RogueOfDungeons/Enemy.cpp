@@ -46,20 +46,20 @@ int Enemy::GetHpEnemy(int numOfHp)
 
 void Enemy::CheckHpEnemy()
 {
-	if (Enemy::HP != Enemy::HpMax && FlagManager::flagAttackPlayer == 1 && FlagManager::flagPlayer == 0)
-	{
-		FlagManager::flagEnemy = 1;
-	}
-	else if (Enemy::HP == Enemy::HpMax && FlagManager::flagAttackPlayer == 0 && FlagManager::flagPlayer == 1)
+	if (Enemy::HP != Enemy::HpMax && FlagManager::flagAttackPlayer == 1 && FlagManager::flagPlayer == 1)
 	{
 		FlagManager::flagEnemy = 0;
+	}
+	else if (Enemy::HP == Enemy::HpMax && FlagManager::flagAttackPlayer == 0 && FlagManager::flagPlayer == 0)
+	{
+		FlagManager::flagEnemy = 1;
 	}
 }
 
 //WTF костыль на изменение значения hp enemy
-void Enemy::ChahgeHpEnemy()
+void Enemy::ChahgeHpEnemy(int valueOfChangingHp)
 {
-	Enemy::HP -= 1;
+	Enemy::HP -= valueOfChangingHp;
 	cout << "HpEnemy Changing" << endl;
 }
 
@@ -198,7 +198,7 @@ void Enemy::animOfAttack()
 {
 	if (xanim == 96)
 	{
-		Enemy::ChahgeHpEnemy();
+		Enemy::ChahgeHpEnemy(1);
 		if (Player::GetHP(0) != 0)
 		{
 			Player::ChangeHpValue();

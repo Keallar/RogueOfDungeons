@@ -33,9 +33,9 @@ int Enemy::GetHpEnemy(int num)
 {
 	switch (num)
 	{
-	case 1:
+	case 0:
 		return HP;
-	case 2:
+	case 1:
 		return HpMax;
 	default:
 		break;

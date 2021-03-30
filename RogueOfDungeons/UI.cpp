@@ -4,6 +4,7 @@
 #include <iostream>
 #include "inventory.h"
 #include "Player.h"
+#include "Enemy.h"
 
 //UIMenu::UIMenu(SDL_Renderer* renderer) 
 //{
@@ -417,8 +418,11 @@ void UIEnemyInfo::Render()
 
 UiHpEnemyInfo::UiHpEnemyInfo(SDL_Renderer* renderer, int changeTextValue): TextInfo(renderer, changeTextValue)
 {
+	ren = renderer;
+	std::string stringValue = std::to_string(Enemy::GetHpEnemy(0));
+	const char* TEXT_VALUE = stringValue.c_str();
 	hpText = FontManager::renderText("HP", PATH_IN_FONT, color, 64, ren);
-	hpCurrentText = FontManager::renderText("5", PATH_IN_FONT, color, 32, ren);
+	hpCurrentText = FontManager::renderText(TEXT_VALUE, PATH_IN_FONT, color, 32, ren);
 	hpMax = FontManager::renderText("5", PATH_IN_FONT, color, 32, ren);
 }
 

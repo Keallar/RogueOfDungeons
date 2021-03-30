@@ -59,7 +59,7 @@ public:
 	TextInfo(SDL_Renderer* renderer, int changeTextValue);
 	virtual ~TextInfo();
 	virtual void Render() = 0;
-	virtual void Update(int value) = 0;
+	virtual void Update() = 0;
 	virtual void UpdateMax() = 0;
 };
 
@@ -73,7 +73,7 @@ public:
 	HpInfo(SDL_Renderer* renderer, int changeTextValue);
 	~HpInfo();
 	void Render();
-	void Update(int value);
+	void Update();
 	void UpdateMax();
 };
 
@@ -87,7 +87,7 @@ public:
 	ManaInfo(SDL_Renderer* renderer, int changeTextValue);
 	~ManaInfo();
 	void Render();
-	void Update(int value);
+	void Update();
 	void UpdateMax();
 };
 
@@ -101,7 +101,7 @@ public:
 	ExpInfo(SDL_Renderer* renderer, int changeTextValue);
 	~ExpInfo();
 	void Render();
-	void Update(int value);
+	void Update();
 	void UpdateMax();
 };
 
@@ -134,7 +134,7 @@ public:
 	UISpecifications(SDL_Renderer* renderer, int changeTextValue);
 	~UISpecifications();
 	void Render();
-	void Update(int value);
+	void Update();
 	void Update(int value, int num);
 	void UpdateMax();
 };
@@ -181,6 +181,21 @@ private:
 public:
 	UIEnemyInfo(SDL_Renderer* rendrerer);
 	void Render();
+};
+
+class UiHpEnemyInfo : public TextInfo
+{
+private:
+	SDL_Renderer* ren;
+	SDL_Texture* hpText;
+	SDL_Texture* hpCurrentText;
+	SDL_Texture* hpMax;
+public:
+	UiHpEnemyInfo(SDL_Renderer* renderer, int changeTextValue);
+	~UiHpEnemyInfo();
+	void Render();
+	void Update();
+	void UpdateMax();
 };
 
 class UIEquipedItem 

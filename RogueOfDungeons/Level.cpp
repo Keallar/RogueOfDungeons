@@ -17,7 +17,8 @@ Level::Level(SDL_Renderer* renderer) : ren (renderer)
 	TileTextureCastle = textureManager::LoadTexture("images/CaslteTiles.png", ren);
 	PlayBackground = textureManager::LoadTexture("images/Playback.png", ren);
 	player = new Player("images/Hero.png", ren);
-	enemy = new Enemy("images/Turtle.png", ren, 10, 3, 4);
+	enemy = new Enemy("images/Turtle.png", ren, 5, 5, 3, 4);
+	enemyHpInfo = new UiHpEnemyInfo(ren, Enemy::GetHpEnemy(1));
 	uiInfo = new UIInfo(ren);
 	uiItem = new UIItem(ren);
 	uiEnemy = new UIEnemyInfo(ren);
@@ -45,6 +46,12 @@ Level::~Level()
 	delete uiItem;
 	delete uiEnemy;
 	delete uiSpec;
+	delete uiInv;
+	delete hp;
+	delete mana;
+	delete exp;
+	delete uiEquiped;
+	delete keyboardButtonsInLevel;
 }
 void Level::Update()
 {
@@ -202,22 +209,23 @@ void Level::Render()
 		if (FlagManager::flagUiEnemy == 1)
 		{
 			uiEnemy->Render();
+
 		}
 
 		//Update значений hp, mana и  exp
 		if (FlagManager::flagCheckHP == 1)
 		{
-			hp->Update(Player::GetHP(0));
+			hp->Update();
 		}
 
 		if (FlagManager::flagCheckMana == 1)
 		{
-			mana->Update(Player::GetMana(0));
+			mana->Update();
 		}
 
 		if (FlagManager::flagCheckExp == 1)
 		{
-			exp->Update(Player::GetEXP());
+			exp->Update();
 		}
 	}
 	if (FlagManager::flagChest != 0) {

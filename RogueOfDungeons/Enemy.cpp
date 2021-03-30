@@ -3,10 +3,15 @@
 #include "Player.h"
 #include <iostream>
 #include "EntityPosition.h"
-Enemy::Enemy(const char* texturesheet, SDL_Renderer* renderer, int HealthP, int Damage, int EXPR) 
+
+int Enemy::HP = 0;
+int Enemy::HpMax = 0;
+
+Enemy::Enemy(const char* texturesheet, SDL_Renderer* renderer, int HealthP, int MaxHealthP, int Damage, int EXPR)
 {
 	expReward = EXPR;
 	HP = HealthP;
+	HpMax = MaxHealthP;
 	DMG = Damage;
 	ren = renderer;
 	enemyTexture = textureManager::LoadTexture(texturesheet, ren);
@@ -18,10 +23,25 @@ Enemy::~Enemy()
 		SDL_DestroyTexture(enemyTexture);
 	}
 }
+
 void Enemy::Render() 
 {
 	RenderManager::CopyToRender(enemyTexture, ren, EntityPosition::Coords[2], EntityPosition::Coords[3], 32, 32, xanim, yanim, 32, 32);
 }
+
+int Enemy::GetHpEnemy(int num)
+{
+	switch (num)
+	{
+	case 1:
+		return HP;
+	case 2:
+		return HpMax;
+	default:
+		break;
+	}
+}
+
 void Enemy::GetLoc(int arr[22][32]) 
 {
 	for (int i = 0; i < 22; i++) 

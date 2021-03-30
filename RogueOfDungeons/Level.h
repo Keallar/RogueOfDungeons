@@ -34,6 +34,7 @@ private:
 	SDL_Renderer* ren;
 	Player* player;
 	Enemy* enemy;
+	UiHpEnemyInfo* enemyHpInfo;
 	UIInfo* uiInfo;
 	UIItem* uiItem;
 	UIEnemyInfo* uiEnemy;

@@ -131,6 +131,7 @@ Timer::Timer()
 //Фунцкия, для которой нужно вызвать задержку
 //Флаг на асинхронность
 //detach позваоляет работать независимо от основного потока
+//CallBack позволяет впихнуть код функции в функцию
 void Timer::add(std::chrono::milliseconds delay, std::function<void()> callback, bool asynchronous)
 {
 	if (asynchronous)

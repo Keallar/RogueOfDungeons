@@ -4,7 +4,6 @@
 class Enemy
 {
 private:
-	int HP;
 	int DMG;
 	int expReward;
 	SDL_Renderer* ren;
@@ -23,12 +22,15 @@ private:
 	int len;                       // длина пути
 
 public:
+	static int HP;
+	static int HpMax;
 	Enemy() = default;
-	Enemy(const char* texturesheet, SDL_Renderer* ren, int HealthP, int Damage, int EXPR);
+	Enemy(const char* texturesheet, SDL_Renderer* ren, int HealthP, int MaxHealthP, int Damage, int EXPR);
 	~Enemy();
 	void Update();
 	void GetLoc(int arr[22][32]);
 	void Render();
+	static int GetHpEnemy(int num);
 	void GetWay();
 	bool WAY(int ax, int ay, int bx, int by);
 	void GetEnemyFirstCoords();

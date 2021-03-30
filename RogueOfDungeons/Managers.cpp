@@ -5,6 +5,7 @@
 #include "SDL_ttf.h"
 #include <iostream>
 #include <string>
+#include <thread>
 
 SDL_Texture* textureManager::LoadTexture(const char* texName, SDL_Renderer* ren) 
 {
@@ -119,6 +120,33 @@ SDL_Texture* FontManager::renderText(const char* text, const char* fontFile, SDL
 	SDL_FreeSurface(surf);
 	TTF_CloseFont(font);
 	return fontTexture;
+}
+
+Timer::Timer()
+{
+
+}
+
+//Время задержки в миллисекундах
+//Фунцкия, для которой нужно вызвать задержку
+//Флаг на асинхронность
+//detach позваоляет работать независимо от основного потока
+void Timer::add(std::chrono::milliseconds delay, std::function<void()> callback, bool asynchronous)
+{
+	if (asynchronous)
+	{
+		//ну это прям жэпа какая-то а не thread
+		std::thread([=]()
+			{
+			std::this_thread::sleep_for(std::chrono::milliseconds(delay));
+			callback();
+			}).detach();
+	}
+	else 
+	{
+		std::this_thread::sleep_for(std::chrono::milliseconds(delay));
+		callback();
+	}
 }
 
 bool FlagManager::flagPlayer = 0;

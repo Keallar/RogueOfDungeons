@@ -125,34 +125,45 @@ bool Enemy::WAY(int ax, int ay, int bx, int by)   // поиск пути из €чейки (ax, a
 
 void Enemy::Update()
 {
-	if ((abs(EntityPosition::Coords[2]/32 - EntityPosition::Coords[0]/32) + abs(EntityPosition::Coords[3]/32 - EntityPosition::Coords[1]/32)) > 1)
+	if ((abs(EntityPosition::Coords[2]/32 - EntityPosition::Coords[0]/32) +
+		abs(EntityPosition::Coords[3]/32 - EntityPosition::Coords[1]/32)) > 1)
 		{
-		WAY(EntityPosition::Coords[2] / 32, EntityPosition::Coords[3] / 32, EntityPosition::Coords[0] / 32, EntityPosition::Coords[1] / 32);
+		WAY(EntityPosition::Coords[2] / 32, EntityPosition::Coords[3] / 32,
+			EntityPosition::Coords[0] / 32, EntityPosition::Coords[1] / 32);
 		Attackflag = 0;
 		}
-	if ((((EntityPosition::Coords[2] == EntityPosition::Coords[0]) && (EntityPosition::Coords[3] == EntityPosition::Coords[1] + 32)) ||
-		((EntityPosition::Coords[2] == EntityPosition::Coords[0]) && (EntityPosition::Coords[3] == EntityPosition::Coords[1] - 32)) ||
-		((EntityPosition::Coords[3] == EntityPosition::Coords[1]) && (EntityPosition::Coords[2] == EntityPosition::Coords[0] + 32)) ||
-		((EntityPosition::Coords[3] == EntityPosition::Coords[1]) && (EntityPosition::Coords[2] == EntityPosition::Coords[0] - 32)))&&Attackflag == 1)
+	if ((((EntityPosition::Coords[2] == EntityPosition::Coords[0]) &&
+		(EntityPosition::Coords[3] == EntityPosition::Coords[1] + 32)) ||
+		((EntityPosition::Coords[2] == EntityPosition::Coords[0]) && 
+			(EntityPosition::Coords[3] == EntityPosition::Coords[1] - 32)) ||
+		((EntityPosition::Coords[3] == EntityPosition::Coords[1]) && 
+			(EntityPosition::Coords[2] == EntityPosition::Coords[0] + 32)) ||
+		((EntityPosition::Coords[3] == EntityPosition::Coords[1]) && 
+			(EntityPosition::Coords[2] == EntityPosition::Coords[0] - 32)))&&Attackflag == 1)
 	{
-		if (xanim == 96)
-		{
-			if (Player::GetHP(0) != 0)
-			{
-				Player::ChangeHpValue();
-				std::cout << "Heat" << std::endl;
-			}
-			xanim = 0;
-			FlagManager::flagPlayer = 1;
-		}
-		else
-		{
-			xanim += 32;
-		}
+		Enemy::animOfAttack();
 	}
 	else
 	{
 		FlagManager::flagPlayer = 1;
 	}
 	Attackflag = 1;
+}
+
+void Enemy::animOfAttack()
+{
+	if (xanim == 96)
+	{
+		if (Player::GetHP(0) != 0)
+		{
+			Player::ChangeHpValue();
+			std::cout << "Heat" << std::endl;
+		}
+		xanim = 0;
+		FlagManager::flagPlayer = 1;
+	}
+	else
+	{
+		xanim += 32;
+	}
 }

@@ -14,7 +14,6 @@ private:
 	int enemyLoc[22][32];
 	int count = 0;
 	int move;
-	int Attackflag = 1;
 	const int W = 32;         // ширина рабочего поля
 	const int H = 22;         // высота рабочего поля
 	const int WALL = -2;         // непроходимая ячейка

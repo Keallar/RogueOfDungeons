@@ -165,3 +165,5 @@ bool FlagManager::flagDEX = 0;
 bool FlagManager::flagINT = 0;
 bool FlagManager::flagPHS = 0;
 bool FlagManager::flagLCK = 0;
+int FlagManager::flagAttackPlayer = 0;
+int FlagManager::flagAttackEnemy = 1;

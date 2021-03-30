@@ -130,7 +130,7 @@ void Enemy::Update()
 		{
 		WAY(EntityPosition::Coords[2] / 32, EntityPosition::Coords[3] / 32,
 			EntityPosition::Coords[0] / 32, EntityPosition::Coords[1] / 32);
-		Attackflag = 0;
+		FlagManager::flagAttackEnemy = 1;
 		}
 	if ((((EntityPosition::Coords[2] == EntityPosition::Coords[0]) &&
 		(EntityPosition::Coords[3] == EntityPosition::Coords[1] + 32)) ||
@@ -139,7 +139,7 @@ void Enemy::Update()
 		((EntityPosition::Coords[3] == EntityPosition::Coords[1]) && 
 			(EntityPosition::Coords[2] == EntityPosition::Coords[0] + 32)) ||
 		((EntityPosition::Coords[3] == EntityPosition::Coords[1]) && 
-			(EntityPosition::Coords[2] == EntityPosition::Coords[0] - 32)))&&Attackflag == 1)
+			(EntityPosition::Coords[2] == EntityPosition::Coords[0] - 32))) && FlagManager::flagAttackEnemy == 1)
 	{
 		Enemy::animOfAttack();
 	}
@@ -147,7 +147,7 @@ void Enemy::Update()
 	{
 		FlagManager::flagPlayer = 1;
 	}
-	Attackflag = 1;
+	FlagManager::flagAttackEnemy = 1;
 }
 
 void Enemy::animOfAttack()

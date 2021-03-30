@@ -46,12 +46,11 @@ int Enemy::GetHpEnemy(int numOfHp)
 
 void Enemy::CheckHpEnemy()
 {
-	if (Enemy::HP != Enemy::HpMax && FlagManager::flagAttackPlayer == 1)
+	if (Enemy::HP != Enemy::HpMax && FlagManager::flagAttackPlayer == 1 && FlagManager::flagPlayer == 0)
 	{
 		FlagManager::flagEnemy = 1;
-		
 	}
-	else if (Enemy::HP == Enemy::HpMax && FlagManager::flagAttackPlayer == 0)
+	else if (Enemy::HP == Enemy::HpMax && FlagManager::flagAttackPlayer == 0 && FlagManager::flagPlayer == 1)
 	{
 		FlagManager::flagEnemy = 0;
 	}
@@ -199,6 +198,7 @@ void Enemy::animOfAttack()
 {
 	if (xanim == 96)
 	{
+		Enemy::ChahgeHpEnemy();
 		if (Player::GetHP(0) != 0)
 		{
 			Player::ChangeHpValue();
@@ -206,10 +206,11 @@ void Enemy::animOfAttack()
 		}
 		xanim = 0;
 		FlagManager::flagPlayer = 1;
+		FlagManager::flagAttackPlayer = 1;
 	}
 	else
 	{
+		FlagManager::flagAttackPlayer = 0;
 		xanim += 32;
-		Enemy::ChahgeHpEnemy();
 	}
 }

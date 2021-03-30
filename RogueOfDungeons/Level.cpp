@@ -172,11 +172,6 @@ void Level::Render()
 		uiInv->Render();
 	}
 
-	if (FlagManager::flagEnemy == 1)
-	{
-		enemyHpInfo->Update();
-	}
-
 	if (FlagManager::flagUiSpec == 1)
 	{
 		uiSpec->Render();
@@ -214,6 +209,10 @@ void Level::Render()
 
 		if (FlagManager::flagUiEnemy == 1)
 		{
+			if (FlagManager::flagEnemy == 1)
+			{
+				enemyHpInfo->Update();
+			}
 			uiEnemy->Render();
 			enemyHpInfo->Render();
 		}

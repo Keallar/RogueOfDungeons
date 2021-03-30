@@ -329,6 +329,25 @@ void UISpecifications::UpdateMax()
 
 }
 
+UIEquipedItem::UIEquipedItem(SDL_Renderer* renderer) : ren (renderer)
+{
+
+}
+
+void UIEquipedItem::Render()
+{
+	std::cout << "A" << Player::Id << "A";
+	Inventory::it = Inventory::ExistingItems.find(Player::EqItems.WeaponId);
+	std::cout << "A" << Player::EqItems.WeaponId << "A";
+	if (Player::EqItems.WeaponId != -1) {
+		EquipedItem = textureManager::LoadTexture((Inventory::it->second).ItemTexture, ren);
+
+		RenderManager::CopyToRender(EquipedItem, ren, 1070, 550, 32, 32);
+		SDL_DestroyTexture(EquipedItem);
+		EquipedItem = 0;
+	}
+}
+
 
 UIItem::UIItem(SDL_Renderer* renderer)
 {

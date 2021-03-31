@@ -4,7 +4,6 @@
 #include "SDL_ttf.h"
 #include "string"
 
-
 //class UIMenu 
 //{
 //private:
@@ -47,19 +46,17 @@ public:
 	void RenderVersion();
 };
 
+//Interface
 class TextInfo
 {
-private:
-	SDL_Renderer* ren;
-	SDL_Texture* infoText;
 protected:
 	const char* PATH_IN_FONT;
 	SDL_Color color = { 255, 255, 255, 255 };
 public:
-	TextInfo(SDL_Renderer* renderer, int changeTextValue);
+	TextInfo();
 	virtual ~TextInfo();
 	virtual void Render() = 0;
-	virtual void Update(int value) = 0;
+	virtual void Update() = 0;
 	virtual void UpdateMax() = 0;
 };
 
@@ -70,10 +67,10 @@ private:
 	SDL_Texture* hpText;
 	SDL_Texture* hpMax;
 public:
-	HpInfo(SDL_Renderer* renderer, int changeTextValue);
+	HpInfo(SDL_Renderer* renderer);
 	~HpInfo();
 	void Render();
-	void Update(int value);
+	void Update();
 	void UpdateMax();
 };
 
@@ -84,10 +81,10 @@ private:
 	SDL_Texture* manaText;
 	SDL_Texture* manaMax;
 public:
-	ManaInfo(SDL_Renderer* renderer, int changeTextValue);
+	ManaInfo(SDL_Renderer* renderer);
 	~ManaInfo();
 	void Render();
-	void Update(int value);
+	void Update();
 	void UpdateMax();
 };
 
@@ -98,10 +95,10 @@ private:
 	SDL_Renderer* ren;
 	SDL_Texture* expText;
 public:
-	ExpInfo(SDL_Renderer* renderer, int changeTextValue);
+	ExpInfo(SDL_Renderer* renderer);
 	~ExpInfo();
 	void Render();
-	void Update(int value);
+	void Update();
 	void UpdateMax();
 };
 
@@ -131,10 +128,10 @@ private:
 	SDL_Texture* five;
 
 public:
-	UISpecifications(SDL_Renderer* renderer, int changeTextValue);
+	UISpecifications(SDL_Renderer* renderer);
 	~UISpecifications();
 	void Render();
-	void Update(int value);
+	void Update();
 	void Update(int value, int num);
 	void UpdateMax();
 };
@@ -181,6 +178,22 @@ private:
 public:
 	UIEnemyInfo(SDL_Renderer* rendrerer);
 	void Render();
+};
+
+class UiHpEnemyInfo : public TextInfo
+{
+private:
+	SDL_Renderer* ren;
+	SDL_Texture* hpTextEnemy;
+	SDL_Texture* hpCurrentTextEnemy;
+	SDL_Texture* hpMaxEnemy;
+	SDL_Texture* slashhhhhhhhh;
+public:
+	UiHpEnemyInfo(SDL_Renderer* renderer);
+	~UiHpEnemyInfo();
+	void Render();
+	void Update();
+	void UpdateMax();
 };
 
 class UIEquipedItem 

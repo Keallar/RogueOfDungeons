@@ -5,6 +5,7 @@
 #include "SDL_ttf.h"
 #include <iostream>
 #include <string>
+#include <thread>
 
 SDL_Texture* textureManager::LoadTexture(const char* texName, SDL_Renderer* ren) 
 {
@@ -121,19 +122,62 @@ SDL_Texture* FontManager::renderText(const char* text, const char* fontFile, SDL
 	return fontTexture;
 }
 
-bool FlagManager::flagPlayer = 0;
-bool FlagManager::flagEnemy = 1;
+Timer::Timer()
+{
+
+}
+
+//Время задержки в миллисекундах
+//Фунцкия, для которой нужно вызвать задержку
+//Флаг на асинхронность
+//detach позваоляет работать независимо от основного потока
+//CallBack позволяет впихнуть код функции в функцию
+void Timer::add(std::chrono::milliseconds delay, std::function<void()> callback, bool asynchronous)
+{
+	if (asynchronous)
+	{
+		//ну это прям жэпа какая-то а не thread
+		std::thread([=]()
+			{
+			std::this_thread::sleep_for(std::chrono::milliseconds(delay));
+			callback();
+			}).detach();
+	}
+	else 
+	{
+		std::this_thread::sleep_for(std::chrono::milliseconds(delay));
+		callback();
+	}
+}
+
+//флаги на ход (последовательность ходов)
+int FlagManager::flagPlayer = 1;
+int FlagManager::flagEnemy = 0;
+
+//флаги на UI
 bool FlagManager::flagUI = 1;
 bool FlagManager::flagUiSpec = 0;
+bool FlagManager::flagUiEnemy = 0;
+bool FlagManager::flagInv = 0;
+
+//check характеристик игрока
 bool FlagManager::flagCheckHP = 0;
 bool FlagManager::flagCheckMana = 0;
 bool FlagManager::flagCheckExp = 0;
-bool FlagManager::flagInv = 0;
+
 int FlagManager::flagChest = 0;
 int FlagManager::flagEquip = -1;
-bool FlagManager::flagUiEnemy = 0;
+
+//check specs игрока
 bool FlagManager::flagSTR = 0;
 bool FlagManager::flagDEX = 0;
 bool FlagManager::flagINT = 0;
 bool FlagManager::flagPHS = 0;
 bool FlagManager::flagLCK = 0;
+
+//флаги на атаку player и enemy
+int FlagManager::flagMeleeAttackPlayer = 0;
+int FlagManager::flagMeleeAttackEnemy = 0;
+
+//check hp enemy
+bool FlagManager::flagCheckHpEnemy = 0;

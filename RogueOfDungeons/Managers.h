@@ -2,6 +2,8 @@
 #include "SDL.h"
 #include "SDL_image.h"
 #include "SDL_ttf.h"
+#include <chrono>
+#include <functional>
 
 class textureManager
 {
@@ -26,17 +28,22 @@ public:
 
 class FontManager 
 {
-private:
-	
 public:
 	static SDL_Texture* renderText(const char* text, const char * fontFile, SDL_Color textColor, int fontSize, SDL_Renderer* renderer);
+};
+
+class Timer
+{
+public:
+	Timer();
+	void add(std::chrono::milliseconds delay, std::function<void()> callback, bool asynchronous = true);
 };
 
 class FlagManager
 {
 public:
-	static bool flagPlayer;
-	static bool flagEnemy;
+	static int flagPlayer;
+	static int flagEnemy;
 	static bool flagUI;
 	static bool flagUiSpec;
 	static bool flagCheckHP;
@@ -51,4 +58,8 @@ public:
 	static bool flagPHS;
 	static bool flagLCK;
 	static int flagEquip;
+	static int flagMeleeAttackPlayer;
+	static int flagMeleeAttackEnemy;
+	static bool flagCheckHpEnemy;
 };
+

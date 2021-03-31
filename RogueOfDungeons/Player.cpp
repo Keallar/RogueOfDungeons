@@ -5,6 +5,11 @@
 #include "EntityPosition.h"
 #include "UI.h"
 #include "inventory.h"
+#include "Enemy.h"
+#include "Buttons.h"
+
+int Player::Id = -2;
+Equiped Player::EqItems = { -1, nullptr, nullptr };
 
 int Player::HP[3] = {
 					 10, /*hp  now*/
@@ -215,10 +220,9 @@ void Player::GetItemEquip(int id) {
 	FlagManager::flagEquip = -1;
 }
 
-//WTF костыль на изменение значения hp player
-void Player::ChangeHpValue()
+void Player::ChangeHpValue(int valueOfChangingHp)
 {
-	HP[0] -= 1;
+	HP[0] -= valueOfChangingHp;
 }
 
 //Изменение максимального значения hp
@@ -366,11 +370,11 @@ void Player::Update()
 	Player::CheckHP();
 	Player::CheckMANA();
 	Player::CheckEXP();
-	Player::CheckSpecVaue(1);
-	Player::CheckSpecVaue(2);
-	Player::CheckSpecVaue(3);
-	Player::CheckSpecVaue(4);
-	Player::CheckSpecVaue(5);
+	Player::CheckSpecVaue(1); //STR
+	Player::CheckSpecVaue(2); //DEX
+	Player::CheckSpecVaue(3); //INT
+	Player::CheckSpecVaue(4); //PHS
+	Player::CheckSpecVaue(5); //LCK
 }
 
 void Player::handleEvents(SDL_Event playerEvent)
@@ -396,10 +400,16 @@ void Player::handleEvents(SDL_Event playerEvent)
 				{
 					EntityPosition::Coords[1] -= 32;
 					FlagManager::flagPlayer = 0;
+					FlagManager::flagEnemy = 1;
 				}
 				if (Location[(EntityPosition::Coords[1]) / 32 - 1][(EntityPosition::Coords[0]) / 32] == 3) 
 				{
 					FlagManager::flagChest = 1;
+				}
+				if (EntityPosition::Coords[0] == EntityPosition::Coords[2] &&
+					(EntityPosition::Coords[1] - 32) == EntityPosition::Coords[3])
+				{
+					//удар при определённой позиции Enemy
 				}
 			}
 		}
@@ -413,7 +423,7 @@ void Player::handleEvents(SDL_Event playerEvent)
 			else if ((EntityPosition::Coords[0] - 32) == EntityPosition::Coords[2] &&
 				EntityPosition::Coords[1] == EntityPosition::Coords[3])
 			{
-				std::cout << "Stop Enemy W" << std::endl;
+				std::cout << "Stop Enemy A" << std::endl;
 				//остановка при попытке пройти сквозь enemy
 			}
 			else
@@ -423,10 +433,16 @@ void Player::handleEvents(SDL_Event playerEvent)
 					EntityPosition::Coords[0] -= 32;
 					Player::mana[0] += 1;
 					FlagManager::flagPlayer = 0;
+					FlagManager::flagEnemy = 1;
 				}
 				if (Location[(EntityPosition::Coords[1]) / 32][(EntityPosition::Coords[0]) / 32 - 1] == 3)
 				{
 					FlagManager::flagChest = 2;
+				}
+				if ((EntityPosition::Coords[0] - 32) == EntityPosition::Coords[2] &&
+					EntityPosition::Coords[1] == EntityPosition::Coords[3])
+				{
+					//удар при определённой позиции Enemy
 				}
 			}
 		}
@@ -450,10 +466,16 @@ void Player::handleEvents(SDL_Event playerEvent)
 					EntityPosition::Coords[1] += 32;
 					Player::exp[0] -= 1;
 					FlagManager::flagPlayer = 0;
+					FlagManager::flagEnemy = 1;
 				}
 				if (Location[(EntityPosition::Coords[1]) / 32 + 1][(EntityPosition::Coords[0]) / 32] == 3)
 				{
 					FlagManager::flagChest = 3;
+				}
+				if (EntityPosition::Coords[0] == EntityPosition::Coords[2] &&
+					(EntityPosition::Coords[1] + 32) == EntityPosition::Coords[3])
+				{
+					//удар при определённой позиции Enemy
 				}
 			}
 		}
@@ -467,7 +489,7 @@ void Player::handleEvents(SDL_Event playerEvent)
 			else if ((EntityPosition::Coords[0] + 32) == EntityPosition::Coords[2] &&
 				EntityPosition::Coords[1] == EntityPosition::Coords[3])
 			{
-				std::cout << "Stop Enemy W" << std::endl;
+				std::cout << "Stop Enemy D" << std::endl;
 				//остановка при попытке пройти сквозь enemy
 			}
 			else
@@ -476,6 +498,7 @@ void Player::handleEvents(SDL_Event playerEvent)
 				{
 					EntityPosition::Coords[0] += 32;
 					FlagManager::flagPlayer = 0;
+					FlagManager::flagEnemy = 1;
 				}
 				if (Location[(EntityPosition::Coords[1]) / 32][(EntityPosition::Coords[0]) / 32 + 1] == 3) 
 				{
@@ -483,18 +506,59 @@ void Player::handleEvents(SDL_Event playerEvent)
 				}
 			}
 		}
+		case SDL_MOUSEBUTTONDOWN:
+
+			if (playerEvent.button.button == SDL_BUTTON_LEFT)
+			{
+				//атака при нажатии левой мыши
+				MouseButtonsPlayer::buttonsForAttack();
+			}
 	default:
 		break;
 	}
 }
 
-/*void Player::Attack()
+void Player::meleeAttackPlayer()
 {
-	if (ITEMTYPE.... = 0 ���� ������� ���) {}
-	else if (ITEMTYPE.... = 1 ���� ������� ���)
+	if ((((EntityPosition::Coords[0] == EntityPosition::Coords[2] - 32) &&
+		(EntityPosition::Coords[1] == EntityPosition::Coords[3])) ||
+		((EntityPosition::Coords[0] == EntityPosition::Coords[2] + 32) &&
+			(EntityPosition::Coords[1] == EntityPosition::Coords[3])) ||
+		((EntityPosition::Coords[0] == EntityPosition::Coords[2]) &&
+			(EntityPosition::Coords[1] == EntityPosition::Coords[3] - 32)) ||
+		((EntityPosition::Coords[0] == EntityPosition::Coords[2]) &&
+			(EntityPosition::Coords[1] == EntityPosition::Coords[3] + 32))) &&
+		FlagManager::flagMeleeAttackPlayer == 1 && FlagManager::flagMeleeAttackEnemy == 0 &&
+		FlagManager::flagPlayer == 1 && FlagManager::flagEnemy == 0)
 	{
-		
+		std::cout << "Player attack enemy" << std::endl;
+		Enemy::ChahgeHpEnemy(2);
+		FlagManager::flagPlayer = 0;
+		FlagManager::flagMeleeAttackPlayer = 0;
+		FlagManager::flagMeleeAttackEnemy = 1;
+		FlagManager::flagEnemy = 1;
 	}
-}*/
-int Player::Id = -2;
-Equiped Player::EqItems = { -1, nullptr, nullptr };
+}
+
+//void Player::Attack(Equiped typeOfEqItem)
+//{
+//	if (typeOfEqItem.equipedMeleeW = 1 && typeOfEqItem.equipedRangeW = 0)
+//	{
+//		//UNDONE сделать условие для всех позиций enemy
+//		if ((EntityPosition::Coords[0] + 32) == EntityPosition::Coords[2] &&
+//			EntityPosition::Coords[1] == EntityPosition::Coords[3] &&
+//			FlagManager::flagAttackPlayer == 1 &&
+//			FlagManager::flagAttackEnemy == 0 &&
+//			FlagManager::flagPlayer == 1 &&
+//			FlagManager::flagEnemy == 0)
+//		{
+//			std::cout << "Player attack enemy" << std::endl;
+//			Enemy::ChahgeHpEnemy(3);
+//		}
+//	}
+//	else if (typeOfEqItem.equipedMeleeW = 0 && typeOfEqItem.equipedRangeW = 1)
+//	{
+//		
+//	}
+//}
+

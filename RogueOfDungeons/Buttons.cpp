@@ -5,6 +5,7 @@
 #include "EntityPosition.h"
 #include "Player.h"
 
+//UNDONE полностью переделать класс BUTTONS
 KeyboardButtonsInLevel::KeyboardButtonsInLevel()
 {
 
@@ -120,7 +121,6 @@ void MouseButtonsInLevel::buttonForCallInvWin()
 void MouseButtonsInLevel::buttonForCallEnemyInfo()
 {
 	SDL_GetMouseState(&mouseCoords.x, &mouseCoords.y);
-
 	if (InputManager::MouseInArea(EntityPosition::Coords[2], EntityPosition::Coords[3], 32, 32, mouseCoords.x, mouseCoords.y) &&
 		FlagManager::flagUiEnemy == 0)
 	{
@@ -167,100 +167,19 @@ void MouseButtonsInLevel::buttonForIncPlayerSpec()
 		Player::ChangeValueSpecs(5);
 	}
 }
-//KeyboardButtonInPlayer::KeyboardButtonInPlayer()
-//{
-//
-//}
 
-//void KeyboardButtonInPlayer::movePlayer(SDL_Event &eventForMovePlayer)
-//{
-//	switch (eventForMovePlayer.type)
-//	{
-//	case SDL_KEYDOWN:
-//		if (keys[SDL_SCANCODE_W])
-//		{
-//			if (EntityPosition::Coords[1] == 32)
-//			{
-//				//остановка при упоре в стену
-//			}
-//			else
-//			{
-//				if (Location[(EntityPosition::Coords[1]) / 32 - 1][(EntityPosition::Coords[0]) / 32] == 0)
-//				{
-//					EntityPosition::Coords[1] -= 32;
-//					if (Player::HP[0] != 0)
-//						Player::HP[0] -= 1;
-//					FlagManager::flagPlayer = 0;
-//				}
-//				if (Location[(EntityPosition::Coords[1]) / 32 - 1][(EntityPosition::Coords[0]) / 32] == 3) 
-//				{
-//					FlagManager::flagChest = 1;
-//				}
-//			}
-//		}
-//
-//		else if (keys[SDL_SCANCODE_A])
-//		{
-//			if (EntityPosition::Coords[0] == 32)
-//			{
-//				//остановка при упоре в стену
-//			}
-//			else
-//			{
-//				if (Location[(EntityPosition::Coords[1]) / 32][(EntityPosition::Coords[0]) / 32 - 1] == 0)
-//				{
-//					EntityPosition::Coords[0] -= 32;
-//					Player::mana[0] += 1;
-//					FlagManager::flagPlayer = 0;
-//				}
-//				if (Location[(EntityPosition::Coords[1]) / 32][(EntityPosition::Coords[0]) / 32 - 1] == 3) 
-//				{
-//					FlagManager::flagChest = 2;
-//				}
-//			}
-//		}
-//
-//		else if (keys[SDL_SCANCODE_S])
-//		{
-//			if (EntityPosition::Coords[1] == 640)
-//			{
-//				//остановка при упоре в стену
-//			}
-//			else
-//			{
-//				if (Location[(EntityPosition::Coords[1]) / 32 + 1][(EntityPosition::Coords[0]) / 32] == 0)
-//				{
-//					EntityPosition::Coords[1] += 32;
-//					Player::exp[0] -= 1;
-//					FlagManager::flagPlayer = 0;
-//				}
-//				if (Location[(EntityPosition::Coords[1]) / 32 + 1][(EntityPosition::Coords[0]) / 32] == 3)
-//				{
-//					FlagManager::flagChest = 3;
-//				}
-//			}
-//		}
-//
-//		else if (keys[SDL_SCANCODE_D])
-//		{
-//			if (EntityPosition::Coords[0] == 960)
-//			{
-//				//остановка при упоре в стену
-//			}
-//			else
-//			{
-//				if (Location[(EntityPosition::Coords[1]) / 32][(EntityPosition::Coords[0]) / 32 + 1] == 0)
-//				{
-//					EntityPosition::Coords[0] += 32;
-//					FlagManager::flagPlayer = 0;
-//				}
-//				if (Location[(EntityPosition::Coords[1]) / 32][(EntityPosition::Coords[0]) / 32 + 1] == 3) 
-//				{
-//					FlagManager::flagChest = 4;
-//				}
-//			}
-//		}
-//	default:
-//		break;
-//	}
-//}
+MouseButtonsPlayer::MouseButtonsPlayer()
+{
+
+}
+
+MouseButtonsPlayer::~MouseButtonsPlayer()
+{
+
+}
+
+void MouseButtonsPlayer::buttonsForAttack()
+{
+	FlagManager::flagMeleeAttackPlayer = 1;
+	Player::meleeAttackPlayer();	
+}

@@ -4,7 +4,6 @@
 class Enemy
 {
 private:
-	int HP;
 	int DMG;
 	int expReward;
 	SDL_Renderer* ren;
@@ -14,7 +13,6 @@ private:
 	int enemyLoc[22][32];
 	int count = 0;
 	int move;
-	int Attackflag = 1;
 	const int W = 32;         // ширина рабочего поля
 	const int H = 22;         // высота рабочего поля
 	const int WALL = -2;         // непроходимая ячейка
@@ -24,8 +22,9 @@ private:
 	int len;                       // длина пути
 
 public:
+
 	Enemy() = default;
-	Enemy(const char* texturesheet, SDL_Renderer* ren, int HealthP, int Damage, int EXPR);
+	Enemy(const char* texturesheet, SDL_Renderer* ren, int HealthP, int MaxHealthP, int Damage, int EXPR);
 	~Enemy();
 	void Update();
 	void GetLoc(int arr[22][32]);
@@ -33,5 +32,14 @@ public:
 	void GetWay();
 	bool WAY(int ax, int ay, int bx, int by);
 	void GetEnemyFirstCoords();
+	
+	void meleeAttackEnemy();
+	void animOfAttack();
+
+	static int HP;
+	static int HpMax;
+	static int GetHpEnemy(int numOfHp);
+	static void CheckHpEnemy();
+	static void ChahgeHpEnemy(int valueOfChangingHp);
 };
 

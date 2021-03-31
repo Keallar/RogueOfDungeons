@@ -17,15 +17,16 @@ Level::Level(SDL_Renderer* renderer) : ren (renderer)
 	TileTextureCastle = textureManager::LoadTexture("images/CaslteTiles.png", ren);
 	PlayBackground = textureManager::LoadTexture("images/Playback.png", ren);
 	player = new Player("images/Hero.png", ren);
-	enemy = new Enemy("images/Turtle.png", ren, 10, 3, 4);
+	enemy = new Enemy("images/Turtle.png", ren, 5, 5, 3, 4);
+	enemyHpInfo = new UiHpEnemyInfo(ren);
 	uiInfo = new UIInfo(ren);
 	uiItem = new UIItem(ren);
 	uiEnemy = new UIEnemyInfo(ren);
-	uiSpec = new UISpecifications(ren, 1);
+	uiSpec = new UISpecifications(ren);
 	uiInv = new UIInventory(ren);
-	hp = new HpInfo(ren, Player::GetHP(0));
-	mana = new ManaInfo(ren, Player::GetMana(0));
-	exp = new ExpInfo(ren, Player::GetEXP());
+	hp = new HpInfo(ren);
+	mana = new ManaInfo(ren);
+	exp = new ExpInfo(ren);
 	uiEquiped = new UIEquipedItem(ren);
 	keyboardButtonsInLevel = new KeyboardButtonsInLevel();
 	for (int i = 0; i < 22; i++) 
@@ -39,20 +40,26 @@ Level::Level(SDL_Renderer* renderer) : ren (renderer)
 
 Level::~Level()
 {
+	//WTF нельзя делитнуть инвентарь (вылезает ошибка линковщика)
 	delete player;
 	delete enemy;
 	delete uiInfo;
 	delete uiItem;
 	delete uiEnemy;
 	delete uiSpec;
+	delete hp;
+	delete mana;
+	delete exp;
+	delete uiEquiped;
+	delete keyboardButtonsInLevel;
 }
 void Level::Update()
 {
-	if (FlagManager::flagPlayer == 1)
+	if (FlagManager::flagPlayer == 1 && FlagManager::flagEnemy == 0)
 	{
 		player->Update();
 	}
-	if (FlagManager::flagPlayer == 0)
+	if (FlagManager::flagPlayer == 0 && FlagManager::flagEnemy == 1)
 	{
 		enemy->Update();
 		enemy->GetLoc(Location);
@@ -64,9 +71,6 @@ void Level::Update()
 
 void Level::Start()
 {
-	FlagManager::flagUI = 1;
-	FlagManager::flagPlayer = 1;
-	FlagManager::flagEnemy = 0;
 	Generate();
 	player->GetLevel(Location);
 	player->GetPlayerFirstCoords();
@@ -77,6 +81,7 @@ void Level::Start()
 void Level::Render()
 {
 	RenderManager::CopyToRender(PlayBackground, ren);
+	
 	//в зависимости от метода генерации выбираются нужные паки текстур
 	if (generateChoose == 0) {
 		for (int i = 0; i < 22; i++)
@@ -192,6 +197,7 @@ void Level::Render()
 			uiSpec->Update(Player::GetSpecValue(5), 5);
 		}
 	}
+
 	if (FlagManager::flagUI == 1)
 	{
 		uiInfo->Render();
@@ -199,28 +205,39 @@ void Level::Render()
 		mana->Render();
 		exp->Render();
 
+		if (FlagManager::flagCheckHpEnemy == 1)
+		{
+			enemyHpInfo->Update();
+			//std::cout << "HpEnemy Level" << std::endl;
+			FlagManager::flagCheckHpEnemy = 0;
+		}
+
 		if (FlagManager::flagUiEnemy == 1)
 		{
+			
 			uiEnemy->Render();
+			enemyHpInfo->Render();
 		}
 
 		//Update значений hp, mana и  exp
 		if (FlagManager::flagCheckHP == 1)
 		{
-			hp->Update(Player::GetHP(0));
+			hp->Update();
 		}
 
 		if (FlagManager::flagCheckMana == 1)
 		{
-			mana->Update(Player::GetMana(0));
+			mana->Update();
 		}
 
 		if (FlagManager::flagCheckExp == 1)
 		{
-			exp->Update(Player::GetEXP());
+			exp->Update();
 		}
 	}
+
 	if (FlagManager::flagChest != 0) {
+
 		switch (FlagManager::flagChest) {
 		case 1:
 			textureLocation[(EntityPosition::Coords[1]) / 32 - 1][(EntityPosition::Coords[0]) / 32] = 0;
@@ -270,8 +287,11 @@ void Level::handleEvents(SDL_Event eventInLvl)
 		//Вызов окна Inventory по нажатию мыши
 		MouseButtonsInLevel::buttonForCallInvWin();
 
-		//Вызов infoEnemy по нажатию мыши
-		MouseButtonsInLevel::buttonForCallEnemyInfo();
+		if (eventInLvl.button.button == SDL_BUTTON_RIGHT)
+		{
+			//Вызов infoEnemy по нажатию мыши
+			MouseButtonsInLevel::buttonForCallEnemyInfo();
+		}
 
 		//Увеличение значения характеристик по нажатию мыши
 		MouseButtonsInLevel::buttonForIncPlayerSpec();

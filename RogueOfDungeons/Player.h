@@ -8,7 +8,6 @@ struct Equiped
 	meleeWeapon* equipedMeleeW;
 	rangeWeapon* equipedRangeW;
 };
-//static Equiped EqItems;
 
 class Player
 {
@@ -26,6 +25,7 @@ private:
     static int PHS[2];
     static int LCK[2];
     int damageInput;
+
     const Uint8* keys = SDL_GetKeyboardState(NULL);
 public: 
     static Equiped EqItems;
@@ -39,17 +39,18 @@ public:
 
 	void GetLevel(int arr[22][32]);
 	void GetPlayerFirstCoords();
-    void Attack();
+    void Attack(Equiped typeOfEqItem);
 	void GetItemOnLvl(int id);
 	void GetItemEquip(int id);
-    //static int GetHP();
+
+    static void meleeAttackPlayer();
 
     static int GetHP(int numOfArr);
     static int GetEXP();
     static int GetMana(int numOfArr);
     static int GetSpecValue(int numSpec);
 
-    static void ChangeHpValue();
+    static void ChangeHpValue(int valueOfChangingHp);
     static void ChangeValueSpecs(int numOfSpec);
     static void ChangeMaxHpValue();
     static void ChangeMaxManaValue();

@@ -7,6 +7,8 @@ struct Equiped
 	int WeaponId;
 	meleeWeapon* equipedMeleeW;
 	rangeWeapon* equipedRangeW;
+	int ArmorId;
+	armorItem* equipedArmor;
 };
 
 class Player
@@ -29,8 +31,8 @@ private:
     const Uint8* keys = SDL_GetKeyboardState(NULL);
 public: 
     static Equiped EqItems;
-    static int Id; // UNDONE сделать getid
-    Player(const char* texturesheet, SDL_Renderer* ren);
+    //static int Id; // UNDONE сделать getid
+    Player(SDL_Renderer* ren);
     ~Player();
     void Render();
     void Update();

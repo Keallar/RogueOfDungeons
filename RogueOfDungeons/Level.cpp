@@ -321,7 +321,7 @@ void Level::handleEvents(SDL_Event eventInLvl)
 
 void Level::Generate() {
 	srand(time(0));
-	generateChoose = 1;
+	generateChoose = 0;
 	if (generateChoose == 0) {
 		ChunkGenerationMethod();
 	}
@@ -332,9 +332,8 @@ void Level::Generate() {
 		RoomGenerationMethod2();
 	}
 	for (int i = 0; i < 3; i++) {
-		itemsOnLvl[i] = rand() % 3;
+		itemsOnLvl[i] = rand() % 4;
 	}
 	itemsHave = 2;
 	floorLvl++;
-
 }

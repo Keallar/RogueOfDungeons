@@ -41,14 +41,19 @@ public:
 	rangeWeapon(int Damage, int Range, int Chanse, int deltaChanse, type type, const char* WeapTex);
 };
 
+class armorItem : public InventoryItem
+{
+private:
+	int DEF;
+public:
+	armorItem(int Defence, type type, const char* WeapTex);
+};
+
 class Inventory
 {
 	//InventoryItem EquipedArmor;
 	//InventoryItem EquipedWeapon;
 public:
-	meleeWeapon* ShortSword = new meleeWeapon(2, 1, weapon, "images/ShortSword.png");
-	meleeWeapon* Spear = new meleeWeapon(3, 0, weapon, "images/Spear.png");
-	rangeWeapon* ShortBow = new rangeWeapon(1, 4, 60, 15, rWeapon, "images/ShortBow.png");
 	Inventory();
 	int inventory[16]; // хранит в себе вcе айтемы и они лежат в inventoryFace ещё (он не static)
 	static int inventoryFace[16];
@@ -57,6 +62,7 @@ public:
 	void Update();
 	meleeWeapon* GetRealMelee(int id);
 	rangeWeapon* GetRealRange(int id);
+	armorItem* GetRealArmor(int id);
 	static std::map <int, InventoryItem> ExistingItems;
 	static std::map <int, InventoryItem>::iterator it;
 };

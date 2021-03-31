@@ -354,6 +354,14 @@ void UIEquipedItem::Render()
 		SDL_DestroyTexture(EquipedItem);
 		EquipedItem = 0;
 	}
+	Inventory::it = Inventory::ExistingItems.find(Player::EqItems.ArmorId);
+	if (Player::EqItems.ArmorId != -1) {
+		EquipedItem = textureManager::LoadTexture((Inventory::it->second).ItemTexture, ren);
+
+		RenderManager::CopyToRender(EquipedItem, ren, 1070, 587, 32, 32);
+		SDL_DestroyTexture(EquipedItem);
+		EquipedItem = 0;
+	}
 }
 
 

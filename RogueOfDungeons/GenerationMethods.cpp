@@ -143,7 +143,7 @@ void Level::ChunkGenerationMethod() {
 			chests[i][0] = rand() % 20 + 1; chests[i][1] = rand() % 30 + 1;
 		}
 		textureLocation[chests[i][0]][chests[i][1]] = 14;
-		Location[chests[i][0]][chests[i][1]] = 0;
+		Location[chests[i][0]][chests[i][1]] = 3;
 	}
 }
 

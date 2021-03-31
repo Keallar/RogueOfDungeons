@@ -159,6 +159,7 @@ void Level::Render()
 	uiItem->Render();
 	uiInfo->RenderVersion();
 	uiEquiped->Render();
+
 	if (FlagManager::flagInv == 1)
 	{
 		uiInv->Render();
@@ -315,5 +316,4 @@ void Level::Generate() {
 	}
 	itemsHave = 2;
 	floorLvl++;
-
 }

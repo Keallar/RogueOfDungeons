@@ -48,11 +48,11 @@ void Enemy::CheckHpEnemy()
 {
 	if (Enemy::HP != Enemy::HpMax)
 	{
-		FlagManager::flagEnemy = 0;
+		FlagManager::flagCheckHpEnemy = 1;
 	}
 	else if (Enemy::HP == Enemy::HpMax )
 	{
-		FlagManager::flagEnemy = 1;
+		FlagManager::flagCheckHpEnemy = 0;
 	}
 }
 
@@ -191,7 +191,7 @@ void Enemy::Update()
 			(EntityPosition::Coords[2] == EntityPosition::Coords[0] + 32)) ||
 		((EntityPosition::Coords[3] == EntityPosition::Coords[1]) && 
 			(EntityPosition::Coords[2] == EntityPosition::Coords[0] - 32))) && 
-		FlagManager::flagAttackEnemy == 1)
+		FlagManager::flagAttackEnemy == 0)
 	{
 		FlagManager::flagPlayer = 0;
 		FlagManager::flagAttackPlayer = 0;
@@ -213,20 +213,16 @@ void Enemy::Update()
 
 void Enemy::animOfAttack()
 {
-	FlagManager::flagAttackPlayer = 0;
+	while (xanim != 96)
+	{
+		xanim += 32;
 
-	if (xanim == 96)
-	{
-		Player::ChangeHpValue(1);
-		std::cout << "Heat" << std::endl;
-		xanim = 0;
+		if (xanim == 96)
+		{
+			Player::ChangeHpValue(1);
+			std::cout << "Heat" << std::endl;
+		}
+
 	}
-	if (xanim == 64)
-	{
-		xanim += 32;
-	}
-	else
-	{
-		xanim += 32;
-	}
+	xanim = 0;
 }

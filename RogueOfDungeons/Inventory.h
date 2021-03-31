@@ -33,11 +33,12 @@ public:
 class rangeWeapon : public InventoryItem 
 {
 private:
+	
+public:
 	int DMG;
 	int RNG;
 	int CHNS;
 	int DCHNS;
-public:
 	rangeWeapon(int Damage, int Range, int Chanse, int deltaChanse, type type, const char* WeapTex);
 };
 

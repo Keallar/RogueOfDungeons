@@ -30,6 +30,7 @@ public:
 	static void buttonForCallInvWin();
 	static void buttonForCallEnemyInfo();
 	static void buttonForIncPlayerSpec();
+	static void buttonForRangeAttack();
 };
 
 //class KeyboardButtonInPlayer

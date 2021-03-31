@@ -46,11 +46,12 @@ int Enemy::GetHpEnemy(int numOfHp)
 
 void Enemy::CheckHpEnemy()
 {
-	if (Enemy::HP != Enemy::HpMax)
+	if (Enemy::HP != Enemy::HpMax && FlagManager::flagCheckHpEnemy == 0)
 	{
 		FlagManager::flagCheckHpEnemy = 1;
+		HpMax = HP;
 	}
-	else if (Enemy::HP == Enemy::HpMax )
+	else if (Enemy::HP == Enemy::HpMax && FlagManager::flagCheckHpEnemy == 1)
 	{
 		FlagManager::flagCheckHpEnemy = 0;
 	}

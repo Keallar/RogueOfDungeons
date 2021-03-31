@@ -531,8 +531,8 @@ void Player::meleeAttackPlayer()
 		FlagManager::flagAttackPlayer == 1 && FlagManager::flagAttackEnemy == 0 &&
 		FlagManager::flagPlayer == 1 && FlagManager::flagEnemy == 0)
 	{
-		Enemy::ChahgeHpEnemy(3);
 		std::cout << "Player attack enemy" << std::endl;
+		Enemy::ChahgeHpEnemy(2);
 	}
 }
 

@@ -204,12 +204,15 @@ void Level::Render()
 		mana->Render();
 		exp->Render();
 
+		if (FlagManager::flagCheckHpEnemy == 1)
+		{
+			enemyHpInfo->Update();
+			std::cout << "HpEnemy Level" << std::endl;
+		}
+
 		if (FlagManager::flagUiEnemy == 1)
 		{
-			if (FlagManager::flagEnemy == 0)
-			{
-				enemyHpInfo->Update();
-			}
+			
 			uiEnemy->Render();
 			enemyHpInfo->Render();
 		}

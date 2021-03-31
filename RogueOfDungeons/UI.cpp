@@ -448,12 +448,12 @@ void UiHpEnemyInfo::Render()
 
 void UiHpEnemyInfo::Update()
 {
-	std::cout << "Update Hp Enemy" << std::endl;
 	SDL_DestroyTexture(hpCurrentTextEnemy);
 	hpCurrentTextEnemy = 0;
 	std::string stringTemp = std::to_string(Enemy::GetHpEnemy(0));
 	const char* CHAR_VALUE = stringTemp.c_str();
 	hpCurrentTextEnemy = FontManager::renderText(CHAR_VALUE, PATH_IN_FONT, color, 32, ren);
+	std::cout << "Update Hp Enemy" << std::endl;
 }
 
 void UiHpEnemyInfo::UpdateMax()

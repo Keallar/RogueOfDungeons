@@ -127,16 +127,28 @@ Timer::Timer()
 
 }
 
+<<<<<<< HEAD
 //����� �������� � �������������
 //�������, ��� ������� ����� ������� ��������
 //���� �� �������������
 //detach ���������� �������� ���������� �� ��������� ������
 //CallBack ��������� �������� ��� ������� � �������
+=======
+//����� �������� � �������������
+//�������, ��� ������� ����� ������� ��������
+//���� �� �������������
+//detach ���������� �������� ���������� �� ��������� ������
+//CallBack ��������� �������� ��� ������� � �������
+>>>>>>> Evgen/MeleeFightSystem
 void Timer::add(std::chrono::milliseconds delay, std::function<void()> callback, bool asynchronous)
 {
 	if (asynchronous)
 	{
+<<<<<<< HEAD
 		//�� ��� ���� ���� �����-�� � �� thread
+=======
+		//�� ��� ���� ���� �����-�� � �� thread
+>>>>>>> Evgen/MeleeFightSystem
 		std::thread([=]()
 			{
 			std::this_thread::sleep_for(std::chrono::milliseconds(delay));
@@ -150,17 +162,29 @@ void Timer::add(std::chrono::milliseconds delay, std::function<void()> callback,
 	}
 }
 
+<<<<<<< HEAD
 //����� �� ��� (������������������ �����)
 int FlagManager::flagPlayer = 1;
 int FlagManager::flagEnemy = 0;
 
 //����� �� UI
+=======
+//����� �� ��� (������������������ �����)
+int FlagManager::flagPlayer = 1;
+int FlagManager::flagEnemy = 0;
+
+//����� �� UI
+>>>>>>> Evgen/MeleeFightSystem
 bool FlagManager::flagUI = 1;
 bool FlagManager::flagUiSpec = 0;
 bool FlagManager::flagUiEnemy = 0;
 bool FlagManager::flagInv = 0;
 
+<<<<<<< HEAD
 //check ������������� ������
+=======
+//check ������������� ������
+>>>>>>> Evgen/MeleeFightSystem
 bool FlagManager::flagCheckHP = 0;
 bool FlagManager::flagCheckMana = 0;
 bool FlagManager::flagCheckExp = 0;
@@ -168,17 +192,28 @@ bool FlagManager::flagCheckExp = 0;
 int FlagManager::flagChest = 0;
 int FlagManager::flagEquip = -1;
 
+<<<<<<< HEAD
 //check specs ������
+=======
+//check specs ������
+>>>>>>> Evgen/MeleeFightSystem
 bool FlagManager::flagSTR = 0;
 bool FlagManager::flagDEX = 0;
 bool FlagManager::flagINT = 0;
 bool FlagManager::flagPHS = 0;
 bool FlagManager::flagLCK = 0;
 
+<<<<<<< HEAD
 //флаги на атаку player и enemy
+=======
+//����� �� ����� player � enemy
+>>>>>>> Evgen/MeleeFightSystem
 int FlagManager::flagMeleeAttackPlayer = 0;
 int FlagManager::flagMeleeAttackEnemy = 0;
 
 //check hp enemy
 bool FlagManager::flagCheckHpEnemy = 0;
+<<<<<<< HEAD
 bool FlagManager::flagRangeAttack = 0;
+=======
+>>>>>>> Evgen/MeleeFightSystem

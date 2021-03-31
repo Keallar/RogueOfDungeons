@@ -32,6 +32,8 @@ public:
 	void GetWay();
 	bool WAY(int ax, int ay, int bx, int by);
 	void GetEnemyFirstCoords();
+	
+	void meleeAttackEnemy();
 	void animOfAttack();
 
 	static int HP;

@@ -168,3 +168,20 @@ void MouseButtonsInLevel::buttonForIncPlayerSpec()
 		Player::ChangeValueSpecs(5);
 	}
 }
+
+MouseButtonsPlayer::MouseButtonsPlayer()
+{
+
+}
+
+MouseButtonsPlayer::~MouseButtonsPlayer()
+{
+
+}
+
+void MouseButtonsPlayer::buttonsForAttack()
+{
+	FlagManager::flagAttackPlayer = 1;
+	Player::meleeAttackPlayer();
+	
+}

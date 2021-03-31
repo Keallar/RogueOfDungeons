@@ -6,6 +6,7 @@
 #include "UI.h"
 #include "inventory.h"
 #include "Enemy.h"
+#include "Buttons.h"
 
 int Player::Id = -2;
 Equiped Player::EqItems = { -1, nullptr, nullptr };
@@ -503,20 +504,30 @@ void Player::handleEvents(SDL_Event playerEvent)
 				{
 					FlagManager::flagChest = 4;
 				}
-				if ((EntityPosition::Coords[0] + 32) == EntityPosition::Coords[2] &&
-					EntityPosition::Coords[1] == EntityPosition::Coords[3] && 
-					FlagManager::flagAttackPlayer == 1 && 
-					FlagManager::flagAttackEnemy == 0 &&
-					FlagManager::flagPlayer == 1 && 
-					FlagManager::flagEnemy == 0)
-				{
-					std::cout << "Player attack enemy" << std::endl;
-					Enemy::ChahgeHpEnemy(3);
-				}
 			}
 		}
+		case SDL_MOUSEBUTTONDOWN:
+
+			//атака при нажатии мыши
+			MouseButtonsPlayer::buttonsForAttack();
+
+
 	default:
 		break;
+	}
+}
+
+void meleeAttackPlayer()
+{
+	if ((EntityPosition::Coords[0] + 32) == EntityPosition::Coords[2] &&
+		EntityPosition::Coords[1] == EntityPosition::Coords[3] &&
+		FlagManager::flagAttackPlayer == 1 &&
+		FlagManager::flagAttackEnemy == 0 &&
+		FlagManager::flagPlayer == 1 &&
+		FlagManager::flagEnemy == 0)
+	{
+		std::cout << "Player attack enemy" << std::endl;
+		Enemy::ChahgeHpEnemy(3);
 	}
 }
 

@@ -150,6 +150,8 @@ void Timer::add(std::chrono::milliseconds delay, std::function<void()> callback,
 	}
 }
 
+//UNDONE ПОПРОБОВАТЬ ЗАМЕНИТЬ ВСЕ ФЛАГИ НА TOKENS
+
 //флаги на ход (последовательность ходов)
 int FlagManager::flagPlayer = 1;
 int FlagManager::flagEnemy = 0;

@@ -182,23 +182,31 @@ void Enemy::Update()
 		FlagManager::flagEnemy = 0;
 		}
 
-	//атака enemy
+	Enemy::meleeAttackEnemy();
+
+	//UNDONE придумать где лучше делать чек HP enemy
+	Enemy::CheckHpEnemy();
+}
+
+void Enemy::meleeAttackEnemy()
+{
+	//атака enemy первым, если игрок первый подошёл 
 	if ((((EntityPosition::Coords[2] == EntityPosition::Coords[0]) &&
 		(EntityPosition::Coords[3] == EntityPosition::Coords[1] + 32)) ||
-		((EntityPosition::Coords[2] == EntityPosition::Coords[0]) && 
+		((EntityPosition::Coords[2] == EntityPosition::Coords[0]) &&
 			(EntityPosition::Coords[3] == EntityPosition::Coords[1] - 32)) ||
-		((EntityPosition::Coords[3] == EntityPosition::Coords[1]) && 
+		((EntityPosition::Coords[3] == EntityPosition::Coords[1]) &&
 			(EntityPosition::Coords[2] == EntityPosition::Coords[0] + 32)) ||
-		((EntityPosition::Coords[3] == EntityPosition::Coords[1]) && 
-			(EntityPosition::Coords[2] == EntityPosition::Coords[0] - 32))) && 
-		FlagManager::flagAttackEnemy == 0)
+		((EntityPosition::Coords[3] == EntityPosition::Coords[1]) &&
+			(EntityPosition::Coords[2] == EntityPosition::Coords[0] - 32))) &&
+		(FlagManager::flagAttackEnemy == 0 && FlagManager::flagEnemy == 1))
 	{
 		FlagManager::flagPlayer = 0;
 		FlagManager::flagAttackPlayer = 0;
-		FlagManager::flagEnemy = 1;
 		FlagManager::flagAttackEnemy = 1;
 		Enemy::animOfAttack();
 	}
+	//else if () если enemy первый подошёл к игроку
 	else
 	{
 		FlagManager::flagEnemy = 0;
@@ -206,9 +214,6 @@ void Enemy::Update()
 		FlagManager::flagPlayer = 1;
 		FlagManager::flagAttackPlayer = 1;
 	}
-
-	//UNDONE придумать где лучше делать чек HP enemy
-	Enemy::CheckHpEnemy();
 }
 
 void Enemy::animOfAttack()

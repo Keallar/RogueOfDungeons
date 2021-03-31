@@ -42,3 +42,13 @@ public:
 //	void movePlayer(SDL_Event &eventForMovePlayer);
 //};
 
+class MouseButtonsPlayer
+{
+private:
+	MCoord mouseCoordsPlayer;
+public:
+	MouseButtonsPlayer();
+	~MouseButtonsPlayer();
+	static void buttonsForAttack();
+};
+

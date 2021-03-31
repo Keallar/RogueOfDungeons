@@ -508,10 +508,11 @@ void Player::handleEvents(SDL_Event playerEvent)
 		}
 		case SDL_MOUSEBUTTONDOWN:
 
-			//атака при нажатии мыши
-			MouseButtonsPlayer::buttonsForAttack();
-
-
+			if (playerEvent.button.button == SDL_BUTTON_LEFT)
+			{
+				//атака при нажатии левой мыши
+				MouseButtonsPlayer::buttonsForAttack();
+			}
 	default:
 		break;
 	}
@@ -519,15 +520,19 @@ void Player::handleEvents(SDL_Event playerEvent)
 
 void Player::meleeAttackPlayer()
 {
-	if ((EntityPosition::Coords[0] + 32) == EntityPosition::Coords[2] &&
-		EntityPosition::Coords[1] == EntityPosition::Coords[3] &&
-		FlagManager::flagAttackPlayer == 1 &&
-		FlagManager::flagAttackEnemy == 0 &&
-		FlagManager::flagPlayer == 1 &&
-		FlagManager::flagEnemy == 0)
+	if ((((EntityPosition::Coords[0] == EntityPosition::Coords[2] - 32) &&
+		(EntityPosition::Coords[1] == EntityPosition::Coords[3])) ||
+		((EntityPosition::Coords[0] == EntityPosition::Coords[2] + 32) &&
+			(EntityPosition::Coords[1] == EntityPosition::Coords[3])) ||
+		((EntityPosition::Coords[0] == EntityPosition::Coords[2]) &&
+			(EntityPosition::Coords[1] == EntityPosition::Coords[3] - 32)) ||
+		((EntityPosition::Coords[0] == EntityPosition::Coords[2]) &&
+			(EntityPosition::Coords[1] == EntityPosition::Coords[3] + 32))) &&
+		FlagManager::flagAttackPlayer == 1 && FlagManager::flagAttackEnemy == 0 &&
+		FlagManager::flagPlayer == 1 && FlagManager::flagEnemy == 0)
 	{
-		std::cout << "Player attack enemy" << std::endl;
 		Enemy::ChahgeHpEnemy(3);
+		std::cout << "Player attack enemy" << std::endl;
 	}
 }
 

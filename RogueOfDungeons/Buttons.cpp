@@ -121,7 +121,6 @@ void MouseButtonsInLevel::buttonForCallInvWin()
 void MouseButtonsInLevel::buttonForCallEnemyInfo()
 {
 	SDL_GetMouseState(&mouseCoords.x, &mouseCoords.y);
-
 	if (InputManager::MouseInArea(EntityPosition::Coords[2], EntityPosition::Coords[3], 32, 32, mouseCoords.x, mouseCoords.y) &&
 		FlagManager::flagUiEnemy == 0)
 	{

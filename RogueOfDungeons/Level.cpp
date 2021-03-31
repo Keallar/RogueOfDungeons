@@ -282,8 +282,11 @@ void Level::handleEvents(SDL_Event eventInLvl)
 		//Вызов окна Inventory по нажатию мыши
 		MouseButtonsInLevel::buttonForCallInvWin();
 
-		//Вызов infoEnemy по нажатию мыши
-		MouseButtonsInLevel::buttonForCallEnemyInfo();
+		if (eventInLvl.button.button == SDL_BUTTON_RIGHT)
+		{
+			//Вызов infoEnemy по нажатию мыши
+			MouseButtonsInLevel::buttonForCallEnemyInfo();
+		}
 
 		//Увеличение значения характеристик по нажатию мыши
 		MouseButtonsInLevel::buttonForIncPlayerSpec();

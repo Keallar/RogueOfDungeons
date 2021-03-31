@@ -58,8 +58,8 @@ public:
 	static bool flagPHS;
 	static bool flagLCK;
 	static int flagEquip;
-	static int flagAttackPlayer;
-	static int flagAttackEnemy;
+	static int flagMeleeAttackPlayer;
+	static int flagMeleeAttackEnemy;
 	static bool flagCheckHpEnemy;
 };
 

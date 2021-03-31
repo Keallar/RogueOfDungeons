@@ -528,7 +528,7 @@ void Player::meleeAttackPlayer()
 			(EntityPosition::Coords[1] == EntityPosition::Coords[3] - 32)) ||
 		((EntityPosition::Coords[0] == EntityPosition::Coords[2]) &&
 			(EntityPosition::Coords[1] == EntityPosition::Coords[3] + 32))) &&
-		FlagManager::flagAttackPlayer == 1 && FlagManager::flagAttackEnemy == 0 &&
+		FlagManager::flagMeleeAttackPlayer == 1 && FlagManager::flagMeleeAttackEnemy == 0 &&
 		FlagManager::flagPlayer == 1 && FlagManager::flagEnemy == 0)
 	{
 		std::cout << "Player attack enemy" << std::endl;

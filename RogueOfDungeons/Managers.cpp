@@ -177,9 +177,9 @@ bool FlagManager::flagINT = 0;
 bool FlagManager::flagPHS = 0;
 bool FlagManager::flagLCK = 0;
 
-//флаги на акаку player и enemy
-int FlagManager::flagAttackPlayer = 0;
-int FlagManager::flagAttackEnemy = 0;
+//флаги на атаку player и enemy
+int FlagManager::flagMeleeAttackPlayer = 0;
+int FlagManager::flagMeleeAttackEnemy = 0;
 
 //check hp enemy
 bool FlagManager::flagCheckHpEnemy = 0;

@@ -59,7 +59,7 @@ void Enemy::CheckHpEnemy()
 
 void Enemy::ChahgeHpEnemy(int valueOfChangingHp)
 {
-	if (FlagManager::flagAttackPlayer == 1 &&
+	if (FlagManager::flagMeleeAttackPlayer == 1 &&
 		FlagManager::flagPlayer == 1)
 	{
 		Enemy::HP -= valueOfChangingHp;
@@ -200,20 +200,20 @@ void Enemy::meleeAttackEnemy()
 			(EntityPosition::Coords[2] == EntityPosition::Coords[0] + 32)) ||
 		((EntityPosition::Coords[3] == EntityPosition::Coords[1]) &&
 			(EntityPosition::Coords[2] == EntityPosition::Coords[0] - 32))) &&
-		(FlagManager::flagAttackEnemy == 0 && FlagManager::flagEnemy == 1))
+		(FlagManager::flagMeleeAttackEnemy == 0 && FlagManager::flagEnemy == 1))
 	{
 		FlagManager::flagPlayer = 0;
-		FlagManager::flagAttackPlayer = 0;
-		FlagManager::flagAttackEnemy = 1;
+		FlagManager::flagMeleeAttackPlayer = 0;
+		FlagManager::flagMeleeAttackEnemy = 1;
 		Enemy::animOfAttack();
 	}
 	//else if () если enemy первый подошёл к игроку
 	else
 	{
 		FlagManager::flagEnemy = 0;
-		FlagManager::flagAttackEnemy = 0;
+		FlagManager::flagMeleeAttackEnemy = 0;
 		FlagManager::flagPlayer = 1;
-		FlagManager::flagAttackPlayer = 1;
+		FlagManager::flagMeleeAttackPlayer = 1;
 	}
 }
 

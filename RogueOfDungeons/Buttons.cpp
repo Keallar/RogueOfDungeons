@@ -180,6 +180,6 @@ MouseButtonsPlayer::~MouseButtonsPlayer()
 
 void MouseButtonsPlayer::buttonsForAttack()
 {
-	FlagManager::flagAttackPlayer = 1;
+	FlagManager::flagMeleeAttackPlayer = 1;
 	Player::meleeAttackPlayer();	
 }

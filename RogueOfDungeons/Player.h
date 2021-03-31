@@ -7,6 +7,8 @@ struct Equiped
 	int WeaponId;
 	meleeWeapon* equipedMeleeW;
 	rangeWeapon* equipedRangeW;
+	int ArmorId;
+	armorItem* equipedArmor;
 };
 //static Equiped EqItems;
 
@@ -30,7 +32,7 @@ private:
 public: 
     static Equiped EqItems;
     //static int Id; // UNDONE сделать getid
-    Player(const char* texturesheet, SDL_Renderer* ren);
+    Player(SDL_Renderer* ren);
     ~Player();
     void Render();
     void Update();

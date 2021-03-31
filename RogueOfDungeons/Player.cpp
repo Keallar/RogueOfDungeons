@@ -48,11 +48,11 @@ int Player::LCK[2] = {
 						1, /*STR  previous*/
 					 };
 
-Player::Player(const char* texturesheet, SDL_Renderer* renderer)
+Player::Player(SDL_Renderer* renderer)
 {
 	//EqItems = { -1, nullptr, nullptr };
 	ren = renderer;
-	PlayerTexture = textureManager::LoadTexture(texturesheet, ren);
+	PlayerTexture = textureManager::LoadTexture("images/Hero.png", ren);
 	for (int i = 0; i < 22; i++) {
 		for (int j = 0; j < 32; j++) {
 			Location[i][j] = 0;
@@ -211,6 +211,22 @@ void Player::GetItemEquip(int id) {
 			EqItems.equipedRangeW = inventory->GetRealRange(ItemId);
 			EqItems.equipedMeleeW = nullptr;
 		}
+		if (Inventory::ExistingItems[ItemId].Type == armor) {
+			if (EqItems.WeaponId != -1) {
+				inventory->inventory[id] = EqItems.ArmorId;
+			}
+			else {
+				inventory->inventory[id] = -1;
+			}
+			EqItems.ArmorId = ItemId;
+
+			EqItems.equipedArmor = inventory->GetRealArmor(ItemId);
+		}
+	}
+	if (id == 3) {
+		SDL_DestroyTexture(PlayerTexture);
+		PlayerTexture = 0;
+		PlayerTexture = textureManager::LoadTexture("images/HeroLether.png", ren);
 	}
 	FlagManager::flagEquip = -1;
 }
@@ -497,4 +513,4 @@ void Player::handleEvents(SDL_Event playerEvent)
 	}
 }*/
 //int Player::Id = -2;
-Equiped Player::EqItems = { -1, nullptr, nullptr }; 
+Equiped Player::EqItems = { -1, nullptr, nullptr, -1}; 

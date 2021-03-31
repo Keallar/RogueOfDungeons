@@ -16,7 +16,7 @@ Level::Level(SDL_Renderer* renderer) : ren (renderer)
 	TileTexture = textureManager::LoadTexture("images/Tiles.png", ren);
 	TileTextureCastle = textureManager::LoadTexture("images/CaslteTiles.png", ren);
 	PlayBackground = textureManager::LoadTexture("images/Playback.png", ren);
-	player = new Player("images/Hero.png", ren);
+	player = new Player( ren);
 	enemy = new Enemy("images/Turtle.png", ren, 10, 3, 4);
 	uiInfo = new UIInfo(ren);
 	uiItem = new UIItem(ren);
@@ -312,7 +312,7 @@ void Level::Generate() {
 		RoomGenerationMethod2();
 	}
 	for (int i = 0; i < 3; i++) {
-		itemsOnLvl[i] = rand() % 3;
+		itemsOnLvl[i] = rand() % 4;
 	}
 	itemsHave = 2;
 	floorLvl++;

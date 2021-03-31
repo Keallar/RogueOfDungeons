@@ -8,7 +8,7 @@
 #include "Enemy.h"
 #include "Buttons.h"
 
-int Player::Id = -2;
+//int Player::Id = -2;
 Equiped Player::EqItems = { -1, nullptr, nullptr };
 
 int Player::HP[3] = {
@@ -528,6 +528,7 @@ void Player::handleEvents(SDL_Event playerEvent)
 			if (playerEvent.button.button == SDL_BUTTON_LEFT)
 			{
 				//атака при нажатии левой мыши
+				MouseButtonsPlayer::buttonForRangeAttack();
 				MouseButtonsPlayer::buttonsForAttack();
 			}
 	default:
@@ -535,9 +536,61 @@ void Player::handleEvents(SDL_Event playerEvent)
 	}
 }
 
-void Player::meleeAttackPlayer()
+//void Player::meleeAttackPlayer()
+//{
+//	if ((((EntityPosition::Coords[0] == EntityPosition::Coords[2] - 32) &&
+//		(EntityPosition::Coords[1] == EntityPosition::Coords[3])) ||
+//		((EntityPosition::Coords[0] == EntityPosition::Coords[2] + 32) &&
+//			(EntityPosition::Coords[1] == EntityPosition::Coords[3])) ||
+//		((EntityPosition::Coords[0] == EntityPosition::Coords[2]) &&
+//			(EntityPosition::Coords[1] == EntityPosition::Coords[3] - 32)) ||
+//		((EntityPosition::Coords[0] == EntityPosition::Coords[2]) &&
+//			(EntityPosition::Coords[1] == EntityPosition::Coords[3] + 32))) &&
+//		FlagManager::flagMeleeAttackPlayer == 1 && FlagManager::flagMeleeAttackEnemy == 0 &&
+//		FlagManager::flagPlayer == 1 && FlagManager::flagEnemy == 0)
+//	{
+//		std::cout << "Player attack enemy" << std::endl;
+//		Enemy::ChahgeHpEnemy(2);
+//		FlagManager::flagPlayer = 0;
+//		FlagManager::flagMeleeAttackPlayer = 0;
+//		FlagManager::flagMeleeAttackEnemy = 1;
+//		FlagManager::flagEnemy = 1;
+//	}
+//}
+
+void Player::Attack()
 {
-	if ((((EntityPosition::Coords[0] == EntityPosition::Coords[2] - 32) &&
+	//if (Player::EqItems.equipedMeleeW == nullptr && Player::EqItems.equipedRangeW == nullptr)
+	//{
+	//	std::cout << "null" <<  std::endl;
+	//}
+	if ((Inventory::ExistingItems[Player::EqItems.WeaponId].Type == rWeapon) && FlagManager::flagRangeAttack == 1) 
+	{
+		if ((abs(EntityPosition::Coords[0]-EntityPosition::Coords[2]) == 0)) // разделил чтобы потом проверять на наличие стен
+		{
+			if (rand() % 100 < ((Player::EqItems.equipedRangeW->CHNS) -
+				((Player::EqItems.equipedRangeW->DCHNS) * abs
+				(abs(EntityPosition::Coords[3] - EntityPosition::Coords[1]) - Player::EqItems.equipedRangeW->RNG)))) 
+			{
+				Enemy::ChahgeHpEnemy(1);
+				std::cout << "Range boy vert" << std::endl;
+			}
+			FlagManager::flagRangeAttack = 0;
+		}
+		else if (abs(EntityPosition::Coords[1] - EntityPosition::Coords[3] == 0))
+		{
+			if (rand() % 100 < ((Player::EqItems.equipedRangeW->CHNS) -
+				((Player::EqItems.equipedRangeW->DCHNS) * abs
+				(abs(EntityPosition::Coords[2] - EntityPosition::Coords[0]) - Player::EqItems.equipedRangeW->RNG))))
+			{
+				Enemy::ChahgeHpEnemy(1);
+				std::cout << "Range boy hor" << std::endl;
+			}
+			FlagManager::flagRangeAttack = 0;
+		}
+	}
+	else if ((Inventory::ExistingItems[Player::EqItems.WeaponId].Type == weapon) &&
+		(((EntityPosition::Coords[0] == EntityPosition::Coords[2] - 32) &&
 		(EntityPosition::Coords[1] == EntityPosition::Coords[3])) ||
 		((EntityPosition::Coords[0] == EntityPosition::Coords[2] + 32) &&
 			(EntityPosition::Coords[1] == EntityPosition::Coords[3])) ||
@@ -555,56 +608,5 @@ void Player::meleeAttackPlayer()
 		FlagManager::flagMeleeAttackEnemy = 1;
 		FlagManager::flagEnemy = 1;
 	}
-}
-
-//void Player::Attack(Equiped typeOfEqItem)
-//{
-//	if (typeOfEqItem.equipedMeleeW = 1 && typeOfEqItem.equipedRangeW = 0)
-//	{
-//		//UNDONE сделать условие для всех позиций enemy
-//		if ((EntityPosition::Coords[0] + 32) == EntityPosition::Coords[2] &&
-//			EntityPosition::Coords[1] == EntityPosition::Coords[3] &&
-//			FlagManager::flagAttackPlayer == 1 &&
-//			FlagManager::flagAttackEnemy == 0 &&
-//			FlagManager::flagPlayer == 1 &&
-//			FlagManager::flagEnemy == 0)
-//		{
-//			std::cout << "Player attack enemy" << std::endl;
-//			Enemy::ChahgeHpEnemy(3);
-//		}
-//	}
-//	else if (typeOfEqItem.equipedMeleeW = 0 && typeOfEqItem.equipedRangeW = 1)
-//	{
-//		
-//	}
-//}
-
-void Player::Attack()
-{
-	if ((Player::EqItems.equipedRangeW->Type == rWeapon) && FlagManager::flagRangeAttack == true) 
-	{
-		if ((abs(EntityPosition::Coords[0]-EntityPosition::Coords[2]) == 0)) // разделил чтобы потом проверять на наличие стен
-		{
-			if (rand() % 100 < ((Player::EqItems.equipedRangeW->CHNS) -
-				((Player::EqItems.equipedRangeW->DCHNS) * abs
-				(abs(EntityPosition::Coords[3] - EntityPosition::Coords[1]) - Player::EqItems.equipedRangeW->RNG)))) 
-			{
-				// тут должен наноситься урон
-			}
-			FlagManager::flagRangeAttack = false;
-		}
-		else if (abs(EntityPosition::Coords[1] - EntityPosition::Coords[3] == 0))
-		{
-			if (rand() % 100 < ((Player::EqItems.equipedRangeW->CHNS) -
-				((Player::EqItems.equipedRangeW->DCHNS) * abs
-				(abs(EntityPosition::Coords[2] - EntityPosition::Coords[0]) - Player::EqItems.equipedRangeW->RNG))))
-			{
-				// тут должен наноситься урон
-			}
-			FlagManager::flagRangeAttack = false;
-		}
-	}
 	
 }
-//int Player::Id = -2;
-Equiped Player::EqItems = { -1, nullptr, nullptr }; 

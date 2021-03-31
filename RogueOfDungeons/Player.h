@@ -45,7 +45,8 @@ public:
 	void GetItemOnLvl(int id);
 	void GetItemEquip(int id);
 
-    static void meleeAttackPlayer();
+    static void Attack();
+    //static void meleeAttackPlayer();
 
     static int GetHP(int numOfArr);
     static int GetEXP();

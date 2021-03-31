@@ -68,15 +68,7 @@ MouseButtonsInLevel::MouseButtonsInLevel()
 {
 
 }
-void MouseButtonsInLevel::buttonForRangeAttack()
-{
-	SDL_GetMouseState(&mouseCoords.x, &mouseCoords.y);
 
-	if (InputManager::MouseInArea(EntityPosition::Coords[2], EntityPosition::Coords[3], 32, 32, mouseCoords.x, mouseCoords.y)) 
-	{
-		FlagManager::flagRangeAttack = true;
-	}
-}
 void MouseButtonsInLevel::buttonsForItemsInInv()
 {
 	SDL_GetMouseState(&mouseCoords.x, &mouseCoords.y);
@@ -189,5 +181,18 @@ MouseButtonsPlayer::~MouseButtonsPlayer()
 void MouseButtonsPlayer::buttonsForAttack()
 {
 	FlagManager::flagMeleeAttackPlayer = 1;
-	Player::meleeAttackPlayer();	
+	Player::Attack();
 }
+
+void MouseButtonsPlayer::buttonForRangeAttack()
+{
+	SDL_GetMouseState(&mouseCoordsPlayer.x, &mouseCoordsPlayer.y);
+
+	if (InputManager::MouseInArea(EntityPosition::Coords[2], EntityPosition::Coords[3], 32, 32, mouseCoordsPlayer.x, mouseCoordsPlayer.y))
+	{
+		FlagManager::flagRangeAttack = 1;
+		Player::Attack();
+	}
+}
+
+MCoord MouseButtonsPlayer:: mouseCoordsPlayer;

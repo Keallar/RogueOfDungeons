@@ -30,7 +30,7 @@ public:
 	static void buttonForCallInvWin();
 	static void buttonForCallEnemyInfo();
 	static void buttonForIncPlayerSpec();
-	static void buttonForRangeAttack();
+
 };
 
 //class KeyboardButtonInPlayer
@@ -46,10 +46,11 @@ public:
 class MouseButtonsPlayer
 {
 private:
-	MCoord mouseCoordsPlayer;
+	static MCoord mouseCoordsPlayer;
 public:
 	MouseButtonsPlayer();
 	~MouseButtonsPlayer();
 	static void buttonsForAttack();
+	static void buttonForRangeAttack();
 };
 

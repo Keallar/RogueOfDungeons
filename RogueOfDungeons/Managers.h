@@ -61,7 +61,7 @@ public:
 	static int flagMeleeAttackPlayer;
 	static int flagMeleeAttackEnemy;
 	static bool flagCheckHpEnemy;
-};
-
 	static bool flagRangeAttack;
 };
+
+

@@ -54,11 +54,11 @@ Level::~Level()
 }
 void Level::Update()
 {
-	if (FlagManager::flagPlayer == 1)
+	if (FlagManager::flagPlayer == 1 && FlagManager::flagEnemy == 0)
 	{
 		player->Update();
 	}
-	if (FlagManager::flagPlayer == 0)
+	if (FlagManager::flagPlayer == 0 && FlagManager::flagEnemy == 1)
 	{
 		enemy->Update();
 		enemy->GetLoc(Location);
@@ -70,9 +70,6 @@ void Level::Update()
 
 void Level::Start()
 {
-	FlagManager::flagUI = 1;
-	FlagManager::flagPlayer = 1;
-	FlagManager::flagEnemy = 0;
 	Generate();
 	player->GetLevel(Location);
 	player->GetPlayerFirstCoords();

@@ -46,15 +46,11 @@ int Enemy::GetHpEnemy(int numOfHp)
 
 void Enemy::CheckHpEnemy()
 {
-	if (Enemy::HP != Enemy::HpMax &&
-		FlagManager::flagAttackPlayer == 1 && 
-		FlagManager::flagPlayer == 1)
+	if (Enemy::HP != Enemy::HpMax)
 	{
 		FlagManager::flagEnemy = 0;
 	}
-	else if (Enemy::HP == Enemy::HpMax && 
-		FlagManager::flagAttackPlayer == 0 &&
-		FlagManager::flagPlayer == 0)
+	else if (Enemy::HP == Enemy::HpMax )
 	{
 		FlagManager::flagEnemy = 1;
 	}
@@ -62,8 +58,12 @@ void Enemy::CheckHpEnemy()
 
 void Enemy::ChahgeHpEnemy(int valueOfChangingHp)
 {
-	Enemy::HP -= valueOfChangingHp;
-	cout << "HpEnemy Changing" << endl;
+	if (FlagManager::flagAttackPlayer == 1 &&
+		FlagManager::flagPlayer == 1)
+	{
+		Enemy::HP -= valueOfChangingHp;
+		cout << "HpEnemy Changing" << endl;
+	}
 }
 
 void Enemy::GetLoc(int arr[22][32]) 
@@ -161,7 +161,8 @@ bool Enemy::WAY(int ax, int ay, int bx, int by)   // поиск пути из €чейки (ax, a
 		}
 	}
 	px[0] = ax;
-	py[0] = ay;                    
+	py[0] = ay;         
+	//мен€етс€ позици€ enemy
 	EntityPosition::Coords[2] = px[1] * 32;
 	EntityPosition::Coords[3] = py[1] * 32;
 	return true;
@@ -169,15 +170,19 @@ bool Enemy::WAY(int ax, int ay, int bx, int by)   // поиск пути из €чейки (ax, a
 
 void Enemy::Update()
 {
+	//движение enemy (поиск кратчайшего пути)
 	if ((abs(EntityPosition::Coords[2]/32 - EntityPosition::Coords[0]/32) +
-		abs(EntityPosition::Coords[3]/32 - EntityPosition::Coords[1]/32)) > 1)
+		abs(EntityPosition::Coords[3]/32 - EntityPosition::Coords[1]/32)) > 1 &&
+		FlagManager::flagPlayer == 0 && FlagManager::flagEnemy == 1)
 		{
 		WAY(EntityPosition::Coords[2] / 32, EntityPosition::Coords[3] / 32,
 			EntityPosition::Coords[0] / 32, EntityPosition::Coords[1] / 32);
 
-		FlagManager::flagAttackEnemy = 1;
+		FlagManager::flagPlayer = 1;
+		FlagManager::flagEnemy = 0;
 		}
 
+	//атака enemy
 	if ((((EntityPosition::Coords[2] == EntityPosition::Coords[0]) &&
 		(EntityPosition::Coords[3] == EntityPosition::Coords[1] + 32)) ||
 		((EntityPosition::Coords[2] == EntityPosition::Coords[0]) && 

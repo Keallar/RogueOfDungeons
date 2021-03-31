@@ -42,8 +42,8 @@ public:
 class FlagManager
 {
 public:
-	static bool flagPlayer;
-	static bool flagEnemy;
+	static int flagPlayer;
+	static int flagEnemy;
 	static bool flagUI;
 	static bool flagUiSpec;
 	static bool flagCheckHP;

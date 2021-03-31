@@ -150,14 +150,17 @@ void Timer::add(std::chrono::milliseconds delay, std::function<void()> callback,
 	}
 }
 
-bool FlagManager::flagPlayer = 0;
-bool FlagManager::flagEnemy = 1;
+//флаги на ход (последовательность ходов)
+int FlagManager::flagPlayer = 1;
+int FlagManager::flagEnemy = 0;
 
+//флаги на UI
 bool FlagManager::flagUI = 1;
 bool FlagManager::flagUiSpec = 0;
 bool FlagManager::flagUiEnemy = 0;
 bool FlagManager::flagInv = 0;
 
+//chekc характеристик игрока
 bool FlagManager::flagCheckHP = 0;
 bool FlagManager::flagCheckMana = 0;
 bool FlagManager::flagCheckExp = 0;
@@ -165,12 +168,16 @@ bool FlagManager::flagCheckExp = 0;
 int FlagManager::flagChest = 0;
 int FlagManager::flagEquip = -1;
 
+//check specs игрока
 bool FlagManager::flagSTR = 0;
 bool FlagManager::flagDEX = 0;
 bool FlagManager::flagINT = 0;
 bool FlagManager::flagPHS = 0;
 bool FlagManager::flagLCK = 0;
 
+//флаги на акаку player и enemy
 int FlagManager::flagAttackPlayer = 0;
-int FlagManager::flagAttackEnemy = 1;
+int FlagManager::flagAttackEnemy = 0;
+
+//check hp enemy
 bool FlagManager::flagCheckHpEnemy = 0;

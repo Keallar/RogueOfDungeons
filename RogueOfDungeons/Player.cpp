@@ -369,11 +369,11 @@ void Player::Update()
 	Player::CheckHP();
 	Player::CheckMANA();
 	Player::CheckEXP();
-	Player::CheckSpecVaue(1);
-	Player::CheckSpecVaue(2);
-	Player::CheckSpecVaue(3);
-	Player::CheckSpecVaue(4);
-	Player::CheckSpecVaue(5);
+	Player::CheckSpecVaue(1); //STR
+	Player::CheckSpecVaue(2); //DEX
+	Player::CheckSpecVaue(3); //INT
+	Player::CheckSpecVaue(4); //PHS
+	Player::CheckSpecVaue(5); //LCK
 }
 
 void Player::handleEvents(SDL_Event playerEvent)
@@ -399,6 +399,7 @@ void Player::handleEvents(SDL_Event playerEvent)
 				{
 					EntityPosition::Coords[1] -= 32;
 					FlagManager::flagPlayer = 0;
+					FlagManager::flagEnemy = 1;
 				}
 				if (Location[(EntityPosition::Coords[1]) / 32 - 1][(EntityPosition::Coords[0]) / 32] == 3) 
 				{
@@ -421,7 +422,7 @@ void Player::handleEvents(SDL_Event playerEvent)
 			else if ((EntityPosition::Coords[0] - 32) == EntityPosition::Coords[2] &&
 				EntityPosition::Coords[1] == EntityPosition::Coords[3])
 			{
-				std::cout << "Stop Enemy W" << std::endl;
+				std::cout << "Stop Enemy A" << std::endl;
 				//остановка при попытке пройти сквозь enemy
 			}
 			else
@@ -431,6 +432,7 @@ void Player::handleEvents(SDL_Event playerEvent)
 					EntityPosition::Coords[0] -= 32;
 					Player::mana[0] += 1;
 					FlagManager::flagPlayer = 0;
+					FlagManager::flagEnemy = 1;
 				}
 				if (Location[(EntityPosition::Coords[1]) / 32][(EntityPosition::Coords[0]) / 32 - 1] == 3)
 				{
@@ -463,6 +465,7 @@ void Player::handleEvents(SDL_Event playerEvent)
 					EntityPosition::Coords[1] += 32;
 					Player::exp[0] -= 1;
 					FlagManager::flagPlayer = 0;
+					FlagManager::flagEnemy = 1;
 				}
 				if (Location[(EntityPosition::Coords[1]) / 32 + 1][(EntityPosition::Coords[0]) / 32] == 3)
 				{
@@ -485,7 +488,7 @@ void Player::handleEvents(SDL_Event playerEvent)
 			else if ((EntityPosition::Coords[0] + 32) == EntityPosition::Coords[2] &&
 				EntityPosition::Coords[1] == EntityPosition::Coords[3])
 			{
-				std::cout << "Stop Enemy W" << std::endl;
+				std::cout << "Stop Enemy D" << std::endl;
 				//остановка при попытке пройти сквозь enemy
 			}
 			else
@@ -494,6 +497,7 @@ void Player::handleEvents(SDL_Event playerEvent)
 				{
 					EntityPosition::Coords[0] += 32;
 					FlagManager::flagPlayer = 0;
+					FlagManager::flagEnemy = 1;
 				}
 				if (Location[(EntityPosition::Coords[1]) / 32][(EntityPosition::Coords[0]) / 32 + 1] == 3) 
 				{

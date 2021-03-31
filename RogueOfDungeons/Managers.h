@@ -63,3 +63,5 @@ public:
 	static bool flagCheckHpEnemy;
 };
 
+	static bool flagRangeAttack;
+};

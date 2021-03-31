@@ -579,3 +579,32 @@ void Player::meleeAttackPlayer()
 //	}
 //}
 
+void Player::Attack()
+{
+	if ((Player::EqItems.equipedRangeW->Type == rWeapon) && FlagManager::flagRangeAttack == true) 
+	{
+		if ((abs(EntityPosition::Coords[0]-EntityPosition::Coords[2]) == 0)) // разделил чтобы потом проверять на наличие стен
+		{
+			if (rand() % 100 < ((Player::EqItems.equipedRangeW->CHNS) -
+				((Player::EqItems.equipedRangeW->DCHNS) * abs
+				(abs(EntityPosition::Coords[3] - EntityPosition::Coords[1]) - Player::EqItems.equipedRangeW->RNG)))) 
+			{
+				// тут должен наноситься урон
+			}
+			FlagManager::flagRangeAttack = false;
+		}
+		else if (abs(EntityPosition::Coords[1] - EntityPosition::Coords[3] == 0))
+		{
+			if (rand() % 100 < ((Player::EqItems.equipedRangeW->CHNS) -
+				((Player::EqItems.equipedRangeW->DCHNS) * abs
+				(abs(EntityPosition::Coords[2] - EntityPosition::Coords[0]) - Player::EqItems.equipedRangeW->RNG))))
+			{
+				// тут должен наноситься урон
+			}
+			FlagManager::flagRangeAttack = false;
+		}
+	}
+	
+}
+//int Player::Id = -2;
+Equiped Player::EqItems = { -1, nullptr, nullptr }; 

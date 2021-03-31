@@ -1,4 +1,4 @@
-#pragma once
+п»ї#pragma once
 #include "Managers.h"
 #include "SDL.h"
 #include "SDL_image.h"
@@ -127,16 +127,16 @@ Timer::Timer()
 
 }
 
-//Время задержки в миллисекундах
-//Фунцкия, для которой нужно вызвать задержку
-//Флаг на асинхронность
-//detach позваоляет работать независимо от основного потока
-//CallBack позволяет впихнуть код функции в функцию
+//пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+//пїЅпїЅпїЅпїЅпїЅпїЅпїЅ, пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+//пїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+//detach пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
+//CallBack пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 void Timer::add(std::chrono::milliseconds delay, std::function<void()> callback, bool asynchronous)
 {
 	if (asynchronous)
 	{
-		//ну это прям жэпа какая-то а не thread
+		//пїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ-пїЅпїЅ пїЅ пїЅпїЅ thread
 		std::thread([=]()
 			{
 			std::this_thread::sleep_for(std::chrono::milliseconds(delay));
@@ -150,17 +150,17 @@ void Timer::add(std::chrono::milliseconds delay, std::function<void()> callback,
 	}
 }
 
-//флаги на ход (последовательность ходов)
+//пїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅ (пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ)
 int FlagManager::flagPlayer = 1;
 int FlagManager::flagEnemy = 0;
 
-//флаги на UI
+//пїЅпїЅпїЅпїЅпїЅ пїЅпїЅ UI
 bool FlagManager::flagUI = 1;
 bool FlagManager::flagUiSpec = 0;
 bool FlagManager::flagUiEnemy = 0;
 bool FlagManager::flagInv = 0;
 
-//check характеристик игрока
+//check пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
 bool FlagManager::flagCheckHP = 0;
 bool FlagManager::flagCheckMana = 0;
 bool FlagManager::flagCheckExp = 0;
@@ -168,16 +168,17 @@ bool FlagManager::flagCheckExp = 0;
 int FlagManager::flagChest = 0;
 int FlagManager::flagEquip = -1;
 
-//check specs игрока
+//check specs пїЅпїЅпїЅпїЅпїЅпїЅ
 bool FlagManager::flagSTR = 0;
 bool FlagManager::flagDEX = 0;
 bool FlagManager::flagINT = 0;
 bool FlagManager::flagPHS = 0;
 bool FlagManager::flagLCK = 0;
 
-//флаги на атаку player и enemy
+//С„Р»Р°РіРё РЅР° Р°С‚Р°РєСѓ player Рё enemy
 int FlagManager::flagMeleeAttackPlayer = 0;
 int FlagManager::flagMeleeAttackEnemy = 0;
 
 //check hp enemy
 bool FlagManager::flagCheckHpEnemy = 0;
+bool FlagManager::flagRangeAttack = 0;

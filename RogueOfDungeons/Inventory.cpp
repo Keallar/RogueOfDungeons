@@ -1,8 +1,8 @@
-#include "Inventory.h"
+п»ї#include "Inventory.h"
 #include "Managers.h"
 #include <iostream>
 
-int Inventory::inventoryFace[16]; //хранит в себе всё, что хранит inventory, но в static
+int Inventory::inventoryFace[16]; //пїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅ пїЅпїЅ, пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ inventory, пїЅпїЅ пїЅ static
 std::map <int, InventoryItem> Inventory::ExistingItems;
 std::map <int, InventoryItem>::iterator Inventory::it;
 
@@ -45,7 +45,7 @@ void Inventory::AddItem(int id)
 		count++;
 		if (count == 16) 
 		{
-			std::cout << "НЕТ МЕСТААААААА!!!" << std::endl;
+			std::cout << "пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ!!!" << std::endl;
 		}
 	}
 }

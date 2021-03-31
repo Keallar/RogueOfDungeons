@@ -40,6 +40,7 @@ Level::Level(SDL_Renderer* renderer) : ren (renderer)
 
 Level::~Level()
 {
+	//WTF нельзя делитнуть инвентарь (вылезает ошибка линковщика)
 	delete player;
 	delete enemy;
 	delete uiInfo;

@@ -533,6 +533,10 @@ void Player::meleeAttackPlayer()
 	{
 		std::cout << "Player attack enemy" << std::endl;
 		Enemy::ChahgeHpEnemy(2);
+		FlagManager::flagPlayer = 0;
+		FlagManager::flagMeleeAttackPlayer = 0;
+		FlagManager::flagMeleeAttackEnemy = 1;
+		FlagManager::flagEnemy = 1;
 	}
 }
 

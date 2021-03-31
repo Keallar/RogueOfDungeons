@@ -453,7 +453,7 @@ void UiHpEnemyInfo::Update()
 	std::string stringTemp = std::to_string(Enemy::GetHpEnemy(0));
 	const char* CHAR_VALUE = stringTemp.c_str();
 	hpCurrentTextEnemy = FontManager::renderText(CHAR_VALUE, PATH_IN_FONT, color, 32, ren);
-	std::cout << "Update Hp Enemy" << std::endl;
+	//std::cout << "Update Hp Enemy" << std::endl;
 }
 
 void UiHpEnemyInfo::UpdateMax()

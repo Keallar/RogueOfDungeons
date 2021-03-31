@@ -208,7 +208,8 @@ void Level::Render()
 		if (FlagManager::flagCheckHpEnemy == 1)
 		{
 			enemyHpInfo->Update();
-			std::cout << "HpEnemy Level" << std::endl;
+			//std::cout << "HpEnemy Level" << std::endl;
+			FlagManager::flagCheckHpEnemy = 0;
 		}
 
 		if (FlagManager::flagUiEnemy == 1)

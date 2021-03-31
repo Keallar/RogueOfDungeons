@@ -206,6 +206,7 @@ void Enemy::meleeAttackEnemy()
 		FlagManager::flagMeleeAttackPlayer = 0;
 		FlagManager::flagMeleeAttackEnemy = 1;
 		FlagManager::flagEnemy = 1;
+		
 		Enemy::animOfAttack();
 
 		FlagManager::flagPlayer = 1;
@@ -234,7 +235,6 @@ void Enemy::animOfAttack()
 			Player::ChangeHpValue(1);
 			std::cout << "Heat" << std::endl;
 		}
-
 	}
 	xanim = 0;
 }

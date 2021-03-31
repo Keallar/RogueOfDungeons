@@ -301,7 +301,7 @@ void Level::handleEvents(SDL_Event eventInLvl)
 
 void Level::Generate() {
 	srand(time(0));
-	generateChoose = 1;
+	generateChoose = 0;
 	if (generateChoose == 0) {
 		ChunkGenerationMethod();
 	}

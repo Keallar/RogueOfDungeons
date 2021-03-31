@@ -200,12 +200,18 @@ void Enemy::meleeAttackEnemy()
 			(EntityPosition::Coords[2] == EntityPosition::Coords[0] + 32)) ||
 		((EntityPosition::Coords[3] == EntityPosition::Coords[1]) &&
 			(EntityPosition::Coords[2] == EntityPosition::Coords[0] - 32))) &&
-		(FlagManager::flagMeleeAttackEnemy == 0 && FlagManager::flagEnemy == 1))
+		(FlagManager::flagMeleeAttackEnemy == 1 && FlagManager::flagEnemy == 1))
 	{
 		FlagManager::flagPlayer = 0;
 		FlagManager::flagMeleeAttackPlayer = 0;
 		FlagManager::flagMeleeAttackEnemy = 1;
+		FlagManager::flagEnemy = 1;
 		Enemy::animOfAttack();
+
+		FlagManager::flagPlayer = 1;
+		FlagManager::flagMeleeAttackPlayer = 1;
+		FlagManager::flagEnemy = 0;
+		FlagManager::flagMeleeAttackEnemy = 0;
 	}
 	//else if () если enemy первый подошёл к игроку
 	else

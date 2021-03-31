@@ -517,7 +517,7 @@ void Player::handleEvents(SDL_Event playerEvent)
 	}
 }
 
-void meleeAttackPlayer()
+void Player::meleeAttackPlayer()
 {
 	if ((EntityPosition::Coords[0] + 32) == EntityPosition::Coords[2] &&
 		EntityPosition::Coords[1] == EntityPosition::Coords[3] &&

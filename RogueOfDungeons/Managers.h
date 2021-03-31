@@ -51,5 +51,5 @@ public:
 	static bool flagPHS;
 	static bool flagLCK;
 	static int flagEquip;
-	static bool flagRangeAttack
+	static bool flagRangeAttack;
 };

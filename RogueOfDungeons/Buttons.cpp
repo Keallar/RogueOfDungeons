@@ -70,9 +70,10 @@ MouseButtonsInLevel::MouseButtonsInLevel()
 void MouseButtonsInLevel::buttonForRangeAttack()
 {
 	SDL_GetMouseState(&mouseCoords.x, &mouseCoords.y);
+
 	if (InputManager::MouseInArea(EntityPosition::Coords[2], EntityPosition::Coords[3], 32, 32, mouseCoords.x, mouseCoords.y)) 
 	{
-		FlagManager::flagRangeAttack = 1;
+		FlagManager::flagRangeAttack = true;
 	}
 }
 void MouseButtonsInLevel::buttonsForItemsInInv()

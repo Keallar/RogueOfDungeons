@@ -490,7 +490,7 @@ void Player::handleEvents(SDL_Event playerEvent)
 
 void Player::Attack()
 {
-	if ((Player::EqItems.equipedRangeW->Type == rWeapon) && FlagManager::flagRangeAttack == 1) 
+	if ((Player::EqItems.equipedRangeW->Type == rWeapon) && FlagManager::flagRangeAttack == true) 
 	{
 		if ((abs(EntityPosition::Coords[0]-EntityPosition::Coords[2]) == 0)) // разделил чтобы потом проверять на наличие стен
 		{
@@ -500,6 +500,7 @@ void Player::Attack()
 			{
 				// тут должен наноситься урон
 			}
+			FlagManager::flagRangeAttack = false;
 		}
 		else if (abs(EntityPosition::Coords[1] - EntityPosition::Coords[3] == 0))
 		{
@@ -509,8 +510,8 @@ void Player::Attack()
 			{
 				// тут должен наноситься урон
 			}
+			FlagManager::flagRangeAttack = false;
 		}
-		FlagManager::flagRangeAttack == 0;
 	}
 	
 }

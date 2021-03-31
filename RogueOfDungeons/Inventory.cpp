@@ -70,11 +70,11 @@ armorItem* Inventory::GetRealArmor(int id) {
 	return static_cast<armorItem*>(&ExistingItems[id]);
 }
 
-rangeWeapon::rangeWeapon(int Damage, int Range, int Chanse, int deltaChanse, type type, const char* WeapTex)
+rangeWeapon::rangeWeapon(int Damage, int Range, int Chance, int deltaChanse, type type, const char* WeapTex)
 {
 	DMG = Damage;
 	RNG = Range;
-	CHNS = Chanse;
+	CHNS = Chance;
 	DCHNS = deltaChanse;
 	ItemTexture = WeapTex;
 	Type = type;

@@ -59,8 +59,8 @@ void Enemy::CheckHpEnemy()
 
 void Enemy::ChahgeHpEnemy(int valueOfChangingHp)
 {
-	if (FlagManager::flagMeleeAttackPlayer == 1 &&
-		FlagManager::flagPlayer == 1)
+	if ((FlagManager::flagMeleeAttackPlayer == 1 || 
+		FlagManager::flagRangeAttack == 1))
 	{
 		Enemy::HP -= valueOfChangingHp;
 		cout << "HpEnemy Changing" << endl;

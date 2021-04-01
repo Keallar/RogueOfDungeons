@@ -10,6 +10,7 @@
 #include "EntityPosition.h"
 #include "Buttons.h"
 #include "Enemy.h"
+#include "Player.h"
 
 Level::Level(SDL_Renderer* renderer) : ren (renderer)
 {
@@ -73,6 +74,7 @@ void Level::deleteEnemy()
 		delete enemy;
 		enemy = nullptr;
 		FlagManager::flagUiEnemy = 0;
+		player->ChangeExpValue(5);
 	}
 }
 
@@ -103,6 +105,7 @@ void Level::Update()
 	if (Enemy::HP <= 0 && enemy != nullptr)
 	{
 		Level::deleteEnemy();
+		
 	}
 }
 
@@ -246,8 +249,6 @@ void Level::Render()
 		if (FlagManager::flagCheckHpEnemy == 1)
 		{
 			enemyHpInfo->Update();
-			//std::cout << "HpEnemy Level" << std::endl;
-			FlagManager::flagCheckHpEnemy = 0;
 		}
 
 		if (FlagManager::flagUiEnemy == 1)

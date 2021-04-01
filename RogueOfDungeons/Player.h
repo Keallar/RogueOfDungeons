@@ -49,11 +49,13 @@ public:
     //static void meleeAttackPlayer();
 
     static int GetHP(int numOfArr);
-    static int GetEXP();
+    static int GetEXP(int numOfArr);
     static int GetMana(int numOfArr);
     static int GetSpecValue(int numSpec);
 
     static void ChangeHpValue(int valueOfChangingHp);
+    static void ChangeManaValue(int valueOfChangingMana);
+    static void ChangeExpValue(int valueOfChangingExp);
     static void ChangeValueSpecs(int numOfSpec);
     static void ChangeMaxHpValue();
     static void ChangeMaxManaValue();

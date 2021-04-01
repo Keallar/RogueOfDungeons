@@ -91,9 +91,9 @@ public:
 class ExpInfo : public TextInfo
 {
 private:
-	SDL_Color color = { 255, 255, 255, 255 };
 	SDL_Renderer* ren;
 	SDL_Texture* expText;
+	SDL_Texture* expMax;
 public:
 	ExpInfo(SDL_Renderer* renderer);
 	~ExpInfo();

@@ -76,10 +76,8 @@ void HpInfo::Render()
 	RenderManager::CopyToRender(hpMax, ren, 1180, 72, 32, 20);
 }
 
-ManaInfo::ManaInfo(SDL_Renderer* renderer) 
+ManaInfo::ManaInfo(SDL_Renderer* renderer) : ren(renderer)
 {
-	ren = renderer;
-
 	std::string stringTemp1 = std::to_string(Player::GetMana(0));
 	const char* TEXT_VALUE_CURRENT_VALUE = stringTemp1.c_str();
 	manaText = FontManager::renderText(TEXT_VALUE_CURRENT_VALUE, PATH_IN_FONT, color, 32, ren);
@@ -128,13 +126,15 @@ void ManaInfo::Render()
 	RenderManager::CopyToRender(manaMax, ren, 1180, 122, 32, 20);
 }
 
-ExpInfo::ExpInfo(SDL_Renderer* renderer)
+ExpInfo::ExpInfo(SDL_Renderer* renderer) : ren (renderer)
 {
-	ren = renderer;
+	std::string stringTemp1 = std::to_string(Player::GetEXP(0));
+	const char* TEXT_VALUE_CURRENT_VALUE = stringTemp1.c_str();
+	expText = FontManager::renderText(TEXT_VALUE_CURRENT_VALUE, PATH_IN_FONT, color, 32, ren);
 
-	std::string stringTemp= std::to_string(Player::GetEXP());
-	const char* TEXT_VALUE = stringTemp.c_str();
-	expText = FontManager::renderText(TEXT_VALUE, PATH_IN_FONT, color, 32, ren);
+	std::string stringTemp2 = std::to_string(Player::GetEXP(2));
+	const char* TEXT_VALUE_MAX = stringTemp2.c_str();
+	expMax = FontManager::renderText(TEXT_VALUE_MAX, PATH_IN_FONT, color, 32, ren);
 }
 
 ExpInfo::~ExpInfo()
@@ -146,19 +146,24 @@ void ExpInfo::Update()
 {
 	SDL_DestroyTexture(expText);
 	expText = 0;
-	std::string stringTemp = std::to_string(Player::GetEXP());
+	std::string stringTemp = std::to_string(Player::GetEXP(0));
 	const char* CHAR_VALUE = stringTemp.c_str();
 	expText = FontManager::renderText(CHAR_VALUE, PATH_IN_FONT, color, 32, ren);
 }
 
 void ExpInfo::UpdateMax()
 {
-
+	SDL_DestroyTexture(expMax);
+	expMax = 0;
+	std::string stringTemp = std::to_string(Player::GetEXP(2));
+	const char* CHAR_VALUE = stringTemp.c_str();
+	expMax = FontManager::renderText(CHAR_VALUE, PATH_IN_FONT, color, 32, ren);
 }
 
 void ExpInfo::Render()
 {
 	RenderManager::CopyToRender(expText, ren, 1120, 175, 32, 20);
+	RenderManager::CopyToRender(expMax, ren, 1180, 175, 32, 20);
 }
 
 UIInfo::UIInfo(SDL_Renderer* renderer)
@@ -476,7 +481,6 @@ void UiHpEnemyInfo::Update()
 	std::string stringTemp = std::to_string(Enemy::GetHpEnemy(0));
 	const char* CHAR_VALUE = stringTemp.c_str();
 	hpCurrentTextEnemy = FontManager::renderText(CHAR_VALUE, PATH_IN_FONT, color, 32, ren);
-	//std::cout << "Update Hp Enemy" << std::endl;
 }
 
 void UiHpEnemyInfo::UpdateMax()

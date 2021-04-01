@@ -16,17 +16,16 @@ int Player::HP[3] = {
 					 10, /*hp  previous*/
 					 10	 /*hp max*/
 					};
-int Player::exp[3] = { 
-					   99, /*exp  now*/
-					   99,  /*exp  previous*/
-					   0   /*exp max */
-					 };
-
-int Player::mana[3] = { 
-					    50, /*mana  now*/
+int Player::mana[3] = {
+						50, /*mana  now*/
 						0, /*mana  previous*/
 						50 /*mana max */
 					  };
+int Player::exp[3] = { 
+					   0, /*exp  now*/
+					   0,  /*exp  previous*/
+					   100   /*exp max */
+					 };
 
 int Player::STR[2] = {
 						1, /*STR  now*/
@@ -95,9 +94,19 @@ int Player::GetHP(int numOfArr)
 	}
 }
 
-int Player::GetEXP()
+int Player::GetEXP(int numOfArr)
 {
-	return exp[0];
+	switch (numOfArr)
+	{
+	case 0:
+		return exp[0];
+	case 1:
+		return exp[1];
+	case 2:
+		return exp[2];
+	default:
+		break;
+	}
 }
 
 int Player::GetMana(int numOfArr)
@@ -171,6 +180,16 @@ void Player::ChangeValueSpecs(int numOfSpec)
 void Player::ChangeHpValue(int valueOfChangingHp)
 {
 	HP[0] -= valueOfChangingHp;
+}
+
+void Player::ChangeManaValue(int valueOfChangingMana)
+{
+	mana[0] -= valueOfChangingMana;
+}
+
+void Player::ChangeExpValue(int valueOfChangingExp)
+{
+	exp[0] += valueOfChangingExp;
 }
 
 //Изменение максимального значения hp
@@ -485,7 +504,6 @@ void Player::handleEvents(SDL_Event playerEvent)
 				if (Location[(EntityPosition::Coords[1]) / 32 + 1][(EntityPosition::Coords[0]) / 32] == 0) 
 				{
 					EntityPosition::Coords[1] += 32;
-					Player::exp[0] -= 1;
 					FlagManager::flagPlayer = 0;
 					FlagManager::flagEnemy = 1;
 				}
@@ -557,7 +575,7 @@ void Player::Attack()
 			{
 				/*std::cout << Player::EqItems.equipedRangeW->CHNS << std::endl;
 				std::cout << rand() << std::endl;*/
-				Player::mana[0] -= 5;
+				Player::ChangeManaValue(5);
 				Enemy::ChahgeHpEnemy(1);
 				std::cout << "Range boy vert" << r << std::endl;
 				FlagManager::flagPlayer = 0;
@@ -574,7 +592,7 @@ void Player::Attack()
 					((Player::EqItems.equipedRangeW->DCHNS) *
 						abs(abs(EntityPosition::Coords[3] - EntityPosition::Coords[1]) - Player::EqItems.equipedRangeW->RNG)));
 				std::cout << check << std::endl;*/
-				Player::mana[0] -= 5;
+				Player::ChangeManaValue(5);
 				Enemy::ChahgeHpEnemy(1);
 				std::cout << "Range boy hor" << std::endl;
 				FlagManager::flagRangeAttack = 0;

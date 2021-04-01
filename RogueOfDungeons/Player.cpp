@@ -578,9 +578,10 @@ void Player::Attack()
 				Player::ChangeManaValue(5);
 				Enemy::ChahgeHpEnemy(1);
 				std::cout << "Range boy vert" << r << std::endl;
-				FlagManager::flagPlayer = 0;
-				FlagManager::flagRangeAttack = 0;
 			}
+			FlagManager::flagPlayer = 0;
+			FlagManager::flagRangeAttack = 0;
+			FlagManager::flagEnemy = 1;
 		}
 		else if (abs(EntityPosition::Coords[1] - EntityPosition::Coords[3] == 0))
 		{
@@ -595,9 +596,10 @@ void Player::Attack()
 				Player::ChangeManaValue(5);
 				Enemy::ChahgeHpEnemy(1);
 				std::cout << "Range boy hor" << std::endl;
-				FlagManager::flagRangeAttack = 0;
-				FlagManager::flagPlayer = 0;
 			}
+			FlagManager::flagRangeAttack = 0;
+			FlagManager::flagPlayer = 0;
+			FlagManager::flagEnemy = 1;
 		}
 	}//Ближний boy
 	else if ((Inventory::ExistingItems[Player::EqItems.WeaponId].Type == weapon) &&

@@ -588,7 +588,7 @@ void Player::Attack()
 		FlagManager::flagPlayer == 1 && FlagManager::flagEnemy == 0)
 	{
 		std::cout << "Player attack enemy" << std::endl;
-		Enemy::ChahgeHpEnemy(2);
+		Enemy::ChahgeHpEnemy(0);
 		FlagManager::flagPlayer = 0;
 		FlagManager::flagMeleeAttackPlayer = 0;
 		FlagManager::flagMeleeAttackEnemy = 1;

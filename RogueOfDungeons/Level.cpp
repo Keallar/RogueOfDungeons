@@ -57,7 +57,12 @@ Level::~Level()
 
 void Level::deletePlayer()
 {
-
+	if (Player::GetHP(0) <= 0)
+	{
+		std::cout << "Delete player" << std::endl;
+		delete player;
+		player = nullptr;
+	}
 }
 
 void Level::deleteEnemy()
@@ -88,6 +93,10 @@ void Level::Update()
 		player->GetLevel(Location);
 	if (enemy != nullptr)
 		enemy->GetLoc(Location);
+	if (Player::GetHP(0) <= 0 && player != nullptr)
+	{
+		Level::deletePlayer();
+	}
 	if (Enemy::HP <= 0 && enemy != nullptr)
 	{
 		Level::deleteEnemy();

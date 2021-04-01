@@ -538,16 +538,21 @@ void Player::handleEvents(SDL_Event playerEvent)
 
 void Player::Attack()
 {
+	srand(100);
+	int r = rand();
+	//Дальний boy
 	if ((Inventory::ExistingItems[Player::EqItems.WeaponId].Type == rWeapon) && FlagManager::flagRangeAttack == 1) 
 	{
 		if ((abs(EntityPosition::Coords[0]-EntityPosition::Coords[2]) == 0)) // разделил чтобы потом проверять на наличие стен
 		{
-			if (rand() % 100 < ((Player::EqItems.equipedRangeW->CHNS) -
+			if (rand() < ((Player::EqItems.equipedRangeW->CHNS) -
 				((Player::EqItems.equipedRangeW->DCHNS) * 
 					abs(abs(EntityPosition::Coords[3] - EntityPosition::Coords[1]) - Player::EqItems.equipedRangeW->RNG)))) 
 			{
+				/*std::cout << Player::EqItems.equipedRangeW->CHNS << std::endl;
+				std::cout << rand() << std::endl;*/
 				Enemy::ChahgeHpEnemy(1);
-				std::cout << "Range boy vert" << std::endl;
+				std::cout << "Range boy vert" << r << std::endl;
 			}
 			FlagManager::flagRangeAttack = 0;
 			FlagManager::flagPlayer = 0;
@@ -558,17 +563,17 @@ void Player::Attack()
 				((Player::EqItems.equipedRangeW->DCHNS) * abs
 				(abs(EntityPosition::Coords[2] - EntityPosition::Coords[0]) - Player::EqItems.equipedRangeW->RNG))))
 			{
-				bool check = rand() % 100 < ((Player::EqItems.equipedRangeW->CHNS) -
+				/*bool check = rand() % 100 < ((Player::EqItems.equipedRangeW->CHNS) -
 					((Player::EqItems.equipedRangeW->DCHNS) *
 						abs(abs(EntityPosition::Coords[3] - EntityPosition::Coords[1]) - Player::EqItems.equipedRangeW->RNG)));
-				std::cout << check << std::endl;
+				std::cout << check << std::endl;*/
 				Enemy::ChahgeHpEnemy(1);
 				std::cout << "Range boy hor" << std::endl;
 			}
 			FlagManager::flagRangeAttack = 0;
 			FlagManager::flagPlayer = 0;
 		}
-	}
+	}//Ближний boy
 	else if ((Inventory::ExistingItems[Player::EqItems.WeaponId].Type == weapon) &&
 		(((EntityPosition::Coords[0] == EntityPosition::Coords[2] - 32) &&
 		(EntityPosition::Coords[1] == EntityPosition::Coords[3])) ||

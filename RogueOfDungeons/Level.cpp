@@ -53,6 +53,7 @@ Level::~Level()
 	delete uiEquiped;
 	delete keyboardButtonsInLevel;
 }
+
 void Level::Update()
 {
 	if (FlagManager::flagPlayer == 1 && FlagManager::flagEnemy == 0)

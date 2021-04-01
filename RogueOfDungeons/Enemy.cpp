@@ -46,10 +46,26 @@ int Enemy::GetHpEnemy(int numOfHp)
 
 void Enemy::CheckHpEnemy()
 {
-	if (Enemy::HP != Enemy::HpMax && FlagManager::flagCheckHpEnemy == 0)
+	if (Enemy::HP <= 0)
+	{
+		static int iter = 0;
+		if (iter == 0)
+		{
+			FlagManager::flagCheckHpEnemy = 1;
+			HpMax = HP;
+			iter++;
+			FlagManager::flagEnemy = 0;
+			FlagManager::flagMeleeAttackEnemy = 0;
+		}
+		else if (iter == 1)
+		{
+			//UNDONE сделать удаление enemy
+		}
+
+	}
+	else if (Enemy::HP != Enemy::HpMax && FlagManager::flagCheckHpEnemy == 0)
 	{
 		FlagManager::flagCheckHpEnemy = 1;
-		HpMax = HP;
 	}
 	else if (Enemy::HP == Enemy::HpMax && FlagManager::flagCheckHpEnemy == 1)
 	{

@@ -20,7 +20,7 @@ Enemy::Enemy(const char* texturesheet, SDL_Renderer* renderer, int HealthP, int 
 }
 Enemy::~Enemy() 
 {
-	if (HP == 0)
+	if (HP <= 0)
 	{
 		SDL_DestroyTexture(enemyTexture);
 	}
@@ -60,6 +60,8 @@ void Enemy::CheckHpEnemy()
 		else if (iter == 1)
 		{
 			//UNDONE сделать удаление enemy
+			FlagManager::flagEnemy = 0;
+			FlagManager::flagMeleeAttackEnemy = 0;
 		}
 
 	}
@@ -224,11 +226,6 @@ void Enemy::meleeAttackEnemy()
 		FlagManager::flagEnemy = 1;
 		
 		Enemy::animOfAttack();
-
-		FlagManager::flagPlayer = 1;
-		FlagManager::flagMeleeAttackPlayer = 1;
-		FlagManager::flagEnemy = 0;
-		FlagManager::flagMeleeAttackEnemy = 0;
 	}
 	//else if () если enemy первый подошёл к игроку
 	else
@@ -253,4 +250,8 @@ void Enemy::animOfAttack()
 		}
 	}
 	xanim = 0;
+	FlagManager::flagPlayer = 1;
+	FlagManager::flagMeleeAttackPlayer = 1;
+	FlagManager::flagEnemy = 0;
+	FlagManager::flagMeleeAttackEnemy = 0;
 }

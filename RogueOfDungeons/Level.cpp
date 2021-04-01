@@ -9,6 +9,7 @@
 #include <iostream>
 #include "EntityPosition.h"
 #include "Buttons.h"
+#include "Enemy.h"
 
 Level::Level(SDL_Renderer* renderer) : ren (renderer)
 {
@@ -54,20 +55,43 @@ Level::~Level()
 	delete keyboardButtonsInLevel;
 }
 
+void Level::deletePlayer()
+{
+
+}
+
+void Level::deleteEnemy()
+{
+	if (Enemy::HP <= 0)
+	{
+		std::cout << "Delete enemy" << std::endl;
+		delete enemy;
+		enemy = nullptr;
+	}
+}
+
 void Level::Update()
 {
-	if (FlagManager::flagPlayer == 1 && FlagManager::flagEnemy == 0)
+	if (player != nullptr && 
+		FlagManager::flagPlayer == 1 && FlagManager::flagEnemy == 0)
 	{
 		player->Update();
 	}
-	if (FlagManager::flagPlayer == 0 && FlagManager::flagEnemy == 1)
+	if (enemy != nullptr &&
+		FlagManager::flagPlayer == 0 && FlagManager::flagEnemy == 1)
 	{
 		enemy->Update();
 		enemy->GetLoc(Location);
 		SDL_Delay(150);
 	}
-	player->GetLevel(Location);
-	enemy->GetLoc(Location);
+	if (player != nullptr)
+		player->GetLevel(Location);
+	if (enemy != nullptr)
+		enemy->GetLoc(Location);
+	if (Enemy::HP <= 0 && enemy != nullptr)
+	{
+		Level::deleteEnemy();
+	}
 }
 
 void Level::Start()
@@ -159,9 +183,10 @@ void Level::Render()
 			}
 		}
 	}
-	
-	player->Render();
-	enemy->Render();
+	if (player != nullptr)
+		player->Render();
+	if (enemy != nullptr)
+		enemy->Render();
 	uiItem->Render();
 	uiInfo->RenderVersion();
 	uiEquiped->Render();
@@ -215,7 +240,6 @@ void Level::Render()
 
 		if (FlagManager::flagUiEnemy == 1)
 		{
-			
 			uiEnemy->Render();
 			enemyHpInfo->Render();
 		}

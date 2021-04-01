@@ -229,7 +229,8 @@ void Player::GetItemEquip(int id) {
 			EqItems.equipedArmor = inventory->GetRealArmor(ItemId);
 		}
 	}
-	if (id == 3) {
+	if (id == 3) 
+	{
 		SDL_DestroyTexture(PlayerTexture);
 		PlayerTexture = 0;
 		PlayerTexture = textureManager::LoadTexture("images/HeroLether.png", ren);
@@ -554,8 +555,8 @@ void Player::Attack()
 				Enemy::ChahgeHpEnemy(1);
 				std::cout << "Range boy vert" << r << std::endl;
 			}
-			FlagManager::flagRangeAttack = 0;
 			FlagManager::flagPlayer = 0;
+			FlagManager::flagRangeAttack = 0;
 		}
 		else if (abs(EntityPosition::Coords[1] - EntityPosition::Coords[3] == 0))
 		{

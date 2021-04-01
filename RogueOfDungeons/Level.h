@@ -54,6 +54,8 @@ public:
 	bool flagTB;
 	Level(SDL_Renderer* renderer);
 	~Level();
+	void deletePlayer();
+	void deleteEnemy();
 	void Update();
 	void Start();
 	void Render();

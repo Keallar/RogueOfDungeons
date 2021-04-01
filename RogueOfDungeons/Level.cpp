@@ -80,6 +80,10 @@ void Level::deleteEnemy()
 
 void Level::Update()
 {
+	if (enemy == nullptr) {
+		FlagManager::flagEnemy = 0;
+		FlagManager::flagPlayer = 1;
+	}
 	if (player != nullptr && 
 		FlagManager::flagPlayer == 1 && FlagManager::flagEnemy == 0)
 	{
@@ -97,6 +101,7 @@ void Level::Update()
 
 	if (enemy != nullptr)
 		enemy->GetLoc(Location);
+
 	//удаление player (enemy) при hp <= 0
 	if (Player::GetHP(0) <= 0 && player != nullptr)
 	{

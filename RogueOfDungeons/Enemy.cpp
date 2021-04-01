@@ -193,17 +193,16 @@ void Enemy::Update()
 	if ((abs(EntityPosition::Coords[2]/32 - EntityPosition::Coords[0]/32) +
 		abs(EntityPosition::Coords[3]/32 - EntityPosition::Coords[1]/32)) > 1 &&
 		FlagManager::flagPlayer == 0 && FlagManager::flagEnemy == 1)
-		{
+	{
 		WAY(EntityPosition::Coords[2] / 32, EntityPosition::Coords[3] / 32,
 			EntityPosition::Coords[0] / 32, EntityPosition::Coords[1] / 32);
 
 		FlagManager::flagPlayer = 1;
 		FlagManager::flagEnemy = 0;
-		}
+	}
 
 	Enemy::meleeAttackEnemy();
 
-	//UNDONE придумать где лучше делать чек HP enemy
 	Enemy::CheckHpEnemy();
 }
 

@@ -65,7 +65,7 @@ void HpInfo::UpdateMax()
 	const char* CHAR_VALUE1 = stringTemp1.c_str();
 	hpMax = FontManager::renderText(CHAR_VALUE1, PATH_IN_FONT, color, 32, ren);
 
-	std::string stringTemp2 = std::to_string(Player::GetHP(2));
+	std::string stringTemp2 = std::to_string(Player::GetHP(0));
 	const char* CHAR_VALUE2 = stringTemp2.c_str();
 	hpText = FontManager::renderText(CHAR_VALUE2, PATH_IN_FONT, color, 32, ren);
 }
@@ -115,7 +115,7 @@ void ManaInfo::UpdateMax()
 	const char* CHAR_VALUE1 = stringTemp1.c_str();
 	manaMax = FontManager::renderText(CHAR_VALUE1, PATH_IN_FONT, color, 32, ren);
 
-	std::string stringTemp2 = std::to_string(Player::GetMana(2));
+	std::string stringTemp2 = std::to_string(Player::GetMana(0));
 	const char* CHAR_VALUE2 = stringTemp2.c_str();
 	manaText = FontManager::renderText(CHAR_VALUE2, PATH_IN_FONT, color, 32, ren);
 

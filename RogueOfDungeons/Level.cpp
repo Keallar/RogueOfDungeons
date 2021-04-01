@@ -105,7 +105,8 @@ void Level::Update()
 	if (Enemy::HP <= 0 && enemy != nullptr)
 	{
 		Level::deleteEnemy();
-		
+		EntityPosition::Coords[2] = 0;
+		EntityPosition::Coords[3] = 0;
 	}
 }
 

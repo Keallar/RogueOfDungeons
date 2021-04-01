@@ -56,12 +56,18 @@ void HpInfo::Update()
 
 void HpInfo::UpdateMax()
 {
+	Player::ChangeMaxHpValue();
 	SDL_DestroyTexture(hpMax);
 	hpMax = 0;
-	Player::ChangeMaxHpValue();
-	std::string stringTemp = std::to_string(Player::GetHP(2));
-	const char* CHAR_VALUE = stringTemp.c_str();
-	hpMax = FontManager::renderText(CHAR_VALUE, PATH_IN_FONT, color, 32, ren);
+	SDL_DestroyTexture(hpText);
+	
+	std::string stringTemp1 = std::to_string(Player::GetHP(2));
+	const char* CHAR_VALUE1 = stringTemp1.c_str();
+	hpMax = FontManager::renderText(CHAR_VALUE1, PATH_IN_FONT, color, 32, ren);
+
+	std::string stringTemp2 = std::to_string(Player::GetHP(2));
+	const char* CHAR_VALUE2 = stringTemp2.c_str();
+	hpText = FontManager::renderText(CHAR_VALUE2, PATH_IN_FONT, color, 32, ren);
 }
 
 void HpInfo::Render()
@@ -99,12 +105,21 @@ void ManaInfo::Update()
 
 void ManaInfo::UpdateMax()
 {
+	Player::ChangeMaxManaValue();
 	SDL_DestroyTexture(manaMax);
 	manaMax = 0;
-	Player::ChangeMaxManaValue();
-	std::string stringTemp = std::to_string(Player::GetMana(2));
-	const char* CHAR_VALUE = stringTemp.c_str();
-	manaMax = FontManager::renderText(CHAR_VALUE, PATH_IN_FONT, color, 32, ren);
+	SDL_DestroyTexture(manaText);
+	manaText = 0;
+
+	std::string stringTemp1 = std::to_string(Player::GetMana(2));
+	const char* CHAR_VALUE1 = stringTemp1.c_str();
+	manaMax = FontManager::renderText(CHAR_VALUE1, PATH_IN_FONT, color, 32, ren);
+
+	std::string stringTemp2 = std::to_string(Player::GetMana(2));
+	const char* CHAR_VALUE2 = stringTemp2.c_str();
+	manaText = FontManager::renderText(CHAR_VALUE2, PATH_IN_FONT, color, 32, ren);
+
+	
 }
 
 void ManaInfo::Render()

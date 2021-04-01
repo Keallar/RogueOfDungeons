@@ -74,7 +74,7 @@ Player::Player(SDL_Renderer* renderer)
 
 Player::~Player()
 {
-	if (HP == 0)
+	if (HP[0] <= 0)
 	{
 		SDL_DestroyTexture(PlayerTexture);
 	}
@@ -167,76 +167,6 @@ void Player::ChangeValueSpecs(int numOfSpec)
 	}
 }
 
-void Player::GetLevel(int arr[22][32])
-{
-	for (int i = 0; i < 22; i++) {
-		for (int j = 0; j < 32; j++) {
-			Location[i][j] = arr[i][j];
-		}
-	}
-}
-
-void Player::GetPlayerFirstCoords()
-{
-	EntityPosition::Coords[0] = (rand() % 2 + 1) * 32;
-	EntityPosition::Coords[1] = (rand() % 20 + 1) * 32;
-	while ((Location[EntityPosition::Coords[1] / 32][EntityPosition::Coords[0] / 32] == 1) ||
-		((Location[EntityPosition::Coords[1] / 32][EntityPosition::Coords[0] / 32 - 1] != 0) &&
-			(Location[EntityPosition::Coords[1] / 32][EntityPosition::Coords[0] / 32 + 1] != 0) &&
-			(Location[EntityPosition::Coords[1] / 32 - 1][EntityPosition::Coords[0] / 32] != 0) &&
-			(Location[EntityPosition::Coords[1] / 32 + 1][EntityPosition::Coords[0] / 32] != 0)))
-	{
-		EntityPosition::Coords[0] = (rand() % 2 + 1) * 32;
-		EntityPosition::Coords[1] = (rand() % 20 + 1) * 32;
-	}
-}
-
-void Player::GetItemEquip(int id) {
-	if (id != -1) {
-		int ItemId = inventory->inventory[id];
-		if (Inventory::ExistingItems[ItemId].Type == weapon) {
-			if (EqItems.WeaponId != -1) {
-				inventory->inventory[id] = EqItems.WeaponId;
-			}
-			else {
-				inventory->inventory[id] = -1;
-			}
-			EqItems.WeaponId = ItemId;
-			EqItems.equipedMeleeW = inventory->GetRealMelee(ItemId);
-			EqItems.equipedRangeW = nullptr;
-		}
-		if (Inventory::ExistingItems[ItemId].Type == rWeapon) {
-			if (EqItems.WeaponId != -1) {
-				inventory->inventory[id] = EqItems.WeaponId;
-			}
-			else {
-				inventory->inventory[id] = -1;
-			}
-			EqItems.WeaponId = ItemId;
-			
-			EqItems.equipedRangeW = inventory->GetRealRange(ItemId);
-			EqItems.equipedMeleeW = nullptr;
-		}
-		if (Inventory::ExistingItems[ItemId].Type == armor) {
-			if (EqItems.WeaponId != -1) {
-				inventory->inventory[id] = EqItems.ArmorId;
-			}
-			else {
-				inventory->inventory[id] = -1;
-			}
-			EqItems.ArmorId = ItemId;
-
-			EqItems.equipedArmor = inventory->GetRealArmor(ItemId);
-		}
-	}
-	if (id == 3) 
-	{
-		SDL_DestroyTexture(PlayerTexture);
-		PlayerTexture = 0;
-		PlayerTexture = textureManager::LoadTexture("images/HeroLether.png", ren);
-	}
-	FlagManager::flagEquip = -1;
-}
 
 void Player::ChangeHpValue(int valueOfChangingHp)
 {
@@ -247,12 +177,14 @@ void Player::ChangeHpValue(int valueOfChangingHp)
 void Player::ChangeMaxHpValue()
 {
 	HP[2] += 1;
+	HP[0] += 1;
 }
 
 //Изменение максимального значения маны
 void Player::ChangeMaxManaValue()
 {
 	mana[2] += 10;
+	mana[0] += 10;
 }
 
 //Изменение максимального значения exp
@@ -264,7 +196,7 @@ void Player::ChangeMaxExpValue()
 //Проверка изменения HP
 void Player::CheckHP()
 {
-	if (Player::HP[0] != Player::HP[1] && FlagManager::flagCheckHP ==  0)
+	if (Player::HP[0] != Player::HP[1] && FlagManager::flagCheckHP == 0)
 	{
 		FlagManager::flagCheckHP = 1;
 		Player::HP[1] = Player::HP[0];
@@ -367,6 +299,78 @@ void Player::CheckSpecVaue(int numSpec)
 		std::cout << "Error in CheckSpecValue" << std::endl;
 		break;
 	}
+}
+
+
+void Player::GetLevel(int arr[22][32])
+{
+	for (int i = 0; i < 22; i++) {
+		for (int j = 0; j < 32; j++) {
+			Location[i][j] = arr[i][j];
+		}
+	}
+}
+
+void Player::GetPlayerFirstCoords()
+{
+	EntityPosition::Coords[0] = (rand() % 2 + 1) * 32;
+	EntityPosition::Coords[1] = (rand() % 20 + 1) * 32;
+	while ((Location[EntityPosition::Coords[1] / 32][EntityPosition::Coords[0] / 32] == 1) ||
+		((Location[EntityPosition::Coords[1] / 32][EntityPosition::Coords[0] / 32 - 1] != 0) &&
+			(Location[EntityPosition::Coords[1] / 32][EntityPosition::Coords[0] / 32 + 1] != 0) &&
+			(Location[EntityPosition::Coords[1] / 32 - 1][EntityPosition::Coords[0] / 32] != 0) &&
+			(Location[EntityPosition::Coords[1] / 32 + 1][EntityPosition::Coords[0] / 32] != 0)))
+	{
+		EntityPosition::Coords[0] = (rand() % 2 + 1) * 32;
+		EntityPosition::Coords[1] = (rand() % 20 + 1) * 32;
+	}
+}
+
+void Player::GetItemEquip(int id) {
+	if (id != -1) {
+		int ItemId = inventory->inventory[id];
+		if (Inventory::ExistingItems[ItemId].Type == weapon) {
+			if (EqItems.WeaponId != -1) {
+				inventory->inventory[id] = EqItems.WeaponId;
+			}
+			else {
+				inventory->inventory[id] = -1;
+			}
+			EqItems.WeaponId = ItemId;
+			EqItems.equipedMeleeW = inventory->GetRealMelee(ItemId);
+			EqItems.equipedRangeW = nullptr;
+		}
+		if (Inventory::ExistingItems[ItemId].Type == rWeapon) {
+			if (EqItems.WeaponId != -1) {
+				inventory->inventory[id] = EqItems.WeaponId;
+			}
+			else {
+				inventory->inventory[id] = -1;
+			}
+			EqItems.WeaponId = ItemId;
+			
+			EqItems.equipedRangeW = inventory->GetRealRange(ItemId);
+			EqItems.equipedMeleeW = nullptr;
+		}
+		if (Inventory::ExistingItems[ItemId].Type == armor) {
+			if (EqItems.WeaponId != -1) {
+				inventory->inventory[id] = EqItems.ArmorId;
+			}
+			else {
+				inventory->inventory[id] = -1;
+			}
+			EqItems.ArmorId = ItemId;
+
+			EqItems.equipedArmor = inventory->GetRealArmor(ItemId);
+		}
+	}
+	if (id == 3) 
+	{
+		SDL_DestroyTexture(PlayerTexture);
+		PlayerTexture = 0;
+		PlayerTexture = textureManager::LoadTexture("images/HeroLether.png", ren);
+	}
+	FlagManager::flagEquip = -1;
 }
 
 void Player::GetItemOnLvl(int id) 
@@ -588,7 +592,7 @@ void Player::Attack()
 		FlagManager::flagPlayer == 1 && FlagManager::flagEnemy == 0)
 	{
 		std::cout << "Player attack enemy" << std::endl;
-		Enemy::ChahgeHpEnemy(0);
+		Enemy::ChahgeHpEnemy(2);
 		FlagManager::flagPlayer = 0;
 		FlagManager::flagMeleeAttackPlayer = 0;
 		FlagManager::flagMeleeAttackEnemy = 1;

@@ -72,6 +72,7 @@ void Level::deleteEnemy()
 		std::cout << "Delete enemy" << std::endl;
 		delete enemy;
 		enemy = nullptr;
+		FlagManager::flagUiEnemy = 0;
 	}
 }
 
@@ -91,8 +92,10 @@ void Level::Update()
 	}
 	if (player != nullptr)
 		player->GetLevel(Location);
+
 	if (enemy != nullptr)
 		enemy->GetLoc(Location);
+	//удаление player (enemy) при hp <= 0
 	if (Player::GetHP(0) <= 0 && player != nullptr)
 	{
 		Level::deletePlayer();

@@ -40,11 +40,9 @@ public:
 
 	void GetLevel(int arr[22][32]);
 	void GetPlayerFirstCoords();
-    void Attack();
+    static void Attack();
 	void GetItemOnLvl(int id);
 	void GetItemEquip(int id);
-
-    static void Attack();
     //static void meleeAttackPlayer();
 
     static int GetHP(int numOfArr);

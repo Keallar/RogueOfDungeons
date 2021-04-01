@@ -366,7 +366,7 @@ void UIEquipedItem::Render()
 {
 	//std::cout << "A" << Player::Id << "A";
 	Inventory::it = Inventory::ExistingItems.find(Player::EqItems.WeaponId);
-	std::cout << "A" << Player::EqItems.WeaponId << "A";
+	//std::cout << "A" << Player::EqItems.WeaponId << "A";
 	if (Player::EqItems.WeaponId != -1) {
 		EquipedItem = textureManager::LoadTexture((Inventory::it->second).ItemTexture, ren);
 

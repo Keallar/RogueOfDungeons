@@ -400,13 +400,12 @@ void Player::GetItemOnLvl(int id)
 void Player::Render()
 {
 	RenderManager::CopyToRender(PlayerTexture, ren, EntityPosition::Coords[0], EntityPosition::Coords[1], 32, 32, 0, 0, 32, 32);
-	std::cout << EqItems.equipedMeleeW << " "<< EqItems.equipedRangeW << " "<<EqItems.WeaponId << std::endl;
+	//std::cout << EqItems.equipedMeleeW << " "<< EqItems.equipedRangeW << " "<<EqItems.WeaponId << std::endl;
 	//Player::Id = EqItems.WeaponId;
 }
 
 void Player::Update()
 {
-	std::cout << "Player" << std::endl;
 	Player::GetItemEquip(FlagManager::flagEquip);
 	inventory->Update();
 	Player::CheckHP();
@@ -561,8 +560,7 @@ void Player::handleEvents(SDL_Event playerEvent)
 
 void Player::Attack()
 {
-	srand(100);
-	int r = rand();
+	//srand(100);
 	//Дальний boy
 	if ((Inventory::ExistingItems[Player::EqItems.WeaponId].Type == rWeapon) && 
 		FlagManager::flagRangeAttack == 1 &&
@@ -570,7 +568,9 @@ void Player::Attack()
 	{
 		if ((abs(EntityPosition::Coords[0]-EntityPosition::Coords[2]) == 0)) // разделил чтобы потом проверять на наличие стен
 		{
-			if (rand() < ((Player::EqItems.equipedRangeW->CHNS) -
+			int i = rand() % 100;
+			std::cout << i << std::endl;
+			if (i < ((Player::EqItems.equipedRangeW->CHNS) -
 				((Player::EqItems.equipedRangeW->DCHNS) * 
 					abs(abs(EntityPosition::Coords[3] - EntityPosition::Coords[1]) - Player::EqItems.equipedRangeW->RNG)))) 
 			{
@@ -578,7 +578,6 @@ void Player::Attack()
 				std::cout << rand() << std::endl;*/
 				Player::ChangeManaValue(5);
 				Enemy::ChahgeHpEnemy(1);
-				std::cout << "Range boy vert" << r << std::endl;
 			}
 			FlagManager::flagPlayer = 0;
 			FlagManager::flagRangeAttack = 0;

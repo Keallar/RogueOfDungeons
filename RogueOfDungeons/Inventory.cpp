@@ -43,10 +43,6 @@ void Inventory::AddItem(int id)
 			break;
 		}
 		count++;
-		if (count == 16) 
-		{
-			std::cout << "��� �����������!!!" << std::endl;
-		}
 	}
 }
 

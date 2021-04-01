@@ -180,8 +180,13 @@ MouseButtonsPlayer::~MouseButtonsPlayer()
 
 void MouseButtonsPlayer::buttonsForAttack()
 {
-	FlagManager::flagMeleeAttackPlayer = 1;
-	Player::Attack();
+	SDL_GetMouseState(&mouseCoordsPlayer.x, &mouseCoordsPlayer.y);
+
+	if (InputManager::MouseInArea(EntityPosition::Coords[2], EntityPosition::Coords[3], 32, 32, mouseCoordsPlayer.x, mouseCoordsPlayer.y))
+	{
+		FlagManager::flagMeleeAttackPlayer = 1;
+		Player::Attack();
+	}
 }
 
 void MouseButtonsPlayer::buttonForRangeAttack()

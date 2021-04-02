@@ -65,8 +65,8 @@ public:
 	meleeWeapon* GetRealMelee(int id);
 	rangeWeapon* GetRealRange(int id);
 	armorItem* GetRealArmor(int id);
-	static std::map <int, InventoryItem> ExistingItems;
-	static std::map <int, InventoryItem>::iterator it;
+	static std::map <int, InventoryItem*> ExistingItems;
+	static std::map <int, InventoryItem*>::iterator it;
 };
 /*class EquipedItems 
 {

@@ -368,7 +368,7 @@ void UIEquipedItem::Render()
 	Inventory::it = Inventory::ExistingItems.find(Player::EqItems.WeaponId);
 	//std::cout << "A" << Player::EqItems.WeaponId << "A";
 	if (Player::EqItems.WeaponId != -1) {
-		EquipedItem = textureManager::LoadTexture((Inventory::it->second).ItemTexture, ren);
+		EquipedItem = textureManager::LoadTexture((Inventory::it->second)->ItemTexture, ren);
 
 		RenderManager::CopyToRender(EquipedItem, ren, 1070, 550, 32, 32);
 		SDL_DestroyTexture(EquipedItem);
@@ -376,7 +376,7 @@ void UIEquipedItem::Render()
 	}
 	Inventory::it = Inventory::ExistingItems.find(Player::EqItems.ArmorId);
 	if (Player::EqItems.ArmorId != -1) {
-		EquipedItem = textureManager::LoadTexture((Inventory::it->second).ItemTexture, ren);
+		EquipedItem = textureManager::LoadTexture((Inventory::it->second)->ItemTexture, ren);
 
 		RenderManager::CopyToRender(EquipedItem, ren, 1070, 587, 32, 32);
 		SDL_DestroyTexture(EquipedItem);
@@ -419,7 +419,7 @@ void UIInventory::Render()
 		if (Inventory::inventoryFace[i] != -1) 
 		{
 			Inventory::it = Inventory::ExistingItems.find(Inventory::inventoryFace[i]);
-			item = textureManager::LoadTexture((Inventory::it->second).ItemTexture, ren);
+			item = textureManager::LoadTexture((Inventory::it->second)->ItemTexture, ren);
 			RenderManager::CopyToRender(item, ren, (780 + 36 * (i % 4)), (100 + ((i / 4) * 50)), 32, 32);
 			SDL_DestroyTexture(item);
 			item = 0;

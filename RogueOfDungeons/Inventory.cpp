@@ -3,8 +3,8 @@
 #include <iostream>
 
 int Inventory::inventoryFace[16]; //������ � ���� ��, ��� ������ inventory, �� � static
-std::map <int, InventoryItem> Inventory::ExistingItems;
-std::map <int, InventoryItem>::iterator Inventory::it;
+std::map <int, InventoryItem*> Inventory::ExistingItems;
+std::map <int, InventoryItem*>::iterator Inventory::it;
 
 Inventory::Inventory()
 {
@@ -14,10 +14,10 @@ Inventory::Inventory()
 	armorItem* LetherArmor = new armorItem(1, armor, "images/LetherArmor.png");
 	ExistingItems = 
 	{ 
-		{0, *ShortSword},
-		{1, *Spear},
-		{2, *ShortBow},
-		{3,*LetherArmor}
+		{0, ShortSword},
+		{1, Spear},
+		{2, ShortBow},
+		{3,LetherArmor}
 	};
 	for (int i = 0; i < 16; i++) 
 	{
@@ -55,15 +55,15 @@ void Inventory::Update()
 }
 
 meleeWeapon* Inventory::GetRealMelee(int id) {
-	return static_cast<meleeWeapon*>(&ExistingItems[id]);
+	return static_cast<meleeWeapon*>(ExistingItems[id]);
 }
 
 rangeWeapon* Inventory::GetRealRange(int id) {
-	return static_cast<rangeWeapon*>(&ExistingItems[id]);
+	return static_cast<rangeWeapon*>(ExistingItems[id]);
 }
 
 armorItem* Inventory::GetRealArmor(int id) {
-	return static_cast<armorItem*>(&ExistingItems[id]);
+	return static_cast<armorItem*>(ExistingItems[id]);
 }
 
 

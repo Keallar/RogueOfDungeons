@@ -347,7 +347,7 @@ void Player::GetPlayerFirstCoords()
 void Player::GetItemEquip(int id) {
 	if (id != -1) {
 		int ItemId = inventory->inventory[id];
-		if (Inventory::ExistingItems[ItemId].Type == weapon) {
+		if (Inventory::ExistingItems[ItemId]->Type == weapon) {
 			if (EqItems.WeaponId != -1) {
 				inventory->inventory[id] = EqItems.WeaponId;
 			}
@@ -358,7 +358,7 @@ void Player::GetItemEquip(int id) {
 			EqItems.equipedMeleeW = inventory->GetRealMelee(ItemId);
 			EqItems.equipedRangeW = nullptr;
 		}
-		if (Inventory::ExistingItems[ItemId].Type == rWeapon) {
+		if (Inventory::ExistingItems[ItemId]->Type == rWeapon) {
 			if (EqItems.WeaponId != -1) {
 				inventory->inventory[id] = EqItems.WeaponId;
 			}
@@ -370,7 +370,7 @@ void Player::GetItemEquip(int id) {
 			EqItems.equipedRangeW = inventory->GetRealRange(ItemId);
 			EqItems.equipedMeleeW = nullptr;
 		}
-		if (Inventory::ExistingItems[ItemId].Type == armor) {
+		if (Inventory::ExistingItems[ItemId]->Type == armor) {
 			if (EqItems.WeaponId != -1) {
 				inventory->inventory[id] = EqItems.ArmorId;
 			}
@@ -562,7 +562,7 @@ int Player::damage = 0;
 void Player::Attack()
 {
 	//Дальний boy
-	if ((Inventory::ExistingItems[Player::EqItems.WeaponId].Type == rWeapon) && 
+	if ((Inventory::ExistingItems[Player::EqItems.WeaponId]->Type == rWeapon) && 
 		FlagManager::flagRangeAttack == 1 &&
 		Player::mana[0] != 0) 
 	{
@@ -607,7 +607,7 @@ void Player::Attack()
 			FlagManager::flagEnemy = 1;
 		}
 	}//Ближний boy
-	else if ((Inventory::ExistingItems[Player::EqItems.WeaponId].Type == weapon) &&
+	else if ((Inventory::ExistingItems[Player::EqItems.WeaponId]->Type == weapon) &&
 		(((EntityPosition::Coords[0] == EntityPosition::Coords[2] - 32) &&
 		(EntityPosition::Coords[1] == EntityPosition::Coords[3])) ||
 		((EntityPosition::Coords[0] == EntityPosition::Coords[2] + 32) &&

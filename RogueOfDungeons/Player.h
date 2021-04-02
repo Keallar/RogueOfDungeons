@@ -30,6 +30,7 @@ private:
 
     const Uint8* keys = SDL_GetKeyboardState(NULL);
 public: 
+    static int damage;
     static Equiped EqItems;
     //static int Id; // UNDONE сделать getid
     Player(SDL_Renderer* ren);

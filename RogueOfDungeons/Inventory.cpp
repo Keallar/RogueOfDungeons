@@ -66,6 +66,7 @@ armorItem* Inventory::GetRealArmor(int id) {
 	return static_cast<armorItem*>(&ExistingItems[id]);
 }
 
+
 rangeWeapon::rangeWeapon(int Damage, int Range, int Chance, int deltaChanse, type type, const char* WeapTex)
 {
 	DMG = Damage;
@@ -84,13 +85,9 @@ meleeWeapon::meleeWeapon(int Damage, int range, type type, const char* WeapTex)
 	Type = type;
 }
 
-armorItem::armorItem(int Defence, type type, const char* WeapTex) {
+armorItem::armorItem(int Defence, type type, const char* WeapTex) 
+{
 	DEF = Defence;
 	ItemTexture = WeapTex;
 	Type = type;
 }
-
-/*void EquipedItems::EquipItem() 
-{
-	
-}*/

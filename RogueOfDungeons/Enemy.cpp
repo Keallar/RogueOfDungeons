@@ -3,6 +3,7 @@
 #include "Player.h"
 #include <iostream>
 #include "EntityPosition.h"
+#include "Inventory.h"
 
 using namespace std;
 

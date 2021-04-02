@@ -54,7 +54,6 @@ int Player::LCK[2] = {
 
 Player::Player(SDL_Renderer* renderer)
 {
-	//EqItems = { -1, nullptr, nullptr };
 	ren = renderer;
 	PlayerTexture = textureManager::LoadTexture("images/Hero.png", ren);
 	for (int i = 0; i < 22; i++) {
@@ -558,6 +557,8 @@ void Player::handleEvents(SDL_Event playerEvent)
 	}
 }
 
+int Player::damage = 0;
+
 void Player::Attack()
 {
 	//Дальний boy
@@ -574,8 +575,11 @@ void Player::Attack()
 					abs(abs(EntityPosition::Coords[3] - EntityPosition::Coords[1]) - Player::EqItems.equipedRangeW->RNG)))) 
 			{
 				std::cout << i << std::endl;
+				damage = Player::EqItems.equipedRangeW->DMG + Player::DEX[0];
+				int ch = Player::EqItems.equipedRangeW->CHNS;
+				std::cout << ch << std::endl;
 				Player::ChangeManaValue(5);
-				Enemy::ChahgeHpEnemy(1);
+				Enemy::ChahgeHpEnemy(damage);
 				std::cout << "Range boy vert" << std::endl;
 			}
 			FlagManager::flagPlayer = 0;
@@ -587,12 +591,15 @@ void Player::Attack()
 
 			int r = rand() % 100;
 			if (r < ((Player::EqItems.equipedRangeW->CHNS) -
-				((Player::EqItems.equipedRangeW->DCHNS) * abs
-				(abs(EntityPosition::Coords[2] - EntityPosition::Coords[0]) - Player::EqItems.equipedRangeW->RNG))))
+				((Player::EqItems.equipedRangeW->DCHNS) *
+					abs(abs(EntityPosition::Coords[2] - EntityPosition::Coords[0]) - Player::EqItems.equipedRangeW->RNG))))
 			{
 				std::cout << r << std::endl;
+				damage = Player::EqItems.equipedRangeW->DMG + Player::DEX[0];
+				int ch = Player::EqItems.equipedRangeW->CHNS;
+				std::cout << ch << std::endl;
 				Player::ChangeManaValue(5);
-				Enemy::ChahgeHpEnemy(1);
+				Enemy::ChahgeHpEnemy(damage);
 				std::cout << "Range boy hor" << std::endl;
 			}
 			FlagManager::flagRangeAttack = 0;
@@ -612,12 +619,13 @@ void Player::Attack()
 		FlagManager::flagMeleeAttackPlayer == 1 && FlagManager::flagMeleeAttackEnemy == 0 &&
 		FlagManager::flagPlayer == 1 && FlagManager::flagEnemy == 0)
 	{
-		std::cout << "Player attack enemy" << std::endl;
-		Enemy::ChahgeHpEnemy(2);
+		std::cout << "Melee boy" << std::endl;
+		damage = Player::EqItems.equipedMeleeW->DMG + Player::STR[0];
+		std::cout << damage << std::endl;
+		Enemy::ChahgeHpEnemy(damage);
 		FlagManager::flagPlayer = 0;
 		FlagManager::flagMeleeAttackPlayer = 0;
 		FlagManager::flagMeleeAttackEnemy = 1;
 		FlagManager::flagEnemy = 1;
 	}
-	
 }

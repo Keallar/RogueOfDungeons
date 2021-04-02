@@ -25,9 +25,10 @@ public:
 class meleeWeapon : public InventoryItem 
 {
 private:
+	
+public:
 	int DMG;
 	int RNG;
-public:
 	meleeWeapon(int Damage, int range, type type, const char* WeapTex);
 };
 class rangeWeapon : public InventoryItem 

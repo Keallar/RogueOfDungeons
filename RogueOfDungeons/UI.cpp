@@ -45,7 +45,7 @@ HpInfo::~HpInfo()
 
 }
 
-void HpInfo::Update()
+void HpInfo::Update() 
 {
 	SDL_DestroyTexture(hpText);
 	hpText = 0;

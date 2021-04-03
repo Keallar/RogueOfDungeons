@@ -1,7 +1,9 @@
 #pragma once
 #include "SDL.h"
 #include <vector>
-class Enemy
+#include "GameObject.h"
+
+class Enemy : public GameObject
 {
 private:
 	int DMG;
@@ -22,19 +24,21 @@ private:
 	int len;                       // длина пути
 
 public:
-
+	static int outputDamageEnemy;
 	Enemy() = default;
 	Enemy(const char* texturesheet, SDL_Renderer* ren, int HealthP, int MaxHealthP, int Damage, int EXPR);
-	~Enemy();
-	void Update();
+	~Enemy() override;
+	void Update() override;
 	void GetLoc(int arr[22][32]);
-	void Render();
+	void Render() override;
+	void clean() override;
 	void GetWay();
 	bool WAY(int ax, int ay, int bx, int by);
 	void GetEnemyFirstCoords();
 	
 	void meleeAttackEnemy();
 	void animOfAttack();
+	int getDamageEnemy();
 
 	static int HP;
 	static int HpMax;

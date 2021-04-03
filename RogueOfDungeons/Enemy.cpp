@@ -32,6 +32,11 @@ void Enemy::Render()
 	RenderManager::CopyToRender(enemyTexture, ren, EntityPosition::Coords[2], EntityPosition::Coords[3], 32, 32, xanim, yanim, 32, 32);
 }
 
+void Enemy::clean()
+{
+
+}
+
 int Enemy::GetHpEnemy(int numOfHp)
 {
 	switch (numOfHp)
@@ -237,6 +242,13 @@ void Enemy::meleeAttackEnemy()
 	}
 }
 
+int Enemy::outputDamageEnemy = 0;
+
+int Enemy::getDamageEnemy()
+{
+	return DMG;
+}
+
 void Enemy::animOfAttack()
 {
 	while (xanim != 96)
@@ -245,7 +257,12 @@ void Enemy::animOfAttack()
 
 		if (xanim == 96)
 		{
-			Player::ChangeHpValue(1);
+			if (Player::EqItems.equipedArmor != nullptr)
+				outputDamageEnemy = getDamageEnemy() - Player::EqItems.equipedArmor->DEF;
+			else
+				outputDamageEnemy = getDamageEnemy();
+			std::cout << "Input damage " << outputDamageEnemy << std::endl;
+			Player::ChangeHpValue(outputDamageEnemy);
 			std::cout << "Heat" << std::endl;
 		}
 	}

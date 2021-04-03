@@ -1,6 +1,7 @@
 #pragma once
 #include "SDL.h"
 #include "inventory.h"
+#include "GameObject.h"
 
 struct Equiped 
 {
@@ -11,7 +12,7 @@ struct Equiped
 	armorItem* equipedArmor;
 };
 
-class Player
+class Player : public GameObject
 {
 private:
 	Inventory* inventory;
@@ -34,10 +35,11 @@ public:
     static Equiped EqItems;
     //static int Id; // UNDONE сделать getid
     Player(SDL_Renderer* ren);
-    ~Player();
-    void Render();
-    void Update();
+    ~Player() override;
+    void Update() override;
+    void Render() override;
     void handleEvents(SDL_Event playerEvent);
+    void clean() override;
 
 	void GetLevel(int arr[22][32]);
 	void GetPlayerFirstCoords();

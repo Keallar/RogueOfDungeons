@@ -46,9 +46,10 @@ public:
 class armorItem : public InventoryItem
 {
 private:
-	int DEF;
+
 public:
 	armorItem(int Defence, type type, const char* WeapTex);
+	int DEF;
 };
 
 class Inventory

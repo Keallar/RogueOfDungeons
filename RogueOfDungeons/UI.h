@@ -69,9 +69,9 @@ private:
 public:
 	HpInfo(SDL_Renderer* renderer);
 	~HpInfo();
-	void Render();
-	void Update();
-	void UpdateMax();
+	void Render() override;
+	void Update() override;
+	void UpdateMax() override;
 };
 
 class ManaInfo :public TextInfo
@@ -83,9 +83,9 @@ private:
 public:
 	ManaInfo(SDL_Renderer* renderer);
 	~ManaInfo();
-	void Render();
-	void Update();
-	void UpdateMax();
+	void Render() override;
+	void Update() override;
+	void UpdateMax() override;
 };
 
 class ExpInfo : public TextInfo
@@ -97,9 +97,9 @@ private:
 public:
 	ExpInfo(SDL_Renderer* renderer);
 	~ExpInfo();
-	void Render();
-	void Update();
-	void UpdateMax();
+	void Render()override;
+	void Update()override;
+	void UpdateMax() override;
 };
 
 class UISpecifications : public TextInfo
@@ -130,10 +130,10 @@ private:
 public:
 	UISpecifications(SDL_Renderer* renderer);
 	~UISpecifications();
-	void Render();
-	void Update();
+	void Render() override;
+	void Update() override;
 	void Update(int value, int num);
-	void UpdateMax();
+	void UpdateMax() override;
 };
 
 

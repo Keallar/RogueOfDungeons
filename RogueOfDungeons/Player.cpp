@@ -633,26 +633,4 @@ void Player::Attack()
 		FlagManager::flagMeleeAttackEnemy = 1;
 		FlagManager::flagEnemy = 1;
 	}
-	//Melee boy without melee wepapon
-	/*else if ((Inventory::ExistingItems[Player::EqItems.WeaponId]->Type == 0) &&
-		(((EntityPosition::Coords[0] == EntityPosition::Coords[2] - 32) &&
-			(EntityPosition::Coords[1] == EntityPosition::Coords[3])) ||
-			((EntityPosition::Coords[0] == EntityPosition::Coords[2] + 32) &&
-				(EntityPosition::Coords[1] == EntityPosition::Coords[3])) ||
-			((EntityPosition::Coords[0] == EntityPosition::Coords[2]) &&
-				(EntityPosition::Coords[1] == EntityPosition::Coords[3] - 32)) ||
-			((EntityPosition::Coords[0] == EntityPosition::Coords[2]) &&
-				(EntityPosition::Coords[1] == EntityPosition::Coords[3] + 32))) &&
-		FlagManager::flagMeleeAttackPlayer == 1 && FlagManager::flagMeleeAttackEnemy == 0 &&
-		FlagManager::flagPlayer == 1 && FlagManager::flagEnemy == 0)
-	{
-		std::cout << "Melee boy without melee weapon" << std::endl;
-		damage = Player::STR[0];
-		std::cout << damage << std::endl;
-		Enemy::ChahgeHpEnemy(damage);
-		FlagManager::flagPlayer = 0;
-		FlagManager::flagMeleeAttackPlayer = 0;
-		FlagManager::flagMeleeAttackEnemy = 1;
-		FlagManager::flagEnemy = 1;
-	}*/
 }

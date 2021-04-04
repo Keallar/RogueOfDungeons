@@ -229,7 +229,6 @@ void Enemy::meleeAttackEnemy()
 		
 		Enemy::animOfAttack();
 	}
-	//else if () если enemy первый подошёл к игроку
 	else
 	{
 		FlagManager::flagPlayer = 1;

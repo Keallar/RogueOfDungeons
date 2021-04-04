@@ -19,7 +19,9 @@ Inventory::Inventory()
 		{0, ShortSword},
 		{1, Spear},
 		{2, ShortBow},
-		{3,LetherArmor}
+		{3,LetherArmor},
+		{4, Punch},
+		{5, FireBall}
 	};
 	for (int i = 0; i < 16; i++) 
 	{

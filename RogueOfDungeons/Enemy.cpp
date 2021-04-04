@@ -232,10 +232,10 @@ void Enemy::meleeAttackEnemy()
 	//else if () если enemy первый подошёл к игроку
 	else
 	{
-		FlagManager::flagEnemy = 0;
-		FlagManager::flagMeleeAttackEnemy = 0;
 		FlagManager::flagPlayer = 1;
 		FlagManager::flagMeleeAttackPlayer = 1;
+		FlagManager::flagEnemy = 0;
+		FlagManager::flagMeleeAttackEnemy = 0;
 	}
 }
 
@@ -248,24 +248,23 @@ int Enemy::getDamageEnemy()
 
 void Enemy::animOfAttack()
 {
-	while (xanim != 96)
+	if (xanim != 96)
 	{
 		xanim += 32;
-
-		if (xanim == 96)
-		{
-			if (Player::EqItems.equipedArmor != nullptr)
-				outputDamageEnemy = getDamageEnemy() - Player::EqItems.equipedArmor->DEF;
-			else
-				outputDamageEnemy = getDamageEnemy();
-			std::cout << "Input damage " << outputDamageEnemy << std::endl;
-			Player::ChangeHpValue(outputDamageEnemy);
-			std::cout << "Heat" << std::endl;
-		}
 	}
-	xanim = 0;
-	FlagManager::flagPlayer = 1;
-	FlagManager::flagMeleeAttackPlayer = 1;
-	FlagManager::flagEnemy = 0;
-	FlagManager::flagMeleeAttackEnemy = 0;
+	else if (xanim == 96)
+	{
+		if (Player::EqItems.equipedArmor != nullptr)
+			outputDamageEnemy = getDamageEnemy() - Player::EqItems.equipedArmor->DEF;
+		else
+			outputDamageEnemy = getDamageEnemy();
+		std::cout << "Input damage " << outputDamageEnemy << std::endl;
+		Player::ChangeHpValue(outputDamageEnemy);
+		std::cout << "Heat" << std::endl;
+		xanim = 0;
+		FlagManager::flagPlayer = 1;
+		FlagManager::flagMeleeAttackPlayer = 1;
+		FlagManager::flagEnemy = 0;
+		FlagManager::flagMeleeAttackEnemy = 0;
+	}
 }

@@ -9,8 +9,10 @@ std::map <int, InventoryItem*>::iterator Inventory::it;
 Inventory::Inventory()
 {
 	meleeWeapon* ShortSword = new meleeWeapon(1, 1, weapon, "images/ShortSword.png");
-	meleeWeapon* Spear = new meleeWeapon(2, 0, weapon, "images/Spear.png");
+	meleeWeapon* Spear = new meleeWeapon(2, 2, weapon, "images/Spear.png");
+	meleeWeapon* Punch = new meleeWeapon(1, 1, weapon, "images/Punch.png");
 	rangeWeapon* ShortBow = new rangeWeapon(1, 4, 60, 15, rWeapon, "images/ShortBow.png");
+	rangeWeapon* FireBall = new rangeWeapon(2, 5, 50, 10, rWeapon, "images/FireBall.png");
 	armorItem* LetherArmor = new armorItem(1, armor, "images/LetherArmor.png");
 	ExistingItems = 
 	{ 

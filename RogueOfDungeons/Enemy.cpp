@@ -21,10 +21,7 @@ Enemy::Enemy(const char* texturesheet, SDL_Renderer* renderer, int HealthP, int 
 }
 Enemy::~Enemy() 
 {
-	if (HP <= 0)
-	{
-		SDL_DestroyTexture(enemyTexture);
-	}
+	SDL_DestroyTexture(enemyTexture);
 }
 
 void Enemy::Render() 
@@ -34,7 +31,7 @@ void Enemy::Render()
 
 void Enemy::clean()
 {
-
+	SDL_DestroyTexture(enemyTexture);
 }
 
 int Enemy::GetHpEnemy(int numOfHp)

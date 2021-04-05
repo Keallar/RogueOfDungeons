@@ -564,6 +564,15 @@ void Player::clean()
 
 int Player::damage = 0;
 
+void Player::playerTurn()
+{
+	FlagManager::flagPlayer = 1;
+	FlagManager::flagMeleeAttackPlayer = 1;
+	FlagManager::flagRangeAttack = 1;
+	FlagManager::flagEnemy = 0;
+	FlagManager::flagMeleeAttackEnemy = 0;
+}
+
 void Player::Attack()
 {
 	//Дальний boy
@@ -587,9 +596,8 @@ void Player::Attack()
 				Enemy::ChahgeHpEnemy(damage);
 				std::cout << "Range boy vert" << std::endl;
 			}
-			FlagManager::flagPlayer = 0;
-			FlagManager::flagRangeAttack = 0;
-			FlagManager::flagEnemy = 1;
+			
+			Enemy::enemyTurn();
 		}
 		else if (abs(EntityPosition::Coords[1] - EntityPosition::Coords[3] == 0))
 		{
@@ -607,9 +615,9 @@ void Player::Attack()
 				Enemy::ChahgeHpEnemy(damage);
 				std::cout << "Range boy hor" << std::endl;
 			}
-			FlagManager::flagRangeAttack = 0;
-			FlagManager::flagPlayer = 0;
-			FlagManager::flagEnemy = 1;
+			
+
+			Enemy::enemyTurn();
 		}
 	}//Ближний boy
 	else if ((Inventory::ExistingItems[Player::EqItems.WeaponId]->Type == weapon) &&
@@ -628,9 +636,7 @@ void Player::Attack()
 		damage = Player::EqItems.equipedMeleeW->DMG + Player::STR[0];
 		std::cout << damage << std::endl;
 		Enemy::ChahgeHpEnemy(damage);
-		FlagManager::flagPlayer = 0;
-		FlagManager::flagMeleeAttackPlayer = 0;
-		FlagManager::flagMeleeAttackEnemy = 1;
-		FlagManager::flagEnemy = 1;
+
+		Enemy::enemyTurn();
 	}
 }

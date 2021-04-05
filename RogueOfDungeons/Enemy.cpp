@@ -238,8 +238,6 @@ void Enemy::meleeAttackEnemy()
 	}
 }
 
-int Enemy::outputDamageEnemy = 0;
-
 int Enemy::getDamageEnemy()
 {
 	return DMG;
@@ -253,17 +251,28 @@ void Enemy::animOfAttack()
 	}
 	else if (xanim == 96)
 	{
-		if (Player::EqItems.equipedArmor != nullptr)
-			outputDamageEnemy = getDamageEnemy() - Player::EqItems.equipedArmor->DEF;
-		else
-			outputDamageEnemy = getDamageEnemy();
-		std::cout << "Input damage " << outputDamageEnemy << std::endl;
-		Player::ChangeHpValue(outputDamageEnemy);
+		Player::ChangeHpValue(Enemy::enemyDamageCalculation());
 		std::cout << "Heat" << std::endl;
 		xanim = 0;
-		FlagManager::flagPlayer = 1;
-		FlagManager::flagMeleeAttackPlayer = 1;
-		FlagManager::flagEnemy = 0;
-		FlagManager::flagMeleeAttackEnemy = 0;
+		
+		Player::playerTurn();
 	}
+}
+
+int Enemy::enemyDamageCalculation()
+{
+	if (Player::EqItems.equipedArmor != nullptr)
+		outputDamageEnemy = getDamageEnemy() - Player::EqItems.equipedArmor->DEF;
+	else
+		outputDamageEnemy = getDamageEnemy();
+	return outputDamageEnemy;
+}
+
+void Enemy::enemyTurn()
+{
+	FlagManager::flagPlayer = 0;
+	FlagManager::flagMeleeAttackPlayer = 0;
+	FlagManager::flagRangeAttack = 0;
+	FlagManager::flagEnemy = 1;
+	FlagManager::flagMeleeAttackEnemy = 1;
 }

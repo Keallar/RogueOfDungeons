@@ -37,12 +37,12 @@ void Animation::animationForTurtle()
 {
 	if (xanimTurtle != 96)
 	{
-
+		xanimTurtle += 32;
 	}
 	else if (xanimTurtle == 96)
 	{
-
-	}
+		xanimTurtle = 0;
+	}	
 }
 
 void Animation::animationForAboba()

@@ -23,8 +23,9 @@ private:
 	int px[13 * 13], py[13 * 13];      // координаты €чеек, вход€щих  путь
 	int len;                       // длина пути
 
+	int outputDamageEnemy;
 public:
-	static int outputDamageEnemy;
+	
 	Enemy() = default;
 	Enemy(const char* texturesheet, SDL_Renderer* ren, int HealthP, int MaxHealthP, int Damage, int EXPR);
 	~Enemy() override;
@@ -38,6 +39,8 @@ public:
 	
 	void meleeAttackEnemy();
 	void animOfAttack();
+	int enemyDamageCalculation();
+	static void enemyTurn(); //UNDONE
 	int getDamageEnemy();
 
 	static int HP;

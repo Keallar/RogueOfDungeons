@@ -179,6 +179,8 @@ UIInfo::UIInfo(SDL_Renderer* renderer)
 
 	slashhhhhhhhh = FontManager::renderText("/", PATH_IN_FONT, color, 32, ren);
 
+	SPEC = FontManager::renderText("SPEC", PATH_IN_FONT, color, 32, ren);
+
 	//HP
 	hpBar = textureManager::LoadTexture("images/hp.png", ren);
 	hpText = FontManager::renderText("HP", PATH_IN_FONT, color, 64, ren);
@@ -203,6 +205,7 @@ void UIInfo::Render()
 	RenderManager::CopyToRender(slashhhhhhhhh, ren, 1152, 122, 32, 20);
 	RenderManager::CopyToRender(slashhhhhhhhh, ren, 1152, 175, 32, 20);
 
+	RenderManager::CopyToRender(SPEC, ren, 1230, 220, 30, 25);
 
 	//HP
 	RenderManager::CopyToRender(hpBar, ren, 1080, 40, 160, 32, 0, 0, 128, 16);
@@ -393,6 +396,8 @@ UIItem::UIItem(SDL_Renderer* renderer) : ren(renderer)
 	itemBlock = textureManager::LoadTexture("images/InfoBlock.png", ren);
 	item = FontManager::renderText("Items", PATH_IN_FONT, color, 32, ren);
 	buttonForInv = textureManager::LoadTexture("images/Button.png", ren);
+
+	INV = FontManager::renderText("INV", PATH_IN_FONT, color, 32, ren);
 }
 
 void UIItem::Render()
@@ -400,6 +405,8 @@ void UIItem::Render()
 	RenderManager::CopyToRender(itemBlock, ren, 1024, 480, 256, 225);
 	RenderManager::CopyToRender(item, ren, 1085, 490, 128, 32);
 	RenderManager::CopyToRender(buttonForInv, ren, 1050, 665, 25, 22);
+
+	RenderManager::CopyToRender(INV, ren, 1048, 648, 27, 22);
 }
 
 UIInventory::UIInventory(SDL_Renderer* renderer) : ren(renderer)

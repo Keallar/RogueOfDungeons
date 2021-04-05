@@ -26,6 +26,8 @@ private:
 	SDL_Texture* infoBlock;
 	SDL_Texture* info;
 	SDL_Texture* slashhhhhhhhh;
+	SDL_Texture* SPEC;
+	
 	//HP
 	SDL_Texture* hpBar;
 	SDL_Texture* hpText;
@@ -146,6 +148,8 @@ private:
 	SDL_Texture* itemBlock;
 	SDL_Texture* item;
 	SDL_Texture* buttonForInv;
+
+	SDL_Texture* INV;
 public:
 	UIItem(SDL_Renderer* renderer);
 	void Render();

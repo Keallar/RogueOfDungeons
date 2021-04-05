@@ -143,6 +143,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Animation.cpp" />
     <ClCompile Include="Buttons.cpp" />
     <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="EntityPosition.cpp" />
@@ -158,6 +159,7 @@
     <ClCompile Include="UI.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Animation.h" />
     <ClInclude Include="Buttons.h" />
     <ClInclude Include="Enemy.h" />
     <ClInclude Include="EntityPosition.h" />

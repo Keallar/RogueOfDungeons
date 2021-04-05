@@ -8,7 +8,7 @@
 #include "Enemy.h"
 #include "Buttons.h"
 #include <iostream>
-//int Player::Id = -2;
+
 Equiped Player::EqItems = { -1, nullptr, nullptr, -1};
 
 int Player::HP[3] = {

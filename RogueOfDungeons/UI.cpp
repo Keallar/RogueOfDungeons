@@ -172,7 +172,7 @@ UIInfo::UIInfo(SDL_Renderer* renderer)
 	ren = renderer;
 
 	//Version
-	versionBLock = FontManager::renderText("ROGUE OF DUNGEONS V-0.0.8", PATH_IN_FONT, color, 32, ren);
+	versionBLock = FontManager::renderText("ROGUE OF DUNGEONS V-0.0.9", PATH_IN_FONT, color, 32, ren);
 
 	infoBlock = textureManager::LoadTexture("images/InfoBlock.png", ren);
 	info = FontManager::renderText("Info", PATH_IN_FONT, color, 32, ren);

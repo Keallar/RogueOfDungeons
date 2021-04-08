@@ -5,23 +5,27 @@
 #include "EntityPosition.h"
 #include "UI.h"
 #include "inventory.h"
+#include "Enemy.h"
+#include "Buttons.h"
+#include <iostream>
+
+Equiped Player::EqItems = { -1, nullptr, nullptr, -1};
 
 int Player::HP[3] = {
 					 10, /*hp  now*/
 					 10, /*hp  previous*/
 					 10	 /*hp max*/
 					};
-int Player::exp[3] = { 
-					   99, /*exp  now*/
-					   99,  /*exp  previous*/
-					   0   /*exp max */
-					 };
-
-int Player::mana[3] = { 
-					    0, /*mana  now*/
+int Player::mana[3] = {
+						50, /*mana  now*/
 						0, /*mana  previous*/
 						50 /*mana max */
 					  };
+int Player::exp[3] = { 
+					   0, /*exp  now*/
+					   0,  /*exp  previous*/
+					   100   /*exp max */
+					 };
 
 int Player::STR[2] = {
 						1, /*STR  now*/
@@ -48,11 +52,10 @@ int Player::LCK[2] = {
 						1, /*STR  previous*/
 					 };
 
-Player::Player(const char* texturesheet, SDL_Renderer* renderer)
+Player::Player(SDL_Renderer* renderer)
 {
-	//EqItems = { -1, nullptr, nullptr };
 	ren = renderer;
-	PlayerTexture = textureManager::LoadTexture(texturesheet, ren);
+	PlayerTexture = textureManager::LoadTexture("images/Hero.png", ren);
 	for (int i = 0; i < 22; i++) {
 		for (int j = 0; j < 32; j++) {
 			Location[i][j] = 0;
@@ -62,13 +65,14 @@ Player::Player(const char* texturesheet, SDL_Renderer* renderer)
 	
 	inventory->AddItem(0);
 	inventory->AddItem(1);
-	inventory->AddItem(0);
+	inventory->AddItem(2);
+	inventory->AddItem(3);
 	inventory->Update();
 }
 
 Player::~Player()
 {
-	if (HP == 0)
+	if (HP[0] <= 0)
 	{
 		SDL_DestroyTexture(PlayerTexture);
 	}
@@ -89,9 +93,19 @@ int Player::GetHP(int numOfArr)
 	}
 }
 
-int Player::GetEXP()
+int Player::GetEXP(int numOfArr)
 {
-	return exp[0];
+	switch (numOfArr)
+	{
+	case 0:
+		return exp[0];
+	case 1:
+		return exp[1];
+	case 2:
+		return exp[2];
+	default:
+		break;
+	}
 }
 
 int Player::GetMana(int numOfArr)
@@ -161,76 +175,34 @@ void Player::ChangeValueSpecs(int numOfSpec)
 	}
 }
 
-void Player::GetLevel(int arr[22][32])
+
+void Player::ChangeHpValue(int valueOfChangingHp)
 {
-	for (int i = 0; i < 22; i++) {
-		for (int j = 0; j < 32; j++) {
-			Location[i][j] = arr[i][j];
-		}
-	}
+	HP[0] -= valueOfChangingHp;
 }
 
-void Player::GetPlayerFirstCoords()
+void Player::ChangeManaValue(int valueOfChangingMana)
 {
-	EntityPosition::Coords[0] = (rand() % 2 + 1) * 32;
-	EntityPosition::Coords[1] = (rand() % 20 + 1) * 32;
-	while ((Location[EntityPosition::Coords[1] / 32][EntityPosition::Coords[0] / 32] == 1) ||
-		((Location[EntityPosition::Coords[1] / 32][EntityPosition::Coords[0] / 32 - 1] != 0) &&
-			(Location[EntityPosition::Coords[1] / 32][EntityPosition::Coords[0] / 32 + 1] != 0) &&
-			(Location[EntityPosition::Coords[1] / 32 - 1][EntityPosition::Coords[0] / 32] != 0) &&
-			(Location[EntityPosition::Coords[1] / 32 + 1][EntityPosition::Coords[0] / 32] != 0)))
-	{
-		EntityPosition::Coords[0] = (rand() % 2 + 1) * 32;
-		EntityPosition::Coords[1] = (rand() % 20 + 1) * 32;
-	}
+	mana[0] -= valueOfChangingMana;
 }
 
-void Player::GetItemEquip(int id) {
-	if (id != -1) {
-		int ItemId = inventory->inventory[id];
-		if (Inventory::ExistingItems[ItemId].Type == weapon) {
-			if (EqItems.WeaponId != -1) {
-				inventory->inventory[id] = EqItems.WeaponId;
-			}
-			else {
-				inventory->inventory[id] = -1;
-			}
-			EqItems.WeaponId = ItemId;
-			EqItems.equipedMeleeW = inventory->GetRealMelee(ItemId);
-			EqItems.equipedRangeW = nullptr;
-		}
-		if (Inventory::ExistingItems[ItemId].Type == rWeapon) {
-			if (EqItems.WeaponId != -1) {
-				inventory->inventory[id] = EqItems.WeaponId;
-			}
-			else {
-				inventory->inventory[id] = -1;
-			}
-			EqItems.WeaponId = ItemId;
-			
-			EqItems.equipedRangeW = inventory->GetRealRange(ItemId);
-			EqItems.equipedMeleeW = nullptr;
-		}
-	}
-	FlagManager::flagEquip = -1;
-}
-
-//WTF костыль на изменение значения hp player
-void Player::ChangeHpValue()
+void Player::ChangeExpValue(int valueOfChangingExp)
 {
-	HP[0] -= 1;
+	exp[0] += valueOfChangingExp;
 }
 
 //Изменение максимального значения hp
 void Player::ChangeMaxHpValue()
 {
 	HP[2] += 1;
+	HP[0] += 1;
 }
 
 //Изменение максимального значения маны
 void Player::ChangeMaxManaValue()
 {
 	mana[2] += 10;
+	mana[0] += 10;
 }
 
 //Изменение максимального значения exp
@@ -242,7 +214,7 @@ void Player::ChangeMaxExpValue()
 //Проверка изменения HP
 void Player::CheckHP()
 {
-	if (Player::HP[0] != Player::HP[1] && FlagManager::flagCheckHP ==  0)
+	if (Player::HP[0] != Player::HP[1] && FlagManager::flagCheckHP == 0)
 	{
 		FlagManager::flagCheckHP = 1;
 		Player::HP[1] = Player::HP[0];
@@ -347,6 +319,78 @@ void Player::CheckSpecVaue(int numSpec)
 	}
 }
 
+
+void Player::GetLevel(int arr[22][32])
+{
+	for (int i = 0; i < 22; i++) {
+		for (int j = 0; j < 32; j++) {
+			Location[i][j] = arr[i][j];
+		}
+	}
+}
+
+void Player::GetPlayerFirstCoords()
+{
+	EntityPosition::Coords[0] = (rand() % 2 + 1) * 32;
+	EntityPosition::Coords[1] = (rand() % 20 + 1) * 32;
+	while ((Location[EntityPosition::Coords[1] / 32][EntityPosition::Coords[0] / 32] == 1) ||
+		((Location[EntityPosition::Coords[1] / 32][EntityPosition::Coords[0] / 32 - 1] != 0) &&
+			(Location[EntityPosition::Coords[1] / 32][EntityPosition::Coords[0] / 32 + 1] != 0) &&
+			(Location[EntityPosition::Coords[1] / 32 - 1][EntityPosition::Coords[0] / 32] != 0) &&
+			(Location[EntityPosition::Coords[1] / 32 + 1][EntityPosition::Coords[0] / 32] != 0)))
+	{
+		EntityPosition::Coords[0] = (rand() % 2 + 1) * 32;
+		EntityPosition::Coords[1] = (rand() % 20 + 1) * 32;
+	}
+}
+
+void Player::GetItemEquip(int id) {
+	if (id != -1) {
+		int ItemId = inventory->inventory[id];
+		if (Inventory::ExistingItems[ItemId]->Type == weapon) {
+			if (EqItems.WeaponId != -1) {
+				inventory->inventory[id] = EqItems.WeaponId;
+			}
+			else {
+				inventory->inventory[id] = -1;
+			}
+			EqItems.WeaponId = ItemId;
+			EqItems.equipedMeleeW = inventory->GetRealMelee(ItemId);
+			EqItems.equipedRangeW = nullptr;
+		}
+		if (Inventory::ExistingItems[ItemId]->Type == rWeapon) {
+			if (EqItems.WeaponId != -1) {
+				inventory->inventory[id] = EqItems.WeaponId;
+			}
+			else {
+				inventory->inventory[id] = -1;
+			}
+			EqItems.WeaponId = ItemId;
+			
+			EqItems.equipedRangeW = inventory->GetRealRange(ItemId);
+			EqItems.equipedMeleeW = nullptr;
+		}
+		if (Inventory::ExistingItems[ItemId]->Type == armor) {
+			if (EqItems.WeaponId != -1) {
+				inventory->inventory[id] = EqItems.ArmorId;
+			}
+			else {
+				inventory->inventory[id] = -1;
+			}
+			EqItems.ArmorId = ItemId;
+
+			EqItems.equipedArmor = inventory->GetRealArmor(ItemId);
+		}
+	}
+	if (id == 3) 
+	{
+		SDL_DestroyTexture(PlayerTexture);
+		PlayerTexture = 0;
+		PlayerTexture = textureManager::LoadTexture("images/HeroLether.png", ren);
+	}
+	FlagManager::flagEquip = -1;
+}
+
 void Player::GetItemOnLvl(int id) 
 {
 	inventory->AddItem(id);
@@ -355,7 +399,7 @@ void Player::GetItemOnLvl(int id)
 void Player::Render()
 {
 	RenderManager::CopyToRender(PlayerTexture, ren, EntityPosition::Coords[0], EntityPosition::Coords[1], 32, 32, 0, 0, 32, 32);
-	std::cout << EqItems.equipedMeleeW << " "<< EqItems.equipedRangeW << " "<<EqItems.WeaponId << std::endl;
+	//std::cout << EqItems.equipedMeleeW << " "<< EqItems.equipedRangeW << " "<<EqItems.WeaponId << std::endl;
 	//Player::Id = EqItems.WeaponId;
 }
 
@@ -366,11 +410,11 @@ void Player::Update()
 	Player::CheckHP();
 	Player::CheckMANA();
 	Player::CheckEXP();
-	Player::CheckSpecVaue(1);
-	Player::CheckSpecVaue(2);
-	Player::CheckSpecVaue(3);
-	Player::CheckSpecVaue(4);
-	Player::CheckSpecVaue(5);
+	Player::CheckSpecVaue(1); //STR
+	Player::CheckSpecVaue(2); //DEX
+	Player::CheckSpecVaue(3); //INT
+	Player::CheckSpecVaue(4); //PHS
+	Player::CheckSpecVaue(5); //LCK
 }
 
 void Player::handleEvents(SDL_Event playerEvent)
@@ -396,10 +440,16 @@ void Player::handleEvents(SDL_Event playerEvent)
 				{
 					EntityPosition::Coords[1] -= 32;
 					FlagManager::flagPlayer = 0;
+					FlagManager::flagEnemy = 1;
 				}
 				if (Location[(EntityPosition::Coords[1]) / 32 - 1][(EntityPosition::Coords[0]) / 32] == 3) 
 				{
 					FlagManager::flagChest = 1;
+				}
+				if (EntityPosition::Coords[0] == EntityPosition::Coords[2] &&
+					(EntityPosition::Coords[1] - 32) == EntityPosition::Coords[3])
+				{
+					//удар при определённой позиции Enemy
 				}
 			}
 		}
@@ -413,7 +463,7 @@ void Player::handleEvents(SDL_Event playerEvent)
 			else if ((EntityPosition::Coords[0] - 32) == EntityPosition::Coords[2] &&
 				EntityPosition::Coords[1] == EntityPosition::Coords[3])
 			{
-				std::cout << "Stop Enemy W" << std::endl;
+				std::cout << "Stop Enemy A" << std::endl;
 				//остановка при попытке пройти сквозь enemy
 			}
 			else
@@ -421,12 +471,17 @@ void Player::handleEvents(SDL_Event playerEvent)
 				if (Location[(EntityPosition::Coords[1]) / 32][(EntityPosition::Coords[0]) / 32 - 1] == 0) 
 				{
 					EntityPosition::Coords[0] -= 32;
-					Player::mana[0] += 1;
 					FlagManager::flagPlayer = 0;
+					FlagManager::flagEnemy = 1;
 				}
 				if (Location[(EntityPosition::Coords[1]) / 32][(EntityPosition::Coords[0]) / 32 - 1] == 3)
 				{
 					FlagManager::flagChest = 2;
+				}
+				if ((EntityPosition::Coords[0] - 32) == EntityPosition::Coords[2] &&
+					EntityPosition::Coords[1] == EntityPosition::Coords[3])
+				{
+					//удар при определённой позиции Enemy
 				}
 			}
 		}
@@ -448,12 +503,17 @@ void Player::handleEvents(SDL_Event playerEvent)
 				if (Location[(EntityPosition::Coords[1]) / 32 + 1][(EntityPosition::Coords[0]) / 32] == 0) 
 				{
 					EntityPosition::Coords[1] += 32;
-					Player::exp[0] -= 1;
 					FlagManager::flagPlayer = 0;
+					FlagManager::flagEnemy = 1;
 				}
 				if (Location[(EntityPosition::Coords[1]) / 32 + 1][(EntityPosition::Coords[0]) / 32] == 3)
 				{
 					FlagManager::flagChest = 3;
+				}
+				if (EntityPosition::Coords[0] == EntityPosition::Coords[2] &&
+					(EntityPosition::Coords[1] + 32) == EntityPosition::Coords[3])
+				{
+					//удар при определённой позиции Enemy
 				}
 			}
 		}
@@ -467,7 +527,7 @@ void Player::handleEvents(SDL_Event playerEvent)
 			else if ((EntityPosition::Coords[0] + 32) == EntityPosition::Coords[2] &&
 				EntityPosition::Coords[1] == EntityPosition::Coords[3])
 			{
-				std::cout << "Stop Enemy W" << std::endl;
+				std::cout << "Stop Enemy D" << std::endl;
 				//остановка при попытке пройти сквозь enemy
 			}
 			else
@@ -476,6 +536,7 @@ void Player::handleEvents(SDL_Event playerEvent)
 				{
 					EntityPosition::Coords[0] += 32;
 					FlagManager::flagPlayer = 0;
+					FlagManager::flagEnemy = 1;
 				}
 				if (Location[(EntityPosition::Coords[1]) / 32][(EntityPosition::Coords[0]) / 32 + 1] == 3) 
 				{
@@ -483,18 +544,99 @@ void Player::handleEvents(SDL_Event playerEvent)
 				}
 			}
 		}
+		case SDL_MOUSEBUTTONDOWN:
+
+			if (playerEvent.button.button == SDL_BUTTON_LEFT)
+			{
+				//атака при нажатии левой мыши
+				MouseButtonsPlayer::buttonForRangeAttack();
+				MouseButtonsPlayer::buttonsForAttack();
+			}
 	default:
 		break;
 	}
 }
 
-/*void Player::Attack()
+void Player::clean()
 {
-	if (ITEMTYPE.... = 0 ���� ������� ���) {}
-	else if (ITEMTYPE.... = 1 ���� ������� ���)
+	SDL_DestroyTexture(PlayerTexture);
+}
+
+int Player::damage = 0;
+
+void Player::playerTurn()
+{
+	FlagManager::flagPlayer = 1;
+	FlagManager::flagMeleeAttackPlayer = 1;
+	FlagManager::flagRangeAttack = 1;
+	FlagManager::flagEnemy = 0;
+	FlagManager::flagMeleeAttackEnemy = 0;
+}
+
+void Player::Attack()
+{
+	//Дальний boy
+	if ((Inventory::ExistingItems[Player::EqItems.WeaponId]->Type == rWeapon) && 
+		FlagManager::flagRangeAttack == 1 &&
+		Player::mana[0] != 0) 
 	{
-		
+		if ((abs(EntityPosition::Coords[0]-EntityPosition::Coords[2]) == 0)) // разделил чтобы потом проверять на наличие стен
+		{ 
+			int i = rand() % 100;
+			std::cout << i << std::endl;
+			if (i < ((Player::EqItems.equipedRangeW->CHNS) -
+				((Player::EqItems.equipedRangeW->DCHNS) * 
+					abs(abs(EntityPosition::Coords[3] - EntityPosition::Coords[1]) - Player::EqItems.equipedRangeW->RNG)))) 
+			{
+				std::cout << i << std::endl;
+				damage = Player::EqItems.equipedRangeW->DMG + Player::DEX[0];
+				int ch = Player::EqItems.equipedRangeW->CHNS;
+				std::cout << ch << std::endl;
+				Player::ChangeManaValue(5);
+				Enemy::ChahgeHpEnemy(damage);
+				std::cout << "Range boy vert" << std::endl;
+			}
+			
+			Enemy::enemyTurn();
+		}
+		else if (abs(EntityPosition::Coords[1] - EntityPosition::Coords[3] == 0))
+		{
+
+			int r = rand() % 100;
+			if (r < ((Player::EqItems.equipedRangeW->CHNS) -
+				((Player::EqItems.equipedRangeW->DCHNS) *
+					abs(abs(EntityPosition::Coords[2] - EntityPosition::Coords[0]) - Player::EqItems.equipedRangeW->RNG))))
+			{
+				std::cout << r << std::endl;
+				damage = Player::EqItems.equipedRangeW->DMG + Player::DEX[0];
+				int ch = Player::EqItems.equipedRangeW->CHNS;
+				std::cout << ch << std::endl;
+				Player::ChangeManaValue(5);
+				Enemy::ChahgeHpEnemy(damage);
+				std::cout << "Range boy hor" << std::endl;
+			}
+			
+
+			Enemy::enemyTurn();
+		}
+	}//Ближний boy
+	else if ((Inventory::ExistingItems[Player::EqItems.WeaponId]->Type == weapon) &&
+		(((EntityPosition::Coords[0] == EntityPosition::Coords[2] - 32) &&
+		(EntityPosition::Coords[1] == EntityPosition::Coords[3])) ||
+		((EntityPosition::Coords[0] == EntityPosition::Coords[2] + 32) &&
+			(EntityPosition::Coords[1] == EntityPosition::Coords[3])) ||
+		((EntityPosition::Coords[0] == EntityPosition::Coords[2]) &&
+			(EntityPosition::Coords[1] == EntityPosition::Coords[3] - 32)) ||
+		((EntityPosition::Coords[0] == EntityPosition::Coords[2]) &&
+			(EntityPosition::Coords[1] == EntityPosition::Coords[3] + 32))) &&
+		FlagManager::flagMeleeAttackPlayer == 1 && FlagManager::flagMeleeAttackEnemy == 0 &&
+		FlagManager::flagPlayer == 1 && FlagManager::flagEnemy == 0)
+	{
+		std::cout << "Melee boy" << std::endl;
+		damage = Player::EqItems.equipedMeleeW->DMG + Player::STR[0];
+		std::cout << damage << std::endl;
+		Enemy::ChahgeHpEnemy(damage);
+
+		Enemy::enemyTurn();
 	}
-}*/
-//int Player::Id = -2;
-Equiped Player::EqItems = { -1, nullptr, nullptr }; 
+}

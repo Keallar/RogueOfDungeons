@@ -34,6 +34,7 @@ private:
 	SDL_Renderer* ren;
 	Player* player;
 	Enemy* enemy;
+	UiHpEnemyInfo* enemyHpInfo;
 	UIInfo* uiInfo;
 	UIItem* uiItem;
 	UIEnemyInfo* uiEnemy;
@@ -53,6 +54,8 @@ public:
 	bool flagTB;
 	Level(SDL_Renderer* renderer);
 	~Level();
+	void deletePlayer();
+	void deleteEnemy();
 	void Update();
 	void Start();
 	void Render();

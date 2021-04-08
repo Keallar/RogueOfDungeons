@@ -30,6 +30,7 @@ public:
 	static void buttonForCallInvWin();
 	static void buttonForCallEnemyInfo();
 	static void buttonForIncPlayerSpec();
+
 };
 
 //class KeyboardButtonInPlayer
@@ -41,4 +42,15 @@ public:
 //	KeyboardButtonInPlayer();
 //	void movePlayer(SDL_Event &eventForMovePlayer);
 //};
+
+class MouseButtonsPlayer
+{
+private:
+	static MCoord mouseCoordsPlayer;
+public:
+	MouseButtonsPlayer();
+	~MouseButtonsPlayer();
+	static void buttonsForAttack();
+	static void buttonForRangeAttack();
+};
 

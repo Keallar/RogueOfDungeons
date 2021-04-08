@@ -1,10 +1,11 @@
 #pragma once
 #include "SDL.h"
 #include <vector>
-class Enemy
+#include "GameObject.h"
+
+class Enemy : public GameObject
 {
 private:
-	int HP;
 	int DMG;
 	int expReward;
 	SDL_Renderer* ren;
@@ -14,7 +15,6 @@ private:
 	int enemyLoc[22][32];
 	int count = 0;
 	int move;
-	int Attackflag = 1;
 	const int W = 32;         // ширина рабочего пол€
 	const int H = 22;         // высота рабочего пол€
 	const int WALL = -2;         // непроходима€ €чейка
@@ -23,15 +23,30 @@ private:
 	int px[13 * 13], py[13 * 13];      // координаты €чеек, вход€щих  путь
 	int len;                       // длина пути
 
+	int outputDamageEnemy;
 public:
+	
 	Enemy() = default;
-	Enemy(const char* texturesheet, SDL_Renderer* ren, int HealthP, int Damage, int EXPR);
-	~Enemy();
-	void Update();
+	Enemy(const char* texturesheet, SDL_Renderer* ren, int HealthP, int MaxHealthP, int Damage, int EXPR);
+	~Enemy() override;
+	void Update() override;
 	void GetLoc(int arr[22][32]);
-	void Render();
+	void Render() override;
+	void clean() override;
 	void GetWay();
 	bool WAY(int ax, int ay, int bx, int by);
 	void GetEnemyFirstCoords();
+	
+	void meleeAttackEnemy();
+	void animOfAttack();
+	int enemyDamageCalculation();
+	static void enemyTurn(); //UNDONE
+	int getDamageEnemy();
+
+	static int HP;
+	static int HpMax;
+	static int GetHpEnemy(int numOfHp);
+	static void CheckHpEnemy();
+	static void ChahgeHpEnemy(int valueOfChangingHp);
 };
 

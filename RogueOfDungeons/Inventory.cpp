@@ -1,18 +1,27 @@
-#include "Inventory.h"
+ï»¿#include "Inventory.h"
 #include "Managers.h"
 #include <iostream>
 
-int Inventory::inventoryFace[16]; //õðàíèò â ñåáå âñ¸, ÷òî õðàíèò inventory, íî â static
-std::map <int, InventoryItem> Inventory::ExistingItems;
-std::map <int, InventoryItem>::iterator Inventory::it;
+int Inventory::inventoryFace[16]; //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½, ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ inventory, ï¿½ï¿½ ï¿½ static
+std::map <int, InventoryItem*> Inventory::ExistingItems;
+std::map <int, InventoryItem*>::iterator Inventory::it;
 
 Inventory::Inventory()
 {
+	meleeWeapon* ShortSword = new meleeWeapon(1, 1, weapon, "images/ShortSword.png");
+	meleeWeapon* Spear = new meleeWeapon(2, 2, weapon, "images/Spear.png");
+	meleeWeapon* Punch = new meleeWeapon(1, 1, weapon, "images/Punch.png");
+	rangeWeapon* ShortBow = new rangeWeapon(1, 4, 60, 15, rWeapon, "images/ShortBow.png");
+	rangeWeapon* FireBall = new rangeWeapon(2, 5, 50, 10, rWeapon, "images/FireBall.png");
+	armorItem* LetherArmor = new armorItem(1, armor, "images/LetherArmor.png");
 	ExistingItems = 
 	{ 
-		{0, *ShortSword},
-		{1, *Spear},
-		{2, *ShortBow} 
+		{0, ShortSword},
+		{1, Spear},
+		{2, ShortBow},
+		{3,LetherArmor},
+		{4, Punch},
+		{5, FireBall}
 	};
 	for (int i = 0; i < 16; i++) 
 	{
@@ -38,10 +47,6 @@ void Inventory::AddItem(int id)
 			break;
 		}
 		count++;
-		if (count == 16) 
-		{
-			std::cout << "ÍÅÒ ÌÅÑÒÀÀÀÀÀÀÀ!!!" << std::endl;
-		}
 	}
 }
 
@@ -54,28 +59,26 @@ void Inventory::Update()
 }
 
 meleeWeapon* Inventory::GetRealMelee(int id) {
-	switch (id) {
-	case 0:
-		return ShortSword;
-	case 2:
-		return Spear;
-	}
+	return static_cast<meleeWeapon*>(ExistingItems[id]);
 }
 
 rangeWeapon* Inventory::GetRealRange(int id) {
-	switch (id) {
-	case 1:
-		return ShortBow;
-	}
+	return static_cast<rangeWeapon*>(ExistingItems[id]);
 }
 
-rangeWeapon::rangeWeapon(int Damage, int Range, int Chanse, int deltaChanse, type type, const char* WeapTex)
+armorItem* Inventory::GetRealArmor(int id) {
+	return static_cast<armorItem*>(ExistingItems[id]);
+}
+
+
+rangeWeapon::rangeWeapon(int Damage, int Range, int Chance, int deltaChanse, type type, const char* WeapTex)
 {
 	DMG = Damage;
 	RNG = Range;
-	CHNS = Chanse;
+	CHNS = Chance;
 	DCHNS = deltaChanse;
 	ItemTexture = WeapTex;
+	Type = type;
 }
 
 meleeWeapon::meleeWeapon(int Damage, int range, type type, const char* WeapTex)
@@ -83,9 +86,12 @@ meleeWeapon::meleeWeapon(int Damage, int range, type type, const char* WeapTex)
 	DMG = Damage;
 	RNG = range;
 	ItemTexture = WeapTex;
+	Type = type;
 }
 
-/*void EquipedItems::EquipItem() 
+armorItem::armorItem(int Defence, type type, const char* WeapTex) 
 {
-	
-}*/
+	DEF = Defence;
+	ItemTexture = WeapTex;
+	Type = type;
+}

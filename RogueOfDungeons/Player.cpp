@@ -586,9 +586,11 @@ void Player::Attack()
 			std::cout << i << std::endl;
 			if (i < ((Player::EqItems.equipedRangeW->CHNS) -
 				((Player::EqItems.equipedRangeW->DCHNS) * 
-					abs(abs(EntityPosition::Coords[3] - EntityPosition::Coords[1]) - Player::EqItems.equipedRangeW->RNG)))) 
+					abs(abs(EntityPosition::Coords[3] - EntityPosition::Coords[1])/32 - Player::EqItems.equipedRangeW->RNG)))) 
 			{
-				std::cout << i << std::endl;
+				std::cout << i << "*" << ((Player::EqItems.equipedRangeW->CHNS) -
+					((Player::EqItems.equipedRangeW->DCHNS) *
+						abs(abs(EntityPosition::Coords[2] - EntityPosition::Coords[0]) - Player::EqItems.equipedRangeW->RNG))) << "*/";
 				damage = Player::EqItems.equipedRangeW->DMG + Player::DEX[0];
 				int ch = Player::EqItems.equipedRangeW->CHNS;
 				std::cout << ch << std::endl;
@@ -603,9 +605,12 @@ void Player::Attack()
 		{
 
 			int r = rand() % 100;
+			std::cout << r << " *" << ((Player::EqItems.equipedRangeW->CHNS) -
+				((Player::EqItems.equipedRangeW->DCHNS) *
+					abs(abs(EntityPosition::Coords[2] - EntityPosition::Coords[0])/32 - Player::EqItems.equipedRangeW->RNG))) << "*/";
 			if (r < ((Player::EqItems.equipedRangeW->CHNS) -
 				((Player::EqItems.equipedRangeW->DCHNS) *
-					abs(abs(EntityPosition::Coords[2] - EntityPosition::Coords[0]) - Player::EqItems.equipedRangeW->RNG))))
+					abs(abs(EntityPosition::Coords[2] - EntityPosition::Coords[0])/32 - Player::EqItems.equipedRangeW->RNG))))
 			{
 				std::cout << r << std::endl;
 				damage = Player::EqItems.equipedRangeW->DMG + Player::DEX[0];

@@ -139,7 +139,7 @@ void Level::ChunkGenerationMethod() {
 
 	for (int i = 0; i < 3; i++) {
 		chests[i][0] = rand() % 20 + 1; chests[i][1] = rand() % 30 + 1;
-		while (Location[chests[i][0]][chests[i][1]] != 0) {
+		while (Location[chests[i][0]][chests[i][1]] != 0 || Location[chests[i][0] + 1][chests[i][1]] != 0 || Location[chests[i][0]][chests[i][1] + 1] != 0 || Location[chests[i][0] - 1][chests[i][1]] != 0 || Location[chests[i][0]][chests[i][1] - 1] != 0 || Location[chests[i][0] - 1][chests[i][1] - 1] != 0 || Location[chests[i][0] - 1][chests[i][1] + 1] != 0 || Location[chests[i][0] + 1][chests[i][1] - 1] != 0 || Location[chests[i][0] + 1][chests[i][1] + 1] != 0) {
 			chests[i][0] = rand() % 20 + 1; chests[i][1] = rand() % 30 + 1;
 		}
 		textureLocation[chests[i][0]][chests[i][1]] = 14;
@@ -528,7 +528,7 @@ void Level::RoomGenerationMethod2() {
 
 	for (int i = 0; i < 3; i++) {
 		chests[i][0] = rand() % 20 + 1; chests[i][1] = rand() % 30 + 1;
-		while (Location[chests[i][0]][chests[i][1]] != 0) {
+		while (Location[chests[i][0]][chests[i][1]] != 0 || Location[chests[i][0]+1][chests[i][1]] != 0|| Location[chests[i][0]][chests[i][1]+1] != 0 || Location[chests[i][0]-1][chests[i][1]] != 0 || Location[chests[i][0]][chests[i][1]-1] != 0 || Location[chests[i][0]- 1][chests[i][1] -1 ] != 0 || Location[chests[i][0]-1][chests[i][1]+1] != 0 || Location[chests[i][0]+1][chests[i][1]-1] != 0 || Location[chests[i][0]+1][chests[i][1]+1] != 0) {
 			chests[i][0] = rand() % 20 + 1; chests[i][1] = rand() % 30 + 1;
 		}
 		textureLocation[chests[i][0]][chests[i][1]] = 14;

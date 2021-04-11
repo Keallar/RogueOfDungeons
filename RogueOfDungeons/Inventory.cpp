@@ -33,9 +33,7 @@ Inventory::Inventory()
 			}
 			file >> Name;
 			type ItemType = weapon;
-			std::cout << Tex << std::endl;
 			ExistingItems[ItemNumber] = new meleeWeapon(DMG, RNG, ItemType, Tex, Name);
-			std::cout << ItemNumber << "weapon" << std::endl;
 		}
 		if (Type == "rWeapon") {
 			file >> DMG;
@@ -48,10 +46,8 @@ Inventory::Inventory()
 				Tex[i] = WeapTex[i];
 			}
 			file >> Name;
-			std::cout << Tex << std::endl;
 			type ItemType = rWeapon;
 			ExistingItems[ItemNumber] = new rangeWeapon(DMG, RNG, CHS, dCHS, ItemType, Tex, Name);
-			std::cout << ItemNumber << "Rweapon" << std::endl;
 		}
 		if (Type == "armor") {
 			file >> DEF;
@@ -61,19 +57,14 @@ Inventory::Inventory()
 				Tex[i] = WeapTex[i];
 			}
 			file >> Name;
-			std::cout << Tex << std::endl;
 			type ItemType = armor;
 			ExistingItems[ItemNumber] = new armorItem(DEF, ItemType, Tex, Name);
-			std::cout << ItemNumber << "armor" << std::endl;
 		}
 		ItemNumber++;
 	}
 	for (int i = 0; i < 16; i++) 
 	{
 		inventory[i] = -1;
-	}
-	for (int i = 0; i < 6; i++) {
-		std::cout << ExistingItems[i]->ItemTexture << std::endl;
 	}
 }
 

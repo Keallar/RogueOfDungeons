@@ -29,7 +29,7 @@ private:
 public:
 	int DMG;
 	int RNG;
-	meleeWeapon(int Damage, int range, type type, const char* WeapTex);
+	meleeWeapon(int Damage, int range, type type, const char* WeapTex, std::string Name);
 };
 class rangeWeapon : public InventoryItem 
 {
@@ -40,7 +40,7 @@ public:
 	int RNG;
 	int CHNS;
 	int DCHNS;
-	rangeWeapon(int Damage, int Range, int Chanse, int deltaChanse, type type, const char* WeapTex);
+	rangeWeapon(int Damage, int Range, int Chanse, int deltaChanse, type type, const char* WeapTex, std::string Name);
 };
 
 class armorItem : public InventoryItem
@@ -48,7 +48,7 @@ class armorItem : public InventoryItem
 private:
 
 public:
-	armorItem(int Defence, type type, const char* WeapTex);
+	armorItem(int Defence, type type, const char* WeapTex, std::string Name);
 	int DEF;
 };
 

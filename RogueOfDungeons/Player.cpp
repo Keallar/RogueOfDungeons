@@ -65,7 +65,7 @@ Player::Player(SDL_Renderer* renderer)
 	
 	inventory->AddItem(0);
 	inventory->AddItem(1);
-	inventory->AddItem(2);
+	inventory->AddItem(5);
 	inventory->AddItem(3);
 	inventory->Update();
 }
@@ -380,13 +380,13 @@ void Player::GetItemEquip(int id) {
 			EqItems.ArmorId = ItemId;
 
 			EqItems.equipedArmor = inventory->GetRealArmor(ItemId);
+			if (EqItems.equipedArmor->name == "LetherArmor")
+			{
+				SDL_DestroyTexture(PlayerTexture);
+				PlayerTexture = 0;
+				PlayerTexture = textureManager::LoadTexture("images/HeroLether.png", ren);
+			}
 		}
-	}
-	if (id == 3) 
-	{
-		SDL_DestroyTexture(PlayerTexture);
-		PlayerTexture = 0;
-		PlayerTexture = textureManager::LoadTexture("images/HeroLether.png", ren);
 	}
 	FlagManager::flagEquip = -1;
 }

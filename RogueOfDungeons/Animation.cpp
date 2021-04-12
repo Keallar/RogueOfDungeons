@@ -1,58 +1,64 @@
 #include "Animation.h"
-
+#include "EntityPosition.h"
 
 Animation::Animation(SDL_Renderer* renderer) : ren(renderer)
 {
-	xanimPlayer = 0;
-	yanimPlayer = 0;
-	xanimTurtle = 0;
-	yanimTurtle = 0;
-	xanimAboba = 0;
-	yanimAboba = 0;
-	playerAnimation = textureManager::LoadTexture("images/Player.png", ren);
-	enemyTurtleAnimation = textureManager::LoadTexture("images/Turtle..png", ren);
-	enemyAbobaAnimation = textureManager::LoadTexture("images/ABOBA.png", ren);
+	xanim = 0;
+	yanim = 0;
 }
 
 Animation::~Animation()
 {
-	SDL_DestroyTexture(playerAnimation);
-	SDL_DestroyTexture(enemyTurtleAnimation);
-	SDL_DestroyTexture(enemyAbobaAnimation);
-}
-
-void Animation::animationForPlayer()
-{
-	if (xanimPlayer != 96)
-	{
-		xanimPlayer += 32;
-	}
-	else if (xanimPlayer == 96)
-	{
 	
-	}
 }
 
-void Animation::animationForTurtle()
+//void Animation::Render()
+//{
+//	RenderManager::CopyToRender(enemyTexture, ren, EntityPosition::Coords[2], EntityPosition::Coords[3], 32, 32, xanim, yanim, 32, 32);
+//}
+
+int Animation::animationInstrForX(SDL_Texture* texture, int numOfFrames, bool complete)
 {
-	if (xanimTurtle != 96)
+	if (xanim != 32 * numOfFrames)
 	{
-		xanimTurtle += 32;
+		xanim += 32;
 	}
-	else if (xanimTurtle == 96)
+	else
 	{
-		xanimTurtle = 0;
-	}	
+		xanim = 0;
+	}
+	return xanim;
 }
 
-void Animation::animationForAboba()
+int Animation::animationInstrForY(SDL_Texture* texture, int numOfFrames, bool complete)
 {
-	if (xanimAboba != 96)
+	if (yanim != 32 * numOfFrames)
 	{
-
+		yanim += 32;
 	}
-	else if (xanimAboba == 96)
+	else
 	{
-
+		yanim = 0;
 	}
+	return yanim;
 }
+
+void Animation::animationInstrForXCoord(SDL_Texture* texture, int numOfFrames, bool complete)
+{
+	if (xanim != 32 * numOfFrames)
+	{
+		xanim += 32;
+	}
+	else
+	{
+		xanim = 0;
+	}
+
+	RenderManager::CopyToRender(texture, ren, EntityPosition::Coords[2], EntityPosition::Coords[3], 32, 32, xanim, yanim, 32, 32);
+}
+
+void Animation::animationInstrForYCoord(SDL_Texture* texture, int numOfFrames, bool complete)
+{
+
+}
+

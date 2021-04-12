@@ -61,7 +61,7 @@ public:
     static void ChangeMaxManaValue();
     static void ChangeMaxExpValue();
 
-    static void playerTurn();//UNDONE
+    static void playerTurn();
 
     static void CheckHP();
     static void CheckEXP();

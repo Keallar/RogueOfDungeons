@@ -36,6 +36,15 @@ Level::Level(SDL_Renderer* renderer) : ren (renderer)
 		for (int j = 0; j < 32; j++)
 		{
 			textureLocation[i][j] = 1;
+			Location[i][j] = 1;
+			Dark[i][j] = 0;
+		}
+	}
+	for (int i = 0; i < 22; i++) {
+		for (int j = 0; j < 32; j++) {
+			if (i == 0 || i == 21 || j == 0 || j == 31) {
+				Dark[i][j] = 1;
+			}
 		}
 	}
 }
@@ -80,6 +89,12 @@ void Level::deleteEnemy()
 
 void Level::Update()
 {
+	int n = Player::VIS;
+	for (int i = (EntityPosition::Coords[1] / 32) - n; i <= (EntityPosition::Coords[1] / 32) + n; i++) {
+		for (int j = (EntityPosition::Coords[0] / 32) - n; j <= (EntityPosition::Coords[0] / 32) + n; j++) {
+			ChangeDark(i, j);
+		}
+	}
 	if (enemy == nullptr) {
 		FlagManager::flagEnemy = 0;
 		FlagManager::flagPlayer = 1;
@@ -124,6 +139,86 @@ void Level::Start()
 	enemy->GetEnemyFirstCoords();
 }
 
+void Level::ChangeDark(int i, int j) {
+	if (i >= 0 && i < 22 && j >= 0 && j < 32) {
+		Dark[i][j] = 1;
+	}
+}
+
+void Level::CaveRender(int y, int x) {
+	int i = y;
+	int j = x;
+	if (textureLocation[i][j] == 0)
+	{
+		RenderManager::SetTile(j * 32, i * 32, 2, ren, TileTexture);
+	}
+	else
+	{
+		RenderManager::SetTile(j * 32, i * 32, 6, ren, TileTexture);
+	}
+	if (textureLocation[i][j] == 2) {
+		RenderManager::SetTile(j * 32, i * 32, 7, ren, TileTexture);
+	}
+	if (textureLocation[i][j] == 3) {
+		RenderManager::SetTile(j * 32, i * 32, 3, ren, TileTexture);
+	}
+	if (textureLocation[i][j] == 4) {
+		RenderManager::SetTile(j * 32, i * 32, 1, ren, TileTexture);
+	}
+	if (textureLocation[i][j] == 5) {
+		RenderManager::SetTile(j * 32, i * 32, 9, ren, TileTexture);
+	}
+	if (textureLocation[i][j] == 6) {
+		RenderManager::SetTile(j * 32, i * 32, 4, ren, TileTexture);
+	}
+	if (textureLocation[i][j] == 14) {
+		RenderManager::SetTile(j * 32, i * 32, 13, ren, TileTexture);
+	}
+	if (Dark[i][j] == 0) {
+		RenderManager::SetTile(j * 32, i * 32, 12, ren, TileTexture);
+	}
+}
+
+void Level::CastleRender(int y, int x) {
+	int i = y;
+	int j = x;
+	if (textureLocation[i][j] == 0)
+	{
+		RenderManager::SetTile(j * 32, i * 32, 6, ren, TileTextureCastle);
+	}
+	else
+	{
+		RenderManager::SetTile(j * 32, i * 32, 8, ren, TileTextureCastle);
+	}
+	if (textureLocation[i][j] == 2) {
+		RenderManager::SetTile(j * 32, i * 32, 9, ren, TileTextureCastle);
+	}
+	if (textureLocation[i][j] == 3) {
+		RenderManager::SetTile(j * 32, i * 32, 2, ren, TileTextureCastle);
+	}
+	if (textureLocation[i][j] == 4) {
+		RenderManager::SetTile(j * 32, i * 32, 3, ren, TileTextureCastle);
+	}
+	if (textureLocation[i][j] == 5) {
+		RenderManager::SetTile(j * 32, i * 32, 7, ren, TileTextureCastle);
+	}
+	if (textureLocation[i][j] == 6) {
+		RenderManager::SetTile(j * 32, i * 32, 1, ren, TileTextureCastle);
+	}
+	if (textureLocation[i][j] == 7) {
+		RenderManager::SetTile(j * 32, i * 32, 10, ren, TileTextureCastle);
+	}
+	if (textureLocation[i][j] == 8) {
+		RenderManager::SetTile(j * 32, i * 32, 11, ren, TileTextureCastle);
+	}
+	if (textureLocation[i][j] == 14) {
+		RenderManager::SetTile(j * 32, i * 32, 14, ren, TileTextureCastle);
+	}
+	if (Dark[i][j] == 0) {
+		RenderManager::SetTile(j * 32, i * 32, 12, ren, TileTexture);
+	}
+}
+
 void Level::Render()
 {
 	RenderManager::CopyToRender(PlayBackground, ren);
@@ -134,32 +229,7 @@ void Level::Render()
 		{
 			for (int j = 0; j < 32; j++)
 			{
-				if (textureLocation[i][j] == 0)
-				{
-					RenderManager::SetTile(j * 32, i * 32, 2, ren, TileTexture);
-				}
-				else
-				{
-					RenderManager::SetTile(j * 32, i * 32, 6, ren, TileTexture);
-				}
-				if (textureLocation[i][j] == 2) {
-					RenderManager::SetTile(j * 32, i * 32, 7, ren, TileTexture);
-				}
-				if (textureLocation[i][j] == 3) {
-					RenderManager::SetTile(j * 32, i * 32, 3, ren, TileTexture);
-				}
-				if (textureLocation[i][j] == 4) {
-					RenderManager::SetTile(j * 32, i * 32, 1, ren, TileTexture);
-				}
-				if (textureLocation[i][j] == 5) {
-					RenderManager::SetTile(j * 32, i * 32, 9, ren, TileTexture);
-				}
-				if (textureLocation[i][j] == 6) {
-					RenderManager::SetTile(j * 32, i * 32, 4, ren, TileTexture);
-				}
-				if (textureLocation[i][j] == 14) {
-					RenderManager::SetTile(j * 32, i * 32, 13, ren, TileTexture);
-				}
+				CaveRender(i, j);
 			}
 		}
 	}
@@ -169,45 +239,20 @@ void Level::Render()
 		{
 			for (int j = 0; j < 32; j++)
 			{
-				if (textureLocation[i][j] == 0)
-				{
-					RenderManager::SetTile(j * 32, i * 32, 6, ren, TileTextureCastle);
-				}
-				else
-				{
-					RenderManager::SetTile(j * 32, i * 32, 8, ren, TileTextureCastle);
-				}
-				if (textureLocation[i][j] == 2) {
-					RenderManager::SetTile(j * 32, i * 32, 9, ren, TileTextureCastle);
-				}
-				if (textureLocation[i][j] == 3) {
-					RenderManager::SetTile(j * 32, i * 32, 2, ren, TileTextureCastle);
-				}
-				if (textureLocation[i][j] == 4) {
-					RenderManager::SetTile(j * 32, i * 32, 3, ren, TileTextureCastle);
-				}
-				if (textureLocation[i][j] == 5) {
-					RenderManager::SetTile(j * 32, i * 32, 7, ren, TileTextureCastle);
-				}
-				if (textureLocation[i][j] == 6) {
-					RenderManager::SetTile(j * 32, i * 32, 1, ren, TileTextureCastle);
-				}
-				if (textureLocation[i][j] == 7) {
-					RenderManager::SetTile(j * 32, i * 32, 10, ren, TileTextureCastle);
-				}
-				if (textureLocation[i][j] == 8) {
-					RenderManager::SetTile(j * 32, i * 32, 11, ren, TileTextureCastle);
-				}
-				if (textureLocation[i][j] == 14) {
-					RenderManager::SetTile(j * 32, i * 32, 14, ren, TileTextureCastle);
-				}
+				CastleRender(i, j);
 			}
 		}
 	}
-	if (player != nullptr)
+	if (player != nullptr) {
 		player->Render();
-	if (enemy != nullptr)
-		enemy->Render();
+	}		
+	if (enemy != nullptr) {
+		if (Dark[EntityPosition::Coords[3]/32][EntityPosition::Coords[2]/32] == 0) {
+			RenderManager::SetTile(EntityPosition::Coords[2], EntityPosition::Coords[3], 12, ren, TileTexture);
+		} else{
+			enemy->Render();
+		}
+	}
 	uiItem->Render();
 	uiInfo->RenderVersion();
 	uiEquiped->Render();
@@ -279,7 +324,6 @@ void Level::Render()
 			exp->Update();
 		}
 	}
-
 	if (FlagManager::flagChest != 0) {
 
 		switch (FlagManager::flagChest) {
@@ -313,6 +357,12 @@ void Level::Render()
 			break;
 		}
 	}
+}
+
+//возможность изменять уровень из вне
+void Level::ChangeLevel(int x, int y, int LocationChange, int TextureChange) {
+	Location[x][y] = LocationChange;
+	textureLocation[x][y] = TextureChange;
 }
 
 //Обновление данных объектов

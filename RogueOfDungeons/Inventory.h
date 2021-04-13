@@ -58,6 +58,7 @@ class Inventory
 	//InventoryItem EquipedWeapon;
 public:
 	Inventory();
+	~Inventory();
 	int inventory[16]; // хранит в себе вcе айтемы и они лежат в inventoryFace ещё (он не static)
 	static int inventoryFace[16];
 	void AddItem(int id);

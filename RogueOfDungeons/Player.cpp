@@ -51,7 +51,7 @@ int Player::LCK[2] = {
 						1, /*STR  now*/
 						1, /*STR  previous*/
 					 };
-
+int Player::VIS = 2;
 Player::Player(SDL_Renderer* renderer)
 {
 	ren = renderer;

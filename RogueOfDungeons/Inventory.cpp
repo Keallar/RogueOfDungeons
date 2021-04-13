@@ -68,6 +68,10 @@ Inventory::Inventory()
 	}
 }
 
+Inventory::~Inventory() {
+
+}
+
 void Inventory::EquipItem(int i, int j) 
 {
 	//EquipedArmor = ExistingItems[i];

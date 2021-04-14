@@ -192,8 +192,8 @@ bool Enemy::WAY(int ax, int ay, int bx, int by)   // поиск пути из €чейки (ax, a
 
 void Enemy::Update()
 {
-	if ((abs(EntityPosition::Coords[2] / 32 - EntityPosition::Coords[0] / 32) +
-		abs(EntityPosition::Coords[3] / 32 - EntityPosition::Coords[1] / 32)) < 14){
+	/*if ((abs(EntityPosition::Coords[2] / 32 - EntityPosition::Coords[0] / 32) +
+		abs(EntityPosition::Coords[3] / 32 - EntityPosition::Coords[1] / 32)) < 14){*/
 		//движение enemy (поиск кратчайшего пути)
 		if ((abs(EntityPosition::Coords[2] / 32 - EntityPosition::Coords[0] / 32) +
 			abs(EntityPosition::Coords[3] / 32 - EntityPosition::Coords[1] / 32)) > 1 &&
@@ -209,7 +209,7 @@ void Enemy::Update()
 		Enemy::meleeAttackEnemy();
 
 		Enemy::CheckHpEnemy();
-	}
+	//}
 }
 
 void Enemy::meleeAttackEnemy()

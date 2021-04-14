@@ -19,18 +19,19 @@ private:
     int Location[22][32];
     SDL_Texture* PlayerTexture;
     SDL_Renderer* ren;
-    static int HP[3];
-    static int exp[3];
-    static int mana[3];
-    static int STR[2];
-    static int DEX[2];
-    static int INT[2];
-    static int PHS[2];
-    static int LCK[2];
     int damageInput;
 
     const Uint8* keys = SDL_GetKeyboardState(NULL);
 public: 
+	static int HP[3];
+	static int exp[3];
+	static int mana[3];
+	static int STR[2];
+	static int DEX[2];
+	static int INT[2];
+	static int PHS[2];
+	static int LCK[2];
+	static int VIS;
     static int damage;
     static Equiped EqItems;
     //static int Id; // UNDONE сделать getid

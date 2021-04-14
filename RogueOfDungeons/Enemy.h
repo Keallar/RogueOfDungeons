@@ -12,7 +12,11 @@ private:
 	SDL_Renderer* ren;
 	SDL_Texture* enemyTexture;
 	int xanim= 0, yanim = 0;
-	int framesOfAnim;
+	//Кол-во кадров для анимации
+	int framesOfAnimForAttack;
+	int framesOfAnimForMove;
+	int framesOfAnimaForIdle;
+
 	const int rows = 22, cols = 32;
 	int enemyLoc[22][32];
 	int count = 0;
@@ -32,7 +36,7 @@ private:
 public:
 	
 	Enemy() = default;
-	Enemy(const char* texturesheet, int framesOfAnimation,SDL_Renderer* ren, int HealthP, int MaxHealthP, int Damage, int EXPR);
+	Enemy(const char* texturesheet, int framesOfAnimationForAttack,SDL_Renderer* ren, int HealthP, int MaxHealthP, int Damage, int EXPR);
 	~Enemy() override;
 	void Update() override;
 	void GetLoc(int arr[22][32]);

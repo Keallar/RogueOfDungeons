@@ -1,7 +1,7 @@
 #include "Animation.h"
 #include "EntityPosition.h"
 
-Animation::Animation(SDL_Renderer* renderer) : ren(renderer)
+Animation::Animation(SDL_Renderer* renderer, SDL_Texture* texture) : ren(renderer), animTexture(texture)
 {
 	xanim = 0;
 	yanim = 0;
@@ -12,10 +12,10 @@ Animation::~Animation()
 	
 }
 
-//void Animation::Render()
-//{
-//	RenderManager::CopyToRender(enemyTexture, ren, EntityPosition::Coords[2], EntityPosition::Coords[3], 32, 32, xanim, yanim, 32, 32);
-//}
+void Animation::Render()
+{
+	RenderManager::CopyToRender(animTexture, ren, EntityPosition::Coords[2], EntityPosition::Coords[3], 32, 32, xanim, yanim, 32, 32);
+}
 
 int Animation::animationInstrForX(SDL_Texture* texture, int numOfFrames, bool complete)
 {
@@ -43,7 +43,7 @@ int Animation::animationInstrForY(SDL_Texture* texture, int numOfFrames, bool co
 	return yanim;
 }
 
-bool Animation::animationInstrForXCoord(SDL_Texture* texture, int numOfFrames, bool complete)
+bool Animation::animationInstrForXCoord(int numOfFrames, bool complete)
 {
 	if (xanim != 32 * numOfFrames)
 	{
@@ -55,8 +55,6 @@ bool Animation::animationInstrForXCoord(SDL_Texture* texture, int numOfFrames, b
 		xanim = 0;
 		complete = 1;
 	}
-
-	RenderManager::CopyToRender(texture, ren, EntityPosition::Coords[2], EntityPosition::Coords[3], 32, 32, xanim, yanim, 32, 32);
 
 	return complete;
 }

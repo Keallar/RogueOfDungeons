@@ -11,17 +11,17 @@ using namespace std;
 int Enemy::HP = 0;
 int Enemy::HpMax = 0;
 
-Enemy::Enemy(const char* texturesheet, int framesOfAnimation,SDL_Renderer* renderer, int HealthP, int MaxHealthP, int Damage, int EXPR)
+Enemy::Enemy(const char* texturesheet, int framesOfAnimationForAttack, SDL_Renderer* renderer, int HealthP, int MaxHealthP, int Damage, int EXPR)
 {
-	framesOfAnim = framesOfAnimation;
-	completeAnimation = 0;
 	expReward = EXPR;
 	HP = HealthP;
 	HpMax = MaxHealthP;
 	DMG = Damage;
 	ren = renderer;
 	enemyTexture = textureManager::LoadTexture(texturesheet, ren);
-	enemyAnimation = new Animation(ren);
+	enemyAnimation = new Animation(ren, enemyTexture);
+	framesOfAnimForAttack = framesOfAnimationForAttack;
+	completeAnimation = 0;
 }
 Enemy::~Enemy() 
 {
@@ -31,6 +31,7 @@ Enemy::~Enemy()
 void Enemy::Render() 
 {
 	RenderManager::CopyToRender(enemyTexture, ren, EntityPosition::Coords[2], EntityPosition::Coords[3], 32, 32, xanim, yanim, 32, 32);
+	enemyAnimation->Render();
 }
 
 void Enemy::clean()
@@ -220,14 +221,14 @@ void Enemy::attackOfEnemy()
 	//UNDONE придумать норм условие
 	if (completeAnimation == 0)
 	{
-		completeAnimation = enemyAnimation->animationInstrForXCoord(enemyTexture, framesOfAnim, completeAnimation);
+		completeAnimation = enemyAnimation->animationInstrForXCoord(framesOfAnimForAttack, completeAnimation);
 	}
 	else if (completeAnimation == 1)
 	{
-		Player::ChangeHpValue(Enemy::enemyDamageCalculation());
-		//std::cout << "Heat" << std::endl;
-		Player::playerTurn();
 		completeAnimation = 0;
+		Player::ChangeHpValue(Enemy::enemyDamageCalculation());
+		std::cout << "Heat" << std::endl;
+		Player::playerTurn();
 	}
 }
 

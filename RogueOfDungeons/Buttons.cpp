@@ -137,34 +137,40 @@ void MouseButtonsInLevel::buttonForIncPlayerSpec()
 {
 	SDL_GetMouseState(&mouseCoords.x, &mouseCoords.y);
 	//STR
-	if (FlagManager::flagUiSpec == 1 && InputManager::MouseInArea(1230, 80, 16, 20, mouseCoords.x, mouseCoords.y) &&
+	if (FlagManager::flagUiSpec == 1 && InputManager::MouseInArea(1230, 50, 16, 20, mouseCoords.x, mouseCoords.y) &&
 		FlagManager::flagSTR == 0)
 	{
 		Player::ChangeValueSpecs(1);
 	}
 	//DEX
-	if (FlagManager::flagUiSpec == 1 && InputManager::MouseInArea(1230, 110, 16, 20, mouseCoords.x, mouseCoords.y) &&
+	if (FlagManager::flagUiSpec == 1 && InputManager::MouseInArea(1230, 80, 16, 20, mouseCoords.x, mouseCoords.y) &&
 		FlagManager::flagDEX == 0)
 	{
 		Player::ChangeValueSpecs(2);
 	}
 	//INT
-	if (FlagManager::flagUiSpec == 1 && InputManager::MouseInArea(1230, 140, 16, 20, mouseCoords.x, mouseCoords.y) &&
+	if (FlagManager::flagUiSpec == 1 && InputManager::MouseInArea(1230, 110, 16, 20, mouseCoords.x, mouseCoords.y) &&
 		FlagManager::flagINT == 0)
 	{
 		Player::ChangeValueSpecs(3);
+	}
+	//WSD
+	if (FlagManager::flagUiSpec == 1 && InputManager::MouseInArea(1230, 140, 16, 20, mouseCoords.x, mouseCoords.y) &&
+		FlagManager::flagWSD == 0) 
+	{
+		Player::ChangeValueSpecs(4);
 	}
 	//PHS
 	if (FlagManager::flagUiSpec == 1 && InputManager::MouseInArea(1230, 170, 16, 20, mouseCoords.x, mouseCoords.y) &&
 		FlagManager::flagPHS == 0)
 	{
-		Player::ChangeValueSpecs(4);
+		Player::ChangeValueSpecs(5);
 	}
 	//LCK
 	if (FlagManager::flagUiSpec == 1 && InputManager::MouseInArea(1230, 200, 16, 20, mouseCoords.x, mouseCoords.y) &&
 		FlagManager::flagLCK == 0)
 	{
-		Player::ChangeValueSpecs(5);
+		Player::ChangeValueSpecs(6);
 	}
 }
 

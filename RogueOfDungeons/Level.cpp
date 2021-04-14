@@ -97,7 +97,7 @@ void Level::Update()
 			ChangeDark(i, j);
 		}
 	}
-	if (enemy == nullptr) {
+	if (enemyTurtle == nullptr) {
 		FlagManager::flagEnemy = 0;
 		FlagManager::flagPlayer = 1;
 	}
@@ -248,11 +248,11 @@ void Level::Render()
 	if (player != nullptr) {
 		player->Render();
 	}		
-	if (enemy != nullptr) {
+	if (enemyTurtle != nullptr) {
 		if (Dark[EntityPosition::Coords[3]/32][EntityPosition::Coords[2]/32] == 0) {
 			RenderManager::SetTile(EntityPosition::Coords[2], EntityPosition::Coords[3], 12, ren, TileTexture);
 		} else{
-			enemy->Render();
+			enemyTurtle->Render();
 		}
 	}
 	uiItem->Render();
@@ -281,14 +281,18 @@ if (FlagManager::flagUiSpec == 1)
 		uiSpec->Update(Player::GetSpecValue(3), 3);
 		mana->UpdateMax();
 	}
-	if (FlagManager::flagPHS == 1)
+	if (FlagManager::flagWSD == 1)
 	{
 		uiSpec->Update(Player::GetSpecValue(4), 4);
+	}
+	if (FlagManager::flagPHS == 1)
+	{
+		uiSpec->Update(Player::GetSpecValue(5), 5);
 		hp->UpdateMax();
 	}
 	if (FlagManager::flagLCK == 1)
 	{
-		uiSpec->Update(Player::GetSpecValue(5), 5);
+		uiSpec->Update(Player::GetSpecValue(6), 6);
 	}
 }
 

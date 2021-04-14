@@ -272,30 +272,35 @@ void UISpecifications::Render()
 	RenderManager::CopyToRender(specifcation, ren, 1075, 13, 160, 32);
 	RenderManager::CopyToRender(button, ren, 1230, 240, 32, 32);
 	//STR
-	RenderManager::CopyToRender(STR, ren, 1050, 80, 64, 20);
-	RenderManager::CopyToRender(plus, ren, 1230, 80, 16, 20);
-	RenderManager::CopyToRender(valueSTR, ren, 1180, 80, 16, 20);
-	RenderManager::CopyToRender(one, ren, 1250, 80, 16, 20);
+	RenderManager::CopyToRender(STR, ren, 1050, 50, 64, 20);
+	RenderManager::CopyToRender(plus, ren, 1230, 50, 16, 20);
+	RenderManager::CopyToRender(valueSTR, ren, 1180, 50, 16, 20);
+	RenderManager::CopyToRender(one, ren, 1250, 50, 16, 20);
 	//DEX
-	RenderManager::CopyToRender(DEX, ren, 1050, 110, 64, 20);
-	RenderManager::CopyToRender(plus, ren, 1230, 110, 16, 20);
-	RenderManager::CopyToRender(valueDEX, ren, 1180, 110, 16, 20);
-	RenderManager::CopyToRender(two, ren, 1250, 110, 16, 20);
+	RenderManager::CopyToRender(DEX, ren, 1050, 80, 64, 20);
+	RenderManager::CopyToRender(plus, ren, 1230, 80, 16, 20);
+	RenderManager::CopyToRender(valueDEX, ren, 1180, 80, 16, 20);
+	RenderManager::CopyToRender(two, ren, 1250, 80, 16, 20);
 	//INT
-	RenderManager::CopyToRender(INT, ren, 1050, 140, 64, 20);
+	RenderManager::CopyToRender(INT, ren, 1050, 110, 64, 20);
+	RenderManager::CopyToRender(plus, ren, 1230, 110, 16, 20);
+	RenderManager::CopyToRender(valueINT, ren, 1180, 110, 16, 20);
+	RenderManager::CopyToRender(three, ren, 1250, 110, 16, 20);
+	//WSD
+	RenderManager::CopyToRender(WSD, ren, 1050, 140, 64, 20);
 	RenderManager::CopyToRender(plus, ren, 1230, 140, 16, 20);
-	RenderManager::CopyToRender(valueINT, ren, 1180, 140, 16, 20);
-	RenderManager::CopyToRender(three, ren, 1250, 140, 16, 20);
+	RenderManager::CopyToRender(valueWSD, ren, 1180, 140, 16, 20);
+	RenderManager::CopyToRender(four, ren, 1250, 140, 16, 20);
 	//PHS
 	RenderManager::CopyToRender(PHS, ren, 1050, 170, 64, 20);
 	RenderManager::CopyToRender(plus, ren, 1230, 170, 16, 20);
 	RenderManager::CopyToRender(valuePHS, ren, 1180, 170, 16, 20);
-	RenderManager::CopyToRender(four, ren, 1250, 170, 16, 20);
+	RenderManager::CopyToRender(five, ren, 1250, 170, 16, 20);
 	//LCK
 	RenderManager::CopyToRender(LCK, ren, 1050, 200, 64, 20);
 	RenderManager::CopyToRender(plus, ren, 1230, 200, 16, 20);
 	RenderManager::CopyToRender(valueLCK, ren, 1180, 200, 16, 20);
-	RenderManager::CopyToRender(five, ren, 1250, 200, 16, 20);
+	RenderManager::CopyToRender(six, ren, 1250, 200, 16, 20);
 }
 
 void UISpecifications::Update()
@@ -336,6 +341,15 @@ void UISpecifications::Update(int value, int num)
 	}
 	case 4:
 	{
+		SDL_DestroyTexture(valueWSD);
+		valueWSD = 0;
+		std::string stringTemp = std::to_string(value);
+		const char* CHAR_VALUE = stringTemp.c_str();
+		valueWSD = FontManager::renderText(CHAR_VALUE, PATH_IN_FONT, color, 32, ren);
+		break;
+	}
+	case 5:
+	{
 		SDL_DestroyTexture(valuePHS);
 		valuePHS = 0;
 		std::string stringTemp = std::to_string(value);
@@ -343,7 +357,7 @@ void UISpecifications::Update(int value, int num)
 		valuePHS = FontManager::renderText(CHAR_VALUE, PATH_IN_FONT, color, 32, ren);
 		break;
 	}
-	case 5: 
+	case 6: 
 	{
 		SDL_DestroyTexture(valueLCK);
 		valueLCK = 0;

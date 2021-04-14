@@ -55,6 +55,7 @@ public:
 	static bool flagSTR;
 	static bool flagDEX;
 	static bool flagINT;
+	static bool flagWSD;
 	static bool flagPHS;
 	static bool flagLCK;
 	static int flagEquip;

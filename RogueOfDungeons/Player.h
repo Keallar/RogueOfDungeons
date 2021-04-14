@@ -29,6 +29,7 @@ public:
 	static int STR[2];
 	static int DEX[2];
 	static int INT[2];
+    static int WSD[2];
 	static int PHS[2];
 	static int LCK[2];
 	static int VIS;

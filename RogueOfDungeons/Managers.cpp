@@ -162,6 +162,7 @@ int FlagManager::flagEquip = -1;
 bool FlagManager::flagSTR = 0;
 bool FlagManager::flagDEX = 0;
 bool FlagManager::flagINT = 0;
+bool FlagManager::flagWSD = 0;
 bool FlagManager::flagPHS = 0;
 bool FlagManager::flagLCK = 0;
 

@@ -2,6 +2,7 @@
 #include "SDL.h"
 #include "inventory.h"
 #include "GameObject.h"
+#include "Animation.h"
 
 struct Equiped 
 {
@@ -20,6 +21,7 @@ private:
     SDL_Texture* PlayerTexture;
     SDL_Renderer* ren;
     int damageInput;
+    Animation* playerAnimation;
 
     const Uint8* keys = SDL_GetKeyboardState(NULL);
 public: 
@@ -29,6 +31,7 @@ public:
 	static int STR[2];
 	static int DEX[2];
 	static int INT[2];
+    static int WSD[2];
 	static int PHS[2];
 	static int LCK[2];
 	static int VIS;
@@ -62,7 +65,7 @@ public:
     static void ChangeMaxManaValue();
     static void ChangeMaxExpValue();
 
-    static void playerTurn();//UNDONE
+    static void playerTurn();
 
     static void CheckHP();
     static void CheckEXP();

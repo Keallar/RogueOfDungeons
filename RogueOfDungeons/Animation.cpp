@@ -1,58 +1,59 @@
 #include "Animation.h"
+#include "EntityPosition.h"
 
-
-Animation::Animation(SDL_Renderer* renderer) : ren(renderer)
+Animation::Animation(SDL_Renderer* renderer, SDL_Texture* texture) : 
+	ren(renderer), animTexture(texture)
 {
-	xanimPlayer = 0;
-	yanimPlayer = 0;
-	xanimTurtle = 0;
-	yanimTurtle = 0;
-	xanimAboba = 0;
-	yanimAboba = 0;
-	playerAnimation = textureManager::LoadTexture("images/Player.png", ren);
-	enemyTurtleAnimation = textureManager::LoadTexture("images/Turtle..png", ren);
-	enemyAbobaAnimation = textureManager::LoadTexture("images/ABOBA.png", ren);
+	xanim = 0;
+	yanim = 0;
 }
 
 Animation::~Animation()
 {
-	SDL_DestroyTexture(playerAnimation);
-	SDL_DestroyTexture(enemyTurtleAnimation);
-	SDL_DestroyTexture(enemyAbobaAnimation);
-}
-
-void Animation::animationForPlayer()
-{
-	if (xanimPlayer != 96)
-	{
-		xanimPlayer += 32;
-	}
-	else if (xanimPlayer == 96)
-	{
 	
-	}
 }
 
-void Animation::animationForTurtle()
+void Animation::Render(int xposition, int yposition)
 {
-	if (xanimTurtle != 96)
-	{
-		xanimTurtle += 32;
-	}
-	else if (xanimTurtle == 96)
-	{
-		xanimTurtle = 0;
-	}	
+	RenderManager::CopyToRender(animTexture, ren, xposition, yposition, 32, 32, xanim, yanim, 32, 32);
 }
 
-void Animation::animationForAboba()
+void Animation::UpdateTexture(const char* newTexture)
 {
-	if (xanimAboba != 96)
-	{
-
-	}
-	else if (xanimAboba == 96)
-	{
-
-	}
+	SDL_DestroyTexture(animTexture);
+	animTexture = 0;
+	animTexture = textureManager::LoadTexture(newTexture, ren);
 }
+
+bool Animation::animationInstrForX(int numOfFrames, bool complete)
+{
+	if (xanim != 32 * numOfFrames)
+	{
+		xanim += 32;
+		complete = 0;
+	}
+	else
+	{
+		xanim = 0;
+		complete = 1;
+	}
+
+	return complete;
+}
+
+bool Animation::animationInstrForY(int numOfFrames, bool complete)
+{
+	if (yanim != 32 * numOfFrames)
+	{
+		yanim += 32;
+		complete = 0;
+	}
+	else
+	{
+		yanim = 0;
+		complete = 1;
+	}
+
+	return complete;
+}
+

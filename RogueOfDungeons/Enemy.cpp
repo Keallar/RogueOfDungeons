@@ -4,13 +4,14 @@
 #include <iostream>
 #include "EntityPosition.h"
 #include "Inventory.h"
+#include "Animation.h"
 
 using namespace std;
 
 int Enemy::HP = 0;
 int Enemy::HpMax = 0;
 
-Enemy::Enemy(const char* texturesheet, SDL_Renderer* renderer, int HealthP, int MaxHealthP, int Damage, int EXPR)
+Enemy::Enemy(const char* texturesheet, int framesOfAnimationForAttack, SDL_Renderer* renderer, int HealthP, int MaxHealthP, int Damage, int EXPR)
 {
 	expReward = EXPR;
 	HP = HealthP;
@@ -18,6 +19,9 @@ Enemy::Enemy(const char* texturesheet, SDL_Renderer* renderer, int HealthP, int 
 	DMG = Damage;
 	ren = renderer;
 	enemyTexture = textureManager::LoadTexture(texturesheet, ren);
+	enemyAnimation = new Animation(ren, enemyTexture);
+	framesOfAnimForAttack = framesOfAnimationForAttack;
+	completeAnimation = 0;
 }
 Enemy::~Enemy() 
 {
@@ -26,7 +30,7 @@ Enemy::~Enemy()
 
 void Enemy::Render() 
 {
-	RenderManager::CopyToRender(enemyTexture, ren, EntityPosition::Coords[2], EntityPosition::Coords[3], 32, 32, xanim, yanim, 32, 32);
+	enemyAnimation->Render(EntityPosition::Coords[2], EntityPosition::Coords[3]);
 }
 
 void Enemy::clean()
@@ -62,7 +66,6 @@ void Enemy::CheckHpEnemy()
 		}
 		else if (iter == 1)
 		{
-			//UNDONE сделать удаление enemy
 			FlagManager::flagEnemy = 0;
 			FlagManager::flagMeleeAttackEnemy = 0;
 		}
@@ -212,6 +215,31 @@ void Enemy::Update()
 	//}
 }
 
+void Enemy::attackOfEnemy()
+{
+	//UNDONE придумать норм условие
+	if (completeAnimation == 0)
+	{
+		completeAnimation = enemyAnimation->animationInstrForX(framesOfAnimForAttack, completeAnimation);
+	}
+	else if (completeAnimation == 1)
+	{
+		completeAnimation = 0;
+		Player::ChangeHpValue(-Enemy::enemyDamageCalculation());
+		std::cout << "Heat" << std::endl;
+		Player::playerTurn();
+	}
+}
+
+void Enemy::enemyTurn()
+{
+	FlagManager::flagPlayer = 0;
+	FlagManager::flagMeleeAttackPlayer = 0;
+	FlagManager::flagRangeAttack = 0;
+	FlagManager::flagEnemy = 1;
+	FlagManager::flagMeleeAttackEnemy = 1;
+}
+
 void Enemy::meleeAttackEnemy()
 {
 	//атака enemy первым, если игрок первый подошёл 
@@ -225,41 +253,19 @@ void Enemy::meleeAttackEnemy()
 			(EntityPosition::Coords[2] == EntityPosition::Coords[0] - 32))) &&
 		(FlagManager::flagMeleeAttackEnemy == 1 && FlagManager::flagEnemy == 1))
 	{
-		FlagManager::flagPlayer = 0;
-		FlagManager::flagMeleeAttackPlayer = 0;
-		FlagManager::flagMeleeAttackEnemy = 1;
-		FlagManager::flagEnemy = 1;
+		Enemy::enemyTurn();
 		
-		Enemy::animOfAttack();
+		Enemy::attackOfEnemy();
 	}
 	else
 	{
-		FlagManager::flagPlayer = 1;
-		FlagManager::flagMeleeAttackPlayer = 1;
-		FlagManager::flagEnemy = 0;
-		FlagManager::flagMeleeAttackEnemy = 0;
+		Player::playerTurn();
 	}
 }
 
 int Enemy::getDamageEnemy()
 {
 	return DMG;
-}
-
-void Enemy::animOfAttack()
-{
-	if (xanim != 96)
-	{
-		xanim += 32;
-	}
-	else if (xanim == 96)
-	{
-		Player::ChangeHpValue(Enemy::enemyDamageCalculation());
-		std::cout << "Heat" << std::endl;
-		xanim = 0;
-		
-		Player::playerTurn();
-	}
 }
 
 int Enemy::enemyDamageCalculation()
@@ -269,13 +275,4 @@ int Enemy::enemyDamageCalculation()
 	else
 		outputDamageEnemy = getDamageEnemy();
 	return outputDamageEnemy;
-}
-
-void Enemy::enemyTurn()
-{
-	FlagManager::flagPlayer = 0;
-	FlagManager::flagMeleeAttackPlayer = 0;
-	FlagManager::flagRangeAttack = 0;
-	FlagManager::flagEnemy = 1;
-	FlagManager::flagMeleeAttackEnemy = 1;
 }

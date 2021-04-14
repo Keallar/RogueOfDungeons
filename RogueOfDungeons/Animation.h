@@ -2,23 +2,20 @@
 #include "Managers.h"
 #include "SDL.h"
 #include "SDL_image.h"
-#include <map>
 
 class Animation
 {
 private:
 	SDL_Renderer* ren;
-	SDL_Texture* playerAnimation;
-	int xanimPlayer, yanimPlayer;
-	SDL_Texture* enemyTurtleAnimation;
-	int xanimTurtle, yanimTurtle;
-	SDL_Texture* enemyAbobaAnimation;
-	int xanimAboba, yanimAboba;
+	SDL_Texture* animTexture;
+	int xanim, yanim;
+	int xpos, ypos;
 public:
-	Animation(SDL_Renderer* renderer);
+	Animation(SDL_Renderer* renderer, SDL_Texture* texture);
 	~Animation();
-	void animationForPlayer();
-	void animationForTurtle();
-	void animationForAboba();
+	void Render(int xposition, int yposition);
+	void UpdateTexture(const char* newTexture); //Добавлять этот метод всегда, когда меняете текстуру чего-то
+	bool animationInstrForX(int numOfFrames, bool complete);
+	bool animationInstrForY(int numOfFrames, bool complete);
 };
 

@@ -2,6 +2,7 @@
 #include "SDL.h"
 #include <vector>
 #include "GameObject.h"
+#include "Animation.h"
 
 class Enemy : public GameObject
 {
@@ -11,6 +12,11 @@ private:
 	SDL_Renderer* ren;
 	SDL_Texture* enemyTexture;
 	int xanim= 0, yanim = 0;
+	//Кол-во кадров для анимации
+	int framesOfAnimForAttack;
+	int framesOfAnimForMove;
+	int framesOfAnimaForIdle;
+
 	const int rows = 22, cols = 32;
 	int enemyLoc[22][32];
 	int count = 0;
@@ -24,10 +30,13 @@ private:
 	int len;                       // длина пути
 
 	int outputDamageEnemy;
+
+	bool completeAnimation;
+	Animation* enemyAnimation;
 public:
 	
 	Enemy() = default;
-	Enemy(const char* texturesheet, SDL_Renderer* ren, int HealthP, int MaxHealthP, int Damage, int EXPR);
+	Enemy(const char* texturesheet, int framesOfAnimationForAttack,SDL_Renderer* ren, int HealthP, int MaxHealthP, int Damage, int EXPR);
 	~Enemy() override;
 	void Update() override;
 	void GetLoc(int arr[22][32]);
@@ -38,9 +47,9 @@ public:
 	void GetEnemyFirstCoords();
 	
 	void meleeAttackEnemy();
-	void animOfAttack();
+	void attackOfEnemy();
 	int enemyDamageCalculation();
-	static void enemyTurn(); //UNDONE
+	static void enemyTurn(); 
 	int getDamageEnemy();
 
 	static int HP;

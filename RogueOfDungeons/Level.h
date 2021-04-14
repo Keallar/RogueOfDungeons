@@ -34,13 +34,14 @@ private:
 	SDL_Texture* PlayBackground;
 	SDL_Renderer* ren;
 	Player* player;
-	Enemy* enemy;
+	Enemy* enemyTurtle;
 	UiHpEnemyInfo* enemyHpInfo;
 	UIInfo* uiInfo;
 	UIItem* uiItem;
 	UIEnemyInfo* uiEnemy;
 	UISpecifications* uiSpec;
 	UIEquipedItem* uiEquiped;
+	Animation* animation;
 	std::vector <Enemy> enemies;
 	UIInventory* uiInv;
 	//std::vector <GameObject> textures; 

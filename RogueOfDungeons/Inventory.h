@@ -9,7 +9,7 @@ enum type
 	weapon,
 	rWeapon,
 	armor,
-	other
+	potion
 };
 
 class InventoryItem 
@@ -50,6 +50,13 @@ private:
 public:
 	armorItem(int Defence, type type, const char* WeapTex, std::string Name);
 	int DEF;
+};
+
+class Potion : public InventoryItem {
+public:
+	int HEAL;
+	int MpHEAL;
+	Potion(int Heal, int MpHeal, type type, const char* WeapTex, std::string Name);
 };
 
 class Inventory

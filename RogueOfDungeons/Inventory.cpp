@@ -22,6 +22,8 @@ Inventory::Inventory()
 		int CHS;
 		int dCHS;
 		int DEF;
+		int HEAL;
+		int MpHEAL;
 		file >> Type;
 		if (Type == "weapon") {
 			file >> DMG;
@@ -59,6 +61,18 @@ Inventory::Inventory()
 			file >> Name;
 			type ItemType = armor;
 			ExistingItems[ItemNumber] = new armorItem(DEF, ItemType, Tex, Name);
+		}
+		if (Type == "potion") {
+			file >> HEAL;
+			file >> MpHEAL;
+			file >> WeapTex;
+			char* Tex = new char[WeapTex.length() + 1];
+			for (int i = 0; i <= WeapTex.length(); i++) {
+				Tex[i] = WeapTex[i];
+			}
+			file >> Name;
+			type ItemType = potion;
+			ExistingItems[ItemNumber] = new Potion(HEAL, MpHEAL, ItemType, Tex, Name);
 		}
 		ItemNumber++;
 	}
@@ -140,5 +154,13 @@ armorItem::armorItem(int Defence, type type, const char* WeapTex, std::string Na
 	DEF = Defence;
 	ItemTexture = WeapTex;
 	Type = type;
+	name = Name;
+}
+
+Potion::Potion(int Heal, int MpHeal, type type, const char* WeapTex, std::string Name) {
+	Type = type;
+	ItemTexture = WeapTex;
+	HEAL = Heal;
+	MpHEAL = MpHeal;
 	name = Name;
 }

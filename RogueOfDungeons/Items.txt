@@ -4,3 +4,5 @@ weapon 1 1 images/Punch.png Punch
 rWeapon 1 4 60 15 images/ShortBow.png ShortBow
 rWeapon 2 5 50 10 images/FireBall.png FireBall
 armor 1 images/LetherArmor.png LetherArmor
+potion 4 0 images/SmallHpPotion.png SmallHpPotion
+potion 0 4 images/SmallMpPotion.png SmallMpPotion

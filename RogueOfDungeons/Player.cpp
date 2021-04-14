@@ -67,6 +67,8 @@ Player::Player(SDL_Renderer* renderer)
 	inventory->AddItem(1);
 	inventory->AddItem(5);
 	inventory->AddItem(3);
+	inventory->AddItem(6);
+	inventory->AddItem(7);
 	inventory->Update();
 }
 
@@ -386,6 +388,11 @@ void Player::GetItemEquip(int id) {
 				PlayerTexture = 0;
 				PlayerTexture = textureManager::LoadTexture("images/HeroLether.png", ren);
 			}
+		}
+		if (Inventory::ExistingItems[ItemId]->Type == potion) {
+			std::cout << "HP" << std::endl;
+			std::cout << "MP" << std::endl;
+			inventory->inventory[id] = -1;
 		}
 	}
 	FlagManager::flagEquip = -1;

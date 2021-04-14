@@ -111,16 +111,25 @@ private:
 	SDL_Color color;
 	SDL_Texture* specBlock;
 	SDL_Texture* specifcation;
+	//STR
 	SDL_Texture* STR;
 	SDL_Texture* valueSTR;
+	//DEX
 	SDL_Texture* DEX;
 	SDL_Texture* valueDEX;
+	//INT
 	SDL_Texture* INT;
 	SDL_Texture* valueINT;
-	SDL_Texture* PHS; //Physical Strength
+	//WSD (WISDOM)
+	SDL_Texture* WSD;
+	SDL_Texture* valueWSD;
+	//PHS (Physical Strength)
+	SDL_Texture* PHS; 
 	SDL_Texture* valuePHS;
+	//LCK
 	SDL_Texture* LCK;
 	SDL_Texture* valueLCK;
+	//other
 	SDL_Texture* button;
 	SDL_Texture* plus;
 	SDL_Texture* one;
@@ -128,6 +137,7 @@ private:
 	SDL_Texture* three;
 	SDL_Texture* four;
 	SDL_Texture* five;
+	SDL_Texture* six;
 
 public:
 	UISpecifications(SDL_Renderer* renderer);

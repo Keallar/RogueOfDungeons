@@ -15,7 +15,9 @@ public:
 	~Animation();
 	void Render(int xposition, int yposition);
 	void UpdateTexture(const char* newTexture); //Добавлять этот метод всегда, когда меняете текстуру чего-то
-	bool animationInstrForX(int numOfFrames, bool complete);
-	bool animationInstrForY(int numOfFrames, bool complete);
+	bool animationPlusForX(int numOfFrames, bool complete);
+	bool animationPlusForY(int numOfFrames, bool complete);
+	bool animationMinusForX(int numOfFrames, bool complete);
+	bool animationMinusForY(int numOfFrames, bool complete);
 };
 

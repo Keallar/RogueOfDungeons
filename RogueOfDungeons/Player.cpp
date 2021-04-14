@@ -180,12 +180,12 @@ void Player::ChangeValueSpecs(int numOfSpec)
 
 void Player::ChangeHpValue(int valueOfChangingHp)
 {
-	HP[0] -= valueOfChangingHp;
+	HP[0] += valueOfChangingHp;
 }
 
 void Player::ChangeManaValue(int valueOfChangingMana)
 {
-	mana[0] -= valueOfChangingMana;
+	mana[0] += valueOfChangingMana;
 }
 
 void Player::ChangeExpValue(int valueOfChangingExp)
@@ -390,8 +390,8 @@ void Player::GetItemEquip(int id) {
 			}
 		}
 		if (Inventory::ExistingItems[ItemId]->Type == potion) {
-			std::cout << "HP" << std::endl;
-			std::cout << "MP" << std::endl;
+			ChangeHpValue(static_cast<Potion*>(Inventory::ExistingItems[ItemId])->HEAL);
+			ChangeManaValue(static_cast<Potion*>(Inventory::ExistingItems[ItemId])->MpHEAL);
 			inventory->inventory[id] = -1;
 		}
 	}

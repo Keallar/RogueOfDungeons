@@ -9,13 +9,13 @@ private:
 	SDL_Renderer* ren;
 	SDL_Texture* animTexture;
 	int xanim, yanim;
+	int xpos, ypos;
 public:
 	Animation(SDL_Renderer* renderer, SDL_Texture* texture);
 	~Animation();
-	void Render();
-	int animationInstrForX(SDL_Texture* texture, int numOfFrames, bool complete);
-	int animationInstrForY(SDL_Texture* texture, int numOfFrames, bool complete);
-	bool animationInstrForXCoord(int numOfFrames, bool complete);
-	void animationInstrForYCoord(SDL_Texture* texture, int numOfFrames, bool complete);
+	void Render(int xposition, int yposition);
+	void UpdateTexture(const char* newTexture); //Добавлять этот метод всегда, когда меняете текстуру чего-то
+	bool animationInstrForX(int numOfFrames, bool complete);
+	bool animationInstrForY(int numOfFrames, bool complete);
 };
 

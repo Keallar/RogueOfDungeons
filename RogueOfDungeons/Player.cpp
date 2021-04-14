@@ -65,11 +65,14 @@ Player::Player(SDL_Renderer* renderer)
 {
 	ren = renderer;
 	PlayerTexture = textureManager::LoadTexture("images/Hero.png", ren);
+	playerAnimation = new Animation(ren, PlayerTexture);
+
 	for (int i = 0; i < 22; i++) {
 		for (int j = 0; j < 32; j++) {
 			Location[i][j] = 0;
 		}
 	}
+
 	inventory = new Inventory;
 	
 	inventory->AddItem(0);
@@ -192,17 +195,19 @@ void Player::ChangeValueSpecs(int numOfSpec)
 	}
 }
 
-
+//Изменение текущего значения hp
 void Player::ChangeHpValue(int valueOfChangingHp)
-{
-	HP[0] -= valueOfChangingHp;
+{	
+	HP[0] += valueOfChangingHp;
 }
 
+//Изменение текущего значения mana
 void Player::ChangeManaValue(int valueOfChangingMana)
 {
-	mana[0] -= valueOfChangingMana;
+	mana[0] += valueOfChangingMana;
 }
 
+//Изменение текущего значения exp
 void Player::ChangeExpValue(int valueOfChangingExp)
 {
 	exp[0] += valueOfChangingExp;
@@ -372,25 +377,33 @@ void Player::GetPlayerFirstCoords()
 	}
 }
 
-void Player::GetItemEquip(int id) {
-	if (id != -1) {
+void Player::GetItemEquip(int id) 
+{
+	if (id != -1)
+	{
 		int ItemId = inventory->inventory[id];
-		if (Inventory::ExistingItems[ItemId]->Type == weapon) {
-			if (EqItems.WeaponId != -1) {
+		if (Inventory::ExistingItems[ItemId]->Type == weapon) 
+		{
+			if (EqItems.WeaponId != -1) 
+			{
 				inventory->inventory[id] = EqItems.WeaponId;
 			}
-			else {
+			else
+			{
 				inventory->inventory[id] = -1;
 			}
 			EqItems.WeaponId = ItemId;
 			EqItems.equipedMeleeW = inventory->GetRealMelee(ItemId);
 			EqItems.equipedRangeW = nullptr;
 		}
-		if (Inventory::ExistingItems[ItemId]->Type == rWeapon) {
-			if (EqItems.WeaponId != -1) {
+		if (Inventory::ExistingItems[ItemId]->Type == rWeapon) 
+		{
+			if (EqItems.WeaponId != -1) 
+			{
 				inventory->inventory[id] = EqItems.WeaponId;
 			}
-			else {
+			else 
+			{
 				inventory->inventory[id] = -1;
 			}
 			EqItems.WeaponId = ItemId;
@@ -398,11 +411,13 @@ void Player::GetItemEquip(int id) {
 			EqItems.equipedRangeW = inventory->GetRealRange(ItemId);
 			EqItems.equipedMeleeW = nullptr;
 		}
-		if (Inventory::ExistingItems[ItemId]->Type == armor) {
+		if (Inventory::ExistingItems[ItemId]->Type == armor) 
+		{
 			if (EqItems.WeaponId != -1) {
 				inventory->inventory[id] = EqItems.ArmorId;
 			}
-			else {
+			else 
+			{
 				inventory->inventory[id] = -1;
 			}
 			EqItems.ArmorId = ItemId;
@@ -413,9 +428,11 @@ void Player::GetItemEquip(int id) {
 				SDL_DestroyTexture(PlayerTexture);
 				PlayerTexture = 0;
 				PlayerTexture = textureManager::LoadTexture("images/HeroLether.png", ren);
+				playerAnimation->UpdateTexture("images/HeroLether.png");
 			}
 		}
-		if (Inventory::ExistingItems[ItemId]->Type == potion) {
+		if (Inventory::ExistingItems[ItemId]->Type == potion) 
+		{
 			std::cout << "HP" << std::endl;
 			std::cout << "MP" << std::endl;
 			inventory->inventory[id] = -1;
@@ -431,7 +448,7 @@ void Player::GetItemOnLvl(int id)
 
 void Player::Render()
 {
-	RenderManager::CopyToRender(PlayerTexture, ren, EntityPosition::Coords[0], EntityPosition::Coords[1], 32, 32, 0, 0, 32, 32);
+	playerAnimation->Render(EntityPosition::Coords[0], EntityPosition::Coords[1]);
 	//std::cout << EqItems.equipedMeleeW << " "<< EqItems.equipedRangeW << " "<<EqItems.WeaponId << std::endl;
 	//Player::Id = EqItems.WeaponId;
 }

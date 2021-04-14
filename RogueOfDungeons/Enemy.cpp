@@ -30,8 +30,7 @@ Enemy::~Enemy()
 
 void Enemy::Render() 
 {
-	RenderManager::CopyToRender(enemyTexture, ren, EntityPosition::Coords[2], EntityPosition::Coords[3], 32, 32, xanim, yanim, 32, 32);
-	enemyAnimation->Render();
+	enemyAnimation->Render(EntityPosition::Coords[2], EntityPosition::Coords[3]);
 }
 
 void Enemy::clean()
@@ -221,12 +220,12 @@ void Enemy::attackOfEnemy()
 	//UNDONE придумать норм условие
 	if (completeAnimation == 0)
 	{
-		completeAnimation = enemyAnimation->animationInstrForXCoord(framesOfAnimForAttack, completeAnimation);
+		completeAnimation = enemyAnimation->animationInstrForX(framesOfAnimForAttack, completeAnimation);
 	}
 	else if (completeAnimation == 1)
 	{
 		completeAnimation = 0;
-		Player::ChangeHpValue(Enemy::enemyDamageCalculation());
+		Player::ChangeHpValue(-Enemy::enemyDamageCalculation());
 		std::cout << "Heat" << std::endl;
 		Player::playerTurn();
 	}

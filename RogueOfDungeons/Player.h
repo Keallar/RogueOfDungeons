@@ -2,6 +2,7 @@
 #include "SDL.h"
 #include "inventory.h"
 #include "GameObject.h"
+#include "Animation.h"
 
 struct Equiped 
 {
@@ -20,6 +21,7 @@ private:
     SDL_Texture* PlayerTexture;
     SDL_Renderer* ren;
     int damageInput;
+    Animation* playerAnimation;
 
     const Uint8* keys = SDL_GetKeyboardState(NULL);
 public: 

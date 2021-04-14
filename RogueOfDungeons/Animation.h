@@ -14,7 +14,7 @@ public:
 	void Render();
 	int animationInstrForX(SDL_Texture* texture, int numOfFrames, bool complete);
 	int animationInstrForY(SDL_Texture* texture, int numOfFrames, bool complete);
-	void animationInstrForXCoord(SDL_Texture* texture, int numOfFrames, bool complete);
+	bool animationInstrForXCoord(SDL_Texture* texture, int numOfFrames, bool complete);
 	void animationInstrForYCoord(SDL_Texture* texture, int numOfFrames, bool complete);
 };
 

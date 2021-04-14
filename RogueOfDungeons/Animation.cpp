@@ -43,18 +43,22 @@ int Animation::animationInstrForY(SDL_Texture* texture, int numOfFrames, bool co
 	return yanim;
 }
 
-void Animation::animationInstrForXCoord(SDL_Texture* texture, int numOfFrames, bool complete)
+bool Animation::animationInstrForXCoord(SDL_Texture* texture, int numOfFrames, bool complete)
 {
 	if (xanim != 32 * numOfFrames)
 	{
 		xanim += 32;
+		complete = 0;
 	}
 	else
 	{
 		xanim = 0;
+		complete = 1;
 	}
 
 	RenderManager::CopyToRender(texture, ren, EntityPosition::Coords[2], EntityPosition::Coords[3], 32, 32, xanim, yanim, 32, 32);
+
+	return complete;
 }
 
 void Animation::animationInstrForYCoord(SDL_Texture* texture, int numOfFrames, bool complete)

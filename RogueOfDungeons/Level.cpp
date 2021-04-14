@@ -255,113 +255,117 @@ void Level::Render()
 			enemyTurtle->Render();
 		}
 	}
-	uiItem->Render();
-	uiInfo->RenderVersion();
-	uiEquiped->Render();
+
+	//ALL UI
+	{
+		uiItem->Render();
+		uiInfo->RenderVersion();
+		uiEquiped->Render();
 
 		if (FlagManager::flagInv == 1)
 		{
 			uiInv->Render();
 		}
 
-if (FlagManager::flagUiSpec == 1)
-{
-	uiSpec->Render();
+		if (FlagManager::flagUiSpec == 1)
+		{
+			uiSpec->Render();
 
-	if (FlagManager::flagSTR == 1)
-	{
-		uiSpec->Update(Player::GetSpecValue(1), 1);
-	}
-	if (FlagManager::flagDEX == 1)
-	{
-		uiSpec->Update(Player::GetSpecValue(2), 2);
-	}
-	if (FlagManager::flagINT == 1)
-	{
-		uiSpec->Update(Player::GetSpecValue(3), 3);
-		mana->UpdateMax();
-	}
-	if (FlagManager::flagWSD == 1)
-	{
-		uiSpec->Update(Player::GetSpecValue(4), 4);
-	}
-	if (FlagManager::flagPHS == 1)
-	{
-		uiSpec->Update(Player::GetSpecValue(5), 5);
-		hp->UpdateMax();
-	}
-	if (FlagManager::flagLCK == 1)
-	{
-		uiSpec->Update(Player::GetSpecValue(6), 6);
-	}
-}
+			if (FlagManager::flagSTR == 1)
+			{
+				uiSpec->Update(Player::GetSpecValue(1), 1);
+			}
+			if (FlagManager::flagDEX == 1)
+			{
+				uiSpec->Update(Player::GetSpecValue(2), 2);
+			}
+			if (FlagManager::flagINT == 1)
+			{
+				uiSpec->Update(Player::GetSpecValue(3), 3);
+				mana->UpdateMax();
+			}
+			if (FlagManager::flagWSD == 1)
+			{
+				uiSpec->Update(Player::GetSpecValue(4), 4);
+			}
+			if (FlagManager::flagPHS == 1)
+			{
+				uiSpec->Update(Player::GetSpecValue(5), 5);
+				hp->UpdateMax();
+			}
+			if (FlagManager::flagLCK == 1)
+			{
+				uiSpec->Update(Player::GetSpecValue(6), 6);
+			}
+		}
 
-if (FlagManager::flagUI == 1)
-{
-	uiInfo->Render();
-	hp->Render();
-	mana->Render();
-	exp->Render();
+		if (FlagManager::flagUI == 1)
+		{
+			uiInfo->Render();
+			hp->Render();
+			mana->Render();
+			exp->Render();
 
-	if (FlagManager::flagCheckHpEnemy == 1)
-	{
-		enemyHpInfo->Update();
-	}
+			if (FlagManager::flagCheckHpEnemy == 1)
+			{
+				enemyHpInfo->Update();
+			}
 
-	if (FlagManager::flagUiEnemy == 1)
-	{
-		uiEnemy->Render();
-		enemyHpInfo->Render();
-	}
+			if (FlagManager::flagUiEnemy == 1)
+			{
+				uiEnemy->Render();
+				enemyHpInfo->Render();
+			}
 
-	//Update значений hp, mana и  exp
-	if (FlagManager::flagCheckHP == 1)
-	{
-		hp->Update();
-	}
+			//Update значений hp, mana и  exp
+			if (FlagManager::flagCheckHP == 1)
+			{
+				hp->Update();
+			}
 
-	if (FlagManager::flagCheckMana == 1)
-	{
-		mana->Update();
-	}
+			if (FlagManager::flagCheckMana == 1)
+			{
+				mana->Update();
+			}
 
-	if (FlagManager::flagCheckExp == 1)
-	{
-		exp->Update();
-	}
-}
+			if (FlagManager::flagCheckExp == 1)
+			{
+				exp->Update();
+			}
+		}
 
-if (FlagManager::flagChest != 0) {
+		if (FlagManager::flagChest != 0) {
 
-		switch (FlagManager::flagChest) {
-		case 1:
-			textureLocation[(EntityPosition::Coords[1]) / 32 - 1][(EntityPosition::Coords[0]) / 32] = 0;
-			Location[(EntityPosition::Coords[1]) / 32 - 1][(EntityPosition::Coords[0]) / 32] = 0;
-			player->GetItemOnLvl(itemsOnLvl[itemsHave]);
-			itemsHave--;
-			FlagManager::flagChest = 0;
-			break;
-		case 2:
-			textureLocation[(EntityPosition::Coords[1]) / 32][(EntityPosition::Coords[0]) / 32 - 1] = 0;
-			Location[(EntityPosition::Coords[1]) / 32][(EntityPosition::Coords[0]) / 32 - 1] = 0;
-			player->GetItemOnLvl(itemsOnLvl[itemsHave]);
-			itemsHave--;
-			FlagManager::flagChest = 0;
-			break;
-		case 3:
-			textureLocation[(EntityPosition::Coords[1]) / 32 + 1][(EntityPosition::Coords[0]) / 32] = 0;
-			Location[(EntityPosition::Coords[1]) / 32 + 1][(EntityPosition::Coords[0]) / 32] = 0;
-			player->GetItemOnLvl(itemsOnLvl[itemsHave]);
-			itemsHave--;
-			FlagManager::flagChest = 0;
-			break;
-		case 4:
-			textureLocation[(EntityPosition::Coords[1]) / 32][(EntityPosition::Coords[0]) / 32 + 1] = 0;
-			Location[(EntityPosition::Coords[1]) / 32][(EntityPosition::Coords[0]) / 32 + 1] = 0;
-			player->GetItemOnLvl(itemsOnLvl[itemsHave]);
-			itemsHave--;
-			FlagManager::flagChest = 0;
-			break;
+			switch (FlagManager::flagChest) {
+			case 1:
+				textureLocation[(EntityPosition::Coords[1]) / 32 - 1][(EntityPosition::Coords[0]) / 32] = 0;
+				Location[(EntityPosition::Coords[1]) / 32 - 1][(EntityPosition::Coords[0]) / 32] = 0;
+				player->GetItemOnLvl(itemsOnLvl[itemsHave]);
+				itemsHave--;
+				FlagManager::flagChest = 0;
+				break;
+			case 2:
+				textureLocation[(EntityPosition::Coords[1]) / 32][(EntityPosition::Coords[0]) / 32 - 1] = 0;
+				Location[(EntityPosition::Coords[1]) / 32][(EntityPosition::Coords[0]) / 32 - 1] = 0;
+				player->GetItemOnLvl(itemsOnLvl[itemsHave]);
+				itemsHave--;
+				FlagManager::flagChest = 0;
+				break;
+			case 3:
+				textureLocation[(EntityPosition::Coords[1]) / 32 + 1][(EntityPosition::Coords[0]) / 32] = 0;
+				Location[(EntityPosition::Coords[1]) / 32 + 1][(EntityPosition::Coords[0]) / 32] = 0;
+				player->GetItemOnLvl(itemsOnLvl[itemsHave]);
+				itemsHave--;
+				FlagManager::flagChest = 0;
+				break;
+			case 4:
+				textureLocation[(EntityPosition::Coords[1]) / 32][(EntityPosition::Coords[0]) / 32 + 1] = 0;
+				Location[(EntityPosition::Coords[1]) / 32][(EntityPosition::Coords[0]) / 32 + 1] = 0;
+				player->GetItemOnLvl(itemsOnLvl[itemsHave]);
+				itemsHave--;
+				FlagManager::flagChest = 0;
+				break;
+			}
 		}
 	}
 }

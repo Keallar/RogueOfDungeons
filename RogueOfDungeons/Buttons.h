@@ -33,16 +33,6 @@ public:
 
 };
 
-//class KeyboardButtonInPlayer
-//{
-//private:
-//	MCoord mouseCoords;
-//	const Uint8* keys = SDL_GetKeyboardState(NULL);
-//public:
-//	KeyboardButtonInPlayer();
-//	void movePlayer(SDL_Event &eventForMovePlayer);
-//};
-
 class MouseButtonsPlayer
 {
 private:
@@ -53,4 +43,3 @@ public:
 	static void buttonsForAttack();
 	static void buttonForRangeAttack();
 };
-

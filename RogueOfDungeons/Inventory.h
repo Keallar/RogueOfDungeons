@@ -9,7 +9,7 @@ enum type
 	weapon,
 	rWeapon,
 	armor,
-	other
+	potion
 };
 
 class InventoryItem 
@@ -29,7 +29,7 @@ private:
 public:
 	int DMG;
 	int RNG;
-	meleeWeapon(int Damage, int range, type type, const char* WeapTex);
+	meleeWeapon(int Damage, int range, type type, const char* WeapTex, std::string Name);
 };
 class rangeWeapon : public InventoryItem 
 {
@@ -40,7 +40,7 @@ public:
 	int RNG;
 	int CHNS;
 	int DCHNS;
-	rangeWeapon(int Damage, int Range, int Chanse, int deltaChanse, type type, const char* WeapTex);
+	rangeWeapon(int Damage, int Range, int Chanse, int deltaChanse, type type, const char* WeapTex, std::string Name);
 };
 
 class armorItem : public InventoryItem
@@ -48,8 +48,15 @@ class armorItem : public InventoryItem
 private:
 
 public:
-	armorItem(int Defence, type type, const char* WeapTex);
+	armorItem(int Defence, type type, const char* WeapTex, std::string Name);
 	int DEF;
+};
+
+class Potion : public InventoryItem {
+public:
+	int HEAL;
+	int MpHEAL;
+	Potion(int Heal, int MpHeal, type type, const char* WeapTex, std::string Name);
 };
 
 class Inventory
@@ -58,6 +65,7 @@ class Inventory
 	//InventoryItem EquipedWeapon;
 public:
 	Inventory();
+	~Inventory();
 	int inventory[16]; // хранит в себе вcе айтемы и они лежат в inventoryFace ещё (он не static)
 	static int inventoryFace[16];
 	void AddItem(int id);

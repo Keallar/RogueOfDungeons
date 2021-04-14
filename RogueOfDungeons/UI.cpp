@@ -246,6 +246,8 @@ UISpecifications::UISpecifications(SDL_Renderer* renderer)
 	valueDEX = FontManager::renderText("1", PATH_IN_FONT, color, 32, ren);
 	INT = FontManager::renderText("INT", PATH_IN_FONT, color, 64, ren);
 	valueINT = FontManager::renderText("1", PATH_IN_FONT, color, 32, ren);
+	WSD = FontManager::renderText("WSD", PATH_IN_FONT, color, 64, ren);
+	valueWSD = FontManager::renderText("1", PATH_IN_FONT, color, 32, ren);
 	PHS = FontManager::renderText("PHS", PATH_IN_FONT, color, 64, ren);
 	valuePHS = FontManager::renderText("1", PATH_IN_FONT, color, 32, ren);
 	LCK = FontManager::renderText("LCK", PATH_IN_FONT, color, 64, ren);
@@ -255,7 +257,7 @@ UISpecifications::UISpecifications(SDL_Renderer* renderer)
 	three = FontManager::renderText("(3)", PATH_IN_FONT, color, 64, ren);
 	four = FontManager::renderText("(4)", PATH_IN_FONT, color, 64, ren);
 	five = FontManager::renderText("(5)", PATH_IN_FONT, color, 64, ren);
-
+	six = FontManager::renderText("(6)", PATH_IN_FONT, color, 64, ren);
 }
 
 UISpecifications::~UISpecifications()

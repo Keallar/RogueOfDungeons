@@ -27,6 +27,7 @@ private:
 	int generateChoose;
 	int textureLocation[22][32];
 	int Location[22][32];
+	int Dark[22][32];
 	//int Location2[22][32];
 	SDL_Texture* TileTexture;
 	SDL_Texture* TileTextureCastle;
@@ -50,7 +51,9 @@ private:
 	//void OtherGeneration(int startX, int startY, int endX, int endY);
 	//bool Search(std::vector<std::pair<int, int>> vector, int x, int y);
 	//int SearchNum(std::vector<std::pair<int, int>> vector, int x, int y);
-
+	void CaveRender(int y, int x);
+	void CastleRender(int y, int x);
+	void ChangeDark(int i, int j);
 public:
 	bool flagTB;
 	Level(SDL_Renderer* renderer);
@@ -68,6 +71,7 @@ public:
 	void RoomGenerationMethod1();
 	void RoomGenerationMethod2();
 	void CreateChunk(int x, int y);
+	void ChangeLevel(int x, int y, int LocationChange, int TextureChange);
 };
 
 

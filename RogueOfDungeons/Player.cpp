@@ -51,7 +51,7 @@ int Player::LCK[2] = {
 						1, /*STR  now*/
 						1, /*STR  previous*/
 					 };
-
+int Player::VIS = 2;
 Player::Player(SDL_Renderer* renderer)
 {
 	ren = renderer;
@@ -65,8 +65,10 @@ Player::Player(SDL_Renderer* renderer)
 	
 	inventory->AddItem(0);
 	inventory->AddItem(1);
-	inventory->AddItem(2);
+	inventory->AddItem(5);
 	inventory->AddItem(3);
+	inventory->AddItem(6);
+	inventory->AddItem(7);
 	inventory->Update();
 }
 
@@ -380,13 +382,18 @@ void Player::GetItemEquip(int id) {
 			EqItems.ArmorId = ItemId;
 
 			EqItems.equipedArmor = inventory->GetRealArmor(ItemId);
+			if (EqItems.equipedArmor->name == "LetherArmor")
+			{
+				SDL_DestroyTexture(PlayerTexture);
+				PlayerTexture = 0;
+				PlayerTexture = textureManager::LoadTexture("images/HeroLether.png", ren);
+			}
 		}
-	}
-	if (id == 3) 
-	{
-		SDL_DestroyTexture(PlayerTexture);
-		PlayerTexture = 0;
-		PlayerTexture = textureManager::LoadTexture("images/HeroLether.png", ren);
+		if (Inventory::ExistingItems[ItemId]->Type == potion) {
+			std::cout << "HP" << std::endl;
+			std::cout << "MP" << std::endl;
+			inventory->inventory[id] = -1;
+		}
 	}
 	FlagManager::flagEquip = -1;
 }

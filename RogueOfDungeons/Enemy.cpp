@@ -195,21 +195,24 @@ bool Enemy::WAY(int ax, int ay, int bx, int by)   // поиск пути из €чейки (ax, a
 
 void Enemy::Update()
 {
-	//движение enemy (поиск кратчайшего пути)
-	if ((abs(EntityPosition::Coords[2]/32 - EntityPosition::Coords[0]/32) +
-		abs(EntityPosition::Coords[3]/32 - EntityPosition::Coords[1]/32)) > 1 &&
-		FlagManager::flagPlayer == 0 && FlagManager::flagEnemy == 1)
-	{
-		WAY(EntityPosition::Coords[2] / 32, EntityPosition::Coords[3] / 32,
-			EntityPosition::Coords[0] / 32, EntityPosition::Coords[1] / 32);
+	/*if ((abs(EntityPosition::Coords[2] / 32 - EntityPosition::Coords[0] / 32) +
+		abs(EntityPosition::Coords[3] / 32 - EntityPosition::Coords[1] / 32)) < 14){*/
+		//движение enemy (поиск кратчайшего пути)
+		if ((abs(EntityPosition::Coords[2] / 32 - EntityPosition::Coords[0] / 32) +
+			abs(EntityPosition::Coords[3] / 32 - EntityPosition::Coords[1] / 32)) > 1 &&
+			FlagManager::flagPlayer == 0 && FlagManager::flagEnemy == 1)
+		{
+			WAY(EntityPosition::Coords[2] / 32, EntityPosition::Coords[3] / 32,
+				EntityPosition::Coords[0] / 32, EntityPosition::Coords[1] / 32);
 
-		FlagManager::flagPlayer = 1;
-		FlagManager::flagEnemy = 0;
-	}
+				FlagManager::flagPlayer = 1;
+				FlagManager::flagEnemy = 0;
+		}
 
-	Enemy::meleeAttackEnemy();
+		Enemy::meleeAttackEnemy();
 
-	Enemy::CheckHpEnemy();
+		Enemy::CheckHpEnemy();
+	//}
 }
 
 void Enemy::attackOfEnemy()

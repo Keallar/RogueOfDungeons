@@ -1,6 +1,8 @@
 ﻿#include "Inventory.h"
 #include "Managers.h"
+#include <string>
 #include <iostream>
+#include <fstream>
 
 int Inventory::inventoryFace[16]; //������ � ���� ��, ��� ������ inventory, �� � static
 std::map <int, InventoryItem*> Inventory::ExistingItems;
@@ -8,25 +10,80 @@ std::map <int, InventoryItem*>::iterator Inventory::it;
 
 Inventory::Inventory()
 {
-	meleeWeapon* ShortSword = new meleeWeapon(1, 1, weapon, "images/ShortSword.png");
-	meleeWeapon* Spear = new meleeWeapon(2, 2, weapon, "images/Spear.png");
-	meleeWeapon* Punch = new meleeWeapon(1, 1, weapon, "images/Punch.png");
-	rangeWeapon* ShortBow = new rangeWeapon(1, 4, 60, 15, rWeapon, "images/ShortBow.png");
-	rangeWeapon* FireBall = new rangeWeapon(2, 5, 50, 10, rWeapon, "images/FireBall.png");
-	armorItem* LetherArmor = new armorItem(1, armor, "images/LetherArmor.png");
-	ExistingItems = 
-	{ 
-		{0, ShortSword},
-		{1, Spear},
-		{2, ShortBow},
-		{3,LetherArmor},
-		{4, Punch},
-		{5, FireBall}
-	};
+	std::ifstream file;
+	file.open("Items.txt");
+	int ItemNumber = 0;
+	while (file) {
+		std::string Type;
+		int DMG;
+		int RNG;
+		std::string WeapTex;
+		std::string Name;
+		int CHS;
+		int dCHS;
+		int DEF;
+		int HEAL;
+		int MpHEAL;
+		file >> Type;
+		if (Type == "weapon") {
+			file >> DMG;
+			file >> RNG;
+			file >> WeapTex;
+			char* Tex = new char[WeapTex.length()+1];
+			for (int i = 0; i <= WeapTex.length(); i++) {
+				Tex[i] = WeapTex[i];
+			}
+			file >> Name;
+			type ItemType = weapon;
+			ExistingItems[ItemNumber] = new meleeWeapon(DMG, RNG, ItemType, Tex, Name);
+		}
+		if (Type == "rWeapon") {
+			file >> DMG;
+			file >> RNG;
+			file >> CHS;
+			file >> dCHS;
+			file >> WeapTex;
+			char* Tex = new char[WeapTex.length() + 1];
+			for (int i = 0; i <= WeapTex.length(); i++) {
+				Tex[i] = WeapTex[i];
+			}
+			file >> Name;
+			type ItemType = rWeapon;
+			ExistingItems[ItemNumber] = new rangeWeapon(DMG, RNG, CHS, dCHS, ItemType, Tex, Name);
+		}
+		if (Type == "armor") {
+			file >> DEF;
+			file >> WeapTex;
+			char* Tex = new char[WeapTex.length() + 1];
+			for (int i = 0; i <= WeapTex.length(); i++) {
+				Tex[i] = WeapTex[i];
+			}
+			file >> Name;
+			type ItemType = armor;
+			ExistingItems[ItemNumber] = new armorItem(DEF, ItemType, Tex, Name);
+		}
+		if (Type == "potion") {
+			file >> HEAL;
+			file >> MpHEAL;
+			file >> WeapTex;
+			char* Tex = new char[WeapTex.length() + 1];
+			for (int i = 0; i <= WeapTex.length(); i++) {
+				Tex[i] = WeapTex[i];
+			}
+			file >> Name;
+			type ItemType = potion;
+			ExistingItems[ItemNumber] = new Potion(HEAL, MpHEAL, ItemType, Tex, Name);
+		}
+		ItemNumber++;
+	}
 	for (int i = 0; i < 16; i++) 
 	{
 		inventory[i] = -1;
 	}
+}
+
+Inventory::~Inventory() {
+
 }
 
 void Inventory::EquipItem(int i, int j) 
@@ -71,7 +128,7 @@ armorItem* Inventory::GetRealArmor(int id) {
 }
 
 
-rangeWeapon::rangeWeapon(int Damage, int Range, int Chance, int deltaChanse, type type, const char* WeapTex)
+rangeWeapon::rangeWeapon(int Damage, int Range, int Chance, int deltaChanse, type type, const char* WeapTex, std::string Name)
 {
 	DMG = Damage;
 	RNG = Range;
@@ -79,19 +136,31 @@ rangeWeapon::rangeWeapon(int Damage, int Range, int Chance, int deltaChanse, typ
 	DCHNS = deltaChanse;
 	ItemTexture = WeapTex;
 	Type = type;
+	name = Name;
 }
 
-meleeWeapon::meleeWeapon(int Damage, int range, type type, const char* WeapTex)
+meleeWeapon::meleeWeapon(int Damage, int range, type type, const char* WeapTex, std::string Name)
 {
+
 	DMG = Damage;
 	RNG = range;
 	ItemTexture = WeapTex;
 	Type = type;
+	name = Name;
 }
 
-armorItem::armorItem(int Defence, type type, const char* WeapTex) 
+armorItem::armorItem(int Defence, type type, const char* WeapTex, std::string Name)
 {
 	DEF = Defence;
 	ItemTexture = WeapTex;
 	Type = type;
+	name = Name;
+}
+
+Potion::Potion(int Heal, int MpHeal, type type, const char* WeapTex, std::string Name) {
+	Type = type;
+	ItemTexture = WeapTex;
+	HEAL = Heal;
+	MpHEAL = MpHeal;
+	name = Name;
 }

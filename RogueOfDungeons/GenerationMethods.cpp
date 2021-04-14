@@ -512,7 +512,7 @@ void Level::RoomGenerationMethod2() {
 
 	for (int i = 0; i < 22; i++) {
 		for (int j = 0; j < 32; j++) {
-			if ((textureLocation[i][j] == 0) || (textureLocation[i][j] == 6)) {
+			if ((textureLocation[i][j] == 0) || (textureLocation[i][j] == 6) || (textureLocation[i][j] == 3) || (textureLocation[i][j] == 4) || (textureLocation[i][j] == 7) || (textureLocation[i][j] == 8)) {
 				Location[i][j] = 0;
 			}
 			if ((textureLocation[i][j] == 1) || (textureLocation[i][j] == 5)) {

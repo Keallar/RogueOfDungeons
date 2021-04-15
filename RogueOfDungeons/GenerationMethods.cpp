@@ -17,6 +17,16 @@ void Level::CreateChunk(int x, int y) {
 	}
 }
 
+void Level::CreateChunk2(int x, int y) {
+	for (int i = x; i < x + 2; i++) {
+		for (int j = y; j < y + 4; j++) {
+			if ((j <= 31) || (i <= 21) || (j > 0) || (i > 0)) {
+				textureLocation[i][j] = 1;
+			}
+		}
+	}
+}
+
 //ф-я для безопасного получения инфы из массива
 int Level::GetLocation(int x, int y) {
 	if (x >= 0 && x < 32 && y >= 0 && y < 22) {
@@ -92,8 +102,33 @@ void Level::ChunkGenerationMethod() {
 
 	for (int j = 0; j < 32; j++) {
 		for (int i = 0; i < 22; i++) {
-			if (!(rand() % 16)) {
+			if ((!(rand() % 16))) {
+				int m = textureLocation[i][j];
 				textureLocation[i][j] = 3;
+				if (GetLocation(j, i + 1) == 3) {
+					textureLocation[i][j] = m;
+				}
+				if (GetLocation(j + 1, i + 1) == 3) {
+					textureLocation[i][j] = m;
+				}
+				if (GetLocation(j + 1, i) == 3) {
+					textureLocation[i][j] = m;
+				}
+				if (GetLocation(j + 1, i - 1) == 3) {
+					textureLocation[i][j] = m;
+				}
+				if (GetLocation(j, i - 1) == 3) {
+					textureLocation[i][j] = m;
+				}
+				if (GetLocation(j - 1, i - 1) == 3) {
+					textureLocation[i][j] = m;
+				}
+				if (GetLocation(j - 1, i) == 3) {
+					textureLocation[i][j] = m;
+				}
+				if (GetLocation(j - 1, i + 1) == 3) {
+					textureLocation[i][j] = m;
+				}
 			}
 			if (textureLocation[i][j] == 1) {
 				if (rand() % 2) {
@@ -535,4 +570,202 @@ void Level::RoomGenerationMethod2() {
 		Location[chests[i][0]][chests[i][1]] = 3;
 	}
 
+}
+
+void Level::ChunkGenerationMethod2() {
+	for (int i = 1; i < 21; i++) {
+		for (int j = 1; j < 31; j++) {
+			textureLocation[i][j] = 0;
+		}
+	}
+	for (int j = 0; j < 8; j++) { //делим карту на 8 столбцов по 11 чанков, обрабатываем каждый отдельно
+		int i = rand() % 4 + rand() % 3; int count = 0;
+		//не буду дальше редачить комменты, этот генератор как первый, но он наоборот делает чанки стен, а не пола
+		while (count < (5 + rand() % 3)) { //выбираем кол-во пустых чанков в столбце
+			if (i + count < 11) {
+				CreateChunk2((i + count) * 2, j * 4);
+			}
+			count++;
+		}
+	}
+	//цикл для сглаживания, превращает угловатую пещеру в нормальную
+   //для каждой клетки считаем пустые клетки- соседи. Если их больше 3, делаем клетку пустой
+	for (int j = 0; j < 32; j++) {
+		for (int i = 0; i < 22; i++) {
+			int iteration = 0;
+			while (iteration < 50) {
+				int count = 0;
+				if (GetLocation(j, i + 1) == 0) {
+					count++;
+				}
+				if (GetLocation(j + 1, i + 1) == 0) {
+					count++;
+				}
+				if (GetLocation(j + 1, i) == 0) {
+					count++;
+				}
+				if (GetLocation(j + 1, i - 1) == 0) {
+					count++;
+				}
+				if (GetLocation(j, i - 1) == 0) {
+					count++;
+				}
+				if (GetLocation(j - 1, i - 1) == 0) {
+					count++;
+				}
+				if (GetLocation(j - 1, i) == 0) {
+					count++;
+				}
+				if (GetLocation(j - 1, i + 1) == 0) {
+					count++;
+				}
+				if (count > 3) {
+					if ((rand() % 3) == 0) {
+						textureLocation[i][j] = 0;
+					}
+				}
+				if (count > 1) {
+					if ((rand() % 200) == 0) {
+						textureLocation[i][j] = 0;
+					}
+				}
+				iteration++;
+			}
+		}
+	}
+	for (int j = 1; j < 31; j++) {
+		textureLocation[1][j] = 0;
+		textureLocation[2][j] = 0;
+		textureLocation[19][j] = 0;
+		textureLocation[20][j] = 0;
+	}
+	int chouseTunnel = rand() % 3;
+	int StartTunnel = 0;
+	switch (chouseTunnel) {
+	case 0:
+		StartTunnel = rand() % 28;
+		for (int i = 0; i < 21; i++) {
+			textureLocation[i][StartTunnel] = 0;
+			textureLocation[i][StartTunnel + 1] = 0;
+			textureLocation[i][StartTunnel + 2] = 0;
+			textureLocation[i][StartTunnel + 3] = 0;
+			textureLocation[i][StartTunnel + 4] = 0;
+			if ((rand() % 2)==1) {
+				textureLocation[i][StartTunnel + 5] = 0;
+			}
+		}
+		break;
+	case 1:
+		StartTunnel = rand() % 10;
+		for (int i = 0; i < 21; i++) {
+			textureLocation[i][StartTunnel] = 0;
+			textureLocation[i][StartTunnel + 1] = 0;
+			textureLocation[i][StartTunnel + 2] = 0;
+			textureLocation[i][StartTunnel + 3] = 0;
+			textureLocation[i][StartTunnel + 4] = 0;
+			if ((rand() % 2) == 1) {
+				textureLocation[i][StartTunnel + 5] = 0;
+			}
+			StartTunnel++;
+		}
+		break;
+	case 2:
+		StartTunnel = rand() % 10 + 18;
+		for (int i = 0; i < 21; i++) {
+			textureLocation[i][StartTunnel] = 0;
+			textureLocation[i][StartTunnel + 1] = 0;
+			textureLocation[i][StartTunnel + 2] = 0;
+			textureLocation[i][StartTunnel + 3] = 0;
+			textureLocation[i][StartTunnel + 4] = 0;
+			if ((rand() % 2) == 1) {
+				textureLocation[i][StartTunnel + 5] = 0;
+			}
+			StartTunnel--;
+		}
+		break;
+	default:
+		break;
+	}
+	//далее рандомно выбираем клетки и меняем им тектурку, чтобы уровень был разнообразнее
+
+	for (int j = 0; j < 32; j++) {
+		for (int i = 0; i < 22; i++) {
+			if ((!(rand() % 16))) {
+				int m = textureLocation[i][j];
+				textureLocation[i][j] = 3;
+				if (GetLocation(j, i + 1) == 3) {
+					textureLocation[i][j] = m;
+				}
+				if (GetLocation(j + 1, i + 1) == 3) {
+					textureLocation[i][j] = m;
+				}
+				if (GetLocation(j + 1, i) == 3) {
+					textureLocation[i][j] = m;
+				}
+				if (GetLocation(j + 1, i - 1) == 3) {
+					textureLocation[i][j] = m;
+				}
+				if (GetLocation(j, i - 1) == 3) {
+					textureLocation[i][j] = m;
+				}
+				if (GetLocation(j - 1, i - 1) == 3) {
+					textureLocation[i][j] = m;
+				}
+				if (GetLocation(j - 1, i) == 3) {
+					textureLocation[i][j] = m;
+				}
+				if (GetLocation(j - 1, i + 1) == 3) {
+					textureLocation[i][j] = m;
+				}
+			}
+			if (textureLocation[i][j] == 1) {
+				if (rand() % 2) {
+					textureLocation[i][j] = 5;
+				}
+			}
+			if (textureLocation[i][j] == 0) {
+				switch (rand() % 3) {
+				case 0:
+					break;
+				case 1:
+					textureLocation[i][j] = 4;
+					break;
+				case 2:
+					textureLocation[i][j] = 6;
+					break;
+				}
+			}
+			//стены вокруг уровня
+			if ((j == 31) || (i == 21) || (j == 0) || (i == 0)) {
+				textureLocation[i][j] = 2;
+			}
+		}
+	}
+
+	//заполяем массив, которых хранит инфу, где стены, а где можно ходить
+
+	for (int i = 0; i < 22; i++) {
+		for (int j = 0; j < 32; j++) {
+			if ((textureLocation[i][j] == 0) || (textureLocation[i][j] == 4) || (textureLocation[i][j] == 6)) {
+				Location[i][j] = 0;
+			}
+			if ((textureLocation[i][j] == 1) || (textureLocation[i][j] == 3) || (textureLocation[i][j] == 5)) {
+				Location[i][j] = 1;
+			}
+			if (textureLocation[i][j] == 2) {
+				Location[i][j] = 2;
+			}
+		}
+	}
+
+	//ставим сундуки
+
+	for (int i = 0; i < 3; i++) {
+		chests[i][0] = rand() % 20 + 1; chests[i][1] = rand() % 30 + 1;
+		while (Location[chests[i][0]][chests[i][1]] != 0 || Location[chests[i][0] + 1][chests[i][1]] != 0 || Location[chests[i][0]][chests[i][1] + 1] != 0 || Location[chests[i][0] - 1][chests[i][1]] != 0 || Location[chests[i][0]][chests[i][1] - 1] != 0 || Location[chests[i][0] - 1][chests[i][1] - 1] != 0 || Location[chests[i][0] - 1][chests[i][1] + 1] != 0 || Location[chests[i][0] + 1][chests[i][1] - 1] != 0 || Location[chests[i][0] + 1][chests[i][1] + 1] != 0) {
+			chests[i][0] = rand() % 20 + 1; chests[i][1] = rand() % 30 + 1;
+		}
+		textureLocation[chests[i][0]][chests[i][1]] = 14;
+		Location[chests[i][0]][chests[i][1]] = 3;
+	}
 }

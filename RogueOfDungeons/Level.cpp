@@ -229,7 +229,7 @@ void Level::Render()
 	RenderManager::CopyToRender(PlayBackground, ren);
 	
 	//в зависимости от метода генерации выбираются нужные паки текстур
-	if (generateChoose == 0) {
+	if ((generateChoose == 0) || (generateChoose == 2)) {
 		for (int i = 0; i < 22; i++)
 		{
 			for (int j = 0; j < 32; j++)
@@ -239,7 +239,7 @@ void Level::Render()
 		}
 	}
 
-	if ((generateChoose == 1)||(generateChoose == 2)) {
+	if ((generateChoose == 1)) {
 		for (int i = 0; i < 22; i++)
 		{
 			for (int j = 0; j < 32; j++)
@@ -429,15 +429,18 @@ void Level::handleEvents(SDL_Event eventInLvl)
 
 void Level::Generate() {
 	srand(time(0));
-	generateChoose = rand()%2;
+	generateChoose = rand()%3;
 	if (generateChoose == 0) {
 		ChunkGenerationMethod();
 	}
-	if (generateChoose == 3) {
+	if (generateChoose == 666) {
 		RoomGenerationMethod1();
 	}
 	if (generateChoose == 1) {
 		RoomGenerationMethod2();
+	}
+	if (generateChoose == 2) {
+		ChunkGenerationMethod2();
 	}
 	for (int i = 0; i < 3; i++) {
 		itemsOnLvl[i] = rand() % 4;

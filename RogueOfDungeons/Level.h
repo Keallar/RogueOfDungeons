@@ -54,6 +54,12 @@ private:
 	void CaveRender(int y, int x);
 	void CastleRender(int y, int x);
 	void ChangeDark(int i, int j);
+	void ChunkGenerationMethod();
+	void ChunkGenerationMethod2();
+	void RoomGenerationMethod1();
+	void RoomGenerationMethod2();
+	void CreateChunk(int x, int y);
+	void CreateChunk2(int x, int y);
 public:
 	bool flagTB;
 	Level(SDL_Renderer* renderer);
@@ -67,10 +73,6 @@ public:
 	void Generate();
 	int GetLocation(int x, int y);
 	void ChangeLocation(int x, int y);
-	void ChunkGenerationMethod();
-	void RoomGenerationMethod1();
-	void RoomGenerationMethod2();
-	void CreateChunk(int x, int y);
 	void ChangeLevel(int x, int y, int LocationChange, int TextureChange);
 };
 

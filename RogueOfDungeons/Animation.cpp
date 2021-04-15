@@ -25,7 +25,7 @@ void Animation::UpdateTexture(const char* newTexture)
 	animTexture = textureManager::LoadTexture(newTexture, ren);
 }
 
-bool Animation::animationInstrForX(int numOfFrames, bool complete)
+bool Animation::animationPlusForX(int numOfFrames, bool complete)
 {
 	if (xanim != 32 * numOfFrames)
 	{
@@ -41,11 +41,43 @@ bool Animation::animationInstrForX(int numOfFrames, bool complete)
 	return complete;
 }
 
-bool Animation::animationInstrForY(int numOfFrames, bool complete)
+bool Animation::animationPlusForY(int numOfFrames, bool complete)
 {
 	if (yanim != 32 * numOfFrames)
 	{
 		yanim += 32;
+		complete = 0;
+	}
+	else
+	{
+		yanim = 0;
+		complete = 1;
+	}
+
+	return complete;
+}
+
+bool Animation::animationMinusForX(int numOfFrames, bool complete)
+{
+	if (xanim != -32 * numOfFrames)
+	{
+		xanim -= 32;
+		complete = 0;
+	}
+	else
+	{
+		xanim = 0;
+		complete = 1;
+	}
+
+	return complete;
+}
+
+bool Animation::animationMinusForX(int numOfFrames, bool complete)
+{
+	if (yanim != -32 * numOfFrames)
+	{
+		yanim -= 32;
 		complete = 0;
 	}
 	else

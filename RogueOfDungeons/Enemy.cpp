@@ -220,7 +220,7 @@ void Enemy::attackOfEnemy()
 	//UNDONE придумать норм условие
 	if (completeAnimation == 0)
 	{
-		completeAnimation = enemyAnimation->animationInstrForX(framesOfAnimForAttack, completeAnimation);
+		completeAnimation = enemyAnimation->animationPlusForX(framesOfAnimForAttack, completeAnimation);
 	}
 	else if (completeAnimation == 1)
 	{

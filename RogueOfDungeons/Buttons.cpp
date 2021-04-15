@@ -5,129 +5,7 @@
 #include "EntityPosition.h"
 #include "Player.h"
 
-Mouse MouseButtonsInLevel::mouseCoords;
-
-MouseButtonsInLevel::MouseButtonsInLevel()
-{
-
-}
-
-void MouseButtonsInLevel::buttonsForItemsInInv()
-{
-	SDL_GetMouseState(&mouseCoords.x, &mouseCoords.y);
-
-	for (int i = 0; i < 16; i++)
-	{
-		if (InputManager::MouseInArea((780 + 36 * (i % 4)), (100 + ((i / 4) * 50)), 32, 32, mouseCoords.x, mouseCoords.y) &&
-			Inventory::inventoryFace[i] != -1 && FlagManager::flagInv == 1)
-		{
-			std::cout << "Item " + i << std::endl;
-			FlagManager::flagEquip = i;
-		}
-	}
-}
-
-void MouseButtonsInLevel::buttonForCallSpecWin()
-{
-	//SDL_GetMouseState(&mouseCoords.x, &mouseCoords.y);
-
-	if (InputManager::MouseInArea(1230, 240, 64, 64, mouseCoords.x, mouseCoords.y) &&
-		FlagManager::flagUiSpec == 0)
-	{
-		FlagManager::flagUiSpec = 1;
-		FlagManager::flagUI = 0;
-	}
-	else if (InputManager::MouseInArea(1230, 240, 32, 32, mouseCoords.x, mouseCoords.y) &&
-		FlagManager::flagUiSpec == 1)
-	{
-		FlagManager::flagUI = 1;
-		FlagManager::flagUiSpec = 0;
-	}
-}
-
-void MouseButtonsInLevel::buttonForCallInvWin()
-{
-	SDL_GetMouseState(&mouseCoords.x, &mouseCoords.y);
-
-	if (InputManager::MouseInArea(1050, 665, 25, 22, mouseCoords.x, mouseCoords.y) &&
-		FlagManager::flagInv == 0)
-	{
-		FlagManager::flagInv = 1;
-	}
-	else if (InputManager::MouseInArea(1050, 665, 25, 22, mouseCoords.x, mouseCoords.y) &&
-		FlagManager::flagInv == 1)
-	{
-		FlagManager::flagInv = 0;
-	}
-}
-
-void MouseButtonsInLevel::buttonForCallEnemyInfo()
-{
-	SDL_GetMouseState(&mouseCoords.x, &mouseCoords.y);
-	if (InputManager::MouseInArea(EntityPosition::Coords[2], EntityPosition::Coords[3], 32, 32, mouseCoords.x, mouseCoords.y) &&
-		FlagManager::flagUiEnemy == 0)
-	{
-		FlagManager::flagUiEnemy = 1;
-	}
-	else if (InputManager::MouseInArea(EntityPosition::Coords[2], EntityPosition::Coords[3], 32, 32, mouseCoords.x, mouseCoords.y) &&
-		FlagManager::flagUiEnemy == 1)
-	{
-		FlagManager::flagUiEnemy = 0;
-	}
-}
-
-void MouseButtonsInLevel::buttonForIncPlayerSpec()
-{
-	SDL_GetMouseState(&mouseCoords.x, &mouseCoords.y);
-	//STR
-	if (FlagManager::flagUiSpec == 1 && InputManager::MouseInArea(1230, 50, 16, 20, mouseCoords.x, mouseCoords.y) &&
-		FlagManager::flagSTR == 0)
-	{
-		Player::ChangeValueSpecs(1);
-	}
-	//DEX
-	if (FlagManager::flagUiSpec == 1 && InputManager::MouseInArea(1230, 80, 16, 20, mouseCoords.x, mouseCoords.y) &&
-		FlagManager::flagDEX == 0)
-	{
-		Player::ChangeValueSpecs(2);
-	}
-	//INT
-	if (FlagManager::flagUiSpec == 1 && InputManager::MouseInArea(1230, 110, 16, 20, mouseCoords.x, mouseCoords.y) &&
-		FlagManager::flagINT == 0)
-	{
-		Player::ChangeValueSpecs(3);
-	}
-	//WSD
-	if (FlagManager::flagUiSpec == 1 && InputManager::MouseInArea(1230, 140, 16, 20, mouseCoords.x, mouseCoords.y) &&
-		FlagManager::flagWSD == 0) 
-	{
-		Player::ChangeValueSpecs(4);
-	}
-	//PHS
-	if (FlagManager::flagUiSpec == 1 && InputManager::MouseInArea(1230, 170, 16, 20, mouseCoords.x, mouseCoords.y) &&
-		FlagManager::flagPHS == 0)
-	{
-		Player::ChangeValueSpecs(5);
-	}
-	//LCK
-	if (FlagManager::flagUiSpec == 1 && InputManager::MouseInArea(1230, 200, 16, 20, mouseCoords.x, mouseCoords.y) &&
-		FlagManager::flagLCK == 0)
-	{
-		Player::ChangeValueSpecs(6);
-	}
-}
-
 Mouse MouseButtonsPlayer::mouseCoordsPlayer;
-
-MouseButtonsPlayer::MouseButtonsPlayer()
-{
-
-}
-
-MouseButtonsPlayer::~MouseButtonsPlayer()
-{
-
-}
 
 void MouseButtonsPlayer::buttonsForAttack()
 {
@@ -252,5 +130,94 @@ void Keyboard::handleEvents(SDL_Event& keyboardEvent)
 	if (keys[SDL_SCANCODE_6] && FlagManager::flagUiSpec == 1 && FlagManager::flagLCK == 0)
 	{
 		Player::ChangeValueSpecs(6);
+	}
+}
+
+
+namespace buttons
+{
+	void buttonForCallInvWinL()
+	{
+		if (FlagManager::flagInv == 0)
+		{
+			FlagManager::flagInv = 1;
+		}
+		else if (FlagManager::flagInv == 1)
+		{
+			FlagManager::flagInv = 0;
+		}
+	}
+
+	void buttonsForItemsInInvL()
+	{
+		for (int i = 0; i < 16; i++)
+		{
+			if (Inventory::inventoryFace[i] != -1 && FlagManager::flagInv == 1)
+			{
+				std::cout << "Item " + i << std::endl;
+				FlagManager::flagEquip = i;
+			}
+		}
+	}
+
+	void buttonForCallSpecWinL()
+	{
+		if (FlagManager::flagUiSpec == 0)
+		{
+			FlagManager::flagUiSpec = 1;
+			FlagManager::flagUI = 0;
+		}
+		else if (FlagManager::flagUiSpec == 1)
+		{
+			FlagManager::flagUI = 1;
+			FlagManager::flagUiSpec = 0;
+		}
+	}
+
+
+	void buttonForCallEnemyInfoL()
+	{
+		if (FlagManager::flagUiEnemy == 0)
+		{
+			FlagManager::flagUiEnemy = 1;
+		}
+		else if (FlagManager::flagUiEnemy == 1)
+		{
+			FlagManager::flagUiEnemy = 0;
+		}
+	}
+
+	void buttonForIncPlayerSpecL()
+	{
+		//STR
+		if (FlagManager::flagSTR == 0)
+		{
+			Player::ChangeValueSpecs(1);
+		}
+		//DEX
+		if (FlagManager::flagDEX == 0)
+		{
+			Player::ChangeValueSpecs(2);
+		}
+		//INT
+		if (FlagManager::flagINT == 0)
+		{
+			Player::ChangeValueSpecs(3);
+		}
+		//WSD
+		if (FlagManager::flagWSD == 0)
+		{
+			Player::ChangeValueSpecs(4);
+		}
+		//PHS
+		if (FlagManager::flagPHS == 0)
+		{
+			Player::ChangeValueSpecs(5);
+		}
+		//LCK
+		if (FlagManager::flagLCK == 0)
+		{
+			Player::ChangeValueSpecs(6);
+		}
 	}
 }

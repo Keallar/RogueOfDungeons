@@ -17,6 +17,7 @@ class Level
 private:
 	Keyboard* keyboard;
 	Button* buttonForCallSpecInfo;
+	Button* buttonForCallInvWin;
 	TextInfo* changeState[3];
 	int itemsOnLvl[3];
 	int itemsHave;

@@ -4,18 +4,6 @@
 #include "SDL_ttf.h"
 #include "string"
 
-//class UIMenu 
-//{
-//private:
-//	SDL_Renderer* ren;
-//	SDL_Texture* Font1;
-//	SDL_Texture* Font2;
-//public:
-//	UIMenu();
-//	UIMenu(SDL_Renderer* renderer);
-//	void Render();
-//};
-
 class UIInfo
 {
 private:

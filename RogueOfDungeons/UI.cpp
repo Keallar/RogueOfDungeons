@@ -6,17 +6,6 @@
 #include "Player.h"
 #include "Enemy.h"
 
-//UIMenu::UIMenu(SDL_Renderer* renderer) 
-//{
-//	ren = renderer;
-//	
-//}
-//void UIMenu::Render()
-//{
-//	RenderManager::CopyToRender(Font1, ren, 1024, 10, 256, 21);
-//	RenderManager::CopyToRender(Font2, ren, 1024, 30, 256, 21);
-//}
-
 TextInfo::TextInfo() 
 {
 	PATH_IN_FONT = "fonts/manaspc.ttf";

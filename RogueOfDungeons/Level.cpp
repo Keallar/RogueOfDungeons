@@ -12,27 +12,12 @@
 #include "Enemy.h"
 #include "Player.h"
 
-void buttonForCallSpecWinLVL()
-{
-	if (FlagManager::flagUiSpec == 0)
-	{
-		FlagManager::flagUiSpec = 1;
-		FlagManager::flagUI = 0;
-	}
-	else if (FlagManager::flagUiSpec == 1)
-	{
-		FlagManager::flagUI = 1;
-		FlagManager::flagUiSpec = 0;
-	}
-}
-
 Level::Level(SDL_Renderer* renderer) : ren (renderer)
 {
 	floorLvl = 0;
 	TileTexture = textureManager::LoadTexture("images/Tiles.png", ren);
 	TileTextureCastle = textureManager::LoadTexture("images/CaslteTiles.png", ren);
-	PlayBackground = textureManager::LoadTexture("images/Playback.png", ren);
-	//animation = new Animation(ren);
+	PlayBackground = textureManager::LoadTexture("images/Playback.png", ren); 
 	player = new Player(ren);
 	enemyTurtle = new Enemy("images/Turtle.png", 4, ren, 8, 8, 3, 4);
 	enemyHpInfo = new UiHpEnemyInfo(ren);
@@ -47,7 +32,10 @@ Level::Level(SDL_Renderer* renderer) : ren (renderer)
 	uiEquiped = new UIEquipedItem(ren);
 	keyboard = new Keyboard();
 
-	buttonForCallSpecInfo = new Button("images/Button.png", { 1230, 240, 32, 32 }, buttonForCallSpecWinLVL, NULL);
+	buttonForCallInvWin = new Button("images/Button.png", { 1050, 665, 25, 22 }, buttons::buttonForCallInvWinL, NULL);
+	buttonForCallSpecInfo = new Button("images/Button.png", { 1230, 240, 32, 32 }, buttons::ForCallSpecWinL, NULL);
+	//buttonForCallEnemyInfo = new Button();
+	//buttonForIncPlayerSpec = new Button("images/Button.png", )
 	for (int i = 0; i < 22; i++) 
 	{
 		for (int j = 0; j < 32; j++)
@@ -403,22 +391,25 @@ void Level::handleEvents(SDL_Event eventInLvl)
 	case SDL_MOUSEBUTTONDOWN:
 
 		//Взаимодействие с Items в Inventory
-		MouseButtonsInLevel::buttonsForItemsInInv();
+		//MouseButtonsInLevel::buttonsForItemsInInv();
+		
 
 		//Вызов окна Spec по нажатию мыши
 		//MouseButtonsInLevel::buttonForCallSpecWin();
+		buttonForCallSpecInfo->handleEvents(eventInLvl);
 		
 		//Вызов окна Inventory по нажатию мыши
-		MouseButtonsInLevel::buttonForCallInvWin();
+		//MouseButtonsInLevel::buttonForCallInvWin();
+		buttonForCallInvWin->handleEvents(eventInLvl);
 
 		if (eventInLvl.button.button == SDL_BUTTON_RIGHT)
 		{
 			//Вызов infoEnemy по нажатию мыши
-			MouseButtonsInLevel::buttonForCallEnemyInfo();
+			//MouseButtonsInLevel::buttonForCallEnemyInfo();
 		}
 
 		//Увеличение значения характеристик по нажатию мыши
-		MouseButtonsInLevel::buttonForIncPlayerSpec();
+		//MouseButtonsInLevel::buttonForIncPlayerSpec();
 		
 	case SDL_KEYDOWN:
 

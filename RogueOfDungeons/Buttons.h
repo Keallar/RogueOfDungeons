@@ -17,27 +17,11 @@ struct ButtonRect
 	int h;
 };
 
-class MouseButtonsInLevel
-{
-private:
-	static Mouse mouseCoords;
-public:
-	MouseButtonsInLevel();
-	static void buttonsForItemsInInv();
-	void buttonForCallSpecWin();
-	static void buttonForCallInvWin();
-	static void buttonForCallEnemyInfo();
-	static void buttonForIncPlayerSpec();
-
-};
-
 class MouseButtonsPlayer
 {
 private:
 	static Mouse mouseCoordsPlayer;
 public:
-	MouseButtonsPlayer();
-	~MouseButtonsPlayer();
 	static void buttonsForAttack();
 	static void buttonForRangeAttack();
 };

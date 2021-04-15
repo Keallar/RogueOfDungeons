@@ -1,32 +1,30 @@
 #pragma once
 #include <SDL.h>
+#include <SDL_image.h>
+#include <string>
 
-struct MCoord
+struct Mouse
 {
 	int x;
 	int y;
 };
 
-class KeyboardButtonsInLevel
+struct ButtonRect
 {
-private:
-	const Uint8* keys = SDL_GetKeyboardState(NULL);
-public:
-	KeyboardButtonsInLevel();
-	static void keyForCallSpecWin(const Uint8* keys);
-	static void keyForCallInvWin(const Uint8* keys);
-	static void keyForIncPlayerSpec(const Uint8* keys);
+	int x;
+	int y;
+	int w;
+	int h;
 };
 
 class MouseButtonsInLevel
 {
 private:
-	static MCoord mouseCoords;
-	
+	static Mouse mouseCoords;
 public:
 	MouseButtonsInLevel();
 	static void buttonsForItemsInInv();
-	static void buttonForCallSpecWin();
+	void buttonForCallSpecWin();
 	static void buttonForCallInvWin();
 	static void buttonForCallEnemyInfo();
 	static void buttonForIncPlayerSpec();
@@ -36,10 +34,35 @@ public:
 class MouseButtonsPlayer
 {
 private:
-	static MCoord mouseCoordsPlayer;
+	static Mouse mouseCoordsPlayer;
 public:
 	MouseButtonsPlayer();
 	~MouseButtonsPlayer();
 	static void buttonsForAttack();
 	static void buttonForRangeAttack();
+};
+
+
+class Button
+{
+private:
+	const char* nameOftexture;
+	Mouse mouse;
+	ButtonRect button;
+	void (*callback);
+	void (*hover);
+public:
+	Button(const char* textureName, SDL_Rect rect, void (*callbackFunction), void (*hoverFunction));
+	void handleEvents(SDL_Event& buttonEvent);
+	bool mouseInArea(int x, int y, int w, int h);
+};
+
+
+class Keyboard
+{
+private:
+	bool keys[SDL_NUM_SCANCODES];
+public:
+	Keyboard();
+	void handleEvents(SDL_Event &keyboardEvent);
 };

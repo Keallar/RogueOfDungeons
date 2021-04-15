@@ -12,6 +12,20 @@
 #include "Enemy.h"
 #include "Player.h"
 
+void buttonForCallSpecWinLVL()
+{
+	if (FlagManager::flagUiSpec == 0)
+	{
+		FlagManager::flagUiSpec = 1;
+		FlagManager::flagUI = 0;
+	}
+	else if (FlagManager::flagUiSpec == 1)
+	{
+		FlagManager::flagUI = 1;
+		FlagManager::flagUiSpec = 0;
+	}
+}
+
 Level::Level(SDL_Renderer* renderer) : ren (renderer)
 {
 	floorLvl = 0;
@@ -31,7 +45,9 @@ Level::Level(SDL_Renderer* renderer) : ren (renderer)
 	mana = new ManaInfo(ren);
 	exp = new ExpInfo(ren);
 	uiEquiped = new UIEquipedItem(ren);
-	keyboardButtonsInLevel = new KeyboardButtonsInLevel();
+	keyboard = new Keyboard();
+
+	buttonForCallSpecInfo = new Button("images/Button.png", { 1230, 240, 32, 32 }, buttonForCallSpecWinLVL, NULL);
 	for (int i = 0; i < 22; i++) 
 	{
 		for (int j = 0; j < 32; j++)
@@ -66,7 +82,7 @@ Level::~Level()
 	delete mana;
 	delete exp;
 	delete uiEquiped;
-	delete keyboardButtonsInLevel;
+	delete keyboard;
 	delete animation;
 }
 
@@ -390,7 +406,7 @@ void Level::handleEvents(SDL_Event eventInLvl)
 		MouseButtonsInLevel::buttonsForItemsInInv();
 
 		//Вызов окна Spec по нажатию мыши
-		MouseButtonsInLevel::buttonForCallSpecWin();
+		//MouseButtonsInLevel::buttonForCallSpecWin();
 		
 		//Вызов окна Inventory по нажатию мыши
 		MouseButtonsInLevel::buttonForCallInvWin();
@@ -406,14 +422,7 @@ void Level::handleEvents(SDL_Event eventInLvl)
 		
 	case SDL_KEYDOWN:
 
-		//Смена окон (с Spec на Info и наоборот) на Q
-		KeyboardButtonsInLevel::keyForCallSpecWin(keys);
-
-		//Вызов окна Inventory на I
-		KeyboardButtonsInLevel::keyForCallInvWin(keys);
-
-		//Увеличение характеристик Spec с помощью клавиш
-		KeyboardButtonsInLevel::keyForIncPlayerSpec(keys);
+		keyboard->handleEvents(eventInLvl);
 
 	default:
 		break;

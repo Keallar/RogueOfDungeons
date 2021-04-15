@@ -15,7 +15,8 @@ struct MouseCoords
 class Level 
 {
 private:
-	KeyboardButtonsInLevel* keyboardButtonsInLevel;
+	Keyboard* keyboard;
+	Button* buttonForCallSpecInfo;
 	TextInfo* changeState[3];
 	int itemsOnLvl[3];
 	int itemsHave;

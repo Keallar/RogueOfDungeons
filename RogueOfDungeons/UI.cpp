@@ -240,18 +240,25 @@ UISpecifications::UISpecifications(SDL_Renderer* renderer)
 	specifcation = FontManager::renderText("Specifications", PATH_IN_FONT, color, 64, ren);
 	plus = FontManager::renderText("+", PATH_IN_FONT, color, 32, ren);
 	button = textureManager::LoadTexture("images/Button.png", ren);
+	//STR
 	STR = FontManager::renderText("STR", PATH_IN_FONT, color, 64, ren);
 	valueSTR = FontManager::renderText("1", PATH_IN_FONT, color, 32, ren);
+	//DEX
 	DEX = FontManager::renderText("DEX", PATH_IN_FONT, color, 64, ren);
 	valueDEX = FontManager::renderText("1", PATH_IN_FONT, color, 32, ren);
+	//INT
 	INT = FontManager::renderText("INT", PATH_IN_FONT, color, 64, ren);
 	valueINT = FontManager::renderText("1", PATH_IN_FONT, color, 32, ren);
+	//WSD
 	WSD = FontManager::renderText("WSD", PATH_IN_FONT, color, 64, ren);
 	valueWSD = FontManager::renderText("1", PATH_IN_FONT, color, 32, ren);
+	//PHS
 	PHS = FontManager::renderText("PHS", PATH_IN_FONT, color, 64, ren);
 	valuePHS = FontManager::renderText("1", PATH_IN_FONT, color, 32, ren);
+	//LCK
 	LCK = FontManager::renderText("LCK", PATH_IN_FONT, color, 64, ren);
 	valueLCK = FontManager::renderText("1", PATH_IN_FONT, color, 32, ren);
+	//numbers
 	one = FontManager::renderText("(1)", PATH_IN_FONT, color, 64, ren);
 	two = FontManager::renderText("(2)", PATH_IN_FONT, color, 64, ren);
 	three = FontManager::renderText("(3)", PATH_IN_FONT, color, 64, ren);

@@ -29,16 +29,17 @@ void MouseButtonsPlayer::buttonForRangeAttack()
 	}
 }
 
-Button::Button(const char* textureName, SDL_Rect rect, void (*callbackFunction)(), void (*hoverFunction)()):
-	nameOftexture(textureName), callback(callbackFunction), hover(hoverFunction)
+Button::Button(const char* textureName, SDL_Renderer* renderer ,SDL_Rect rect, void (*callbackFunction)(), void (*hoverFunction)()):
+	nameOftexture(textureName), ren(renderer), callback(callbackFunction), hover(hoverFunction)
 {
 	button.x = rect.x;
 	button.y = rect.y;
 	button.w = rect.w;
 	button.h = rect.h;
+
+	buttonTexture = textureManager::LoadTexture(nameOftexture, ren);
 }
 
-//UNDONE сделать SDL_BUTTON_RIGHT
 void Button::handleEvents(SDL_Event& buttonEvent)
 {
 	if (buttonEvent.type == SDL_MOUSEBUTTONDOWN)
@@ -60,7 +61,6 @@ void Button::handleEvents(SDL_Event& buttonEvent)
 	}
 }
 
-//да-да, знаю, что уже есть такая функция, но надо было её сделать, просто надо!
 bool Button::mouseInArea(int x, int y, int w, int h)
 {
 	bool validity;
@@ -68,15 +68,24 @@ bool Button::mouseInArea(int x, int y, int w, int h)
 	if ((mouse.x >= x) && (mouse.y >= y) && (mouse.x <= x + w) && (mouse.y <= y + h))
 	{
 		validity = true;
-		//std::cout << "True validity" << std::endl;
 	}
 	else
 	{
 		validity = false;
-		//std::cout << "False validity" << std::endl;
 	}
 
 	return validity;
+}
+
+void Button::updateCoords(int x, int y)
+{
+	button.x = x;
+	button.y = y;
+}
+
+void Button::Render()
+{
+	RenderManager::CopyToRender(buttonTexture, ren, button.x, button.y, button.w, button.h);
 }
 
 Keyboard::Keyboard()
@@ -135,54 +144,106 @@ void Keyboard::handleEvents(SDL_Event& keyboardEvent)
 	}
 }
 
-
-namespace buttons
+void buttonsForItemsInInvL()
 {
-	
-
-	void buttonForCallEnemyInfoL()
+	for (int i = 0; i < 16; i++)
 	{
-		if (FlagManager::flagUiEnemy == 0)
+		if (Inventory::inventoryFace[i] != -1 && FlagManager::flagInv == 1)
 		{
-			FlagManager::flagUiEnemy = 1;
-		}
-		else if (FlagManager::flagUiEnemy == 1)
-		{
-			FlagManager::flagUiEnemy = 0;
+			std::cout << "Item " + i << std::endl;
+			FlagManager::flagEquip = i;
 		}
 	}
+}
 
-	void buttonForIncPlayerSpecL()
+void callbackFunctions::callInvWin()
+{
+	if (FlagManager::flagInv == 0)
 	{
-		//STR
-		if (FlagManager::flagSTR == 0)
-		{
-			Player::ChangeValueSpecs(1);
-		}
-		//DEX
-		if (FlagManager::flagDEX == 0)
-		{
-			Player::ChangeValueSpecs(2);
-		}
-		//INT
-		if (FlagManager::flagINT == 0)
-		{
-			Player::ChangeValueSpecs(3);
-		}
-		//WSD
-		if (FlagManager::flagWSD == 0)
-		{
-			Player::ChangeValueSpecs(4);
-		}
-		//PHS
-		if (FlagManager::flagPHS == 0)
-		{
-			Player::ChangeValueSpecs(5);
-		}
-		//LCK
-		if (FlagManager::flagLCK == 0)
-		{
-			Player::ChangeValueSpecs(6);
-		}
+		FlagManager::flagInv = 1;
+	}
+	else if (FlagManager::flagInv == 1)
+	{
+		FlagManager::flagInv = 0;
+	}
+}
+
+void callbackFunctions::callSpecWin()
+{
+	if (FlagManager::flagUiSpec == 0)
+	{
+		FlagManager::flagUiSpec = 1;
+		FlagManager::flagUI = 0;
+	}
+	else if (FlagManager::flagUiSpec == 1)
+	{
+		FlagManager::flagUI = 1;
+		FlagManager::flagUiSpec = 0;
+	}
+}
+
+void callbackFunctions::incPlayerSTR()
+{
+	//STR
+	if (FlagManager::flagSTR == 0 && FlagManager::flagUiSpec == 1)
+	{
+		Player::ChangeValueSpecs(1);
+	}
+}
+
+void callbackFunctions::incPlayerDEX()
+{
+	//DEX
+	if (FlagManager::flagDEX == 0)
+	{
+		Player::ChangeValueSpecs(2);
+	}
+}
+
+void callbackFunctions::incPlayerINT()
+{
+	//INT
+	if (FlagManager::flagINT == 0)
+	{
+		Player::ChangeValueSpecs(3);
+	}
+}
+
+void callbackFunctions::incPlayerWSD()
+{
+	//WSD
+	if (FlagManager::flagWSD == 0)
+	{
+		Player::ChangeValueSpecs(4);
+	}
+}
+
+void callbackFunctions::incPlayerPHS()
+{
+	//PHS
+	if (FlagManager::flagPHS == 0)
+	{
+		Player::ChangeValueSpecs(5);
+	}
+}
+
+void callbackFunctions::incPlayerLCK()
+{
+	//LCK
+	if (FlagManager::flagLCK == 0)
+	{
+		Player::ChangeValueSpecs(6);
+	}
+}
+
+void callbackFunctions::callEnemyInfo()
+{
+	if (FlagManager::flagUiEnemy == 0)
+	{
+		FlagManager::flagUiEnemy = 1;
+	}
+	else if (FlagManager::flagUiEnemy == 1)
+	{
+		FlagManager::flagUiEnemy = 0;
 	}
 }

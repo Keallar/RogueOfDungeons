@@ -3,6 +3,7 @@
 #include "SDL_image.h"
 #include "SDL_ttf.h"
 #include "string"
+#include "Buttons.h"
 
 class UIInfo
 {
@@ -41,7 +42,7 @@ class TextInfo
 {
 protected:
 	const char* PATH_IN_FONT;
-	SDL_Color color = { 255, 255, 255, 255 };
+	SDL_Color color;
 public:
 	TextInfo();
 	virtual ~TextInfo();
@@ -95,6 +96,15 @@ public:
 class UISpecifications : public TextInfo
 {
 private:
+
+	Button* buttonForIncPlayerSTR;
+	Button* buttonForIncPlayerDEX;
+	Button* buttonForIncPlayerINT;
+	Button* buttonForIncPlayerWSD;
+	Button* buttonForIncPlayerPHS;
+	Button* buttonForIncPlayerLCK;
+
+
 	SDL_Renderer* ren;
 	SDL_Color color;
 	SDL_Texture* specBlock;

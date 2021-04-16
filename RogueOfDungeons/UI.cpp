@@ -9,6 +9,7 @@
 TextInfo::TextInfo() 
 {
 	PATH_IN_FONT = "fonts/manaspc.ttf";
+	color = { 255, 255, 255, 255 };
 }
 
 TextInfo::~TextInfo()
@@ -16,10 +17,8 @@ TextInfo::~TextInfo()
 	
 }
 
-HpInfo::HpInfo(SDL_Renderer* renderer) 
+HpInfo::HpInfo(SDL_Renderer* renderer) : ren (renderer)
 {
-	ren = renderer;
-
 	std::string stringTemp1 = std::to_string(Player::GetHP(0));
 	const char* TEXT_VALUE_CURRENT_HP = stringTemp1.c_str();
 	hpText = FontManager::renderText(TEXT_VALUE_CURRENT_HP, PATH_IN_FONT, color, 32, ren);
@@ -155,11 +154,8 @@ void ExpInfo::Render()
 	RenderManager::CopyToRender(expMax, ren, 1180, 175, 32, 20);
 }
 
-UIInfo::UIInfo(SDL_Renderer* renderer)
+UIInfo::UIInfo(SDL_Renderer* renderer) : ren (renderer)
 {
-	PATH_IN_FONT = "fonts/manaspc.ttf";
-	ren = renderer;
-
 	//Version
 	versionBLock = FontManager::renderText("ROGUE OF DUNGEONS V-0.1 ALPHA", PATH_IN_FONT, color, 32, ren);
 
@@ -218,11 +214,14 @@ void UIInfo::RenderVersion()
 	RenderManager::CopyToRender(versionBLock, ren, 0, 705, 170, 9);
 }
 
-UISpecifications::UISpecifications(SDL_Renderer* renderer)
+UISpecifications::UISpecifications(SDL_Renderer* renderer) : ren (renderer)
 {
-	PATH_IN_FONT = "fonts/manaspc.ttf";
-	color = { 255, 255, 255, 255 };
-	ren = renderer;
+	buttonForIncPlayerSTR = new Button("images/plus.png", ren, { 1230, 50, 16, 20 }, callbackFunctions::incPlayerSTR, NULL);
+	buttonForIncPlayerDEX = new Button(NULL, ren, { 1230, 80, 16, 20 }, callbackFunctions::incPlayerDEX, NULL);
+	buttonForIncPlayerINT = new Button(NULL, ren, { 1230, 110, 16, 20 }, callbackFunctions::incPlayerINT, NULL);
+	buttonForIncPlayerWSD = new Button(NULL, ren, { 1230, 140, 16, 20 }, callbackFunctions::incPlayerWSD, NULL);
+	buttonForIncPlayerPHS = new Button(NULL, ren, { 1230, 170, 16, 20 }, callbackFunctions::incPlayerPHS, NULL);
+	buttonForIncPlayerLCK = new Button(NULL, ren, { 1230, 200, 16, 20 }, callbackFunctions::incPlayerLCK, NULL);
 
 	//Specifications
 	specBlock = textureManager::LoadTexture("images/InfoBlock.png", ren);
@@ -270,31 +269,37 @@ void UISpecifications::Render()
 	//STR
 	RenderManager::CopyToRender(STR, ren, 1050, 50, 64, 20);
 	RenderManager::CopyToRender(plus, ren, 1230, 50, 16, 20);
+	buttonForIncPlayerSTR->Render();
 	RenderManager::CopyToRender(valueSTR, ren, 1180, 50, 16, 20);
 	RenderManager::CopyToRender(one, ren, 1250, 50, 16, 20);
 	//DEX
 	RenderManager::CopyToRender(DEX, ren, 1050, 80, 64, 20);
 	RenderManager::CopyToRender(plus, ren, 1230, 80, 16, 20);
+	buttonForIncPlayerDEX->Render();
 	RenderManager::CopyToRender(valueDEX, ren, 1180, 80, 16, 20);
 	RenderManager::CopyToRender(two, ren, 1250, 80, 16, 20);
 	//INT
 	RenderManager::CopyToRender(INT, ren, 1050, 110, 64, 20);
 	RenderManager::CopyToRender(plus, ren, 1230, 110, 16, 20);
+	buttonForIncPlayerINT->Render();
 	RenderManager::CopyToRender(valueINT, ren, 1180, 110, 16, 20);
 	RenderManager::CopyToRender(three, ren, 1250, 110, 16, 20);
 	//WSD
 	RenderManager::CopyToRender(WSD, ren, 1050, 140, 64, 20);
 	RenderManager::CopyToRender(plus, ren, 1230, 140, 16, 20);
+	buttonForIncPlayerWSD->Render();
 	RenderManager::CopyToRender(valueWSD, ren, 1180, 140, 16, 20);
 	RenderManager::CopyToRender(four, ren, 1250, 140, 16, 20);
 	//PHS
 	RenderManager::CopyToRender(PHS, ren, 1050, 170, 64, 20);
 	RenderManager::CopyToRender(plus, ren, 1230, 170, 16, 20);
+	buttonForIncPlayerPHS->Render();
 	RenderManager::CopyToRender(valuePHS, ren, 1180, 170, 16, 20);
 	RenderManager::CopyToRender(five, ren, 1250, 170, 16, 20);
 	//LCK
 	RenderManager::CopyToRender(LCK, ren, 1050, 200, 64, 20);
 	RenderManager::CopyToRender(plus, ren, 1230, 200, 16, 20);
+	buttonForIncPlayerLCK->Render();
 	RenderManager::CopyToRender(valueLCK, ren, 1180, 200, 16, 20);
 	RenderManager::CopyToRender(six, ren, 1250, 200, 16, 20);
 }

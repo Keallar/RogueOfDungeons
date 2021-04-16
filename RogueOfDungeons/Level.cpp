@@ -12,44 +12,10 @@
 #include "Enemy.h"
 #include "Player.h"
 
-void buttonForCallInvWinL()
+void hoverForCallSpecWin()
 {
-	if (FlagManager::flagInv == 0)
-	{
-		FlagManager::flagInv = 1;
-	}
-	else if (FlagManager::flagInv == 1)
-	{
-		FlagManager::flagInv = 0;
-	}
+	//UNDONE сделать отображение тексте SPEC
 }
-
-void buttonsForItemsInInvL()
-{
-	for (int i = 0; i < 16; i++)
-	{
-		if (Inventory::inventoryFace[i] != -1 && FlagManager::flagInv == 1)
-		{
-			std::cout << "Item " + i << std::endl;
-			FlagManager::flagEquip = i;
-		}
-	}
-}
-
-void buttonForCallSpecWinL()
-{
-	if (FlagManager::flagUiSpec == 0)
-	{
-		FlagManager::flagUiSpec = 1;
-		FlagManager::flagUI = 0;
-	}
-	else if (FlagManager::flagUiSpec == 1)
-	{
-		FlagManager::flagUI = 1;
-		FlagManager::flagUiSpec = 0;
-	}
-}
-
 
 Level::Level(SDL_Renderer* renderer) : ren (renderer)
 {
@@ -69,12 +35,14 @@ Level::Level(SDL_Renderer* renderer) : ren (renderer)
 	mana = new ManaInfo(ren);
 	exp = new ExpInfo(ren);
 	uiEquiped = new UIEquipedItem(ren);
+
 	keyboard = new Keyboard();
 
-	buttonForCallInvWin = new Button("images/Button.png", { 1050, 665, 32, 32 }, buttonForCallInvWinL, NULL);
-	buttonForCallSpecInfo = new Button("images/Button.png", { 1230, 240, 32, 32 }, buttonForCallSpecWinL, NULL);
-	//buttonForCallEnemyInfo = new Button();
-	//buttonForIncPlayerSpec = new Button("images/Button.png", )
+	buttonForCallInvWin = new Button("images/Button.png", ren ,{ 1050, 665, 25, 22 }, callbackFunctions::callInvWin, NULL);
+	buttonForCallSpecInfo = new Button("images/Button.png", ren, { 1230, 240, 32, 32 }, callbackFunctions::callSpecWin, NULL);
+	
+	
+
 	for (int i = 0; i < 22; i++) 
 	{
 		for (int j = 0; j < 32; j++)
@@ -137,6 +105,9 @@ void Level::deleteEnemy()
 
 void Level::Update()
 {
+	//WTF Button::updateCoords
+	buttonForCallEnemyInfo->updateCoords(EntityPosition::Coords[2], EntityPosition::Coords[3]);
+
 	int n = Player::VIS;
 	for (int i = (EntityPosition::Coords[1] / 32) - n; i <= (EntityPosition::Coords[1] / 32) + n; i++) {
 		for (int j = (EntityPosition::Coords[0] / 32) - n; j <= (EntityPosition::Coords[0] / 32) + n; j++) {
@@ -434,21 +405,19 @@ void Level::handleEvents(SDL_Event eventInLvl)
 		
 
 		//Вызов окна Spec по нажатию мыши
-		//MouseButtonsInLevel::buttonForCallSpecWin();
 		buttonForCallSpecInfo->handleEvents(eventInLvl);
 		
 		//Вызов окна Inventory по нажатию мыши
-		//MouseButtonsInLevel::buttonForCallInvWin();
 		buttonForCallInvWin->handleEvents(eventInLvl);
 
 		if (eventInLvl.button.button == SDL_BUTTON_RIGHT)
 		{
 			//Вызов infoEnemy по нажатию мыши
-			//MouseButtonsInLevel::buttonForCallEnemyInfo();
+			//buttonForCallEnemyInfo->handleEvents(eventInLvl);
 		}
 
 		//Увеличение значения характеристик по нажатию мыши
-		//MouseButtonsInLevel::buttonForIncPlayerSpec();
+		
 		
 	case SDL_KEYDOWN:
 

@@ -57,6 +57,7 @@ private:
 	void ChunkGenerationMethod();
 	void ChunkGenerationMethod2();
 	void LabGeneration();
+	void CastleLabGeneration();
 	void RoomGenerationMethod2();
 	void CreateChunk(int x, int y);
 	void CreateChunk2(int x, int y);

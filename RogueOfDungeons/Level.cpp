@@ -239,7 +239,7 @@ void Level::Render()
 		}
 	}
 
-	if ((generateChoose == 1)) {
+	if ((generateChoose == 1)||(generateChoose == 5)) {
 		for (int i = 0; i < 22; i++)
 		{
 			for (int j = 0; j < 32; j++)
@@ -429,7 +429,7 @@ void Level::handleEvents(SDL_Event eventInLvl)
 
 void Level::Generate() {
 	srand(time(0));
-	generateChoose = 4;
+	generateChoose = 5;
 	player->generate = generateChoose;
 	enemyTurtle->generate = generateChoose;
 	if (generateChoose == 0) {
@@ -437,6 +437,9 @@ void Level::Generate() {
 	}
 	if (generateChoose == 4) {
 		LabGeneration();
+	}
+	if (generateChoose == 5) {
+		CastleLabGeneration();
 	}
 	if (generateChoose == 1) {
 		RoomGenerationMethod2();

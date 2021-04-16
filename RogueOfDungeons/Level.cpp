@@ -114,7 +114,7 @@ void Level::Update()
 	{
 		enemyTurtle->Update();
 		enemyTurtle->GetLoc(Location);
-		SDL_Delay(150);
+		SDL_Delay(100); //UNDONE перенести delay в Animation
 	}
 	if (player != nullptr)
 		player->GetLevel(Location);
@@ -229,7 +229,7 @@ void Level::Render()
 	RenderManager::CopyToRender(PlayBackground, ren);
 	
 	//в зависимости от метода генерации выбираются нужные паки текстур
-	if ((generateChoose == 0) || (generateChoose == 2)) {
+	if ((generateChoose == 0) || (generateChoose == 2) || (generateChoose == 4)) {
 		for (int i = 0; i < 22; i++)
 		{
 			for (int j = 0; j < 32; j++)
@@ -429,12 +429,14 @@ void Level::handleEvents(SDL_Event eventInLvl)
 
 void Level::Generate() {
 	srand(time(0));
-	generateChoose = rand()%3;
+	generateChoose = 4;
+	player->generate = generateChoose;
+	enemyTurtle->generate = generateChoose;
 	if (generateChoose == 0) {
 		ChunkGenerationMethod();
 	}
-	if (generateChoose == 666) {
-		RoomGenerationMethod1();
+	if (generateChoose == 4) {
+		LabGeneration();
 	}
 	if (generateChoose == 1) {
 		RoomGenerationMethod2();

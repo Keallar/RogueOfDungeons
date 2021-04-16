@@ -34,7 +34,7 @@ private:
 	bool completeAnimation;
 	Animation* enemyAnimation;
 public:
-	
+	int generate = 0;
 	Enemy() = default;
 	Enemy(const char* texturesheet, int framesOfAnimationForAttack,SDL_Renderer* ren, int HealthP, int MaxHealthP, int Damage, int EXPR);
 	~Enemy() override;

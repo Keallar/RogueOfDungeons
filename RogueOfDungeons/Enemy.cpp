@@ -13,6 +13,7 @@ int Enemy::HpMax = 0;
 
 Enemy::Enemy(const char* texturesheet, int framesOfAnimationForAttack, SDL_Renderer* renderer, int HealthP, int MaxHealthP, int Damage, int EXPR)
 {
+	generate = -1;
 	expReward = EXPR;
 	HP = HealthP;
 	HpMax = MaxHealthP;
@@ -113,14 +114,23 @@ void Enemy::GetLoc(int arr[22][32])
 void Enemy::GetEnemyFirstCoords() {
 	EntityPosition::Coords[2] = (rand() % 30) * 32;
 	EntityPosition::Coords[3] = (rand() % 20) * 32;
-	while ((enemyLoc[EntityPosition::Coords[3] / 32][EntityPosition::Coords[2] / 32] == -2) ||
-		((enemyLoc[EntityPosition::Coords[3] / 32][(EntityPosition::Coords[2] / 32) - 1] != -1) ||
+	if (generate != 4) {
+		while ((enemyLoc[EntityPosition::Coords[3] / 32][EntityPosition::Coords[2] / 32] == -2) ||
+			((enemyLoc[EntityPosition::Coords[3] / 32][(EntityPosition::Coords[2] / 32) - 1] != -1) ||
 			(enemyLoc[EntityPosition::Coords[3] / 32][(EntityPosition::Coords[2] / 32) + 1] != -1) ||
 			(enemyLoc[(EntityPosition::Coords[3] / 32) - 1][EntityPosition::Coords[2] / 32] != -1) ||
 			(enemyLoc[(EntityPosition::Coords[3] / 32) + 1][EntityPosition::Coords[2] / 32] != -1)))
-	{
-		EntityPosition::Coords[2] = (rand() % 30) * 32;
-		EntityPosition::Coords[3] = (rand() % 20) * 32;
+		{
+			EntityPosition::Coords[2] = (rand() % 30) * 32;
+			EntityPosition::Coords[3] = (rand() % 20) * 32;
+		}
+	}
+	else {
+		while ((enemyLoc[EntityPosition::Coords[3] / 32][EntityPosition::Coords[2] / 32] == -2))
+		{
+			EntityPosition::Coords[2] = (rand() % 30) * 32;
+			EntityPosition::Coords[3] = (rand() % 20) * 32;
+		}
 	}
 }
 

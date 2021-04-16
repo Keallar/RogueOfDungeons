@@ -73,7 +73,7 @@ bool Animation::animationMinusForX(int numOfFrames, bool complete)
 	return complete;
 }
 
-bool Animation::animationMinusForX(int numOfFrames, bool complete)
+bool Animation::animationMinusForY(int numOfFrames, bool complete)
 {
 	if (yanim != -32 * numOfFrames)
 	{

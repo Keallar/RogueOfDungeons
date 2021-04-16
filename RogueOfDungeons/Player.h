@@ -24,7 +24,8 @@ private:
     Animation* playerAnimation;
 
     const Uint8* keys = SDL_GetKeyboardState(NULL);
-public: 
+public:
+	int generate;
 	static int HP[3];
 	static int exp[3];
 	static int mana[3];

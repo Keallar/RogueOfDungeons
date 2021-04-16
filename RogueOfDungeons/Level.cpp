@@ -12,6 +12,45 @@
 #include "Enemy.h"
 #include "Player.h"
 
+void buttonForCallInvWinL()
+{
+	if (FlagManager::flagInv == 0)
+	{
+		FlagManager::flagInv = 1;
+	}
+	else if (FlagManager::flagInv == 1)
+	{
+		FlagManager::flagInv = 0;
+	}
+}
+
+void buttonsForItemsInInvL()
+{
+	for (int i = 0; i < 16; i++)
+	{
+		if (Inventory::inventoryFace[i] != -1 && FlagManager::flagInv == 1)
+		{
+			std::cout << "Item " + i << std::endl;
+			FlagManager::flagEquip = i;
+		}
+	}
+}
+
+void buttonForCallSpecWinL()
+{
+	if (FlagManager::flagUiSpec == 0)
+	{
+		FlagManager::flagUiSpec = 1;
+		FlagManager::flagUI = 0;
+	}
+	else if (FlagManager::flagUiSpec == 1)
+	{
+		FlagManager::flagUI = 1;
+		FlagManager::flagUiSpec = 0;
+	}
+}
+
+
 Level::Level(SDL_Renderer* renderer) : ren (renderer)
 {
 	floorLvl = 0;
@@ -32,8 +71,8 @@ Level::Level(SDL_Renderer* renderer) : ren (renderer)
 	uiEquiped = new UIEquipedItem(ren);
 	keyboard = new Keyboard();
 
-	buttonForCallInvWin = new Button("images/Button.png", { 1050, 665, 25, 22 }, buttons::buttonForCallInvWinL, NULL);
-	buttonForCallSpecInfo = new Button("images/Button.png", { 1230, 240, 32, 32 }, buttons::ForCallSpecWinL, NULL);
+	buttonForCallInvWin = new Button("images/Button.png", { 1050, 665, 32, 32 }, buttonForCallInvWinL, NULL);
+	buttonForCallSpecInfo = new Button("images/Button.png", { 1230, 240, 32, 32 }, buttonForCallSpecWinL, NULL);
 	//buttonForCallEnemyInfo = new Button();
 	//buttonForIncPlayerSpec = new Button("images/Button.png", )
 	for (int i = 0; i < 22; i++) 
@@ -413,7 +452,7 @@ void Level::handleEvents(SDL_Event eventInLvl)
 		
 	case SDL_KEYDOWN:
 
-		keyboard->handleEvents(eventInLvl);
+		//keyboard->handleEvents(eventInLvl);
 
 	default:
 		break;

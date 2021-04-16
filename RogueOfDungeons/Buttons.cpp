@@ -29,7 +29,7 @@ void MouseButtonsPlayer::buttonForRangeAttack()
 	}
 }
 
-Button::Button(const char* textureName, SDL_Rect rect, void (*callbackFunction), void (*hoverFunction)):
+Button::Button(const char* textureName, SDL_Rect rect, void (*callbackFunction)(), void (*hoverFunction)()):
 	nameOftexture(textureName), callback(callbackFunction), hover(hoverFunction)
 {
 	button.x = rect.x;
@@ -47,7 +47,7 @@ void Button::handleEvents(SDL_Event& buttonEvent)
 		{
 			if (Button::mouseInArea(button.x, button.y, button.w, button.h))
 			{
-				callback;
+				callback();
 			}
 		}
 	}
@@ -55,7 +55,7 @@ void Button::handleEvents(SDL_Event& buttonEvent)
 	{
 		if (Button::mouseInArea(button.x, button.y, button.w, button.h))
 		{
-			hover;
+			hover();
 		}
 	}
 }
@@ -65,13 +65,15 @@ bool Button::mouseInArea(int x, int y, int w, int h)
 {
 	bool validity;
 	SDL_GetMouseState(&mouse.x, &mouse.y);
-	if ((mouse.x >= x) && (mouse.y >= y) && (mouse.x >= x + w) && (mouse.y >= y + h))
+	if ((mouse.x >= x) && (mouse.y >= y) && (mouse.x <= x + w) && (mouse.y <= y + h))
 	{
 		validity = true;
+		//std::cout << "True validity" << std::endl;
 	}
 	else
 	{
 		validity = false;
+		//std::cout << "False validity" << std::endl;
 	}
 
 	return validity;
@@ -136,44 +138,7 @@ void Keyboard::handleEvents(SDL_Event& keyboardEvent)
 
 namespace buttons
 {
-	void buttonForCallInvWinL()
-	{
-		if (FlagManager::flagInv == 0)
-		{
-			FlagManager::flagInv = 1;
-		}
-		else if (FlagManager::flagInv == 1)
-		{
-			FlagManager::flagInv = 0;
-		}
-	}
-
-	void buttonsForItemsInInvL()
-	{
-		for (int i = 0; i < 16; i++)
-		{
-			if (Inventory::inventoryFace[i] != -1 && FlagManager::flagInv == 1)
-			{
-				std::cout << "Item " + i << std::endl;
-				FlagManager::flagEquip = i;
-			}
-		}
-	}
-
-	void buttonForCallSpecWinL()
-	{
-		if (FlagManager::flagUiSpec == 0)
-		{
-			FlagManager::flagUiSpec = 1;
-			FlagManager::flagUI = 0;
-		}
-		else if (FlagManager::flagUiSpec == 1)
-		{
-			FlagManager::flagUI = 1;
-			FlagManager::flagUiSpec = 0;
-		}
-	}
-
+	
 
 	void buttonForCallEnemyInfoL()
 	{

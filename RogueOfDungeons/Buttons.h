@@ -33,10 +33,10 @@ private:
 	const char* nameOftexture;
 	Mouse mouse;
 	ButtonRect button;
-	void (*callback);
-	void (*hover);
+	void (*callback)();
+	void (*hover)();
 public:
-	Button(const char* textureName, SDL_Rect rect, void (*callbackFunction), void (*hoverFunction));
+	Button(const char* textureName, SDL_Rect rect, void (*callbackFunction)(), void (*hoverFunction)());
 	void handleEvents(SDL_Event& buttonEvent);
 	bool mouseInArea(int x, int y, int w, int h);
 };

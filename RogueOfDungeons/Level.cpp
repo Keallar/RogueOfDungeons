@@ -38,11 +38,6 @@ Level::Level(SDL_Renderer* renderer) : ren (renderer)
 
 	keyboard = new Keyboard();
 
-	buttonForCallInvWin = new Button("images/Button.png", ren ,{ 1050, 665, 25, 22 }, callbackFunctions::callInvWin, NULL);
-	buttonForCallSpecInfo = new Button("images/Button.png", ren, { 1230, 240, 32, 32 }, callbackFunctions::callSpecWin, NULL);
-	
-	
-
 	for (int i = 0; i < 22; i++) 
 	{
 		for (int j = 0; j < 32; j++)
@@ -105,9 +100,6 @@ void Level::deleteEnemy()
 
 void Level::Update()
 {
-	//WTF Button::updateCoords
-	buttonForCallEnemyInfo->updateCoords(EntityPosition::Coords[2], EntityPosition::Coords[3]);
-
 	int n = Player::VIS;
 	for (int i = (EntityPosition::Coords[1] / 32) - n; i <= (EntityPosition::Coords[1] / 32) + n; i++) {
 		for (int j = (EntityPosition::Coords[0] / 32) - n; j <= (EntityPosition::Coords[0] / 32) + n; j++) {
@@ -405,10 +397,10 @@ void Level::handleEvents(SDL_Event eventInLvl)
 		
 
 		//Вызов окна Spec по нажатию мыши
-		buttonForCallSpecInfo->handleEvents(eventInLvl);
+		uiInfo->handleEvents(eventInLvl);
 		
 		//Вызов окна Inventory по нажатию мыши
-		buttonForCallInvWin->handleEvents(eventInLvl);
+		uiInv->handleEvents(eventInLvl);
 
 		if (eventInLvl.button.button == SDL_BUTTON_RIGHT)
 		{
@@ -417,7 +409,7 @@ void Level::handleEvents(SDL_Event eventInLvl)
 		}
 
 		//Увеличение значения характеристик по нажатию мыши
-		
+		uiSpec->handleEvents(eventInLvl);
 		
 	case SDL_KEYDOWN:
 

@@ -30,11 +30,12 @@ private:
 	SDL_Texture* mnText;
 
 	//Buttons
-	SDL_Texture* specButton;
+	Button* buttonForCallSpecInfo;
 public:
 	UIInfo(SDL_Renderer* renderer);
 	void Render();
 	void RenderVersion();
+	void handleEvents(SDL_Event& eventInUiInfo);
 };
 
 //Interface
@@ -42,7 +43,7 @@ class TextInfo
 {
 protected:
 	const char* PATH_IN_FONT;
-	SDL_Color color;
+	SDL_Color color = { 255, 255, 255, 255 };
 public:
 	TextInfo();
 	virtual ~TextInfo();
@@ -96,15 +97,6 @@ public:
 class UISpecifications : public TextInfo
 {
 private:
-
-	Button* buttonForIncPlayerSTR;
-	Button* buttonForIncPlayerDEX;
-	Button* buttonForIncPlayerINT;
-	Button* buttonForIncPlayerWSD;
-	Button* buttonForIncPlayerPHS;
-	Button* buttonForIncPlayerLCK;
-
-
 	SDL_Renderer* ren;
 	SDL_Color color;
 	SDL_Texture* specBlock;
@@ -127,9 +119,15 @@ private:
 	//LCK
 	SDL_Texture* LCK;
 	SDL_Texture* valueLCK;
+	//buttons
+	Button* buttonForCallInfoWin;
+	Button* buttonForIncPlayerSTR;
+	Button* buttonForIncPlayerDEX;
+	Button* buttonForIncPlayerINT;
+	Button* buttonForIncPlayerWSD;
+	Button* buttonForIncPlayerPHS;
+	Button* buttonForIncPlayerLCK;
 	//other
-	SDL_Texture* button;
-	SDL_Texture* plus;
 	SDL_Texture* one;
 	SDL_Texture* two;
 	SDL_Texture* three;
@@ -144,6 +142,7 @@ public:
 	void Update() override;
 	void Update(int value, int num);
 	void UpdateMax() override;
+	void handleEvents(SDL_Event &eventInSpec);
 };
 
 
@@ -155,8 +154,6 @@ private:
 	SDL_Renderer* ren;
 	SDL_Texture* itemBlock;
 	SDL_Texture* item;
-	SDL_Texture* buttonForInv;
-
 	SDL_Texture* INV;
 public:
 	UIItem(SDL_Renderer* renderer);
@@ -171,10 +168,12 @@ private:
 	SDL_Texture* inventoryText;
 	SDL_Texture* inventory;
 	SDL_Texture* item;
+	Button* buttonForCallInvWin;
 public:
 	UIInventory(SDL_Renderer* renderer);
 	~UIInventory();
 	void Render();
+	void handleEvents(SDL_Event &eventInInv);
 };
 
 class UIEnemyInfo

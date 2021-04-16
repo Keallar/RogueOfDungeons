@@ -29,7 +29,8 @@ void MouseButtonsPlayer::buttonForRangeAttack()
 	}
 }
 
-Button::Button(const char* textureName, SDL_Renderer* renderer ,SDL_Rect rect, void (*callbackFunction)(), void (*hoverFunction)()):
+Button::Button(const char* textureName, SDL_Renderer* renderer, SDL_Rect rect, 
+	void (*callbackFunction)(), void (*hoverFunction)()):
 	nameOftexture(textureName), ren(renderer), callback(callbackFunction), hover(hoverFunction)
 {
 	button.x = rect.x;
@@ -37,7 +38,10 @@ Button::Button(const char* textureName, SDL_Renderer* renderer ,SDL_Rect rect, v
 	button.w = rect.w;
 	button.h = rect.h;
 
-	buttonTexture = textureManager::LoadTexture(nameOftexture, ren);
+	if (nameOftexture != NULL)
+		buttonTexture = textureManager::LoadTexture(nameOftexture, ren);
+	else
+		buttonTexture = NULL;
 }
 
 void Button::handleEvents(SDL_Event& buttonEvent)
@@ -48,7 +52,10 @@ void Button::handleEvents(SDL_Event& buttonEvent)
 		{
 			if (Button::mouseInArea(button.x, button.y, button.w, button.h))
 			{
-				callback();
+				if (callback != NULL)
+					callback();
+				else
+					std::cout << "callback is NULL" << std::endl;
 			}
 		}
 	}
@@ -56,9 +63,10 @@ void Button::handleEvents(SDL_Event& buttonEvent)
 	{
 		if (Button::mouseInArea(button.x, button.y, button.w, button.h))
 		{
-			hover();
+			if (hover != NULL)
+				hover();
 		}
-	}
+	} 
 }
 
 bool Button::mouseInArea(int x, int y, int w, int h)
@@ -77,15 +85,12 @@ bool Button::mouseInArea(int x, int y, int w, int h)
 	return validity;
 }
 
-void Button::updateCoords(int x, int y)
-{
-	button.x = x;
-	button.y = y;
-}
-
 void Button::Render()
 {
-	RenderManager::CopyToRender(buttonTexture, ren, button.x, button.y, button.w, button.h);
+	if (buttonTexture != NULL)
+		RenderManager::CopyToRender(buttonTexture, ren, button.x, button.y, button.w, button.h);
+	else
+		std::cout << "Error in Button::Render" << std::endl;
 }
 
 Keyboard::Keyboard()
@@ -144,7 +149,7 @@ void Keyboard::handleEvents(SDL_Event& keyboardEvent)
 	}
 }
 
-void buttonsForItemsInInvL()
+void buttonsForItemsInInv()
 {
 	for (int i = 0; i < 16; i++)
 	{
@@ -174,11 +179,17 @@ void callbackFunctions::callSpecWin()
 	{
 		FlagManager::flagUiSpec = 1;
 		FlagManager::flagUI = 0;
+		std::cout << "Spec" << std::endl;
 	}
-	else if (FlagManager::flagUiSpec == 1)
+}
+
+void callbackFunctions::callInfoWin()
+{
+	if (FlagManager::flagUiSpec == 1)
 	{
 		FlagManager::flagUI = 1;
 		FlagManager::flagUiSpec = 0;
+		std::cout << "Info" << std::endl;
 	}
 }
 

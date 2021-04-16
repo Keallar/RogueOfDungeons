@@ -37,11 +37,10 @@ private:
 	ButtonRect button;
 	void (*callback)();
 	void (*hover)();
+	bool mouseInArea(int x, int y, int w, int h);
 public:
 	Button(const char* textureName, SDL_Renderer* renderer, SDL_Rect rect, void (*callbackFunction)(), void (*hoverFunction)());
 	void handleEvents(SDL_Event& buttonEvent);
-	bool mouseInArea(int x, int y, int w, int h);
-	void updateCoords(int x, int y);
 	void Render();
 };
 
@@ -59,6 +58,7 @@ class callbackFunctions
 public:
 	static void callInvWin();
 	static void callSpecWin();
+	static void callInfoWin();
 	static void incPlayerSTR();
 	static void incPlayerDEX();
 	static void incPlayerINT();

@@ -5,6 +5,7 @@
 #include "inventory.h"
 #include "Player.h"
 #include "Enemy.h"
+#include "CallBackAndHoverFuncs.h"
 
 TextInfo::TextInfo() 
 {
@@ -211,7 +212,7 @@ void UIInfo::Render()
 	buttonForCallSpecInfo->Render();
 }
 
-void UIInfo::RenderVersion()
+void UIInfo::AlwaysRender()
 {
 	RenderManager::CopyToRender(versionBLock, ren, 0, 705, 170, 9);
 	buttonForCallInvWin->Render();
@@ -461,6 +462,22 @@ void UIInventory::Render()
 
 void UIInventory::handleEvents(SDL_Event& eventInInv)
 {
+
+}
+
+void UIInventory::clickForItemsInInv()
+{
+	SDL_GetMouseState(&xMouseCoord, &yMouseCoord);
+
+	for (int i = 0; i < 16; i++)
+	{
+		if (InputManager::MouseInArea((780 + 36 * (i % 4)), (100 + ((i / 4) * 50)), 32, 32, xMouseCoord, yMouseCoord) &&
+			Inventory::inventoryFace[i] != -1 && FlagManager::flagInv == 1)
+		{
+			std::cout << "Item " + i << std::endl;
+			FlagManager::flagEquip = i;
+		}
+	}
 }
 
 UIEnemyInfo::UIEnemyInfo(SDL_Renderer* renderer) : ren(renderer)
@@ -518,4 +535,16 @@ void UiHpEnemyInfo::Update()
 void UiHpEnemyInfo::UpdateMax()
 {
 
+}
+
+void UiHpEnemyInfo::callEnemyInfo()
+{
+	if (FlagManager::flagUiEnemy == 0)
+	{
+		FlagManager::flagUiEnemy = 1;
+	}
+	else if (FlagManager::flagUiEnemy == 1)
+	{
+		FlagManager::flagUiEnemy = 0;
+	}
 }

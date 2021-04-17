@@ -15,12 +15,6 @@ struct MouseCoords
 class Level 
 {
 private:
-	Keyboard* keyboard;
-	Button* buttonForCallSpecInfo;
-	Button* buttonForCallInvWin;
-	
-	Button* buttonForCallEnemyInfo;
-
 	TextInfo* changeState[3];
 	int itemsOnLvl[3];
 	int itemsHave;
@@ -40,12 +34,15 @@ private:
 	SDL_Renderer* ren;
 	Player* player;
 	Enemy* enemyTurtle;
-	UiHpEnemyInfo* enemyHpInfo;
+	UiHpEnemyInfo* uiEnemyHpInfo;
 	UIInfo* uiInfo;
 	UIItem* uiItem;
 	UIEnemyInfo* uiEnemy;
 	UISpecifications* uiSpec;
 	UIEquipedItem* uiEquiped;
+	Keyboard* keyboard;
+	Button* buttonForCallSpecInfo;
+	Button* buttonForCallInvWin;
 	Animation* animation;
 	std::vector <Enemy> enemies;
 	UIInventory* uiInv;

@@ -35,7 +35,7 @@ private:
 public:
 	UIInfo(SDL_Renderer* renderer);
 	void Render();
-	void RenderVersion();
+	void AlwaysRender();
 	void handleEvents(SDL_Event& eventInUiInfo);
 };
 
@@ -169,11 +169,14 @@ private:
 	SDL_Texture* inventoryText;
 	SDL_Texture* inventory;
 	SDL_Texture* item;
+	int xMouseCoord;
+	int yMouseCoord;
 public:
 	UIInventory(SDL_Renderer* renderer);
 	~UIInventory();
 	void Render();
 	void handleEvents(SDL_Event &eventInInv);
+	void clickForItemsInInv();
 };
 
 class UIEnemyInfo
@@ -191,6 +194,17 @@ public:
 	void Render();
 };
 
+class UIEquipedItem 
+{
+private:
+	SDL_Texture* EquipedItem;
+	SDL_Renderer* ren;
+public:
+	UIEquipedItem(SDL_Renderer* renderer);
+	UIEquipedItem();
+	void Render();
+};
+
 class UiHpEnemyInfo : public TextInfo
 {
 private:
@@ -205,15 +219,5 @@ public:
 	void Render();
 	void Update();
 	void UpdateMax();
-};
-
-class UIEquipedItem 
-{
-private:
-	SDL_Texture* EquipedItem;
-	SDL_Renderer* ren;
-public:
-	UIEquipedItem(SDL_Renderer* renderer);
-	UIEquipedItem();
-	void Render();
+	void callEnemyInfo();
 };

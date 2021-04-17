@@ -25,7 +25,7 @@ Level::Level(SDL_Renderer* renderer) : ren (renderer)
 	PlayBackground = textureManager::LoadTexture("images/Playback.png", ren); 
 	player = new Player(ren);
 	enemyTurtle = new Enemy("images/Turtle.png", 4, ren, 8, 8, 3, 4);
-	enemyHpInfo = new UiHpEnemyInfo(ren);
+	uiEnemyHpInfo = new UiHpEnemyInfo(ren);
 	uiInfo = new UIInfo(ren);
 	uiItem = new UIItem(ren);
 	uiEnemy = new UIEnemyInfo(ren);
@@ -245,7 +245,8 @@ void Level::Render()
 		}
 	}
 
-	if ((generateChoose == 1)||(generateChoose == 2)) {
+	if ((generateChoose == 1)||(generateChoose == 2)) 
+	{
 		for (int i = 0; i < 22; i++)
 		{
 			for (int j = 0; j < 32; j++)
@@ -254,13 +255,18 @@ void Level::Render()
 			}
 		}
 	}
-	if (player != nullptr) {
+	if (player != nullptr)
+	{
 		player->Render();
 	}		
-	if (enemyTurtle != nullptr) {
-		if (Dark[EntityPosition::Coords[3]/32][EntityPosition::Coords[2]/32] == 0) {
+	if (enemyTurtle != nullptr)
+	{
+		if (Dark[EntityPosition::Coords[3]/32][EntityPosition::Coords[2]/32] == 0) 
+		{
 			RenderManager::SetTile(EntityPosition::Coords[2], EntityPosition::Coords[3], 12, ren, TileTexture);
-		} else{
+		}
+		else
+		{
 			enemyTurtle->Render();
 		}
 	}
@@ -268,7 +274,7 @@ void Level::Render()
 	//ALL UI
 	{
 		uiItem->Render();
-		uiInfo->RenderVersion();
+		uiInfo->AlwaysRender();
 		uiEquiped->Render();
 
 		if (FlagManager::flagInv == 1)
@@ -317,13 +323,13 @@ void Level::Render()
 
 			if (FlagManager::flagCheckHpEnemy == 1)
 			{
-				enemyHpInfo->Update();
+				uiEnemyHpInfo->Update();
 			}
 
 			if (FlagManager::flagUiEnemy == 1)
 			{
 				uiEnemy->Render();
-				enemyHpInfo->Render();
+				uiEnemyHpInfo->Render();
 			}
 
 			//Update значений hp, mana и  exp
@@ -393,8 +399,7 @@ void Level::handleEvents(SDL_Event eventInLvl)
 	case SDL_MOUSEBUTTONDOWN:
 
 		//Взаимодействие с Items в Inventory
-		//MouseButtonsInLevel::buttonsForItemsInInv();
-		
+		uiInv->clickForItemsInInv();
 
 		//Вызов окна Spec по нажатию мыши
 		uiInfo->handleEvents(eventInLvl);
@@ -408,7 +413,7 @@ void Level::handleEvents(SDL_Event eventInLvl)
 		if (eventInLvl.button.button == SDL_BUTTON_RIGHT)
 		{
 			//Вызов infoEnemy по нажатию мыши
-			//buttonForCallEnemyInfo->handleEvents(eventInLvl);
+			uiEnemyHpInfo->callEnemyInfo();
 		}
 
 		

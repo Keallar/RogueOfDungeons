@@ -31,7 +31,7 @@ Button::Button(const char* textureName, SDL_Renderer* renderer, SDL_Rect rect,
 
 	//UNDONE call of name callback
 	if (callback == NULL)
-		std::cout << "callback isn't ready " << "name of callback" << std::endl;
+		std::cout << "callback isn't ready " << std::endl;
 
 	if (nameOftexture != NULL)
 		buttonTexture = textureManager::LoadTexture(nameOftexture, ren);
@@ -83,30 +83,6 @@ void Button::Render()
 		RenderManager::CopyToRender(buttonTexture, ren, button.x, button.y, button.w, button.h);
 	else
 		std::cout << "Error in Button::Render" << std::endl;
-}
-
-Mouse MouseButtonsPlayer::mouseCoordsPlayer;
-
-void MouseButtonsPlayer::buttonsForAttack()
-{
-	SDL_GetMouseState(&mouseCoordsPlayer.x, &mouseCoordsPlayer.y);
-
-	if (InputManager::MouseInArea(EntityPosition::Coords[2], EntityPosition::Coords[3], 32, 32, mouseCoordsPlayer.x, mouseCoordsPlayer.y))
-	{
-		FlagManager::flagMeleeAttackPlayer = 1;
-		Player::Attack();
-	}
-}
-
-void MouseButtonsPlayer::buttonForRangeAttack()
-{
-	SDL_GetMouseState(&mouseCoordsPlayer.x, &mouseCoordsPlayer.y);
-
-	if (InputManager::MouseInArea(EntityPosition::Coords[2], EntityPosition::Coords[3], 32, 32, mouseCoordsPlayer.x, mouseCoordsPlayer.y))
-	{
-		FlagManager::flagRangeAttack = 1;
-		Player::Attack();
-	}
 }
 
 Keyboard::Keyboard()
@@ -165,113 +141,26 @@ void Keyboard::handleEvents(SDL_Event& keyboardEvent)
 	}
 }
 
-void buttonsForItemsInInv()
+Mouse MouseButtonsPlayer::mouseCoordsPlayer;
+
+void MouseButtonsPlayer::buttonsForAttack()
 {
-	for (int i = 0; i < 16; i++)
+	SDL_GetMouseState(&mouseCoordsPlayer.x, &mouseCoordsPlayer.y);
+
+	if (InputManager::MouseInArea(EntityPosition::Coords[2], EntityPosition::Coords[3], 32, 32, mouseCoordsPlayer.x, mouseCoordsPlayer.y))
 	{
-		if (Inventory::inventoryFace[i] != -1 && FlagManager::flagInv == 1)
-		{
-			std::cout << "Item " + i << std::endl;
-			FlagManager::flagEquip = i;
-		}
+		FlagManager::flagMeleeAttackPlayer = 1;
+		Player::Attack();
 	}
 }
 
-void callbackFunctions::callInvWin()
+void MouseButtonsPlayer::buttonForRangeAttack()
 {
-	if (FlagManager::flagInv == 0)
-	{
-		FlagManager::flagInv = 1;
-	}
-	else if (FlagManager::flagInv == 1)
-	{
-		FlagManager::flagInv = 0;
-	}
-}
+	SDL_GetMouseState(&mouseCoordsPlayer.x, &mouseCoordsPlayer.y);
 
-void callbackFunctions::callSpecOrInfoWin()
-{
-	if (FlagManager::flagUiSpec == 0)
+	if (InputManager::MouseInArea(EntityPosition::Coords[2], EntityPosition::Coords[3], 32, 32, mouseCoordsPlayer.x, mouseCoordsPlayer.y))
 	{
-		FlagManager::flagUiSpec = 1;
-		FlagManager::flagUI = 0;
-		std::cout << "Spec" << std::endl;
-	}
-	else if (FlagManager::flagUiSpec == 1)
-	{
-		FlagManager::flagUI = 1;
-		FlagManager::flagUiSpec = 0;
-		std::cout << "Info" << std::endl;
-	}
-}
-
-//void callbackFunctions::callInfoWin()
-//{
-//	
-//}
-
-void callbackFunctions::incPlayerSTR()
-{
-	//STR
-	if (FlagManager::flagSTR == 0 && FlagManager::flagUiSpec == 1)
-	{
-		Player::ChangeValueSpecs(1);
-	}
-}
-
-void callbackFunctions::incPlayerDEX()
-{
-	//DEX
-	if (FlagManager::flagDEX == 0)
-	{
-		Player::ChangeValueSpecs(2);
-	}
-}
-
-void callbackFunctions::incPlayerINT()
-{
-	//INT
-	if (FlagManager::flagINT == 0)
-	{
-		Player::ChangeValueSpecs(3);
-	}
-}
-
-void callbackFunctions::incPlayerWSD()
-{
-	//WSD
-	if (FlagManager::flagWSD == 0)
-	{
-		Player::ChangeValueSpecs(4);
-	}
-}
-
-void callbackFunctions::incPlayerPHS()
-{
-	//PHS
-	if (FlagManager::flagPHS == 0)
-	{
-		Player::ChangeValueSpecs(5);
-	}
-}
-
-void callbackFunctions::incPlayerLCK()
-{
-	//LCK
-	if (FlagManager::flagLCK == 0)
-	{
-		Player::ChangeValueSpecs(6);
-	}
-}
-
-void callbackFunctions::callEnemyInfo()
-{
-	if (FlagManager::flagUiEnemy == 0)
-	{
-		FlagManager::flagUiEnemy = 1;
-	}
-	else if (FlagManager::flagUiEnemy == 1)
-	{
-		FlagManager::flagUiEnemy = 0;
+		FlagManager::flagRangeAttack = 1;
+		Player::Attack();
 	}
 }

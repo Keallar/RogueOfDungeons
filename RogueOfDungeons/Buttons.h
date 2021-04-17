@@ -17,16 +17,6 @@ struct ButtonRect
 	int h;
 };
 
-class MouseButtonsPlayer
-{
-private:
-	static Mouse mouseCoordsPlayer;
-public:
-	static void buttonsForAttack();
-	static void buttonForRangeAttack();
-};
-
-
 class Button
 {
 private:
@@ -54,26 +44,17 @@ public:
 	void handleEvents(SDL_Event& keyboardEvent);
 };
 
-class callbackFunctions
+class MouseButtonsPlayer
 {
+private:
+	static Mouse mouseCoordsPlayer;
 public:
-	static void callInvWin();
-	static void callSpecOrInfoWin();
-	//static void callInfoWin();
-	static void incPlayerSTR();
-	static void incPlayerDEX();
-	static void incPlayerINT();
-	static void incPlayerWSD();
-	static void incPlayerPHS();
-	static void incPlayerLCK();
-	static void callEnemyInfo();
+	static void buttonsForAttack();
+	static void buttonForRangeAttack();
 };
 
-class hoverFunctions
-{
-public:
-	void callSpecWin();
-};
+
+
 
 
 

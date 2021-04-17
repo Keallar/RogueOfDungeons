@@ -39,7 +39,8 @@ void RenderManager::CopyToRender(SDL_Texture* texture, SDL_Renderer* ren, int x,
 	COORD.x = x; COORD.y = y; COORD.w = w; COORD.h = h;
 	SDL_RenderCopy(ren, texture, NULL, &COORD);
 }	
-void RenderManager::CopyToRender(SDL_Texture* texture, SDL_Renderer* ren) {
+void RenderManager::CopyToRender(SDL_Texture* texture, SDL_Renderer* ren) 
+{
 	SDL_RenderCopy(ren, texture, NULL, NULL);
 }
 

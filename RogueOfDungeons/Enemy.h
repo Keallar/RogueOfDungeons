@@ -31,7 +31,7 @@ private:
 
 	int outputDamageEnemy;
 
-	bool completeAnimation;
+	bool completeEnemyAnimation;
 	Animation* enemyAnimation;
 public:
 	

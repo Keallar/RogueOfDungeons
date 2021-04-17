@@ -21,7 +21,7 @@ Enemy::Enemy(const char* texturesheet, int framesOfAnimationForAttack, SDL_Rende
 	enemyTexture = textureManager::LoadTexture(texturesheet, ren);
 	enemyAnimation = new Animation(ren, enemyTexture);
 	framesOfAnimForAttack = framesOfAnimationForAttack;
-	completeAnimation = 0;
+	completeEnemyAnimation = 0;
 }
 Enemy::~Enemy() 
 {
@@ -217,14 +217,13 @@ void Enemy::Update()
 
 void Enemy::attackOfEnemy()
 {
-	//UNDONE придумать норм условие
-	if (completeAnimation == 0)
+	if (completeEnemyAnimation == 0)
 	{
-		completeAnimation = enemyAnimation->animationPlusForX(framesOfAnimForAttack, completeAnimation);
+		completeEnemyAnimation = enemyAnimation->animationPlusForX(framesOfAnimForAttack, completeEnemyAnimation);
 	}
-	else if (completeAnimation == 1)
+	else if (completeEnemyAnimation == 1)
 	{
-		completeAnimation = 0;
+		completeEnemyAnimation = 0;
 		Player::ChangeHpValue(-Enemy::enemyDamageCalculation());
 		std::cout << "Heat" << std::endl;
 		Player::playerTurn();

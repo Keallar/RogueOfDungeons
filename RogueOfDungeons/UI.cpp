@@ -5,21 +5,12 @@
 #include "inventory.h"
 #include "Player.h"
 #include "Enemy.h"
-
-//UIMenu::UIMenu(SDL_Renderer* renderer) 
-//{
-//	ren = renderer;
-//	
-//}
-//void UIMenu::Render()
-//{
-//	RenderManager::CopyToRender(Font1, ren, 1024, 10, 256, 21);
-//	RenderManager::CopyToRender(Font2, ren, 1024, 30, 256, 21);
-//}
+#include "CallBackAndHoverFuncs.h"
 
 TextInfo::TextInfo() 
 {
 	PATH_IN_FONT = "fonts/manaspc.ttf";
+	color = { 255, 255, 255, 255 };
 }
 
 TextInfo::~TextInfo()
@@ -27,10 +18,8 @@ TextInfo::~TextInfo()
 	
 }
 
-HpInfo::HpInfo(SDL_Renderer* renderer) 
+HpInfo::HpInfo(SDL_Renderer* renderer) : ren (renderer)
 {
-	ren = renderer;
-
 	std::string stringTemp1 = std::to_string(Player::GetHP(0));
 	const char* TEXT_VALUE_CURRENT_HP = stringTemp1.c_str();
 	hpText = FontManager::renderText(TEXT_VALUE_CURRENT_HP, PATH_IN_FONT, color, 32, ren);
@@ -166,10 +155,9 @@ void ExpInfo::Render()
 	RenderManager::CopyToRender(expMax, ren, 1180, 175, 32, 20);
 }
 
-UIInfo::UIInfo(SDL_Renderer* renderer)
+UIInfo::UIInfo(SDL_Renderer* renderer) : ren (renderer)
 {
 	PATH_IN_FONT = "fonts/manaspc.ttf";
-	ren = renderer;
 
 	//Version
 	versionBLock = FontManager::renderText("ROGUE OF DUNGEONS V-0.1 ALPHA", PATH_IN_FONT, color, 32, ren);
@@ -194,7 +182,8 @@ UIInfo::UIInfo(SDL_Renderer* renderer)
 	xpText = FontManager::renderText("XP", PATH_IN_FONT, color, 64, ren);
 
 	//Buttons
-	specButton = textureManager::LoadTexture("images/Button.png", ren);
+	buttonForCallSpecInfo = new Button("images/Button.png", ren, { 1230, 240, 32, 32 }, callbackFunctions::callSpecOrInfoWin, NULL);
+	buttonForCallInvWin = new Button("images/Button.png", ren, { 1050, 665, 25, 22 }, callbackFunctions::callInvWin, NULL);
 }
 
 void UIInfo::Render()
@@ -220,38 +209,54 @@ void UIInfo::Render()
 	RenderManager::CopyToRender(xpText, ren, 1050, 152, 25, 22);
 
 	//Buttons
-	RenderManager::CopyToRender(specButton, ren, 1230, 240, 32, 32);
-
+	buttonForCallSpecInfo->Render();
 }
 
-void UIInfo::RenderVersion()
+void UIInfo::AlwaysRender()
 {
 	RenderManager::CopyToRender(versionBLock, ren, 0, 705, 170, 9);
+	buttonForCallInvWin->Render();
 }
 
-UISpecifications::UISpecifications(SDL_Renderer* renderer)
+void UIInfo::handleEvents(SDL_Event& eventInUiInfo)
 {
-	PATH_IN_FONT = "fonts/manaspc.ttf";
+	buttonForCallSpecInfo->handleEvents(eventInUiInfo);
+	buttonForCallInvWin->handleEvents(eventInUiInfo);
+}
+
+UISpecifications::UISpecifications(SDL_Renderer* renderer) : ren (renderer)
+{
 	color = { 255, 255, 255, 255 };
-	ren = renderer;
 
 	//Specifications
 	specBlock = textureManager::LoadTexture("images/InfoBlock.png", ren);
 	specifcation = FontManager::renderText("Specifications", PATH_IN_FONT, color, 64, ren);
-	plus = FontManager::renderText("+", PATH_IN_FONT, color, 32, ren);
-	button = textureManager::LoadTexture("images/Button.png", ren);
+	buttonForCallInfoWin = new Button("images/Button.png", ren, { 1230, 240, 32, 32 });
+	//STR
 	STR = FontManager::renderText("STR", PATH_IN_FONT, color, 64, ren);
 	valueSTR = FontManager::renderText("1", PATH_IN_FONT, color, 32, ren);
+	buttonForIncPlayerSTR = new Button("images/Button.png", ren, { 1230, 50, 16, 20 }, callbackFunctions::incPlayerSTR, NULL);
+	//DEX
 	DEX = FontManager::renderText("DEX", PATH_IN_FONT, color, 64, ren);
 	valueDEX = FontManager::renderText("1", PATH_IN_FONT, color, 32, ren);
+	buttonForIncPlayerDEX = new Button("images/Button.png", ren, { 1230, 80, 16, 20 }, callbackFunctions::incPlayerDEX, NULL);
+	//INT
 	INT = FontManager::renderText("INT", PATH_IN_FONT, color, 64, ren);
 	valueINT = FontManager::renderText("1", PATH_IN_FONT, color, 32, ren);
+	buttonForIncPlayerINT = new Button("images/Button.png", ren, { 1230, 110, 16, 20 }, callbackFunctions::incPlayerINT, NULL);
+	//WSD
 	WSD = FontManager::renderText("WSD", PATH_IN_FONT, color, 64, ren);
 	valueWSD = FontManager::renderText("1", PATH_IN_FONT, color, 32, ren);
+	buttonForIncPlayerWSD = new Button("images/Button.png", ren, { 1230, 140, 16, 20 }, callbackFunctions::incPlayerWSD, NULL);
+	//PHS
 	PHS = FontManager::renderText("PHS", PATH_IN_FONT, color, 64, ren);
 	valuePHS = FontManager::renderText("1", PATH_IN_FONT, color, 32, ren);
+	buttonForIncPlayerPHS = new Button("images/Button.png", ren, { 1230, 170, 16, 20 }, callbackFunctions::incPlayerPHS, NULL);
+	//LCK
 	LCK = FontManager::renderText("LCK", PATH_IN_FONT, color, 64, ren);
 	valueLCK = FontManager::renderText("1", PATH_IN_FONT, color, 32, ren);
+	buttonForIncPlayerLCK = new Button("images/Button.png", ren, { 1230, 200, 16, 20 }, callbackFunctions::incPlayerLCK, NULL);
+	//numbers
 	one = FontManager::renderText("(1)", PATH_IN_FONT, color, 64, ren);
 	two = FontManager::renderText("(2)", PATH_IN_FONT, color, 64, ren);
 	three = FontManager::renderText("(3)", PATH_IN_FONT, color, 64, ren);
@@ -270,35 +275,35 @@ void UISpecifications::Render()
 	//Specifications
 	RenderManager::CopyToRender(specBlock, ren, 1024, 0, 256, 480);
 	RenderManager::CopyToRender(specifcation, ren, 1075, 13, 160, 32);
-	RenderManager::CopyToRender(button, ren, 1230, 240, 32, 32);
+	buttonForCallInfoWin->Render();
 	//STR
 	RenderManager::CopyToRender(STR, ren, 1050, 50, 64, 20);
-	RenderManager::CopyToRender(plus, ren, 1230, 50, 16, 20);
+	buttonForIncPlayerSTR->Render();
 	RenderManager::CopyToRender(valueSTR, ren, 1180, 50, 16, 20);
 	RenderManager::CopyToRender(one, ren, 1250, 50, 16, 20);
 	//DEX
 	RenderManager::CopyToRender(DEX, ren, 1050, 80, 64, 20);
-	RenderManager::CopyToRender(plus, ren, 1230, 80, 16, 20);
+	buttonForIncPlayerDEX->Render();
 	RenderManager::CopyToRender(valueDEX, ren, 1180, 80, 16, 20);
 	RenderManager::CopyToRender(two, ren, 1250, 80, 16, 20);
 	//INT
 	RenderManager::CopyToRender(INT, ren, 1050, 110, 64, 20);
-	RenderManager::CopyToRender(plus, ren, 1230, 110, 16, 20);
+	buttonForIncPlayerINT->Render();
 	RenderManager::CopyToRender(valueINT, ren, 1180, 110, 16, 20);
 	RenderManager::CopyToRender(three, ren, 1250, 110, 16, 20);
 	//WSD
 	RenderManager::CopyToRender(WSD, ren, 1050, 140, 64, 20);
-	RenderManager::CopyToRender(plus, ren, 1230, 140, 16, 20);
+	buttonForIncPlayerWSD->Render();
 	RenderManager::CopyToRender(valueWSD, ren, 1180, 140, 16, 20);
 	RenderManager::CopyToRender(four, ren, 1250, 140, 16, 20);
 	//PHS
 	RenderManager::CopyToRender(PHS, ren, 1050, 170, 64, 20);
-	RenderManager::CopyToRender(plus, ren, 1230, 170, 16, 20);
+	buttonForIncPlayerPHS->Render();
 	RenderManager::CopyToRender(valuePHS, ren, 1180, 170, 16, 20);
 	RenderManager::CopyToRender(five, ren, 1250, 170, 16, 20);
 	//LCK
 	RenderManager::CopyToRender(LCK, ren, 1050, 200, 64, 20);
-	RenderManager::CopyToRender(plus, ren, 1230, 200, 16, 20);
+	buttonForIncPlayerLCK->Render();
 	RenderManager::CopyToRender(valueLCK, ren, 1180, 200, 16, 20);
 	RenderManager::CopyToRender(six, ren, 1250, 200, 16, 20);
 }
@@ -376,6 +381,16 @@ void UISpecifications::UpdateMax()
 
 }
 
+void UISpecifications::handleEvents(SDL_Event& eventInSpec)
+{
+	buttonForIncPlayerSTR->handleEvents(eventInSpec);
+	buttonForIncPlayerDEX->handleEvents(eventInSpec);
+	buttonForIncPlayerINT->handleEvents(eventInSpec);
+	buttonForIncPlayerWSD->handleEvents(eventInSpec);
+	buttonForIncPlayerPHS->handleEvents(eventInSpec);
+	buttonForIncPlayerLCK->handleEvents(eventInSpec);
+}
+
 UIEquipedItem::UIEquipedItem(SDL_Renderer* renderer) : ren (renderer)
 {
 
@@ -383,9 +398,7 @@ UIEquipedItem::UIEquipedItem(SDL_Renderer* renderer) : ren (renderer)
 
 void UIEquipedItem::Render()
 {
-	//std::cout << "A" << Player::Id << "A";
 	Inventory::it = Inventory::ExistingItems.find(Player::EqItems.WeaponId);
-	//std::cout << "A" << Player::EqItems.WeaponId << "A";
 	if (Player::EqItems.WeaponId != -1) {
 		EquipedItem = textureManager::LoadTexture((Inventory::it->second)->ItemTexture, ren);
 
@@ -411,8 +424,6 @@ UIItem::UIItem(SDL_Renderer* renderer) : ren(renderer)
 
 	itemBlock = textureManager::LoadTexture("images/InfoBlock.png", ren);
 	item = FontManager::renderText("Items", PATH_IN_FONT, color, 32, ren);
-	buttonForInv = textureManager::LoadTexture("images/Button.png", ren);
-
 	INV = FontManager::renderText("INV", PATH_IN_FONT, color, 32, ren);
 }
 
@@ -420,8 +431,6 @@ void UIItem::Render()
 {
 	RenderManager::CopyToRender(itemBlock, ren, 1024, 480, 256, 225);
 	RenderManager::CopyToRender(item, ren, 1085, 490, 128, 32);
-	RenderManager::CopyToRender(buttonForInv, ren, 1050, 665, 25, 22);
-
 	RenderManager::CopyToRender(INV, ren, 1048, 648, 27, 22);
 }
 
@@ -429,6 +438,7 @@ UIInventory::UIInventory(SDL_Renderer* renderer) : ren(renderer)
 {
 	SDL_Color color = { 255, 255, 255, 255 };
 	const char* PATH_IN_FONT = "fonts/manaspc.ttf";
+
 	inventoryBlock = textureManager::LoadTexture("images/InfoBlock.png", ren);
 	inventoryText = FontManager::renderText("Inventory", PATH_IN_FONT, color, 64, ren);
 }
@@ -447,13 +457,29 @@ void UIInventory::Render()
 			SDL_DestroyTexture(item);
 			item = 0;
 		}
-		/*else {
-			std::cout << 0;
-		}*/
 	}
 }
 
-//EnemyInfo
+void UIInventory::handleEvents(SDL_Event& eventInInv)
+{
+
+}
+
+void UIInventory::clickForItemsInInv()
+{
+	SDL_GetMouseState(&xMouseCoord, &yMouseCoord);
+
+	for (int i = 0; i < 16; i++)
+	{
+		if (InputManager::MouseInArea((780 + 36 * (i % 4)), (100 + ((i / 4) * 50)), 32, 32, xMouseCoord, yMouseCoord) &&
+			Inventory::inventoryFace[i] != -1 && FlagManager::flagInv == 1)
+		{
+			std::cout << "Item " + i << std::endl;
+			FlagManager::flagEquip = i;
+		}
+	}
+}
+
 UIEnemyInfo::UIEnemyInfo(SDL_Renderer* renderer) : ren(renderer)
 {
 	pathInFont = "fonts/manaspc.ttf";
@@ -509,4 +535,16 @@ void UiHpEnemyInfo::Update()
 void UiHpEnemyInfo::UpdateMax()
 {
 
+}
+
+void UiHpEnemyInfo::callEnemyInfo()
+{
+	if (FlagManager::flagUiEnemy == 0)
+	{
+		FlagManager::flagUiEnemy = 1;
+	}
+	else if (FlagManager::flagUiEnemy == 1)
+	{
+		FlagManager::flagUiEnemy = 0;
+	}
 }

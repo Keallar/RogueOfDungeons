@@ -1,10 +1,39 @@
 #pragma once
 #include <SDL.h>
+#include <SDL_image.h>
+#include <string>
 
-struct MCoord
+struct Mouse
 {
 	int x;
 	int y;
+};
+
+struct ButtonRect
+{
+	int x;
+	int y;
+	int w;
+	int h;
+};
+
+class Button
+{
+private:
+	const char* nameOftexture;
+	SDL_Renderer* ren;
+	SDL_Texture* buttonTexture;
+	Mouse mouse;
+	ButtonRect button;
+	void (*callback)();
+	void (*hover)();
+	bool mouseInArea(int x, int y, int w, int h);
+public:
+	Button(const char* textureName, SDL_Renderer* renderer, SDL_Rect rect);
+	Button(const char* textureName, SDL_Renderer* renderer, SDL_Rect rect, void (*callbackFunction)(), void (*hoverFunction)());
+	void handleEvents(SDL_Event& buttonEvent);
+	void Render();
+	void updateCoords(int newx, int newy);
 };
 
 class KeyboardButtonsInLevel
@@ -18,39 +47,17 @@ public:
 	static void keyForIncPlayerSpec(const Uint8* keys);
 };
 
-class MouseButtonsInLevel
-{
-private:
-	static MCoord mouseCoords;
-	
-public:
-	MouseButtonsInLevel();
-	static void buttonsForItemsInInv();
-	static void buttonForCallSpecWin();
-	static void buttonForCallInvWin();
-	static void buttonForCallEnemyInfo();
-	static void buttonForIncPlayerSpec();
-
-};
-
-//class KeyboardButtonInPlayer
-//{
-//private:
-//	MCoord mouseCoords;
-//	const Uint8* keys = SDL_GetKeyboardState(NULL);
-//public:
-//	KeyboardButtonInPlayer();
-//	void movePlayer(SDL_Event &eventForMovePlayer);
-//};
-
 class MouseButtonsPlayer
 {
 private:
-	static MCoord mouseCoordsPlayer;
+	static Mouse mouseCoordsPlayer;
 public:
-	MouseButtonsPlayer();
-	~MouseButtonsPlayer();
 	static void buttonsForAttack();
 	static void buttonForRangeAttack();
 };
+
+
+
+
+
 

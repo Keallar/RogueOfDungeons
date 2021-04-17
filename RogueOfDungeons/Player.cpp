@@ -66,11 +66,9 @@ Player::Player(SDL_Renderer* renderer)
 	ren = renderer;
 	PlayerTexture = textureManager::LoadTexture("images/Hero.png", ren);
 	playerAnimation = new Animation(ren, PlayerTexture);
-
-	for (int i = 0; i < 22; i++) 
-	{
-		for (int j = 0; j < 32; j++) 
-		{
+	generate = -1;
+	for (int i = 0; i < 22; i++) {
+		for (int j = 0; j < 32; j++) {
 			Location[i][j] = 0;
 		}
 	}
@@ -370,14 +368,23 @@ void Player::GetPlayerFirstCoords()
 {
 	EntityPosition::Coords[0] = (rand() % 2 + 1) * 32;
 	EntityPosition::Coords[1] = (rand() % 20 + 1) * 32;
-	while ((Location[EntityPosition::Coords[1] / 32][EntityPosition::Coords[0] / 32] == 1) ||
-		((Location[EntityPosition::Coords[1] / 32][EntityPosition::Coords[0] / 32 - 1] != 0) &&
+	if (generate != 4) {
+		while ((Location[EntityPosition::Coords[1] / 32][EntityPosition::Coords[0] / 32] == 1) ||
+			((Location[EntityPosition::Coords[1] / 32][EntityPosition::Coords[0] / 32 - 1] != 0) &&
 			(Location[EntityPosition::Coords[1] / 32][EntityPosition::Coords[0] / 32 + 1] != 0) &&
-			(Location[EntityPosition::Coords[1] / 32 - 1][EntityPosition::Coords[0] / 32] != 0) &&
-			(Location[EntityPosition::Coords[1] / 32 + 1][EntityPosition::Coords[0] / 32] != 0)))
-	{
-		EntityPosition::Coords[0] = (rand() % 2 + 1) * 32;
-		EntityPosition::Coords[1] = (rand() % 20 + 1) * 32;
+				(Location[EntityPosition::Coords[1] / 32 - 1][EntityPosition::Coords[0] / 32] != 0) &&
+				(Location[EntityPosition::Coords[1] / 32 + 1][EntityPosition::Coords[0] / 32] != 0)))
+		{
+			EntityPosition::Coords[0] = (rand() % 2 + 1) * 32;
+			EntityPosition::Coords[1] = (rand() % 20 + 1) * 32;
+		}
+	}
+	else {
+		while ((Location[EntityPosition::Coords[1] / 32][EntityPosition::Coords[0] / 32] == 1))
+		{
+			EntityPosition::Coords[0] = (rand() % 2 + 1) * 32;
+			EntityPosition::Coords[1] = (rand() % 20 + 1) * 32;
+		}
 	}
 }
 

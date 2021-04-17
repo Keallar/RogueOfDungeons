@@ -311,84 +311,212 @@ void Level::OtherGeneration(int startX, int startY, int endX, int endY) {
 
 //метод плохо работает на данный момент, не юзайте
 
-void Level::RoomGenerationMethod1() {
-	for (int i = 0; i < 22; i++) {
-		for (int j = 0; j < 32; j++) {
+void Level::LabGeneration() {
+	for (int j = 0; j < 32; j++) {
+		for (int i = 0; i < 22; i++) {
+			//стены вокруг уровня
 			if ((j == 31) || (i == 21) || (j == 0) || (i == 0)) {
 				textureLocation[i][j] = 2;
 			}
 		}
 	}
-	COORDS RoomPoints[9] = { {-1, -1},{-1, -1},{-1, -1},{-1, -1},{-1, -1},{-1, -1},{-1, -1},{-1, -1},{-1, -1} };
-	for (int i = 0; i < 9; i++) {
-		bool near = true;
-		int counter = 0;
-		while (near) {
-			near = false;
-			RoomPoints[i] = { rand() % 20 + 1, rand() % 30 + 1 };
-			if ((RoomPoints[i].x < 4) || (RoomPoints[i].x > 17) || (RoomPoints[i].y < 4) || (RoomPoints[i].y > 27)) {
-				near = true;
-			}
-			for (int k = 0; k < i; k++) {
-				if ((((RoomPoints[k].x - RoomPoints[i].x < 7) && (RoomPoints[k].x - RoomPoints[i].x > -7)) &&
-					((RoomPoints[k].y - RoomPoints[i].y < 7) && (RoomPoints[k].y - RoomPoints[i].y > -7)))) {
-					near = true;
-				}
-			}
-			counter++;
-			if (counter > 150) {
-				near = false;
-				RoomPoints[i].x = -1;
-				RoomPoints[i].y = -1;
-			}
-		}
-	}
-	for (int m = 0; m < 9; m++) {
-		if ((RoomPoints[m].x != -1) && (RoomPoints[m].y != -1)) {
-			textureLocation[RoomPoints[m].x][RoomPoints[m].y] = 0;
-			for (int j = 0; j < 6; j++) {
-				for (int k = 0; k < 6; k++) {
-					textureLocation[RoomPoints[m].x - 2 + j][RoomPoints[m].y - 2 + k] = 0;
-				}
-			}
-		}
-	}
-	for (int i = 0; i < 8; i++) {
-		if ((RoomPoints[i].x != -1) && (RoomPoints[i].y != -1) && (RoomPoints[i + 1].x != -1) && (RoomPoints[i + 1].y != -1)) {
-			int deltaX = abs(RoomPoints[i].x - RoomPoints[i + 1].x);
-			int deltaY = abs(RoomPoints[i].y - RoomPoints[i + 1].y);
-			if (RoomPoints[i].x < RoomPoints[i + 1].x) {
-				for (int j = 0; j < deltaX; j++) {
-					textureLocation[RoomPoints[i].x + 1 + j][RoomPoints[i].y] = 0;
-				}
-				if (RoomPoints[i].y < RoomPoints[i + 1].y) {
-					for (int j = 0; j < deltaY; j++) {
-						textureLocation[RoomPoints[i + 1].x][RoomPoints[i].y + 1 + j] = 0;
-					}
-				}
-				else {
-					for (int j = 0; j < deltaY; j++) {
-						textureLocation[RoomPoints[i + 1].x][RoomPoints[i + 1].y + 1 + j] = 0;
-					}
-				}
-			}
-			else {
-				for (int j = 0; j < deltaX; j++) {
-					textureLocation[RoomPoints[i + 1].x + 1 + j][RoomPoints[i].y] = 0;
-				}
-				if (RoomPoints[i].y < RoomPoints[i + 1].y) {
-					for (int j = 0; j < deltaY; j++) {
-						textureLocation[RoomPoints[i].x][RoomPoints[i].y + 1 + j] = 0;
-					}
-				}
-				else {
-					for (int j = 0; j < deltaY; j++) {
-						textureLocation[RoomPoints[i].x][RoomPoints[i + 1].y + 1 + j] = 0;
+	for (int i = 1; i < 19; i++) {
+		for (int j = 1; j < 29; j++) {
+			if ((i % 2 == 1) && (j % 2 == 1)) {
+				textureLocation[i][j] = 0;
+				//int PrevWay = 0;
+				int Way = rand() % 2;
+				bool Choosed = false;
+				while (Choosed == false) {
+					Choosed = true;
+					/*if (PrevWay == 30) {
+						Choosed = false;
+						Way = 4;
+					}*/
+					switch (Way) {
+					case 0:
+						if (textureLocation[i][j + 1] != 1) {
+							//PrevWay++;
+							Way = rand() % 4;
+							Choosed = false;
+						}
+						else {
+							textureLocation[i][j + 1] = 0;
+						}
+						break;
+					case 1:
+						if (textureLocation[i+1][j] != 1) {
+							//PrevWay++;
+							Way = rand() % 4;
+							Choosed = false;
+						}
+						else {
+							textureLocation[i + 1][j] = 0;
+						}
+						break;
+					/*case 2:
+						if (textureLocation[i][j - 1] != 1) {
+							PrevWay++;
+							Way = rand() % 4;
+							Choosed = false;
+						}
+						else {
+							textureLocation[i][j - 1] = 0;
+						}
+						break;*/
+					/*case 3:
+						if (textureLocation[i-1][j] != 1) {
+							PrevWay++;
+							Way = rand() % 4;
+							Choosed = false;
+						}
+						else {
+							textureLocation[i - 1][j] = 0;
+						}
+						break;*/
+					/*case 4:
+						textureLocation[i][j+1] = 0;
+						textureLocation[i+1][j] = 0;
+						textureLocation[i - 1][j] = 0;
+						textureLocation[i][j-1] = 0;
+						break;*/
+					default:
+						break;
 					}
 				}
 			}
 		}
 	}
+	for (int i = 1; i < 20; i++) {
+		textureLocation[i][29] = 0;
+	}
+	for (int i = 1; i < 30; i++) {
+		textureLocation[19][i] = 0;
+	}
+
+	//ставим сундуки
+
+	int counter = 0;
+	for (int k = 1; k < 21; k++) {
+		for (int j = 1; j < 31; j++) {
+			if (textureLocation[k][j] == 0) {
+				counter = 0;
+				if (textureLocation[k][j + 1] == 0 || textureLocation[k][j + 1] == 14) {
+					counter++;
+				}
+				if (textureLocation[k][j - 1] == 0 || textureLocation[k][j - 1] == 14) {
+					counter++;
+				}
+				if (textureLocation[k - 1][j] == 0 || textureLocation[k - 1][j] == 14) {
+					counter++;
+				}
+				if (textureLocation[k + 1][j] == 0 || textureLocation[k + 1][j] == 14) {
+					counter++;
+				}
+				if (counter == 1) {
+					chests[0][0] = k; chests[0][1] = j;
+					break;
+				}
+			}
+		}
+	}
+	textureLocation[chests[0][0]][chests[0][1]] = 14;
+	Location[chests[0][0]][chests[0][1]] = 3;
+	counter = 0;
+	for (int k = 20; k >= 1; k--) {
+		for (int j = 1; j < 31; j++) {
+			if (textureLocation[k][j] == 0) {
+				counter = 0;
+				if (textureLocation[k][j + 1] == 0 || textureLocation[k][j + 1] == 14) {
+					counter++;
+				}
+				if (textureLocation[k][j - 1] == 0 || textureLocation[k][j - 1] == 14) {
+					counter++;
+				}
+				if (textureLocation[k - 1][j] == 0 || textureLocation[k - 1][j] == 14) {
+					counter++;
+				}
+				if (textureLocation[k + 1][j] == 0 || textureLocation[k + 1][j] == 14) {
+					counter++;
+				}
+				if (counter == 1) {
+					chests[1][0] = k; chests[1][1] = j;
+					break;
+				}
+			}
+		}
+	}
+	textureLocation[chests[1][0]][chests[1][1]] = 14;
+	Location[chests[1][0]][chests[1][1]] = 3;
+	counter = 0;
+	for (int k = 20; k >= 1; k--) {
+		for (int j = 30; j >= 1; j--) {
+			if (textureLocation[k][j] == 0) {
+				counter = 0;
+				if (textureLocation[k][j + 1] == 0 || textureLocation[k][j + 1] == 14) {
+					counter++;
+				}
+				if (textureLocation[k][j - 1] == 0 || textureLocation[k][j - 1] == 14) {
+					counter++;
+				}
+				if (textureLocation[k - 1][j] == 0 || textureLocation[k - 1][j] == 14) {
+					counter++;
+				}
+				if (textureLocation[k + 1][j] == 0 || textureLocation[k + 1][j] == 14) {
+					counter++;
+				}
+				if (counter == 1) {
+					chests[2][0] = k; chests[2][1] = j;
+					break;
+				}
+			}
+		}
+	}
+	textureLocation[chests[2][0]][chests[2][1]] = 14;
+	Location[chests[2][0]][chests[2][1]] = 3;
+
+	for (int j = 0; j < 32; j++) {
+		for (int i = 0; i < 22; i++) {
+			if (textureLocation[i][j] == 1) {
+				if (rand() % 2) {
+					textureLocation[i][j] = 5;
+				}
+			}
+			if (textureLocation[i][j] == 0) {
+				switch (rand() % 3) {
+				case 0:
+					break;
+				case 1:
+					textureLocation[i][j] = 4;
+					break;
+				case 2:
+					textureLocation[i][j] = 6;
+					break;
+				}
+			}
+			//стены вокруг уровня
+			if ((j == 31) || (i == 21) || (j == 0) || (i == 0)) {
+				textureLocation[i][j] = 2;
+			}
+		}
+	}
+
+	//заполяем массив, которых хранит инфу, где стены, а где можно ходить
+
+	for (int i = 0; i < 22; i++) {
+		for (int j = 0; j < 32; j++) {
+			if ((textureLocation[i][j] == 0) || (textureLocation[i][j] == 4) || (textureLocation[i][j] == 6)) {
+				Location[i][j] = 0;
+			}
+			if ((textureLocation[i][j] == 1) || (textureLocation[i][j] == 3) || (textureLocation[i][j] == 5)) {
+				Location[i][j] = 1;
+			}
+			if (textureLocation[i][j] == 2) {
+				Location[i][j] = 2;
+			}
+		}
+	}
+
 }
 
 //метод для генерации комнат, 2 вариант генерации

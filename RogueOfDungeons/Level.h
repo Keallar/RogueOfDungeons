@@ -58,11 +58,12 @@ private:
 	void ChangeDark(int i, int j);
 	void ChunkGenerationMethod();
 	void ChunkGenerationMethod2();
-	void RoomGenerationMethod1();
+	void LabGeneration();
 	void RoomGenerationMethod2();
 	void CreateChunk(int x, int y);
 	void CreateChunk2(int x, int y);
 public:
+	int GetGeneration();
 	bool flagTB;
 	Level(SDL_Renderer* renderer);
 	~Level();

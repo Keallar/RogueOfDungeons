@@ -85,14 +85,19 @@ void Button::Render()
 		std::cout << "Error in Button::Render" << std::endl;
 }
 
-Keyboard::Keyboard()
+void Button::updateCoords(int newx, int newy)
+{
+	button.x = newx;
+	button.y = newy;
+}
+
+KeyboardButtonsInLevel::KeyboardButtonsInLevel()
 {
 
 }
 
-void Keyboard::handleEvents(SDL_Event& keyboardEvent)
+void KeyboardButtonsInLevel::keyForCallSpecWin(const Uint8* keys)
 {
-	//keyForCallSpecWin
 	if (keys[SDL_SCANCODE_Q] && FlagManager::flagUiSpec == 0)
 	{
 		FlagManager::flagUiSpec = 1;
@@ -103,8 +108,10 @@ void Keyboard::handleEvents(SDL_Event& keyboardEvent)
 		FlagManager::flagUiSpec = 0;
 		FlagManager::flagUI = 1;
 	}
+}
 
-	//keyForCallInvWin
+void KeyboardButtonsInLevel::keyForCallInvWin(const Uint8* keys)
+{
 	if (keys[SDL_SCANCODE_I] && FlagManager::flagInv == 0)
 	{
 		FlagManager::flagInv = 1;
@@ -114,7 +121,10 @@ void Keyboard::handleEvents(SDL_Event& keyboardEvent)
 		FlagManager::flagInv = 0;
 	}
 
-	//keyForIncPlayerSpec
+}
+
+void KeyboardButtonsInLevel::keyForIncPlayerSpec(const Uint8* keys)
+{
 	if (keys[SDL_SCANCODE_1] && FlagManager::flagUiSpec == 1 && FlagManager::flagSTR == 0)
 	{
 		Player::ChangeValueSpecs(1);
@@ -127,17 +137,13 @@ void Keyboard::handleEvents(SDL_Event& keyboardEvent)
 	{
 		Player::ChangeValueSpecs(3);
 	}
-	if (keys[SDL_SCANCODE_4] && FlagManager::flagUiSpec == 1 && FlagManager::flagWSD == 0)
+	if (keys[SDL_SCANCODE_4] && FlagManager::flagUiSpec == 1 && FlagManager::flagPHS == 0)
 	{
 		Player::ChangeValueSpecs(4);
 	}
-	if (keys[SDL_SCANCODE_5] && FlagManager::flagUiSpec == 1 && FlagManager::flagPHS == 0)
+	if (keys[SDL_SCANCODE_5] && FlagManager::flagUiSpec == 1 && FlagManager::flagLCK == 0)
 	{
 		Player::ChangeValueSpecs(5);
-	}
-	if (keys[SDL_SCANCODE_6] && FlagManager::flagUiSpec == 1 && FlagManager::flagLCK == 0)
-	{
-		Player::ChangeValueSpecs(6);
 	}
 }
 

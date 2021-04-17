@@ -67,8 +67,10 @@ Player::Player(SDL_Renderer* renderer)
 	PlayerTexture = textureManager::LoadTexture("images/Hero.png", ren);
 	playerAnimation = new Animation(ren, PlayerTexture);
 
-	for (int i = 0; i < 22; i++) {
-		for (int j = 0; j < 32; j++) {
+	for (int i = 0; i < 22; i++) 
+	{
+		for (int j = 0; j < 32; j++) 
+		{
 			Location[i][j] = 0;
 		}
 	}
@@ -355,8 +357,10 @@ void Player::CheckSpecVaue(int numSpec)
 
 void Player::GetLevel(int arr[22][32])
 {
-	for (int i = 0; i < 22; i++) {
-		for (int j = 0; j < 32; j++) {
+	for (int i = 0; i < 22; i++)
+	{
+		for (int j = 0; j < 32; j++) 
+		{
 			Location[i][j] = arr[i][j];
 		}
 	}
@@ -448,8 +452,6 @@ void Player::GetItemOnLvl(int id)
 void Player::Render()
 {
 	playerAnimation->Render(EntityPosition::Coords[0], EntityPosition::Coords[1]);
-	//std::cout << EqItems.equipedMeleeW << " "<< EqItems.equipedRangeW << " "<<EqItems.WeaponId << std::endl;
-	//Player::Id = EqItems.WeaponId;
 }
 
 void Player::Update()
@@ -481,7 +483,6 @@ void Player::handleEvents(SDL_Event playerEvent)
 			else if (EntityPosition::Coords[0] == EntityPosition::Coords[2] &&
 				(EntityPosition::Coords[1] - 32) == EntityPosition::Coords[3])
 			{
-				std::cout << "Stop Enemy W" << std::endl;
 				//остановка при попытке пройти сквозь enemy
 			}
 			else
@@ -513,7 +514,6 @@ void Player::handleEvents(SDL_Event playerEvent)
 			else if ((EntityPosition::Coords[0] - 32) == EntityPosition::Coords[2] &&
 				EntityPosition::Coords[1] == EntityPosition::Coords[3])
 			{
-				std::cout << "Stop Enemy A" << std::endl;
 				//остановка при попытке пройти сквозь enemy
 			}
 			else
@@ -545,7 +545,6 @@ void Player::handleEvents(SDL_Event playerEvent)
 			else if (EntityPosition::Coords[0] == EntityPosition::Coords[2] && 
 				(EntityPosition::Coords[1] + 32) == EntityPosition::Coords[3])
 			{
-				std::cout << "Stop Enemy S" << std::endl;
 				//остановка при попытке пройти сквозь enemy
 			}
 			else
@@ -577,7 +576,6 @@ void Player::handleEvents(SDL_Event playerEvent)
 			else if ((EntityPosition::Coords[0] + 32) == EntityPosition::Coords[2] &&
 				EntityPosition::Coords[1] == EntityPosition::Coords[3])
 			{
-				std::cout << "Stop Enemy D" << std::endl;
 				//остановка при попытке пройти сквозь enemy
 			}
 			else

@@ -33,15 +33,18 @@ public:
 	Button(const char* textureName, SDL_Renderer* renderer, SDL_Rect rect, void (*callbackFunction)(), void (*hoverFunction)());
 	void handleEvents(SDL_Event& buttonEvent);
 	void Render();
+	void updateCoords(int newx, int newy);
 };
 
-class Keyboard
+class KeyboardButtonsInLevel
 {
 private:
-	bool keys[SDL_NUM_SCANCODES];
+	const Uint8* keys = SDL_GetKeyboardState(NULL);
 public:
-	Keyboard();
-	void handleEvents(SDL_Event& keyboardEvent);
+	KeyboardButtonsInLevel();
+	static void keyForCallSpecWin(const Uint8* keys);
+	static void keyForCallInvWin(const Uint8* keys);
+	static void keyForIncPlayerSpec(const Uint8* keys);
 };
 
 class MouseButtonsPlayer

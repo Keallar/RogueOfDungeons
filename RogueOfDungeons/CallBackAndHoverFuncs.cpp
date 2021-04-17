@@ -18,13 +18,11 @@ void callbackFunctions::callSpecOrInfoWin()
 	{
 		FlagManager::flagUiSpec = 1;
 		FlagManager::flagUI = 0;
-		std::cout << "Spec" << std::endl;
 	}
 	else if (FlagManager::flagUiSpec == 1)
 	{
 		FlagManager::flagUI = 1;
 		FlagManager::flagUiSpec = 0;
-		std::cout << "Info" << std::endl;
 	}
 }
 
@@ -82,7 +80,7 @@ void callbackFunctions::incPlayerLCK()
 	}
 }
 
-void hoverFunctions::callSpecWin()
-{
-
-}
+//void hoverFunctions::callSpecWin()
+//{
+//
+//}

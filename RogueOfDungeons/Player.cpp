@@ -50,7 +50,7 @@ int Player::WSD[2] = {
 					 };
 
 int Player::PHS[2] = {
-						1, /*pHS  now*/
+						1, /*PHS  now*/
 						1, /*PHS  previous*/
 					 };
 

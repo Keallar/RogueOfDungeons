@@ -398,6 +398,9 @@ void Level::handleEvents(SDL_Event eventInLvl)
 
 		//Вызов окна Spec по нажатию мыши
 		uiInfo->handleEvents(eventInLvl);
+
+		//Увеличение значения характеристик по нажатию мыши
+		uiSpec->handleEvents(eventInLvl);
 		
 		//Вызов окна Inventory по нажатию мыши
 		uiInv->handleEvents(eventInLvl);
@@ -408,8 +411,6 @@ void Level::handleEvents(SDL_Event eventInLvl)
 			//buttonForCallEnemyInfo->handleEvents(eventInLvl);
 		}
 
-		//Увеличение значения характеристик по нажатию мыши
-		uiSpec->handleEvents(eventInLvl);
 		
 	case SDL_KEYDOWN:
 

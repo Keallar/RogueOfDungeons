@@ -5,30 +5,21 @@
 #include "EntityPosition.h"
 #include "Player.h"
 
-Mouse MouseButtonsPlayer::mouseCoordsPlayer;
-
-void MouseButtonsPlayer::buttonsForAttack()
+//конструктор без callback и hover
+Button::Button(const char* textureName, SDL_Renderer* renderer, SDL_Rect rect)
+	:nameOftexture(textureName), ren(renderer)
 {
-	SDL_GetMouseState(&mouseCoordsPlayer.x, &mouseCoordsPlayer.y);
+	button.x = rect.x;
+	button.y = rect.y;
+	button.w = rect.w;
+	button.h = rect.h;
 
-	if (InputManager::MouseInArea(EntityPosition::Coords[2], EntityPosition::Coords[3], 32, 32, mouseCoordsPlayer.x, mouseCoordsPlayer.y))
-	{
-		FlagManager::flagMeleeAttackPlayer = 1;
-		Player::Attack();
-	}
+	if (nameOftexture != NULL)
+		buttonTexture = textureManager::LoadTexture(nameOftexture, ren);
+	else
+		buttonTexture = NULL;
 }
-
-void MouseButtonsPlayer::buttonForRangeAttack()
-{
-	SDL_GetMouseState(&mouseCoordsPlayer.x, &mouseCoordsPlayer.y);
-
-	if (InputManager::MouseInArea(EntityPosition::Coords[2], EntityPosition::Coords[3], 32, 32, mouseCoordsPlayer.x, mouseCoordsPlayer.y))
-	{
-		FlagManager::flagRangeAttack = 1;
-		Player::Attack();
-	}
-}
-
+//конструктор c callback и hover
 Button::Button(const char* textureName, SDL_Renderer* renderer, SDL_Rect rect, 
 	void (*callbackFunction)(), void (*hoverFunction)()):
 	nameOftexture(textureName), ren(renderer), callback(callbackFunction), hover(hoverFunction)
@@ -37,6 +28,10 @@ Button::Button(const char* textureName, SDL_Renderer* renderer, SDL_Rect rect,
 	button.y = rect.y;
 	button.w = rect.w;
 	button.h = rect.h;
+
+	//UNDONE call of name callback
+	if (callback == NULL)
+		std::cout << "callback isn't ready " << "name of callback" << std::endl;
 
 	if (nameOftexture != NULL)
 		buttonTexture = textureManager::LoadTexture(nameOftexture, ren);
@@ -52,10 +47,7 @@ void Button::handleEvents(SDL_Event& buttonEvent)
 		{
 			if (Button::mouseInArea(button.x, button.y, button.w, button.h))
 			{
-				if (callback != NULL)
-					callback();
-				else
-					std::cout << "callback is NULL" << std::endl;
+				callback();
 			}
 		}
 	}
@@ -91,6 +83,30 @@ void Button::Render()
 		RenderManager::CopyToRender(buttonTexture, ren, button.x, button.y, button.w, button.h);
 	else
 		std::cout << "Error in Button::Render" << std::endl;
+}
+
+Mouse MouseButtonsPlayer::mouseCoordsPlayer;
+
+void MouseButtonsPlayer::buttonsForAttack()
+{
+	SDL_GetMouseState(&mouseCoordsPlayer.x, &mouseCoordsPlayer.y);
+
+	if (InputManager::MouseInArea(EntityPosition::Coords[2], EntityPosition::Coords[3], 32, 32, mouseCoordsPlayer.x, mouseCoordsPlayer.y))
+	{
+		FlagManager::flagMeleeAttackPlayer = 1;
+		Player::Attack();
+	}
+}
+
+void MouseButtonsPlayer::buttonForRangeAttack()
+{
+	SDL_GetMouseState(&mouseCoordsPlayer.x, &mouseCoordsPlayer.y);
+
+	if (InputManager::MouseInArea(EntityPosition::Coords[2], EntityPosition::Coords[3], 32, 32, mouseCoordsPlayer.x, mouseCoordsPlayer.y))
+	{
+		FlagManager::flagRangeAttack = 1;
+		Player::Attack();
+	}
 }
 
 Keyboard::Keyboard()
@@ -173,7 +189,7 @@ void callbackFunctions::callInvWin()
 	}
 }
 
-void callbackFunctions::callSpecWin()
+void callbackFunctions::callSpecOrInfoWin()
 {
 	if (FlagManager::flagUiSpec == 0)
 	{
@@ -181,17 +197,18 @@ void callbackFunctions::callSpecWin()
 		FlagManager::flagUI = 0;
 		std::cout << "Spec" << std::endl;
 	}
-}
-
-void callbackFunctions::callInfoWin()
-{
-	if (FlagManager::flagUiSpec == 1)
+	else if (FlagManager::flagUiSpec == 1)
 	{
 		FlagManager::flagUI = 1;
 		FlagManager::flagUiSpec = 0;
 		std::cout << "Info" << std::endl;
 	}
 }
+
+//void callbackFunctions::callInfoWin()
+//{
+//	
+//}
 
 void callbackFunctions::incPlayerSTR()
 {

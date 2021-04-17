@@ -31,6 +31,7 @@ private:
 
 	//Buttons
 	Button* buttonForCallSpecInfo;
+	Button* buttonForCallInvWin;
 public:
 	UIInfo(SDL_Renderer* renderer);
 	void Render();
@@ -168,7 +169,6 @@ private:
 	SDL_Texture* inventoryText;
 	SDL_Texture* inventory;
 	SDL_Texture* item;
-	Button* buttonForCallInvWin;
 public:
 	UIInventory(SDL_Renderer* renderer);
 	~UIInventory();

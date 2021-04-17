@@ -181,7 +181,8 @@ UIInfo::UIInfo(SDL_Renderer* renderer) : ren (renderer)
 	xpText = FontManager::renderText("XP", PATH_IN_FONT, color, 64, ren);
 
 	//Buttons
-	buttonForCallSpecInfo = new Button("images/Button.png", ren, { 1230, 240, 32, 32 }, callbackFunctions::callSpecWin, NULL);
+	buttonForCallSpecInfo = new Button("images/Button.png", ren, { 1230, 240, 32, 32 }, callbackFunctions::callSpecOrInfoWin, NULL);
+	buttonForCallInvWin = new Button("images/Button.png", ren, { 1050, 665, 25, 22 }, callbackFunctions::callInvWin, NULL);
 }
 
 void UIInfo::Render()
@@ -213,11 +214,13 @@ void UIInfo::Render()
 void UIInfo::RenderVersion()
 {
 	RenderManager::CopyToRender(versionBLock, ren, 0, 705, 170, 9);
+	buttonForCallInvWin->Render();
 }
 
 void UIInfo::handleEvents(SDL_Event& eventInUiInfo)
 {
 	buttonForCallSpecInfo->handleEvents(eventInUiInfo);
+	buttonForCallInvWin->handleEvents(eventInUiInfo);
 }
 
 UISpecifications::UISpecifications(SDL_Renderer* renderer) : ren (renderer)
@@ -227,7 +230,7 @@ UISpecifications::UISpecifications(SDL_Renderer* renderer) : ren (renderer)
 	//Specifications
 	specBlock = textureManager::LoadTexture("images/InfoBlock.png", ren);
 	specifcation = FontManager::renderText("Specifications", PATH_IN_FONT, color, 64, ren);
-	buttonForCallInfoWin = new Button("images/Button.png", ren, { 1230, 240, 32, 32 }, callbackFunctions::callInfoWin, NULL);
+	buttonForCallInfoWin = new Button("images/Button.png", ren, { 1230, 240, 32, 32 });
 	//STR
 	STR = FontManager::renderText("STR", PATH_IN_FONT, color, 64, ren);
 	valueSTR = FontManager::renderText("1", PATH_IN_FONT, color, 32, ren);
@@ -379,7 +382,6 @@ void UISpecifications::UpdateMax()
 
 void UISpecifications::handleEvents(SDL_Event& eventInSpec)
 {
-	buttonForCallInfoWin->handleEvents(eventInSpec);
 	buttonForIncPlayerSTR->handleEvents(eventInSpec);
 	buttonForIncPlayerDEX->handleEvents(eventInSpec);
 	buttonForIncPlayerINT->handleEvents(eventInSpec);
@@ -395,9 +397,7 @@ UIEquipedItem::UIEquipedItem(SDL_Renderer* renderer) : ren (renderer)
 
 void UIEquipedItem::Render()
 {
-	//std::cout << "A" << Player::Id << "A";
 	Inventory::it = Inventory::ExistingItems.find(Player::EqItems.WeaponId);
-	//std::cout << "A" << Player::EqItems.WeaponId << "A";
 	if (Player::EqItems.WeaponId != -1) {
 		EquipedItem = textureManager::LoadTexture((Inventory::it->second)->ItemTexture, ren);
 
@@ -440,14 +440,12 @@ UIInventory::UIInventory(SDL_Renderer* renderer) : ren(renderer)
 
 	inventoryBlock = textureManager::LoadTexture("images/InfoBlock.png", ren);
 	inventoryText = FontManager::renderText("Inventory", PATH_IN_FONT, color, 64, ren);
-	buttonForCallInvWin = new Button("images/Button.png", ren, { 1050, 665, 25, 22 }, callbackFunctions::callInvWin, NULL);
 }
 
 void UIInventory::Render()
 {
 	RenderManager::CopyToRender(inventoryBlock, ren, 730, 0, 300, 710);
 	RenderManager::CopyToRender(inventoryText, ren, 780, 50, 160, 32);
-	buttonForCallInvWin->Render();
 	for (int i = 0; i < 16; i++) 
 	{
 		if (Inventory::inventoryFace[i] != -1) 
@@ -463,7 +461,6 @@ void UIInventory::Render()
 
 void UIInventory::handleEvents(SDL_Event& eventInInv)
 {
-	buttonForCallInvWin->handleEvents(eventInInv);
 }
 
 UIEnemyInfo::UIEnemyInfo(SDL_Renderer* renderer) : ren(renderer)

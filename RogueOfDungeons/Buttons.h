@@ -39,6 +39,7 @@ private:
 	void (*hover)();
 	bool mouseInArea(int x, int y, int w, int h);
 public:
+	Button(const char* textureName, SDL_Renderer* renderer, SDL_Rect rect);
 	Button(const char* textureName, SDL_Renderer* renderer, SDL_Rect rect, void (*callbackFunction)(), void (*hoverFunction)());
 	void handleEvents(SDL_Event& buttonEvent);
 	void Render();
@@ -57,8 +58,8 @@ class callbackFunctions
 {
 public:
 	static void callInvWin();
-	static void callSpecWin();
-	static void callInfoWin();
+	static void callSpecOrInfoWin();
+	//static void callInfoWin();
 	static void incPlayerSTR();
 	static void incPlayerDEX();
 	static void incPlayerINT();

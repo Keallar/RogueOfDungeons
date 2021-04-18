@@ -40,7 +40,7 @@ private:
 	UIEnemyInfo* uiEnemy;
 	UISpecifications* uiSpec;
 	UIEquipedItem* uiEquiped;
-	Keyboard* keyboard;
+	//Keyboard* keyboard;
 	Button* buttonForCallSpecInfo;
 	Button* buttonForCallInvWin;
 	Animation* animation;

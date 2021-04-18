@@ -12,16 +12,20 @@
 #include "Enemy.h"
 #include "Player.h"
 
+void hoverForCallSpecWin()
+{
+	//UNDONE сделать отображение тексте SPEC
+}
+
 Level::Level(SDL_Renderer* renderer) : ren (renderer)
 {
 	floorLvl = 0;
 	TileTexture = textureManager::LoadTexture("images/Tiles.png", ren);
 	TileTextureCastle = textureManager::LoadTexture("images/CaslteTiles.png", ren);
-	PlayBackground = textureManager::LoadTexture("images/Playback.png", ren);
-	//animation = new Animation(ren);
+	PlayBackground = textureManager::LoadTexture("images/Playback.png", ren); 
 	player = new Player(ren);
 	enemyTurtle = new Enemy("images/Turtle.png", 4, ren, 8, 8, 3, 4);
-	enemyHpInfo = new UiHpEnemyInfo(ren);
+	uiEnemyHpInfo = new UiHpEnemyInfo(ren);
 	uiInfo = new UIInfo(ren);
 	uiItem = new UIItem(ren);
 	uiEnemy = new UIEnemyInfo(ren);
@@ -31,7 +35,9 @@ Level::Level(SDL_Renderer* renderer) : ren (renderer)
 	mana = new ManaInfo(ren);
 	exp = new ExpInfo(ren);
 	uiEquiped = new UIEquipedItem(ren);
-	keyboardButtonsInLevel = new KeyboardButtonsInLevel();
+
+	keyboard = new Keyboard();
+
 	for (int i = 0; i < 22; i++) 
 	{
 		for (int j = 0; j < 32; j++)
@@ -66,7 +72,7 @@ Level::~Level()
 	delete mana;
 	delete exp;
 	delete uiEquiped;
-	delete keyboardButtonsInLevel;
+	delete keyboard;
 	delete animation;
 }
 
@@ -248,13 +254,18 @@ void Level::Render()
 			}
 		}
 	}
-	if (player != nullptr) {
+	if (player != nullptr)
+	{
 		player->Render();
 	}		
-	if (enemyTurtle != nullptr) {
-		if (Dark[EntityPosition::Coords[3]/32][EntityPosition::Coords[2]/32] == 0) {
+	if (enemyTurtle != nullptr)
+	{
+		if (Dark[EntityPosition::Coords[3]/32][EntityPosition::Coords[2]/32] == 0) 
+		{
 			RenderManager::SetTile(EntityPosition::Coords[2], EntityPosition::Coords[3], 12, ren, TileTexture);
-		} else{
+		}
+		else
+		{
 			enemyTurtle->Render();
 		}
 	}
@@ -262,7 +273,7 @@ void Level::Render()
 	//ALL UI
 	{
 		uiItem->Render();
-		uiInfo->RenderVersion();
+		uiInfo->AlwaysRender();
 		uiEquiped->Render();
 
 		if (FlagManager::flagInv == 1)
@@ -311,13 +322,13 @@ void Level::Render()
 
 			if (FlagManager::flagCheckHpEnemy == 1)
 			{
-				enemyHpInfo->Update();
+				uiEnemyHpInfo->Update();
 			}
 
 			if (FlagManager::flagUiEnemy == 1)
 			{
 				uiEnemy->Render();
-				enemyHpInfo->Render();
+				uiEnemyHpInfo->Render();
 			}
 
 			//Update значений hp, mana и  exp
@@ -387,25 +398,25 @@ void Level::handleEvents(SDL_Event eventInLvl)
 	case SDL_MOUSEBUTTONDOWN:
 
 		//Взаимодействие с Items в Inventory
-		MouseButtonsInLevel::buttonsForItemsInInv();
+		uiInv->clickForItemsInInv();
 
 		//Вызов окна Spec по нажатию мыши
-		MouseButtonsInLevel::buttonForCallSpecWin();
+		uiInfo->handleEvents(eventInLvl);
+
+		//Увеличение значения характеристик по нажатию мыши
+		uiSpec->handleEvents(eventInLvl);
 		
 		//Вызов окна Inventory по нажатию мыши
-		MouseButtonsInLevel::buttonForCallInvWin();
+		uiInv->handleEvents(eventInLvl);
 
 		if (eventInLvl.button.button == SDL_BUTTON_RIGHT)
 		{
 			//Вызов infoEnemy по нажатию мыши
-			MouseButtonsInLevel::buttonForCallEnemyInfo();
+			uiEnemyHpInfo->callEnemyInfo();
 		}
 
-		//Увеличение значения характеристик по нажатию мыши
-		MouseButtonsInLevel::buttonForIncPlayerSpec();
 		
 	case SDL_KEYDOWN:
-
 		//Смена окон (с Spec на Info и наоборот) на Q
 		KeyboardButtonsInLevel::keyForCallSpecWin(keys);
 

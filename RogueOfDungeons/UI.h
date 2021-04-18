@@ -3,18 +3,7 @@
 #include "SDL_image.h"
 #include "SDL_ttf.h"
 #include "string"
-
-//class UIMenu 
-//{
-//private:
-//	SDL_Renderer* ren;
-//	SDL_Texture* Font1;
-//	SDL_Texture* Font2;
-//public:
-//	UIMenu();
-//	UIMenu(SDL_Renderer* renderer);
-//	void Render();
-//};
+#include "Buttons.h"
 
 class UIInfo
 {
@@ -41,11 +30,13 @@ private:
 	SDL_Texture* mnText;
 
 	//Buttons
-	SDL_Texture* specButton;
+	Button* buttonForCallSpecInfo;
+	Button* buttonForCallInvWin;
 public:
 	UIInfo(SDL_Renderer* renderer);
 	void Render();
-	void RenderVersion();
+	void AlwaysRender();
+	void handleEvents(SDL_Event& eventInUiInfo);
 };
 
 //Interface
@@ -129,9 +120,15 @@ private:
 	//LCK
 	SDL_Texture* LCK;
 	SDL_Texture* valueLCK;
+	//buttons
+	Button* buttonForCallInfoWin;
+	Button* buttonForIncPlayerSTR;
+	Button* buttonForIncPlayerDEX;
+	Button* buttonForIncPlayerINT;
+	Button* buttonForIncPlayerWSD;
+	Button* buttonForIncPlayerPHS;
+	Button* buttonForIncPlayerLCK;
 	//other
-	SDL_Texture* button;
-	SDL_Texture* plus;
 	SDL_Texture* one;
 	SDL_Texture* two;
 	SDL_Texture* three;
@@ -146,6 +143,7 @@ public:
 	void Update() override;
 	void Update(int value, int num);
 	void UpdateMax() override;
+	void handleEvents(SDL_Event &eventInSpec);
 };
 
 
@@ -157,8 +155,6 @@ private:
 	SDL_Renderer* ren;
 	SDL_Texture* itemBlock;
 	SDL_Texture* item;
-	SDL_Texture* buttonForInv;
-
 	SDL_Texture* INV;
 public:
 	UIItem(SDL_Renderer* renderer);
@@ -173,10 +169,14 @@ private:
 	SDL_Texture* inventoryText;
 	SDL_Texture* inventory;
 	SDL_Texture* item;
+	int xMouseCoord;
+	int yMouseCoord;
 public:
 	UIInventory(SDL_Renderer* renderer);
 	~UIInventory();
 	void Render();
+	void handleEvents(SDL_Event &eventInInv);
+	void clickForItemsInInv();
 };
 
 class UIEnemyInfo
@@ -194,6 +194,17 @@ public:
 	void Render();
 };
 
+class UIEquipedItem 
+{
+private:
+	SDL_Texture* EquipedItem;
+	SDL_Renderer* ren;
+public:
+	UIEquipedItem(SDL_Renderer* renderer);
+	UIEquipedItem();
+	void Render();
+};
+
 class UiHpEnemyInfo : public TextInfo
 {
 private:
@@ -208,15 +219,5 @@ public:
 	void Render();
 	void Update();
 	void UpdateMax();
-};
-
-class UIEquipedItem 
-{
-private:
-	SDL_Texture* EquipedItem;
-	SDL_Renderer* ren;
-public:
-	UIEquipedItem(SDL_Renderer* renderer);
-	UIEquipedItem();
-	void Render();
+	void callEnemyInfo();
 };

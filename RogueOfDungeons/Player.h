@@ -22,6 +22,7 @@ private:
     SDL_Renderer* ren;
     int damageInput;
     Animation* playerAnimation;
+    bool completePlayerAnimation;
 
     const Uint8* keys = SDL_GetKeyboardState(NULL);
 public:

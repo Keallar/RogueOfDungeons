@@ -145,6 +145,7 @@
   <ItemGroup>
     <ClCompile Include="Animation.cpp" />
     <ClCompile Include="Buttons.cpp" />
+    <ClCompile Include="CallBackAndHoverFuncs.cpp" />
     <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="EntityPosition.cpp" />
     <ClCompile Include="Game.cpp" />
@@ -161,6 +162,7 @@
   <ItemGroup>
     <ClInclude Include="Animation.h" />
     <ClInclude Include="Buttons.h" />
+    <ClInclude Include="CallBackAndHoverFuncs.h" />
     <ClInclude Include="Enemy.h" />
     <ClInclude Include="EntityPosition.h" />
     <ClInclude Include="Game.h" />

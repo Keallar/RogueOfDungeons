@@ -1,5 +1,7 @@
 #include "CallBackAndHoverFuncs.h"
 
+using namespace std;
+
 void callbackFunctions::callInvWin()
 {
 	if (FlagManager::flagInv == 0)

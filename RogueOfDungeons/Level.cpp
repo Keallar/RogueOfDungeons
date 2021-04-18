@@ -36,7 +36,7 @@ Level::Level(SDL_Renderer* renderer) : ren (renderer)
 	exp = new ExpInfo(ren);
 	uiEquiped = new UIEquipedItem(ren);
 
-	keyboard = new Keyboard();
+	//keyboard = new Keyboard();
 
 	for (int i = 0; i < 22; i++) 
 	{

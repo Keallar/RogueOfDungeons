@@ -156,9 +156,12 @@ bool FlagManager::flagInv = 0;
 bool FlagManager::flagCheckHP = 0;
 bool FlagManager::flagCheckMana = 0;
 bool FlagManager::flagCheckExp = 0;
+bool FlagManager::flagHaveDrop = 0;
 
 int FlagManager::flagChest = 0;
 int FlagManager::flagEquip = -1;
+int FlagManager::flagUnEquip = -1;
+int FlagManager::flagDrop = -1;
 
 bool FlagManager::flagSTR = 0;
 bool FlagManager::flagDEX = 0;
@@ -172,7 +175,6 @@ int FlagManager::flagMeleeAttackPlayer = 0;
 int FlagManager::flagMeleeAttackEnemy = 0;
 
 bool FlagManager::flagRangeAttack = 0;
-
 //check hp enemy
 bool FlagManager::flagCheckHpEnemy = 0;
 

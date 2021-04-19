@@ -349,36 +349,40 @@ void Level::Render()
 		}
 
 		if (FlagManager::flagChest != 0) {
-
-			switch (FlagManager::flagChest) {
-			case 1:
-				textureLocation[(EntityPosition::Coords[1]) / 32 - 1][(EntityPosition::Coords[0]) / 32] = 0;
-				Location[(EntityPosition::Coords[1]) / 32 - 1][(EntityPosition::Coords[0]) / 32] = 0;
-				player->GetItemOnLvl(itemsOnLvl[itemsHave]);
-				itemsHave--;
+			if (!player->InventoryBlock()) {
+				switch (FlagManager::flagChest) {
+				case 1:
+					textureLocation[(EntityPosition::Coords[1]) / 32 - 1][(EntityPosition::Coords[0]) / 32] = 0;
+					Location[(EntityPosition::Coords[1]) / 32 - 1][(EntityPosition::Coords[0]) / 32] = 0;
+					player->GetItemOnLvl(itemsOnLvl[itemsHave]);
+					itemsHave--;
+					FlagManager::flagChest = 0;
+					break;
+				case 2:
+					textureLocation[(EntityPosition::Coords[1]) / 32][(EntityPosition::Coords[0]) / 32 - 1] = 0;
+					Location[(EntityPosition::Coords[1]) / 32][(EntityPosition::Coords[0]) / 32 - 1] = 0;
+					player->GetItemOnLvl(itemsOnLvl[itemsHave]);
+					itemsHave--;
+					FlagManager::flagChest = 0;
+					break;
+				case 3:
+					textureLocation[(EntityPosition::Coords[1]) / 32 + 1][(EntityPosition::Coords[0]) / 32] = 0;
+					Location[(EntityPosition::Coords[1]) / 32 + 1][(EntityPosition::Coords[0]) / 32] = 0;
+					player->GetItemOnLvl(itemsOnLvl[itemsHave]);
+					itemsHave--;
+					FlagManager::flagChest = 0;
+					break;
+				case 4:
+					textureLocation[(EntityPosition::Coords[1]) / 32][(EntityPosition::Coords[0]) / 32 + 1] = 0;
+					Location[(EntityPosition::Coords[1]) / 32][(EntityPosition::Coords[0]) / 32 + 1] = 0;
+					player->GetItemOnLvl(itemsOnLvl[itemsHave]);
+					itemsHave--;
+					FlagManager::flagChest = 0;
+					break;
+				}
+			}
+			else {
 				FlagManager::flagChest = 0;
-				break;
-			case 2:
-				textureLocation[(EntityPosition::Coords[1]) / 32][(EntityPosition::Coords[0]) / 32 - 1] = 0;
-				Location[(EntityPosition::Coords[1]) / 32][(EntityPosition::Coords[0]) / 32 - 1] = 0;
-				player->GetItemOnLvl(itemsOnLvl[itemsHave]);
-				itemsHave--;
-				FlagManager::flagChest = 0;
-				break;
-			case 3:
-				textureLocation[(EntityPosition::Coords[1]) / 32 + 1][(EntityPosition::Coords[0]) / 32] = 0;
-				Location[(EntityPosition::Coords[1]) / 32 + 1][(EntityPosition::Coords[0]) / 32] = 0;
-				player->GetItemOnLvl(itemsOnLvl[itemsHave]);
-				itemsHave--;
-				FlagManager::flagChest = 0;
-				break;
-			case 4:
-				textureLocation[(EntityPosition::Coords[1]) / 32][(EntityPosition::Coords[0]) / 32 + 1] = 0;
-				Location[(EntityPosition::Coords[1]) / 32][(EntityPosition::Coords[0]) / 32 + 1] = 0;
-				player->GetItemOnLvl(itemsOnLvl[itemsHave]);
-				itemsHave--;
-				FlagManager::flagChest = 0;
-				break;
 			}
 		}
 	}
@@ -399,6 +403,9 @@ void Level::handleEvents(SDL_Event eventInLvl)
 
 		//Взаимодействие с Items в Inventory
 		uiInv->clickForItemsInInv();
+
+		//Взаимодействие с Equiped Items
+		uiEquiped->clickForItemsInInv();
 
 		//Вызов окна Spec по нажатию мыши
 		uiInfo->handleEvents(eventInLvl);

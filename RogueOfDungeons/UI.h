@@ -171,6 +171,7 @@ private:
 	SDL_Texture* item;
 	int xMouseCoord;
 	int yMouseCoord;
+	Button* buttonForCallDpor;
 public:
 	UIInventory(SDL_Renderer* renderer);
 	~UIInventory();
@@ -203,6 +204,7 @@ public:
 	UIEquipedItem(SDL_Renderer* renderer);
 	UIEquipedItem();
 	void Render();
+	void clickForItemsInInv();
 };
 
 class UiHpEnemyInfo : public TextInfo

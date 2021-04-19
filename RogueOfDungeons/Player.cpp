@@ -388,6 +388,13 @@ void Player::GetPlayerFirstCoords()
 	}
 }
 
+void Player::GetItemDrop(int id) {
+	if (id != -1) {
+		inventory->inventory[id] = -1;
+	}
+	FlagManager::flagDrop = -1;
+}
+
 void Player::GetItemEquip(int id) 
 {
 	if (id != -1)
@@ -451,6 +458,37 @@ void Player::GetItemEquip(int id)
 	FlagManager::flagEquip = -1;
 }
 
+void Player::GetItemUnEquip(int id) {
+	if (inventory->InventoryCount() != 16) {
+		if (id == 0) {
+			inventory->AddItem(EqItems.WeaponId);
+			EqItems.WeaponId = -1;
+			EqItems.equipedMeleeW = nullptr;
+			EqItems.equipedRangeW = nullptr;
+		}
+		if (id == 1) {
+			inventory->AddItem(EqItems.ArmorId);
+			EqItems.ArmorId = -1;
+			EqItems.equipedArmor = nullptr;
+			SDL_DestroyTexture(PlayerTexture);
+			PlayerTexture = 0;
+			PlayerTexture = textureManager::LoadTexture("images/Hero.png", ren);
+			playerAnimation->UpdateTexture("images/Hero.png");
+		}
+	}
+	FlagManager::flagUnEquip = -1;
+}
+
+bool Player::InventoryBlock() {
+	int count = inventory->InventoryCount();
+	if (count == 16) {
+		return true;
+	}
+	else {
+		return false;
+	}
+}
+
 void Player::GetItemOnLvl(int id) 
 {
 	inventory->AddItem(id);
@@ -463,7 +501,9 @@ void Player::Render()
 
 void Player::Update()
 {
+	Player::GetItemDrop(FlagManager::flagDrop);
 	Player::GetItemEquip(FlagManager::flagEquip);
+	Player::GetItemUnEquip(FlagManager::flagUnEquip);
 	inventory->Update();
 	Player::CheckHP();
 	Player::CheckMANA();

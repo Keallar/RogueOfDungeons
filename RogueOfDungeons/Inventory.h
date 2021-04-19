@@ -30,6 +30,7 @@ public:
 	int DMG;
 	int RNG;
 	meleeWeapon(int Damage, int range, type type, const char* WeapTex, std::string Name);
+	~meleeWeapon();
 };
 class rangeWeapon : public InventoryItem 
 {
@@ -41,6 +42,7 @@ public:
 	int CHNS;
 	int DCHNS;
 	rangeWeapon(int Damage, int Range, int Chanse, int deltaChanse, type type, const char* WeapTex, std::string Name);
+	~rangeWeapon();
 };
 
 class armorItem : public InventoryItem
@@ -49,6 +51,7 @@ private:
 
 public:
 	armorItem(int Defence, type type, const char* WeapTex, std::string Name);
+	~armorItem();
 	int DEF;
 };
 
@@ -68,6 +71,7 @@ public:
 	~Inventory();
 	int inventory[16]; // хранит в себе вcе айтемы и они лежат в inventoryFace ещё (он не static)
 	static int inventoryFace[16];
+	int InventoryCount();
 	void AddItem(int id);
 	void EquipItem(int i, int j);
 	void Update();

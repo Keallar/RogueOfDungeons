@@ -92,6 +92,16 @@ void Inventory::EquipItem(int i, int j)
 	//EquipedWeapon = ExistingItems[j];
 }
 
+
+int Inventory::InventoryCount() {
+	int count = 0;
+	for (int i = 0; i < 16; i++) {
+		if (inventory[i] != -1) {
+			count++;
+		}
+	}
+	return count;
+}
 void Inventory::AddItem(int id) 
 {
 	int count = 0;
@@ -138,6 +148,9 @@ rangeWeapon::rangeWeapon(int Damage, int Range, int Chance, int deltaChanse, typ
 	Type = type;
 	name = Name;
 }
+rangeWeapon::~rangeWeapon() {
+
+}
 
 meleeWeapon::meleeWeapon(int Damage, int range, type type, const char* WeapTex, std::string Name)
 {
@@ -148,6 +161,10 @@ meleeWeapon::meleeWeapon(int Damage, int range, type type, const char* WeapTex, 
 	Type = type;
 	name = Name;
 }
+meleeWeapon::~meleeWeapon() {
+
+}
+
 
 armorItem::armorItem(int Defence, type type, const char* WeapTex, std::string Name)
 {
@@ -155,6 +172,9 @@ armorItem::armorItem(int Defence, type type, const char* WeapTex, std::string Na
 	ItemTexture = WeapTex;
 	Type = type;
 	name = Name;
+}
+armorItem::~armorItem() {
+
 }
 
 Potion::Potion(int Heal, int MpHeal, type type, const char* WeapTex, std::string Name) {

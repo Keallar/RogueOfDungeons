@@ -15,6 +15,7 @@ public:
 	static void incPlayerWSD();
 	static void incPlayerPHS();
 	static void incPlayerLCK();
+	static void callDrop();
 };
 
 class hoverFunctions

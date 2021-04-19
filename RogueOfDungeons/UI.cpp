@@ -416,6 +416,19 @@ void UIEquipedItem::Render()
 	}
 }
 
+void UIEquipedItem::clickForItemsInInv() {
+	int xMouseCoord;
+	int yMouseCoord;
+	SDL_GetMouseState(&xMouseCoord, &yMouseCoord);
+	if (InputManager::MouseInArea(1070, 550, 32, 32, xMouseCoord, yMouseCoord) &&
+	Player::EqItems.WeaponId != -1) {
+		FlagManager::flagUnEquip = 0;
+	}
+	if (InputManager::MouseInArea(1070, 587, 32, 32, xMouseCoord, yMouseCoord) &&
+	Player::EqItems.WeaponId != -1) {
+		FlagManager::flagUnEquip = 1;
+	}
+}
 
 UIItem::UIItem(SDL_Renderer* renderer) : ren(renderer)
 {
@@ -441,12 +454,15 @@ UIInventory::UIInventory(SDL_Renderer* renderer) : ren(renderer)
 
 	inventoryBlock = textureManager::LoadTexture("images/InfoBlock.png", ren);
 	inventoryText = FontManager::renderText("Inventory", PATH_IN_FONT, color, 64, ren);
+	buttonForCallDpor = new Button("images/Button.png", ren, { 790, 665, 25, 22 }, callbackFunctions::callDrop, NULL);
 }
 
 void UIInventory::Render()
 {
 	RenderManager::CopyToRender(inventoryBlock, ren, 730, 0, 300, 710);
 	RenderManager::CopyToRender(inventoryText, ren, 780, 50, 160, 32);
+	buttonForCallDpor->Render();
+
 	for (int i = 0; i < 16; i++) 
 	{
 		if (Inventory::inventoryFace[i] != -1) 
@@ -462,22 +478,30 @@ void UIInventory::Render()
 
 void UIInventory::handleEvents(SDL_Event& eventInInv)
 {
-
+	buttonForCallDpor->handleEvents(eventInInv);
 }
 
 void UIInventory::clickForItemsInInv()
 {
 	SDL_GetMouseState(&xMouseCoord, &yMouseCoord);
-
+	
 	for (int i = 0; i < 16; i++)
 	{
 		if (InputManager::MouseInArea((780 + 36 * (i % 4)), (100 + ((i / 4) * 50)), 32, 32, xMouseCoord, yMouseCoord) &&
 			Inventory::inventoryFace[i] != -1 && FlagManager::flagInv == 1)
 		{
 			std::cout << "Item " + i << std::endl;
-			FlagManager::flagEquip = i;
+			if (FlagManager::flagHaveDrop == false) 
+			{
+				FlagManager::flagEquip = i;
+			}
+			else
+			{
+				FlagManager::flagDrop = i;
+			}
 		}
 	}
+	
 }
 
 UIEnemyInfo::UIEnemyInfo(SDL_Renderer* renderer) : ren(renderer)

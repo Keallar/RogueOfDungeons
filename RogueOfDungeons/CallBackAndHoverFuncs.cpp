@@ -82,6 +82,18 @@ void callbackFunctions::incPlayerLCK()
 	}
 }
 
+void callbackFunctions::callDrop()
+{
+	if (FlagManager::flagHaveDrop == false) 
+	{
+		FlagManager::flagHaveDrop = true;
+	}
+	else 
+	{
+		FlagManager::flagHaveDrop = false;
+	}
+}
+
 //void hoverFunctions::callSpecWin()
 //{
 //

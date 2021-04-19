@@ -59,10 +59,13 @@ public:
 	static bool flagPHS;
 	static bool flagLCK;
 	static int flagEquip;
+	static int flagUnEquip;
 	static int flagMeleeAttackPlayer;
 	static int flagMeleeAttackEnemy;
 	static bool flagCheckHpEnemy;
 	static bool flagRangeAttack;
+	static int flagDrop;
+	static bool flagHaveDrop;
 };
 
 

@@ -26,6 +26,7 @@ private:
 
     const Uint8* keys = SDL_GetKeyboardState(NULL);
 public:
+	bool InventoryBlock();
 	int generate;
 	static int HP[3];
 	static int exp[3];
@@ -52,6 +53,8 @@ public:
     static void Attack();
 	void GetItemOnLvl(int id);
 	void GetItemEquip(int id);
+	void GetItemUnEquip(int id);
+	void GetItemDrop(int id);
     //static void meleeAttackPlayer();
 
     static int GetHP(int numOfArr);

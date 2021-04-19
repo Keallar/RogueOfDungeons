@@ -40,7 +40,7 @@ private:
 	UIEnemyInfo* uiEnemy;
 	UISpecifications* uiSpec;
 	UIEquipedItem* uiEquiped;
-	Keyboard* keyboard;
+	//Keyboard* keyboard;
 	Button* buttonForCallSpecInfo;
 	Button* buttonForCallInvWin;
 	Animation* animation;
@@ -59,6 +59,7 @@ private:
 	void ChunkGenerationMethod();
 	void ChunkGenerationMethod2();
 	void LabGeneration();
+	void CastleLabGeneration();
 	void RoomGenerationMethod2();
 	void CreateChunk(int x, int y);
 	void CreateChunk2(int x, int y);

@@ -75,13 +75,15 @@ Player::Player(SDL_Renderer* renderer)
 
 	inventory = new Inventory;
 	
-	inventory->AddItem(0);
 	inventory->AddItem(1);
+	inventory->AddItem(2);
 	inventory->AddItem(5);
 	inventory->AddItem(3);
 	inventory->AddItem(6);
 	inventory->AddItem(7);
 	inventory->Update();
+	EqItems.WeaponId = 0;
+	EqItems.equipedMeleeW = inventory->GetRealMelee(0);
 }
 
 Player::~Player()
@@ -402,7 +404,7 @@ void Player::GetItemEquip(int id)
 		int ItemId = inventory->inventory[id];
 		if (Inventory::ExistingItems[ItemId]->Type == weapon) 
 		{
-			if (EqItems.WeaponId != -1) 
+			if (EqItems.WeaponId > 0) 
 			{
 				inventory->inventory[id] = EqItems.WeaponId;
 			}
@@ -416,7 +418,7 @@ void Player::GetItemEquip(int id)
 		}
 		if (Inventory::ExistingItems[ItemId]->Type == rWeapon) 
 		{
-			if (EqItems.WeaponId != -1) 
+			if (EqItems.WeaponId > 0) 
 			{
 				inventory->inventory[id] = EqItems.WeaponId;
 			}
@@ -431,7 +433,7 @@ void Player::GetItemEquip(int id)
 		}
 		if (Inventory::ExistingItems[ItemId]->Type == armor) 
 		{
-			if (EqItems.WeaponId != -1) {
+			if (EqItems.ArmorId > 0) {
 				inventory->inventory[id] = EqItems.ArmorId;
 			}
 			else 
@@ -462,8 +464,8 @@ void Player::GetItemUnEquip(int id) {
 	if (inventory->InventoryCount() != 16) {
 		if (id == 0) {
 			inventory->AddItem(EqItems.WeaponId);
-			EqItems.WeaponId = -1;
-			EqItems.equipedMeleeW = nullptr;
+			EqItems.WeaponId = 0;
+			EqItems.equipedMeleeW = inventory->GetRealMelee(0);
 			EqItems.equipedRangeW = nullptr;
 		}
 		if (id == 1) {

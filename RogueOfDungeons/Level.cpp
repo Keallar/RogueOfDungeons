@@ -466,7 +466,7 @@ void Level::Generate() {
 		ChunkGenerationMethod2();
 	}
 	for (int i = 0; i < 3; i++) {
-		itemsOnLvl[i] = rand() % 4;
+		itemsOnLvl[i] = rand() % 4 + 1;
 	}
 	itemsHave = 2;
 	floorLvl++;

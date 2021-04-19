@@ -421,7 +421,7 @@ void UIEquipedItem::clickForItemsInInv() {
 	int yMouseCoord;
 	SDL_GetMouseState(&xMouseCoord, &yMouseCoord);
 	if (InputManager::MouseInArea(1070, 550, 32, 32, xMouseCoord, yMouseCoord) &&
-	Player::EqItems.WeaponId != -1) {
+	Player::EqItems.WeaponId > 0) {
 		FlagManager::flagUnEquip = 0;
 	}
 	if (InputManager::MouseInArea(1070, 587, 32, 32, xMouseCoord, yMouseCoord) &&

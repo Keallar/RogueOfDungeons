@@ -1,5 +1,5 @@
 #include "EntityPosition.h"
-void EntityPosition::(int i, int changePosition)
+void EntityPosition::ChangeCoords(int i, int changePosition)
 {
 	EntityPosition::Coords[i] += changePosition;
 }

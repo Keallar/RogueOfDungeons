@@ -1,5 +1,6 @@
 #include "Animation.h"
 #include "EntityPosition.h"
+#include <iostream>
 
 Animation::Animation(SDL_Renderer* renderer, SDL_Texture* texture) : 
 	ren(renderer), animTexture(texture)
@@ -27,15 +28,20 @@ void Animation::UpdateTexture(const char* newTexture)
 
 bool Animation::animationPlusForX(int numOfFrames, bool complete)
 {
-	if (xanim != 32 * numOfFrames)
+	static int num = 0;
+	if (xanim != 32 * (numOfFrames - 1))
 	{
+		num++;
 		xanim += 32;
 		complete = 0;
+		std::cout << num << std::endl;
 	}
 	else
 	{
+		num = 0;
 		xanim = 0;
 		complete = 1;
+		std::cout << num << std::endl;
 	}
 
 	return complete;
@@ -43,7 +49,7 @@ bool Animation::animationPlusForX(int numOfFrames, bool complete)
 
 bool Animation::animationPlusForY(int numOfFrames, bool complete)
 {
-	if (yanim != 32 * numOfFrames)
+	if (yanim != 32 * (numOfFrames - 1))
 	{
 		yanim += 32;
 		complete = 0;
@@ -59,7 +65,7 @@ bool Animation::animationPlusForY(int numOfFrames, bool complete)
 
 bool Animation::animationMinusForX(int numOfFrames, bool complete)
 {
-	if (xanim != -32 * numOfFrames)
+	if (xanim != -32 * (numOfFrames - 1))
 	{
 		xanim -= 32;
 		complete = 0;
@@ -75,7 +81,7 @@ bool Animation::animationMinusForX(int numOfFrames, bool complete)
 
 bool Animation::animationMinusForY(int numOfFrames, bool complete)
 {
-	if (yanim != -32 * numOfFrames)
+	if (yanim != -32 * (numOfFrames - 1))
 	{
 		yanim -= 32;
 		complete = 0;

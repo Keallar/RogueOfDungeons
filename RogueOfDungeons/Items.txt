@@ -1,4 +1,4 @@
-weapon 1 1 images/Punch.png Punch
+weapon 0 1 images/Punch.png Punch
 weapon 1 1 images/ShortSword.png ShortSword
 weapon 2 2 images/Spear.png Spear
 rWeapon 1 4 60 15 images/ShortBow.png ShortBow

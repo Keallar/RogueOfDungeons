@@ -12,11 +12,6 @@
 #include "Enemy.h"
 #include "Player.h"
 
-void hoverForCallSpecWin()
-{
-	//UNDONE сделать отображение тексте SPEC
-}
-
 Level::Level(SDL_Renderer* renderer) : ren (renderer)
 {
 	floorLvl = 0;

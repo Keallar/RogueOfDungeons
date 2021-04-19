@@ -98,3 +98,9 @@ void callbackFunctions::callDrop()
 //{
 //
 //}
+
+
+void hoverForCallSpecWin()
+{
+	//UNDONE сделать отображение тексте SPEC
+}

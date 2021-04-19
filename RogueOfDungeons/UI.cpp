@@ -425,7 +425,7 @@ void UIEquipedItem::clickForItemsInInv() {
 		FlagManager::flagUnEquip = 0;
 	}
 	if (InputManager::MouseInArea(1070, 587, 32, 32, xMouseCoord, yMouseCoord) &&
-	Player::EqItems.WeaponId != -1) {
+	Player::EqItems.ArmorId != -1) {
 		FlagManager::flagUnEquip = 1;
 	}
 }

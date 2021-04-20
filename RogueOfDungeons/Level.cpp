@@ -14,9 +14,10 @@
 
 Level::Level(SDL_Renderer* renderer) : ren (renderer)
 {
+	TileSet = 0;
 	floorLvl = 0;
-	TileTexture = textureManager::LoadTexture("images/Tiles.png", ren);
-	TileTextureCastle = textureManager::LoadTexture("images/CaslteTiles.png", ren);
+	TileTextures[0] = textureManager::LoadTexture("images/Tiles.png", ren);
+	TileTextures[1] = textureManager::LoadTexture("images/CaslteTiles.png", ren);
 	PlayBackground = textureManager::LoadTexture("images/Playback.png", ren); 
 	player = new Player(ren);
 	enemyTurtle = new Enemy("images/Turtle.png", 4, ren, 8, 8, 3, 4);
@@ -151,102 +152,14 @@ void Level::ChangeDark(int i, int j) {
 	}
 }
 
-void Level::CaveRender(int y, int x) {
-	int i = y;
-	int j = x;
-	if (textureLocation[i][j] == 0)
-	{
-		RenderManager::SetTile(j * 32, i * 32, 2, ren, TileTexture);
-	}
-	else
-	{
-		RenderManager::SetTile(j * 32, i * 32, 6, ren, TileTexture);
-	}
-	if (textureLocation[i][j] == 2) {
-		RenderManager::SetTile(j * 32, i * 32, 7, ren, TileTexture);
-	}
-	if (textureLocation[i][j] == 3) {
-		RenderManager::SetTile(j * 32, i * 32, 3, ren, TileTexture);
-	}
-	if (textureLocation[i][j] == 4) {
-		RenderManager::SetTile(j * 32, i * 32, 1, ren, TileTexture);
-	}
-	if (textureLocation[i][j] == 5) {
-		RenderManager::SetTile(j * 32, i * 32, 9, ren, TileTexture);
-	}
-	if (textureLocation[i][j] == 6) {
-		RenderManager::SetTile(j * 32, i * 32, 4, ren, TileTexture);
-	}
-	if (textureLocation[i][j] == 14) {
-		RenderManager::SetTile(j * 32, i * 32, 13, ren, TileTexture);
-	}
-	if (Dark[i][j] == 0) {
-		RenderManager::SetTile(j * 32, i * 32, 12, ren, TileTexture);
-	}
-}
-
-void Level::CastleRender(int y, int x) {
-	int i = y;
-	int j = x;
-	if (textureLocation[i][j] == 0)
-	{
-		RenderManager::SetTile(j * 32, i * 32, 6, ren, TileTextureCastle);
-	}
-	else
-	{
-		RenderManager::SetTile(j * 32, i * 32, 8, ren, TileTextureCastle);
-	}
-	if (textureLocation[i][j] == 2) {
-		RenderManager::SetTile(j * 32, i * 32, 9, ren, TileTextureCastle);
-	}
-	if (textureLocation[i][j] == 3) {
-		RenderManager::SetTile(j * 32, i * 32, 2, ren, TileTextureCastle);
-	}
-	if (textureLocation[i][j] == 4) {
-		RenderManager::SetTile(j * 32, i * 32, 3, ren, TileTextureCastle);
-	}
-	if (textureLocation[i][j] == 5) {
-		RenderManager::SetTile(j * 32, i * 32, 7, ren, TileTextureCastle);
-	}
-	if (textureLocation[i][j] == 6) {
-		RenderManager::SetTile(j * 32, i * 32, 1, ren, TileTextureCastle);
-	}
-	if (textureLocation[i][j] == 7) {
-		RenderManager::SetTile(j * 32, i * 32, 10, ren, TileTextureCastle);
-	}
-	if (textureLocation[i][j] == 8) {
-		RenderManager::SetTile(j * 32, i * 32, 11, ren, TileTextureCastle);
-	}
-	if (textureLocation[i][j] == 14) {
-		RenderManager::SetTile(j * 32, i * 32, 14, ren, TileTextureCastle);
-	}
-	if (Dark[i][j] == 0) {
-		RenderManager::SetTile(j * 32, i * 32, 12, ren, TileTexture);
-	}
-}
-
 void Level::Render()
 {
 	RenderManager::CopyToRender(PlayBackground, ren);
-	
-	//в зависимости от метода генерации выбираются нужные паки текстур
-	if ((generateChoose == 0) || (generateChoose == 2) || (generateChoose == 4)) {
-		for (int i = 0; i < 22; i++)
+	for (int i = 0; i < 22; i++)
+	{
+		for (int j = 0; j < 32; j++)
 		{
-			for (int j = 0; j < 32; j++)
-			{
-				CaveRender(i, j);
-			}
-		}
-	}
-
-	if ((generateChoose == 1)||(generateChoose == 5)) {
-		for (int i = 0; i < 22; i++)
-		{
-			for (int j = 0; j < 32; j++)
-			{
-				CastleRender(i, j);
-			}
+			RenderManager::SetTile(j*32, i*32, textureLocation[i][j], ren, TileTextures[TileSet]);
 		}
 	}
 	if (player != nullptr)
@@ -257,7 +170,7 @@ void Level::Render()
 	{
 		if (Dark[EntityPosition::Coords[3]/32][EntityPosition::Coords[2]/32] == 0) 
 		{
-			RenderManager::SetTile(EntityPosition::Coords[2], EntityPosition::Coords[3], 12, ren, TileTexture);
+			RenderManager::SetTile(EntityPosition::Coords[2], EntityPosition::Coords[3], 12, ren, TileTextures[0]);
 		}
 		else
 		{
@@ -442,7 +355,7 @@ void Level::handleEvents(SDL_Event eventInLvl)
 
 void Level::Generate() {
 	srand(time(0));
-	generateChoose = 5;
+	generateChoose = 1;
 	player->generate = generateChoose;
 	enemyTurtle->generate = generateChoose;
 	if (generateChoose == 0) {

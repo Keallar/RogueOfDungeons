@@ -131,10 +131,10 @@ void Button::updateCoords(int newx, int newy)
 	button.y = newy;
 }
 
-Keyboard::Keyboard(SDL_Scancode* code, void (*callbackFunction)()):
+Keyboard::Keyboard(SDL_Scancode code, void (*callbackFunction)()):
 	callback(callbackFunction)
 {
-	keys[*code];
+	keys[code];
 	if (callback == NULL)
 		std::cout << "callback in Keyboard isn't ready" << std::endl;
 }
@@ -155,11 +155,13 @@ bool Keyboard::buttonIsPressed(SDL_Event& keyboardEvent)
 	bool validity;
 	if (keyboardEvent.type = SDL_KEYDOWN)
 	{
-		validity = keys[keyboardEvent.key.keysym.scancode] = true;
+		keys[keyboardEvent.key.keysym.scancode] = true;
+		validity = keys[keyboardEvent.key.keysym.scancode];
 	}
 	else if (keyboardEvent.type == SDL_KEYUP)
 	{
-		validity = keys[keyboardEvent.key.keysym.scancode] = false;
+		keys[keyboardEvent.key.keysym.scancode] = false;
+		validity = keys[keyboardEvent.key.keysym.scancode];
 	}
 	return validity;
 }

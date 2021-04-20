@@ -69,7 +69,7 @@ private:
 	void (*callback)();
 	bool buttonIsPressed(SDL_Event& keyboardEvent);
 public:
-	Keyboard(SDL_Scancode* code, void (*callbackFunction)());
+	Keyboard(SDL_Scancode code, void (*callbackFunction)());
 	~Keyboard();
 	void handleEvents(SDL_Event &keyboardEvent);
 };

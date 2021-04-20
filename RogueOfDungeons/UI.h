@@ -32,6 +32,9 @@ private:
 	//Buttons
 	Button* buttonForCallSpecInfo;
 	Button* buttonForCallInvWin;
+
+	//Keyboard
+	Keyboard* keyForCallSpecInfo;
 public:
 	UIInfo(SDL_Renderer* renderer);
 	void Render();

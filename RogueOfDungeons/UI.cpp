@@ -184,6 +184,9 @@ UIInfo::UIInfo(SDL_Renderer* renderer) : ren (renderer)
 	//Buttons
 	buttonForCallSpecInfo = new Button("images/Button.png", ren, { 1230, 240, 32, 32 }, callbackFunctions::callSpecOrInfoWin, hoverFunctions::callSpecWin);
 	buttonForCallInvWin = new Button("images/Button.png", ren, { 1050, 665, 25, 22 }, callbackFunctions::callInvWin, NULL);
+
+	//Keyboard
+	keyForCallSpecInfo = new Keyboard(SDL_SCANCODE_Q, callbackFunctions::callSpecOrInfoWin);
 }
 
 void UIInfo::Render()
@@ -220,8 +223,12 @@ void UIInfo::AlwaysRender()
 
 void UIInfo::handleEvents(SDL_Event& eventInUiInfo)
 {
+	//Buttons
 	buttonForCallSpecInfo->handleEvents(eventInUiInfo);
 	buttonForCallInvWin->handleEvents(eventInUiInfo);
+
+	//Keyboard
+	keyForCallSpecInfo->handleEvents(eventInUiInfo);
 }
 
 UISpecifications::UISpecifications(SDL_Renderer* renderer) : ren (renderer)

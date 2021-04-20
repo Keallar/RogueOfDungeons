@@ -159,7 +159,12 @@ void Level::Render()
 	{
 		for (int j = 0; j < 32; j++)
 		{
-			RenderManager::SetTile(j*32, i*32, textureLocation[i][j], ren, TileTextures[TileSet]);
+			if (Dark[i][j] == 1) {
+				RenderManager::SetTile(j * 32, i * 32, textureLocation[i][j], ren, TileTextures[TileSet]);
+			}
+			else {
+				RenderManager::SetTile(j * 32, i * 32, 12, ren, TileTextures[0]);
+			}
 		}
 	}
 	if (player != nullptr)
@@ -355,7 +360,7 @@ void Level::handleEvents(SDL_Event eventInLvl)
 
 void Level::Generate() {
 	srand(time(0));
-	generateChoose = 1;
+	generateChoose = 0;
 	player->generate = generateChoose;
 	enemyTurtle->generate = generateChoose;
 	if (generateChoose == 0) {

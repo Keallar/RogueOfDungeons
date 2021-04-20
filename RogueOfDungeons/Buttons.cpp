@@ -67,18 +67,21 @@ void Button::handleEvents(SDL_Event& buttonEvent)
 {
 	if (buttonEvent.type == SDL_MOUSEBUTTONDOWN)
 	{
-		if (buttonEvent.button.button == SDL_BUTTON_LEFT)
+		if (buttonEvent.button.clicks == 1)
 		{
-			mouse.x = buttonEvent.button.x;
-			mouse.y = buttonEvent.button.y;
-			if (Button::mouseInArea(button.x, button.y, button.w, button.h))
+			if (buttonEvent.button.button == SDL_BUTTON_LEFT)
 			{
-				clip = &stateOfClip[CLIP_MOUSEDOWN];
-				callback();
-			}
-			else
-			{
-				clip = &stateOfClip[CLIP_MOUSEUP];
+				mouse.x = buttonEvent.button.x;
+				mouse.y = buttonEvent.button.y;
+				if (Button::mouseInArea(button.x, button.y, button.w, button.h))
+				{
+					clip = &stateOfClip[CLIP_MOUSEDOWN];
+					callback();
+				}
+				else
+				{
+					clip = &stateOfClip[CLIP_MOUSEUP];
+				}
 			}
 		}
 	}
@@ -152,7 +155,7 @@ void Keyboard::handleEvents(SDL_Event& keyboardEvent)
 
 bool Keyboard::buttonIsPressed(SDL_Event& keyboardEvent)
 {
-	bool validity;
+	bool validity = false;
 	if (keyboardEvent.type = SDL_KEYDOWN)
 	{
 		keys[keyboardEvent.key.keysym.scancode] = true;

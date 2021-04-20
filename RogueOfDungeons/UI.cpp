@@ -187,6 +187,7 @@ UIInfo::UIInfo(SDL_Renderer* renderer) : ren (renderer)
 
 	//Keyboard
 	keyForCallSpecInfo = new Keyboard(SDL_SCANCODE_Q, callbackFunctions::callSpecOrInfoWin);
+	keyForcCallInvWin = new Keyboard(SDL_SCANCODE_I, callbackFunctions::callInvWin);
 }
 
 void UIInfo::Render()
@@ -229,6 +230,7 @@ void UIInfo::handleEvents(SDL_Event& eventInUiInfo)
 
 	//Keyboard
 	keyForCallSpecInfo->handleEvents(eventInUiInfo);
+	keyForcCallInvWin->handleEvents(eventInUiInfo);
 }
 
 UISpecifications::UISpecifications(SDL_Renderer* renderer) : ren (renderer)

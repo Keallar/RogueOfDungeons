@@ -167,7 +167,7 @@ UIInfo::UIInfo(SDL_Renderer* renderer) : ren (renderer)
 
 	slashhhhhhhhh = FontManager::renderText("/", PATH_IN_FONT, color, 32, ren);
 
-	SPEC = FontManager::renderText("SPEC", PATH_IN_FONT, color, 32, ren);
+	//SPEC = FontManager::renderText("SPEC", PATH_IN_FONT, color, 32, ren);
 
 	//HP
 	hpBar = textureManager::LoadTexture("images/hp.png", ren);
@@ -182,7 +182,7 @@ UIInfo::UIInfo(SDL_Renderer* renderer) : ren (renderer)
 	xpText = FontManager::renderText("XP", PATH_IN_FONT, color, 64, ren);
 
 	//Buttons
-	buttonForCallSpecInfo = new Button("images/Button.png", ren, { 1230, 240, 32, 32 }, callbackFunctions::callSpecOrInfoWin, NULL);
+	buttonForCallSpecInfo = new Button("images/Button.png", ren, { 1230, 240, 32, 32 }, callbackFunctions::callSpecOrInfoWin, hoverFunctions::callSpecWin);
 	buttonForCallInvWin = new Button("images/Button.png", ren, { 1050, 665, 25, 22 }, callbackFunctions::callInvWin, NULL);
 }
 
@@ -194,7 +194,7 @@ void UIInfo::Render()
 	RenderManager::CopyToRender(slashhhhhhhhh, ren, 1152, 122, 32, 20);
 	RenderManager::CopyToRender(slashhhhhhhhh, ren, 1152, 175, 32, 20);
 
-	RenderManager::CopyToRender(SPEC, ren, 1230, 220, 30, 25);
+	//RenderManager::CopyToRender(SPEC, ren, 1230, 220, 30, 25);
 
 	//HP
 	RenderManager::CopyToRender(hpBar, ren, 1080, 40, 160, 32, 0, 0, 128, 16);

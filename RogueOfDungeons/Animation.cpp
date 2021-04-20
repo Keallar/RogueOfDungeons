@@ -28,20 +28,15 @@ void Animation::UpdateTexture(const char* newTexture)
 
 bool Animation::animationPlusForX(int numOfFrames, bool complete)
 {
-	static int num = 0;
 	if (xanim != 32 * (numOfFrames - 1))
 	{
-		num++;
 		xanim += 32;
 		complete = 0;
-		std::cout << num << std::endl;
 	}
 	else
 	{
-		num = 0;
 		xanim = 0;
 		complete = 1;
-		std::cout << num << std::endl;
 	}
 
 	return complete;

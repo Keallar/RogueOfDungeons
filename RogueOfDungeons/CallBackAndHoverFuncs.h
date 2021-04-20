@@ -20,6 +20,8 @@ public:
 
 class hoverFunctions
 {
+private:
+	static SDL_Renderer* renderer;
 public:
-	void callSpecWin(SDL_Renderer* ren, SDL_Texture* hoverTexture);
+	static void callSpecWin();
 };

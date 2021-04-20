@@ -25,6 +25,12 @@ private:
 	SDL_Texture* buttonTexture;
 	Mouse mouse;
 	ButtonRect button;
+	SDL_Rect stateOfClip[4];
+	SDL_Rect* clip;
+	const int CLIP_MOUSEOVER = 0;
+	const int CLIP_MOUSEOUT = 1;
+	const int CLIP_MOUSEDOWN = 2;
+	const int CLIP_MOUSEUP = 3;
 	void (*callback)();
 	void (*hover)();
 	bool mouseInArea(int x, int y, int w, int h);
@@ -54,6 +60,18 @@ private:
 public:
 	static void buttonsForAttack();
 	static void buttonForRangeAttack();
+};
+
+class Keyboard
+{
+private:
+	bool keys[SDL_NUM_SCANCODES];
+	void (*callback)();
+	bool buttonIsPressed(SDL_Event& keyboardEvent);
+public:
+	Keyboard(SDL_Scancode* code, void (*callbackFunction)());
+	~Keyboard();
+	void handleEvents(SDL_Event &keyboardEvent);
 };
 
 

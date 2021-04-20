@@ -153,7 +153,7 @@ void MouseButtonsPlayer::buttonsForAttack()
 {
 	SDL_GetMouseState(&mouseCoordsPlayer.x, &mouseCoordsPlayer.y);
 
-	if (InputManager::MouseInArea(EntityPosition::Coords[2], EntityPosition::Coords[3], 32, 32, mouseCoordsPlayer.x, mouseCoordsPlayer.y))
+	if (InputManager::MouseInArea(GameObject::xpos, GameObject::ypos, 32, 32, mouseCoordsPlayer.x, mouseCoordsPlayer.y))
 	{
 		FlagManager::flagMeleeAttackPlayer = 1;
 		Player::Attack();
@@ -164,7 +164,7 @@ void MouseButtonsPlayer::buttonForRangeAttack()
 {
 	SDL_GetMouseState(&mouseCoordsPlayer.x, &mouseCoordsPlayer.y);
 
-	if (InputManager::MouseInArea(EntityPosition::Coords[2], EntityPosition::Coords[3], 32, 32, mouseCoordsPlayer.x, mouseCoordsPlayer.y))
+	if (InputManager::MouseInArea(GameObject::xpos, GameObject::ypos, 32, 32, mouseCoordsPlayer.x, mouseCoordsPlayer.y))
 	{
 		FlagManager::flagRangeAttack = 1;
 		Player::Attack();

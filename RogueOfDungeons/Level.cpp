@@ -131,8 +131,8 @@ void Level::Update()
 	if (Enemy::HP <= 0 && enemyTurtle != nullptr)
 	{
 		Level::deleteEnemy();
-		EntityPosition::Coords[2] = 0;
-		EntityPosition::Coords[3] = 0;
+		GameObject::xpos = 0;
+		GameObject::ypos = 0;
 	}
 }
 
@@ -255,9 +255,9 @@ void Level::Render()
 	}		
 	if (enemyTurtle != nullptr)
 	{
-		if (Dark[EntityPosition::Coords[3]/32][EntityPosition::Coords[2]/32] == 0) 
+		if (Dark[GameObject::ypos/32][GameObject::xpos/32] == 0) 
 		{
-			RenderManager::SetTile(EntityPosition::Coords[2], EntityPosition::Coords[3], 12, ren, TileTexture);
+			RenderManager::SetTile(GameObject::xpos, GameObject::ypos, 12, ren, TileTexture);
 		}
 		else
 		{

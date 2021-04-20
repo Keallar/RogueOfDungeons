@@ -31,7 +31,7 @@ Enemy::~Enemy()
 
 void Enemy::Render() 
 {
-	enemyAnimation->Render(EntityPosition::Coords[2], EntityPosition::Coords[3]);
+	enemyAnimation->Render(GameObject::xpos, GameObject::ypos);
 }
 
 void Enemy::clean()
@@ -112,25 +112,25 @@ void Enemy::GetLoc(int arr[22][32])
 }
 
 void Enemy::GetEnemyFirstCoords() {
-	EntityPosition::Coords[2] = (rand() % 30) * 32;
-	EntityPosition::Coords[3] = (rand() % 20) * 32;
+	GameObject::xpos = (rand() % 30) * 32;
+	GameObject::ypos = (rand() % 20) * 32;
 	if (generate != 4 && generate != 5) {
-		while ((enemyLoc[EntityPosition::Coords[3] / 32][EntityPosition::Coords[2] / 32] == -2) ||
-			((enemyLoc[EntityPosition::Coords[3] / 32][(EntityPosition::Coords[2] / 32) - 1] != -1) ||
-			(enemyLoc[EntityPosition::Coords[3] / 32][(EntityPosition::Coords[2] / 32) + 1] != -1) ||
-			(enemyLoc[(EntityPosition::Coords[3] / 32) - 1][EntityPosition::Coords[2] / 32] != -1) ||
-			(enemyLoc[(EntityPosition::Coords[3] / 32) + 1][EntityPosition::Coords[2] / 32] != -1)))
+		while ((enemyLoc[GameObject::ypos / 32][GameObject::xpos / 32] == -2) ||
+			((enemyLoc[GameObject::ypos / 32][(GameObject::xpos / 32) - 1] != -1) ||
+			(enemyLoc[GameObject::ypos / 32][(GameObject::xpos / 32) + 1] != -1) ||
+			(enemyLoc[(GameObject::ypos / 32) - 1][GameObject::xpos / 32] != -1) ||
+			(enemyLoc[(GameObject::ypos / 32) + 1][GameObject::xpos / 32] != -1)))
 		{
-			EntityPosition::Coords[2] = (rand() % 30) * 32;
-			EntityPosition::Coords[3] = (rand() % 20) * 32;
+			GameObject::xpos = (rand() % 30) * 32;
+			GameObject::ypos = (rand() % 20) * 32;
 		}
 	}
 	else 
 	{
-		while ((enemyLoc[EntityPosition::Coords[3] / 32][EntityPosition::Coords[2] / 32] == -2))
+		while ((enemyLoc[GameObject::ypos / 32][GameObject::xpos / 32] == -2))
 		{
-			EntityPosition::Coords[2] = (rand() % 30) * 32;
-			EntityPosition::Coords[3] = (rand() % 20) * 32;
+			GameObject::xpos = (rand() % 30) * 32;
+			GameObject::ypos = (rand() % 20) * 32;
 		}
 	}
 }
@@ -199,21 +199,21 @@ bool Enemy::WAY(int ax, int ay, int bx, int by)   // поиск пути из €чейки (ax, a
 	px[0] = ax;
 	py[0] = ay;         
 	//мен€етс€ позици€ enemy
-	EntityPosition::Coords[2] = px[1] * 32;
-	EntityPosition::Coords[3] = py[1] * 32;
+	GameObject::xpos = px[1] * 32;
+	GameObject::ypos = py[1] * 32;
 	return true;
 }
 
 void Enemy::Update()
 {
-	/*if ((abs(EntityPosition::Coords[2] / 32 - EntityPosition::Coords[0] / 32) +
-		abs(EntityPosition::Coords[3] / 32 - EntityPosition::Coords[1] / 32)) < 14){*/
+	/*if ((abs(GameObject::xpos / 32 - EntityPosition::Coords[0] / 32) +
+		abs(GameObject::ypos / 32 - EntityPosition::Coords[1] / 32)) < 14){*/
 		//движение enemy (поиск кратчайшего пути)
-		if ((abs(EntityPosition::Coords[2] / 32 - EntityPosition::Coords[0] / 32) +
-			abs(EntityPosition::Coords[3] / 32 - EntityPosition::Coords[1] / 32)) > 1 &&
+		if ((abs(GameObject::xpos / 32 - EntityPosition::Coords[0] / 32) +
+			abs(GameObject::ypos / 32 - EntityPosition::Coords[1] / 32)) > 1 &&
 			FlagManager::flagPlayer == 0 && FlagManager::flagEnemy == 1)
 		{
-			WAY(EntityPosition::Coords[2] / 32, EntityPosition::Coords[3] / 32,
+			WAY(GameObject::xpos / 32, GameObject::ypos / 32,
 				EntityPosition::Coords[0] / 32, EntityPosition::Coords[1] / 32);
 
 				FlagManager::flagPlayer = 1;
@@ -253,14 +253,14 @@ void Enemy::enemyTurn()
 void Enemy::meleeAttackEnemy()
 {
 	//атака enemy первым, если игрок первый подошЄл 
-	if ((((EntityPosition::Coords[2] == EntityPosition::Coords[0]) &&
-		(EntityPosition::Coords[3] == EntityPosition::Coords[1] + 32)) ||
-		((EntityPosition::Coords[2] == EntityPosition::Coords[0]) &&
-			(EntityPosition::Coords[3] == EntityPosition::Coords[1] - 32)) ||
-		((EntityPosition::Coords[3] == EntityPosition::Coords[1]) &&
-			(EntityPosition::Coords[2] == EntityPosition::Coords[0] + 32)) ||
-		((EntityPosition::Coords[3] == EntityPosition::Coords[1]) &&
-			(EntityPosition::Coords[2] == EntityPosition::Coords[0] - 32))) &&
+	if ((((GameObject::xpos == EntityPosition::Coords[0]) &&
+		(GameObject::ypos == EntityPosition::Coords[1] + 32)) ||
+		((GameObject::xpos == EntityPosition::Coords[0]) &&
+			(GameObject::ypos == EntityPosition::Coords[1] - 32)) ||
+		((GameObject::ypos == EntityPosition::Coords[1]) &&
+			(GameObject::xpos == EntityPosition::Coords[0] + 32)) ||
+		((GameObject::ypos == EntityPosition::Coords[1]) &&
+			(GameObject::xpos == EntityPosition::Coords[0] - 32))) &&
 		(FlagManager::flagMeleeAttackEnemy == 1 && FlagManager::flagEnemy == 1))
 	{
 		Enemy::enemyTurn();

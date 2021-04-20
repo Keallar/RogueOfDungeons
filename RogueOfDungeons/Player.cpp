@@ -529,8 +529,8 @@ void Player::handleEvents(SDL_Event playerEvent)
 			{
 				//остановка при упоре в стену
 			}
-			else if (EntityPosition::Coords[0] == EntityPosition::Coords[2] &&
-				(EntityPosition::Coords[1] - 32) == EntityPosition::Coords[3])
+			else if (EntityPosition::Coords[0] == GameObject::xpos &&
+				(EntityPosition::Coords[1] - 32) == GameObject::ypos)
 			{
 				//остановка при попытке пройти сквозь enemy
 			}
@@ -546,8 +546,8 @@ void Player::handleEvents(SDL_Event playerEvent)
 				{
 					FlagManager::flagChest = 1;
 				}
-				if (EntityPosition::Coords[0] == EntityPosition::Coords[2] &&
-					(EntityPosition::Coords[1] - 32) == EntityPosition::Coords[3])
+				if (EntityPosition::Coords[0] == GameObject::xpos &&
+					(EntityPosition::Coords[1] - 32) == GameObject::ypos)
 				{
 					//удар при определённой позиции Enemy
 				}
@@ -560,8 +560,8 @@ void Player::handleEvents(SDL_Event playerEvent)
 			{
 				//остановка при упоре в стену
 			}
-			else if ((EntityPosition::Coords[0] - 32) == EntityPosition::Coords[2] &&
-				EntityPosition::Coords[1] == EntityPosition::Coords[3])
+			else if ((EntityPosition::Coords[0] - 32) == GameObject::xpos &&
+				EntityPosition::Coords[1] == GameObject::ypos)
 			{
 				//остановка при попытке пройти сквозь enemy
 			}
@@ -577,8 +577,8 @@ void Player::handleEvents(SDL_Event playerEvent)
 				{
 					FlagManager::flagChest = 2;
 				}
-				if ((EntityPosition::Coords[0] - 32) == EntityPosition::Coords[2] &&
-					EntityPosition::Coords[1] == EntityPosition::Coords[3])
+				if ((EntityPosition::Coords[0] - 32) == GameObject::xpos &&
+					EntityPosition::Coords[1] == GameObject::ypos)
 				{
 					//удар при определённой позиции Enemy
 				}
@@ -591,8 +591,8 @@ void Player::handleEvents(SDL_Event playerEvent)
 			{
 				//остановка при упоре в стену
 			}
-			else if (EntityPosition::Coords[0] == EntityPosition::Coords[2] && 
-				(EntityPosition::Coords[1] + 32) == EntityPosition::Coords[3])
+			else if (EntityPosition::Coords[0] == GameObject::xpos && 
+				(EntityPosition::Coords[1] + 32) == GameObject::ypos)
 			{
 				//остановка при попытке пройти сквозь enemy
 			}
@@ -608,8 +608,8 @@ void Player::handleEvents(SDL_Event playerEvent)
 				{
 					FlagManager::flagChest = 3;
 				}
-				if (EntityPosition::Coords[0] == EntityPosition::Coords[2] &&
-					(EntityPosition::Coords[1] + 32) == EntityPosition::Coords[3])
+				if (EntityPosition::Coords[0] == GameObject::xpos &&
+					(EntityPosition::Coords[1] + 32) == GameObject::ypos)
 				{
 					//удар при определённой позиции Enemy
 				}
@@ -622,8 +622,8 @@ void Player::handleEvents(SDL_Event playerEvent)
 			{
 				//остановка при упоре в стену
 			}
-			else if ((EntityPosition::Coords[0] + 32) == EntityPosition::Coords[2] &&
-				EntityPosition::Coords[1] == EntityPosition::Coords[3])
+			else if ((EntityPosition::Coords[0] + 32) == GameObject::xpos &&
+				EntityPosition::Coords[1] == GameObject::ypos)
 			{
 				//остановка при попытке пройти сквозь enemy
 			}
@@ -677,17 +677,17 @@ void Player::Attack()
 		FlagManager::flagRangeAttack == 1 &&
 		Player::mana[0] != 0) 
 	{
-		if ((abs(EntityPosition::Coords[0]-EntityPosition::Coords[2]) == 0)) // разделил чтобы потом проверять на наличие стен
+		if ((abs(EntityPosition::Coords[0]-GameObject::xpos) == 0)) // разделил чтобы потом проверять на наличие стен
 		{ 
 			int i = rand() % 100;
 			std::cout << i << std::endl;
 			if (i < ((Player::EqItems.equipedRangeW->CHNS) -
 				((Player::EqItems.equipedRangeW->DCHNS) * 
-					abs(abs(EntityPosition::Coords[3] - EntityPosition::Coords[1])/32 - Player::EqItems.equipedRangeW->RNG)))) 
+					abs(abs(GameObject::ypos - EntityPosition::Coords[1])/32 - Player::EqItems.equipedRangeW->RNG)))) 
 			{
 				std::cout << i << "*" << ((Player::EqItems.equipedRangeW->CHNS) -
 					((Player::EqItems.equipedRangeW->DCHNS) *
-						abs(abs(EntityPosition::Coords[2] - EntityPosition::Coords[0]) - Player::EqItems.equipedRangeW->RNG))) << "*/";
+						abs(abs(GameObject::xpos - EntityPosition::Coords[0]) - Player::EqItems.equipedRangeW->RNG))) << "*/";
 				damage = Player::EqItems.equipedRangeW->DMG + Player::DEX[0];
 				int ch = Player::EqItems.equipedRangeW->CHNS;
 				std::cout << ch << std::endl;
@@ -698,16 +698,16 @@ void Player::Attack()
 			
 			Enemy::enemyTurn();
 		}
-		else if (abs(EntityPosition::Coords[1] - EntityPosition::Coords[3] == 0))
+		else if (abs(EntityPosition::Coords[1] - GameObject::ypos == 0))
 		{
 
 			int r = rand() % 100;
 			std::cout << r << " *" << ((Player::EqItems.equipedRangeW->CHNS) -
 				((Player::EqItems.equipedRangeW->DCHNS) *
-					abs(abs(EntityPosition::Coords[2] - EntityPosition::Coords[0])/32 - Player::EqItems.equipedRangeW->RNG))) << "*/";
+					abs(abs(GameObject::xpos - EntityPosition::Coords[0])/32 - Player::EqItems.equipedRangeW->RNG))) << "*/";
 			if (r < ((Player::EqItems.equipedRangeW->CHNS) -
 				((Player::EqItems.equipedRangeW->DCHNS) *
-					abs(abs(EntityPosition::Coords[2] - EntityPosition::Coords[0])/32 - Player::EqItems.equipedRangeW->RNG))))
+					abs(abs(GameObject::xpos - EntityPosition::Coords[0])/32 - Player::EqItems.equipedRangeW->RNG))))
 			{
 				std::cout << r << std::endl;
 				damage = Player::EqItems.equipedRangeW->DMG + Player::DEX[0];
@@ -723,14 +723,14 @@ void Player::Attack()
 		}
 	}//Ближний boy
 	else if ((Inventory::ExistingItems[Player::EqItems.WeaponId]->Type == weapon) &&
-		(((EntityPosition::Coords[0] == EntityPosition::Coords[2] - 32) &&
-		(EntityPosition::Coords[1] == EntityPosition::Coords[3])) ||
-		((EntityPosition::Coords[0] == EntityPosition::Coords[2] + 32) &&
-			(EntityPosition::Coords[1] == EntityPosition::Coords[3])) ||
-		((EntityPosition::Coords[0] == EntityPosition::Coords[2]) &&
-			(EntityPosition::Coords[1] == EntityPosition::Coords[3] - 32)) ||
-		((EntityPosition::Coords[0] == EntityPosition::Coords[2]) &&
-			(EntityPosition::Coords[1] == EntityPosition::Coords[3] + 32))) &&
+		(((EntityPosition::Coords[0] == GameObject::xpos - 32) &&
+		(EntityPosition::Coords[1] == GameObject::ypos)) ||
+		((EntityPosition::Coords[0] == GameObject::xpos + 32) &&
+			(EntityPosition::Coords[1] == GameObject::ypos)) ||
+		((EntityPosition::Coords[0] == GameObject::xpos) &&
+			(EntityPosition::Coords[1] == GameObject::ypos - 32)) ||
+		((EntityPosition::Coords[0] == GameObject::xpos) &&
+			(EntityPosition::Coords[1] == GameObject::ypos + 32))) &&
 		FlagManager::flagMeleeAttackPlayer == 1 && FlagManager::flagMeleeAttackEnemy == 0 &&
 		FlagManager::flagPlayer == 1 && FlagManager::flagEnemy == 0)
 	{

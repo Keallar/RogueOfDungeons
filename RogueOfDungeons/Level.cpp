@@ -569,6 +569,7 @@ void Level::Generate() {
 	itemsHave = 2;
 	floorLvl++;
 }
+
 bool Level::CheckPositionToMeleeAttack(SDL_Rect rect, int x, int y)
 {
 	if (((rect.x = x + 32) && (rect.y = y)) ||

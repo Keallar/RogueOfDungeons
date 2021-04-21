@@ -579,6 +579,7 @@ int Player::RangeAttack()
 				std::cout << ch << std::endl;
 				Player::ChangeManaValue(5);
 				Enemy::ChahgeHpEnemy(damage);
+				
 				std::cout << "Range boy vert" << std::endl;
 			}
 			

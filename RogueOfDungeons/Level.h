@@ -61,9 +61,12 @@ private:
 	void RoomGenerationMethod2();
 	void CreateChunk(int x, int y);
 	void CreateChunk2(int x, int y);
+	MouseCoords Mouse;
 public:
+	bool CheckPositionToMeleeAttack(SDL_Rect rect, int x, int y);
 	int GetGeneration();
 	bool flagTB;
+	void Attack();
 	Level(SDL_Renderer* renderer);
 	~Level();
 	void deletePlayer();

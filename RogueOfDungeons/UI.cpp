@@ -6,6 +6,7 @@
 #include "Player.h"
 #include "Enemy.h"
 #include "CallBackAndHoverFuncs.h"
+#include "Game.h"
 
 TextInfo::TextInfo() 
 {
@@ -182,7 +183,7 @@ UIInfo::UIInfo(SDL_Renderer* renderer) : ren (renderer)
 	xpText = FontManager::renderText("XP", PATH_IN_FONT, color, 64, ren);
 
 	//Buttons
-	buttonForCallSpecInfo = new Button("images/Button.png", ren, { 1230, 240, 32, 32 }, callbackFunctions::callSpecOrInfoWin, hoverFunctions::callSpecWin);
+	buttonForCallSpecInfo = new Button("images/Button.png", ren , { 1230, 240, 32, 32 }, callbackFunctions::callSpecOrInfoWin, hoverFunctions::callSpecWin);
 	buttonForCallInvWin = new Button("images/Button.png", ren, { 1050, 665, 25, 22 }, callbackFunctions::callInvWin, NULL);
 
 	//Keyboard

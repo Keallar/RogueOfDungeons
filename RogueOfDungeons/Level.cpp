@@ -108,12 +108,15 @@ void Level::deleteEnemy()
 void Level::Update()
 {
 	int n = Player::VIS;
-	for (int i = (EntityPosition::Coords[1] / 32) - n; i <= (EntityPosition::Coords[1] / 32) + n; i++) {
-		for (int j = (EntityPosition::Coords[0] / 32) - n; j <= (EntityPosition::Coords[0] / 32) + n; j++) {
+	for (int i = (EntityPosition::Coords[1] / 32) - n; i <= (EntityPosition::Coords[1] / 32) + n; i++) 
+	{
+		for (int j = (EntityPosition::Coords[0] / 32) - n; j <= (EntityPosition::Coords[0] / 32) + n; j++) 
+		{
 			ChangeDark(i, j);
 		}
 	}
-	if (enemyTurtle == nullptr) {
+	if (enemyTurtle == nullptr)
+	{
 		FlagManager::flagEnemy = 0;
 		FlagManager::flagPlayer = 1;
 	}
@@ -127,7 +130,6 @@ void Level::Update()
 	{
 		enemyTurtle->Update();
 		enemyTurtle->GetLoc(Location);
-		SDL_Delay(100); //UNDONE перенести delay в Animation
 	}
 	if (player != nullptr)
 		player->GetLevel(Location);

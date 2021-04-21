@@ -123,7 +123,7 @@ Keyboard::~Keyboard()
 
 void Keyboard::handleEvents(SDL_Event& keyboardEvent)
 {
-	if (buttonIsPressed(keyboardEvent) == 1 && callback != NULL)
+	if (buttonIsPressed(keyboardEvent) == true && callback != NULL)
 	{
 		//std::cout << code << std::endl;
 		callback();
@@ -132,12 +132,12 @@ void Keyboard::handleEvents(SDL_Event& keyboardEvent)
 
 bool Keyboard::buttonIsPressed(SDL_Event& keyboardEvent)
 {
-	SDL_Scancode codeB = keyboardEvent.key.keysym.scancode;
+	SDL_Scancode tempcode = keyboardEvent.key.keysym.scancode;
 	bool validity = false;
 	switch (keyboardEvent.type)
 	{
 	case SDL_KEYDOWN:
-		if (code == codeB)
+		if (code == tempcode)
 		validity = true;
 		break;
 	case SDL_KEYUP:

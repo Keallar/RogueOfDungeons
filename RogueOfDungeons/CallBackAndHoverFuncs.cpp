@@ -1,4 +1,5 @@
 #include "CallBackAndHoverFuncs.h"
+#include "Game.h"
 
 using namespace std;
 
@@ -94,14 +95,15 @@ void callbackFunctions::callDrop()
 	}
 }
 
-SDL_Renderer* hoverFunctions::renderer;
-
 void hoverFunctions::callSpecWin()
 {
 	const char* PATH_IN_FONT = "fonts/manaspc.ttf";
 	SDL_Color color = { 255, 255, 255, 255 };
-	SDL_Texture* SPEC = FontManager::renderText("SPEC", PATH_IN_FONT, color, 32, renderer);
+	SDL_Texture* SPEC = FontManager::renderText("SPEC", PATH_IN_FONT, color, 32, Game::renderer);
 
-	RenderManager::CopyToRender(SPEC, renderer, 1230, 220, 30, 25);
-	std::cout << "Render Hover SPEC" << std::endl;
+	if (SPEC != nullptr)
+	{
+		RenderManager::CopyToRender(SPEC, Game::renderer, 1230, 220, 30, 25);
+		std::cout << "Render Hover SPEC" << std::endl;
+	}
 }

@@ -398,6 +398,8 @@ void UISpecifications::handleEvents(SDL_Event& eventInSpec)
 	buttonForIncPlayerWSD->handleEvents(eventInSpec);
 	buttonForIncPlayerPHS->handleEvents(eventInSpec);
 	buttonForIncPlayerLCK->handleEvents(eventInSpec);
+
+
 }
 
 UIEquipedItem::UIEquipedItem(SDL_Renderer* renderer) : ren (renderer)

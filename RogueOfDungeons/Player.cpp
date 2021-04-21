@@ -460,15 +460,19 @@ void Player::GetItemEquip(int id)
 	FlagManager::flagEquip = -1;
 }
 
-void Player::GetItemUnEquip(int id) {
-	if (inventory->InventoryCount() != 16) {
-		if (id == 0) {
+void Player::GetItemUnEquip(int id) 
+{
+	if (inventory->InventoryCount() != 16) 
+	{
+		if (id == 0) 
+		{
 			inventory->AddItem(EqItems.WeaponId);
 			EqItems.WeaponId = 0;
 			EqItems.equipedMeleeW = inventory->GetRealMelee(0);
 			EqItems.equipedRangeW = nullptr;
 		}
-		if (id == 1) {
+		if (id == 1) 
+		{
 			inventory->AddItem(EqItems.ArmorId);
 			EqItems.ArmorId = -1;
 			EqItems.equipedArmor = nullptr;
@@ -552,7 +556,9 @@ int Player::RangeAttack()
 {
 	if ((Inventory::ExistingItems[Player::EqItems.WeaponId]->Type == rWeapon) &&
 		FlagManager::flagRangeAttack == 1 &&
-		Player::mana[0] != 0) {
+		Player::mana[0] != 0)
+	{
+
 	}
 	return 0;
 }

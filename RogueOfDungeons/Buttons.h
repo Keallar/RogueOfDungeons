@@ -9,14 +9,6 @@ struct Mouse
 	int y;
 };
 
-struct ButtonRect
-{
-	int x;
-	int y;
-	int w;
-	int h;
-};
-
 class Button
 {
 private:
@@ -24,13 +16,7 @@ private:
 	SDL_Renderer* ren;
 	SDL_Texture* buttonTexture;
 	Mouse mouse;
-	ButtonRect button;
-	SDL_Rect stateOfClip[4];
-	SDL_Rect* clip;
-	const int CLIP_MOUSEOVER = 0;
-	const int CLIP_MOUSEOUT = 1;
-	const int CLIP_MOUSEDOWN = 2;
-	const int CLIP_MOUSEUP = 3;
+	SDL_Rect button;
 	void (*callback)();
 	void (*hover)();
 	bool mouseInArea(int x, int y, int w, int h);
@@ -39,18 +25,8 @@ public:
 	Button(const char* textureName, SDL_Renderer* renderer, SDL_Rect rect, void (*callbackFunction)(), void (*hoverFunction)());
 	void handleEvents(SDL_Event& buttonEvent);
 	void Render();
+	void RenderHover();
 	void updateCoords(int newx, int newy);
-};
-
-class KeyboardButtonsInLevel
-{
-private:
-	const Uint8* keys = SDL_GetKeyboardState(NULL);
-public:
-	KeyboardButtonsInLevel();
-	static void keyForCallSpecWin(const Uint8* keys);
-	static void keyForCallInvWin(const Uint8* keys);
-	static void keyForIncPlayerSpec(const Uint8* keys);
 };
 
 class MouseButtonsPlayer
@@ -65,11 +41,11 @@ public:
 class Keyboard
 {
 private:
-	bool keys[SDL_NUM_SCANCODES];
+	SDL_Scancode code;
 	void (*callback)();
 	bool buttonIsPressed(SDL_Event& keyboardEvent);
 public:
-	Keyboard(SDL_Scancode code, void (*callbackFunction)());
+	Keyboard(SDL_Scancode scancode, void (*callbackFunction)());
 	~Keyboard();
 	void handleEvents(SDL_Event &keyboardEvent);
 };

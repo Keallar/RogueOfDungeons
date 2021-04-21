@@ -31,6 +31,10 @@ Level::Level(SDL_Renderer* renderer) : ren (renderer)
 	mana = new ManaInfo(ren);
 	exp = new ExpInfo(ren);
 	uiEquiped = new UIEquipedItem(ren);
+	//w = new Keyboard(SDL_SCANCODE_W, );
+	//a = new Keyboard(SDL_SCANCODE_A, );
+	//s = new Keyboard(SDL_SCANCODE_S, );
+	//d = new Keyboard(SDL_SCANCODE_D, );
 
 	//keyboard = new Keyboard();
 
@@ -153,8 +157,10 @@ void Level::Start()
 	enemyTurtle->GetEnemyFirstCoords();
 }
 
-void Level::ChangeDark(int i, int j) {
-	if (i >= 0 && i < 22 && j >= 0 && j < 32) {
+void Level::ChangeDark(int i, int j) 
+{
+	if (i >= 0 && i < 22 && j >= 0 && j < 32) 
+	{
 		Dark[i][j] = 1;
 	}
 }
@@ -268,9 +274,12 @@ void Level::Render()
 			}
 		}
 
-		if (FlagManager::flagChest != 0) {
-			if (!player->InventoryBlock()) {
-				switch (FlagManager::flagChest) {
+		if (FlagManager::flagChest != 0)
+		{
+			if (!player->InventoryBlock()) 
+			{
+				switch (FlagManager::flagChest) 
+				{
 				case 1:
 					textureLocation[(EntityPosition::Coords[1]) / 32 - 1][(EntityPosition::Coords[0]) / 32] = 0;
 					Location[(EntityPosition::Coords[1]) / 32 - 1][(EntityPosition::Coords[0]) / 32] = 0;
@@ -301,7 +310,8 @@ void Level::Render()
 					break;
 				}
 			}
-			else {
+			else 
+			{
 				FlagManager::flagChest = 0;
 			}
 		}
@@ -309,7 +319,8 @@ void Level::Render()
 }
 
 //возможность изменять уровень из вне
-void Level::ChangeLevel(int x, int y, int LocationChange, int TextureChange) {
+void Level::ChangeLevel(int x, int y, int LocationChange, int TextureChange) 
+{
 	Location[x][y] = LocationChange;
 	textureLocation[x][y] = TextureChange;
 }
@@ -317,10 +328,8 @@ void Level::ChangeLevel(int x, int y, int LocationChange, int TextureChange) {
 //Обновление данных объектов
 void Level::handleEvents(SDL_Event eventInLvl)
 {
-	switch (eventInLvl.type)
+	if (uiInfo)
 	{
-	case SDL_MOUSEBUTTONDOWN:
-
 		//Взаимодействие с Items в Inventory
 		uiInv->clickForItemsInInv();
 
@@ -332,7 +341,7 @@ void Level::handleEvents(SDL_Event eventInLvl)
 
 		//Увеличение значения характеристик по нажатию мыши
 		uiSpec->handleEvents(eventInLvl);
-		
+
 		//Вызов окна Inventory по нажатию мыши
 		uiInv->handleEvents(eventInLvl);
 
@@ -341,20 +350,6 @@ void Level::handleEvents(SDL_Event eventInLvl)
 			//Вызов infoEnemy по нажатию мыши
 			uiEnemyHpInfo->callEnemyInfo();
 		}
-
-		
-	case SDL_KEYDOWN:
-		//Смена окон (с Spec на Info и наоборот) на Q
-		KeyboardButtonsInLevel::keyForCallSpecWin(keys);
-
-		//Вызов окна Inventory на I
-		KeyboardButtonsInLevel::keyForCallInvWin(keys);
-
-		//Увеличение характеристик Spec с помощью клавиш
-		KeyboardButtonsInLevel::keyForIncPlayerSpec(keys);
-
-	default:
-		break;
 	}
 
 	//Передача event в Player
@@ -485,9 +480,6 @@ void Level::handleEvents(SDL_Event eventInLvl)
 
 			if (eventInLvl.button.button == SDL_BUTTON_LEFT)
 			{
-				//атака при нажатии левой мыши
-				/*MouseButtonsPlayer::buttonForRangeAttack(enemyTurtle->Rect.x, enemyTurtle->Rect.y);
-				MouseButtonsPlayer::buttonsForAttack(enemyTurtle->Rect.x, enemyTurtle->Rect.y);*/
 				SDL_GetMouseState(&Mouse.x, &Mouse.y);
 
 				if (InputManager::MouseInArea(enemyTurtle->Rect.x, enemyTurtle->Rect.y, 32, 32, Mouse.x, Mouse.y))

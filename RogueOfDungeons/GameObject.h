@@ -30,17 +30,12 @@ enum Tiles
 
 class GameObject
 {
-private:
-	SDL_Texture* objTexture;
-	SDL_Rect srcRect, destRect;
-	SDL_Renderer* ren;
 protected:
-	int xpos;
-	int ypos;
-	int weight;
-	int height;
-	int index;
+	SDL_Texture* objTexture;
+	SDL_Renderer* ren;
 public:
+	SDL_Rect GetRect();
+	SDL_Rect Rect;
 	GameObject(); //конструктор по умлочанию
 	GameObject(const char* texturesheet, SDL_Renderer* renderer, int x, int y, int w, int h);;
 	GameObject(const char* texturesheet, SDL_Renderer* renderer);

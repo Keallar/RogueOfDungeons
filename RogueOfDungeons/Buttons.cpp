@@ -4,6 +4,8 @@
 #include <iostream>
 #include "EntityPosition.h"
 #include "Player.h"
+#include "Level.h"
+#include "Game.h"
 
 //конструктор без callback и hover
 Button::Button(const char* textureName, SDL_Renderer* renderer, SDL_Rect rect)
@@ -228,25 +230,25 @@ void KeyboardButtonsInLevel::keyForIncPlayerSpec(const Uint8* keys)
 
 Mouse MouseButtonsPlayer::mouseCoordsPlayer;
 
-void MouseButtonsPlayer::buttonsForAttack()
+void MouseButtonsPlayer::buttonsForAttack(int x, int y)
 {
 	SDL_GetMouseState(&mouseCoordsPlayer.x, &mouseCoordsPlayer.y);
 
-	if (InputManager::MouseInArea(EntityPosition::Coords[2], EntityPosition::Coords[3], 32, 32, mouseCoordsPlayer.x, mouseCoordsPlayer.y))
+	if (InputManager::MouseInArea(x, y, 32, 32, mouseCoordsPlayer.x, mouseCoordsPlayer.y))
 	{
 		FlagManager::flagMeleeAttackPlayer = 1;
-		Player::Attack();
+		//level->Attack();
 	}
 }
 
-void MouseButtonsPlayer::buttonForRangeAttack()
+void MouseButtonsPlayer::buttonForRangeAttack(int x, int y)
 {
 	SDL_GetMouseState(&mouseCoordsPlayer.x, &mouseCoordsPlayer.y);
 
-	if (InputManager::MouseInArea(EntityPosition::Coords[2], EntityPosition::Coords[3], 32, 32, mouseCoordsPlayer.x, mouseCoordsPlayer.y))
+	if (InputManager::MouseInArea(x, y, 32, 32, mouseCoordsPlayer.x, mouseCoordsPlayer.y))
 	{
 		FlagManager::flagRangeAttack = 1;
-		Player::Attack();
+		//Level::Attack();
 	}
 }
 

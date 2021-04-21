@@ -14,9 +14,10 @@
 
 Level::Level(SDL_Renderer* renderer) : ren (renderer)
 {
+	TileSet = 0;
 	floorLvl = 0;
-	TileTexture = textureManager::LoadTexture("images/Tiles.png", ren);
-	TileTextureCastle = textureManager::LoadTexture("images/CaslteTiles.png", ren);
+	TileTextures[0] = textureManager::LoadTexture("images/Tiles.png", ren);
+	TileTextures[1] = textureManager::LoadTexture("images/CaslteTiles.png", ren);
 	PlayBackground = textureManager::LoadTexture("images/Playback.png", ren); 
 	player = new Player(ren);
 	enemyTurtle = new Enemy("images/Turtle.png", 4, ren, 8, 8, 3, 4);
@@ -81,6 +82,13 @@ void Level::deletePlayer()
 	}
 }
 
+int Level::GetGeneration()
+{
+	return 0;
+}
+
+
+
 void Level::deleteEnemy()
 {
 	if (Enemy::HP <= 0)
@@ -131,8 +139,8 @@ void Level::Update()
 	if (Enemy::HP <= 0 && enemyTurtle != nullptr)
 	{
 		Level::deleteEnemy();
-		EntityPosition::Coords[2] = 0;
-		EntityPosition::Coords[3] = 0;
+		enemyTurtle->Rect.x = 0;
+		enemyTurtle->Rect.y = 0;
 	}
 }
 
@@ -151,101 +159,18 @@ void Level::ChangeDark(int i, int j) {
 	}
 }
 
-void Level::CaveRender(int y, int x) {
-	int i = y;
-	int j = x;
-	if (textureLocation[i][j] == 0)
-	{
-		RenderManager::SetTile(j * 32, i * 32, 2, ren, TileTexture);
-	}
-	else
-	{
-		RenderManager::SetTile(j * 32, i * 32, 6, ren, TileTexture);
-	}
-	if (textureLocation[i][j] == 2) {
-		RenderManager::SetTile(j * 32, i * 32, 7, ren, TileTexture);
-	}
-	if (textureLocation[i][j] == 3) {
-		RenderManager::SetTile(j * 32, i * 32, 3, ren, TileTexture);
-	}
-	if (textureLocation[i][j] == 4) {
-		RenderManager::SetTile(j * 32, i * 32, 1, ren, TileTexture);
-	}
-	if (textureLocation[i][j] == 5) {
-		RenderManager::SetTile(j * 32, i * 32, 9, ren, TileTexture);
-	}
-	if (textureLocation[i][j] == 6) {
-		RenderManager::SetTile(j * 32, i * 32, 4, ren, TileTexture);
-	}
-	if (textureLocation[i][j] == 14) {
-		RenderManager::SetTile(j * 32, i * 32, 13, ren, TileTexture);
-	}
-	if (Dark[i][j] == 0) {
-		RenderManager::SetTile(j * 32, i * 32, 12, ren, TileTexture);
-	}
-}
-
-void Level::CastleRender(int y, int x) {
-	int i = y;
-	int j = x;
-	if (textureLocation[i][j] == 0)
-	{
-		RenderManager::SetTile(j * 32, i * 32, 6, ren, TileTextureCastle);
-	}
-	else
-	{
-		RenderManager::SetTile(j * 32, i * 32, 8, ren, TileTextureCastle);
-	}
-	if (textureLocation[i][j] == 2) {
-		RenderManager::SetTile(j * 32, i * 32, 9, ren, TileTextureCastle);
-	}
-	if (textureLocation[i][j] == 3) {
-		RenderManager::SetTile(j * 32, i * 32, 2, ren, TileTextureCastle);
-	}
-	if (textureLocation[i][j] == 4) {
-		RenderManager::SetTile(j * 32, i * 32, 3, ren, TileTextureCastle);
-	}
-	if (textureLocation[i][j] == 5) {
-		RenderManager::SetTile(j * 32, i * 32, 7, ren, TileTextureCastle);
-	}
-	if (textureLocation[i][j] == 6) {
-		RenderManager::SetTile(j * 32, i * 32, 1, ren, TileTextureCastle);
-	}
-	if (textureLocation[i][j] == 7) {
-		RenderManager::SetTile(j * 32, i * 32, 10, ren, TileTextureCastle);
-	}
-	if (textureLocation[i][j] == 8) {
-		RenderManager::SetTile(j * 32, i * 32, 11, ren, TileTextureCastle);
-	}
-	if (textureLocation[i][j] == 14) {
-		RenderManager::SetTile(j * 32, i * 32, 14, ren, TileTextureCastle);
-	}
-	if (Dark[i][j] == 0) {
-		RenderManager::SetTile(j * 32, i * 32, 12, ren, TileTexture);
-	}
-}
-
 void Level::Render()
 {
 	RenderManager::CopyToRender(PlayBackground, ren);
-	
-	//в зависимости от метода генерации выбираются нужные паки текстур
-	if ((generateChoose == 0) || (generateChoose == 2) || (generateChoose == 4)) {
-		for (int i = 0; i < 22; i++)
+	for (int i = 0; i < 22; i++)
+	{
+		for (int j = 0; j < 32; j++)
 		{
-			for (int j = 0; j < 32; j++)
-			{
-				CaveRender(i, j);
+			if (Dark[i][j] == 1) {
+				RenderManager::SetTile(j * 32, i * 32, textureLocation[i][j], ren, TileTextures[TileSet]);
 			}
-		}
-	}
-
-	if ((generateChoose == 1)||(generateChoose == 5)) {
-		for (int i = 0; i < 22; i++)
-		{
-			for (int j = 0; j < 32; j++)
-			{
-				CastleRender(i, j);
+			else {
+				RenderManager::SetTile(j * 32, i * 32, 12, ren, TileTextures[0]);
 			}
 		}
 	}
@@ -255,9 +180,9 @@ void Level::Render()
 	}		
 	if (enemyTurtle != nullptr)
 	{
-		if (Dark[EntityPosition::Coords[3]/32][EntityPosition::Coords[2]/32] == 0) 
+		if (Dark[enemyTurtle->Rect.y/32][enemyTurtle->Rect.x/32] == 0)
 		{
-			RenderManager::SetTile(EntityPosition::Coords[2], EntityPosition::Coords[3], 12, ren, TileTexture);
+			RenderManager::SetTile(EntityPosition::Coords[2], EntityPosition::Coords[3], 12, ren, TileTextures[0]);
 		}
 		else
 		{
@@ -435,14 +360,192 @@ void Level::handleEvents(SDL_Event eventInLvl)
 	//Передача event в Player
 	if (player)
 	{
-		player->handleEvents(eventInLvl);
+		switch (eventInLvl.type)
+		{
+		case SDL_KEYDOWN:
+			if (keys[SDL_SCANCODE_W])
+			{
+				if (EntityPosition::Coords[1] == 32)
+				{
+					//остановка при упоре в стену
+				}
+				else if (EntityPosition::Coords[0] == enemyTurtle->Rect.x &&
+					(EntityPosition::Coords[1] - 32) == enemyTurtle->Rect.y)
+				{
+					//остановка при попытке пройти сквозь enemy
+				}
+				else
+				{
+					if (Location[(EntityPosition::Coords[1]) / 32 - 1][(EntityPosition::Coords[0]) / 32] == 0)
+					{
+						EntityPosition::Coords[1] -= 32;
+						FlagManager::flagPlayer = 0;
+						FlagManager::flagEnemy = 1;
+					}
+					if (Location[(EntityPosition::Coords[1]) / 32 - 1][(EntityPosition::Coords[0]) / 32] == 3)
+					{
+						FlagManager::flagChest = 1;
+					}
+					if (EntityPosition::Coords[0] == enemyTurtle->Rect.x &&
+						(EntityPosition::Coords[1] - 32) == enemyTurtle->Rect.y)
+					{
+						//удар при определённой позиции Enemy
+					}
+				}
+			}
+
+			else if (keys[SDL_SCANCODE_A])
+			{
+				if (EntityPosition::Coords[0] == 32)
+				{
+					//остановка при упоре в стену
+				}
+				else if ((EntityPosition::Coords[0] - 32) == enemyTurtle->Rect.x &&
+					EntityPosition::Coords[1] == enemyTurtle->Rect.y)
+				{
+					//остановка при попытке пройти сквозь enemy
+				}
+				else
+				{
+					if (Location[(EntityPosition::Coords[1]) / 32][(EntityPosition::Coords[0]) / 32 - 1] == 0)
+					{
+						EntityPosition::Coords[0] -= 32;
+						FlagManager::flagPlayer = 0;
+						FlagManager::flagEnemy = 1;
+					}
+					if (Location[(EntityPosition::Coords[1]) / 32][(EntityPosition::Coords[0]) / 32 - 1] == 3)
+					{
+						FlagManager::flagChest = 2;
+					}
+					if ((EntityPosition::Coords[0] - 32) == enemyTurtle->Rect.x &&
+						EntityPosition::Coords[1] == enemyTurtle->Rect.y)
+					{
+						//удар при определённой позиции Enemy
+					}
+				}
+			}
+
+			else if (keys[SDL_SCANCODE_S])
+			{
+				if (EntityPosition::Coords[1] == 640)
+				{
+					//остановка при упоре в стену
+				}
+				else if (EntityPosition::Coords[0] == enemyTurtle->Rect.x &&
+					(EntityPosition::Coords[1] + 32) == enemyTurtle->Rect.y)
+				{
+					//остановка при попытке пройти сквозь enemy
+				}
+				else
+				{
+					if (Location[(EntityPosition::Coords[1]) / 32 + 1][(EntityPosition::Coords[0]) / 32] == 0)
+					{
+						EntityPosition::Coords[1] += 32;
+						FlagManager::flagPlayer = 0;
+						FlagManager::flagEnemy = 1;
+					}
+					if (Location[(EntityPosition::Coords[1]) / 32 + 1][(EntityPosition::Coords[0]) / 32] == 3)
+					{
+						FlagManager::flagChest = 3;
+					}
+					if (EntityPosition::Coords[0] == enemyTurtle->Rect.x &&
+						(EntityPosition::Coords[1] + 32) == enemyTurtle->Rect.y)
+					{
+						//удар при определённой позиции Enemy
+					}
+				}
+			}
+
+			else if (keys[SDL_SCANCODE_D])
+			{
+				if (EntityPosition::Coords[0] == 960)
+				{
+					//остановка при упоре в стену
+				}
+				else if ((EntityPosition::Coords[0] + 32) == enemyTurtle->Rect.x &&
+					EntityPosition::Coords[1] == enemyTurtle->Rect.y)
+				{
+					//остановка при попытке пройти сквозь enemy
+				}
+				else
+				{
+					if (Location[(EntityPosition::Coords[1]) / 32][(EntityPosition::Coords[0]) / 32 + 1] == 0)
+					{
+						EntityPosition::Coords[0] += 32;
+						FlagManager::flagPlayer = 0;
+						FlagManager::flagEnemy = 1;
+					}
+					if (Location[(EntityPosition::Coords[1]) / 32][(EntityPosition::Coords[0]) / 32 + 1] == 3)
+					{
+						FlagManager::flagChest = 4;
+					}
+				}
+			}
+		case SDL_MOUSEBUTTONDOWN:
+
+			if (eventInLvl.button.button == SDL_BUTTON_LEFT)
+			{
+				//атака при нажатии левой мыши
+				/*MouseButtonsPlayer::buttonForRangeAttack(enemyTurtle->Rect.x, enemyTurtle->Rect.y);
+				MouseButtonsPlayer::buttonsForAttack(enemyTurtle->Rect.x, enemyTurtle->Rect.y);*/
+				SDL_GetMouseState(&Mouse.x, &Mouse.y);
+
+				if (InputManager::MouseInArea(enemyTurtle->Rect.x, enemyTurtle->Rect.y, 32, 32, Mouse.x, Mouse.y))
+				{
+					FlagManager::flagRangeAttack = 1;
+					Attack();
+				}
+			}
+		default:
+			break;
+		}
 	}
 }
 //rand для рандомного выбора метода генерации
+void Level::Attack() 
+{
+	//Дальний boy
+		//if ((abs(EntityPosition::Coords[0] - enemyTurtle->Rect.x) == 0)) // разделил чтобы потом проверять на наличие стен
+		//{
+		//	{
+		//		enemyTurtle->ChahgeHpEnemy(-(player->RangeAttack()));
 
+		//		Player::ChangeManaValue(5);
+		//	}
+
+		//	Enemy::enemyTurn();
+		//}
+		//else if (abs(EntityPosition::Coords[1] - enemyTurtle->Rect.y == 0))
+		//{
+
+		//	int r = rand() % 100;
+		//	if (r < ((Player::EqItems.equipedRangeW->CHNS) -
+		//		((Player::EqItems.equipedRangeW->DCHNS) *
+		//			abs(abs(enemyTurtle->Rect.x - EntityPosition::Coords[0]) / 32 - Player::EqItems.equipedRangeW->RNG))))
+		//	{
+		//		damage = Player::EqItems.equipedRangeW->DMG + Player::DEX[0];
+		//		int ch = Player::EqItems.equipedRangeW->CHNS;
+		//		std::cout << ch << std::endl;
+		//		Player::ChangeManaValue(5);
+		//		Enemy::ChahgeHpEnemy(damage);
+		//		std::cout << "Range boy hor" << std::endl;
+		//	}
+
+
+		//	Enemy::enemyTurn();
+		//}
+	//Ближний boy
+	if (this->CheckPositionToMeleeAttack(enemyTurtle->Rect, EntityPosition::Coords[0], EntityPosition::Coords[1]) &&
+		FlagManager::flagMeleeAttackPlayer == 1 && FlagManager::flagMeleeAttackEnemy == 0 &&
+		FlagManager::flagPlayer == 1 && FlagManager::flagEnemy == 0)
+	{
+		enemyTurtle->ChahgeHpEnemy(-(player->MeleeAttack()));
+		enemyTurtle->enemyTurn();
+	}
+}
 void Level::Generate() {
 	srand(time(0));
-	generateChoose = 5;
+	generateChoose = 0;
 	player->generate = generateChoose;
 	enemyTurtle->generate = generateChoose;
 	if (generateChoose == 0) {
@@ -465,4 +568,15 @@ void Level::Generate() {
 	}
 	itemsHave = 2;
 	floorLvl++;
+}
+bool Level::CheckPositionToMeleeAttack(SDL_Rect rect, int x, int y)
+{
+	if (((rect.x = x + 32) && (rect.y = y)) ||
+		((rect.x = x - 32) && (rect.y = y)) ||
+		((rect.x = x) && (rect.y = y + 32)) ||
+		((rect.x = x) && (rect.y = y - 32))) 
+	{
+		return true;
+	}
+	return false;
 }

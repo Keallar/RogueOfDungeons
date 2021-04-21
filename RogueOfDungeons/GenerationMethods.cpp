@@ -180,136 +180,9 @@ void Level::ChunkGenerationMethod() {
 		textureLocation[chests[i][0]][chests[i][1]] = 14;
 		Location[chests[i][0]][chests[i][1]] = 3;
 	}
+
+	TileSet = 0;
 }
-
-//здесь описан алгоритм поиска в ширину, я его сделал, потом понял, что он мне не нужен
-
-/*
-std::vector<std::pair<int, int>> Level::pop_front(std::vector<std::pair<int, int>> vec)
-{
-	for (int i = 0; i < vec.size() - 1; i++) {
-		vec[i] = vec[i + 1];
-	}
-	vec.pop_back();
-	return vec;
-}
-
-bool Level::Search(std::vector<std::pair<int, int>> vector, int x, int y) {
-	std::pair<int, int> coords = { x ,y };
-	bool result = false;
-	for (int i = 0; i < vector.size(); i++) {
-		if (vector[i] == coords) {
-			result = true;
-		}
-	}
-	return result;
-}
-
-int Level::SearchNum(std::vector<std::pair<int, int>> vector, int x, int y) {
-	std::pair<int, int> coords = { x ,y };
-	bool result = false;
-	for (int i = 0; i < vector.size(); i++) {
-		if (vector[i] == coords) {
-			return i;
-		}
-	}
-	return -1;
-}
-
-void Level::OtherGeneration(int startX, int startY, int endX, int endY) {
-	COORDS startPoint = {startX, startY };
-	COORDS endPoint = { endX, endY };
-	bool HaveWay = false;
-	std::vector< std::pair<int, int> > used (1);
-	std::vector< std::pair<int, int> > queue (1);
-	queue.push_back({ startPoint.x, startPoint.y });
-	used.push_back({ startPoint.x, startPoint.y });
-	std::pair <int, int> current = { 0, 0 };
-	while ((!queue.empty())) {
-		current = queue.front();
-		queue = pop_front(queue);
-		if ((current.first == endPoint.x)&&(current.second == endPoint.y)) {
-			HaveWay = true;
-			break;
-		}
-		if (textureLocation[current.first][current.second + 1] != 2) {
-			if (!(Search(used, current.first, current.second + 1))) {
-				queue.push_back({ current.first, current.second + 1 });
-				used.push_back({ current.first, current.second + 1 });
-			}
-		}
-		if (textureLocation[current.first - 1][current.second] != 2) {
-			if (!(Search(used, current.first - 1, current.second ))) {
-				queue.push_back({ current.first - 1, current.second });
-				used.push_back({ current.first - 1, current.second });
-			}
-		}
-		if (textureLocation[current.first][current.second - 1] != 2) {
-			if (!(Search(used, current.first, current.second - 1))) {
-				queue.push_back({ current.first, current.second - 1 });
-				used.push_back({ current.first, current.second - 1 });
-			}
-		}
-		if (textureLocation[current.first + 1][current.second] != 2) {
-			if (!(Search(used, current.first + 1, current.second))) {
-				queue.push_back({ current.first + 1, current.second });
-				used.push_back({ current.first + 1, current.second });
-			}
-		}
-	}
-	std::vector< std::pair<int, int> > Way (1);
-	Way.push_back({endPoint.x, endPoint.y});
-	current = { endPoint.x, endPoint.y };
-	int min;
-	int minNum;
-	int Numbers[] = { -1, -1, -1, -1 };
-	while ((current.first != startPoint.x)||(current.second != startPoint.y)) {
-		minNum = 0;
-		min = 0;
-		int counter = 0;
-		Numbers[0] = SearchNum(used, current.first, current.second + 1);
-		Numbers[1] = SearchNum(used, current.first - 1, current.second);
-		Numbers[2] = SearchNum(used, current.first, current.second - 1);
-		Numbers[3] = SearchNum(used, current.first + 1, current.second);
-		for (int k = 0; k < 4; k++) {
-			if (Numbers[k] != -1) {
-				min = Numbers[k];
-				counter = k;
-				break;
-			}
-		}
-		for (int k = counter; k < 3; k++) {
-			if ((min > Numbers[k + 1])&&(Numbers[k + 1] != -1)) {
-				min = Numbers[k + 1];
-				minNum = k + 1;
-			}
-		}
-		switch (minNum) {
-		case 0:
-			current = { current.first, current.second + 1 };
-			Way.push_back(current);
-			break;
-		case 1:
-			current = { current.first - 1, current.second };
-			Way.push_back(current);
-			break;
-		case 2:
-			current = { current.first, current.second - 1 };
-			Way.push_back(current);
-			break;
-		case 3:
-			current = { current.first + 1, current.second };
-			Way.push_back(current);
-			break;
-		}
-	}
-	std::cout << Way.size() << std::endl;
-	for (int i = 0; i < Way.size(); i++) {
-		textureLocation[Way[i].first][Way[i].second] = 0;
-	}
-}*/
-
-//метод плохо работает на данный момент, не юзайте
 
 void Level::LabGeneration() {
 	for (int j = 0; j < 32; j++) {
@@ -516,7 +389,7 @@ void Level::LabGeneration() {
 			}
 		}
 	}
-
+	TileSet = 0;
 }
 
 void Level::CastleLabGeneration() {
@@ -725,6 +598,8 @@ void Level::CastleLabGeneration() {
 			}
 		}
 	}
+
+	TileSet = 1;
 }
 
 //метод для генерации комнат, 2 вариант генерации
@@ -906,6 +781,7 @@ void Level::RoomGenerationMethod2() {
 		Location[chests[i][0]][chests[i][1]] = 3;
 	}
 
+	TileSet = 1;
 }
 
 void Level::ChunkGenerationMethod2() {
@@ -1104,4 +980,6 @@ void Level::ChunkGenerationMethod2() {
 		textureLocation[chests[i][0]][chests[i][1]] = 14;
 		Location[chests[i][0]][chests[i][1]] = 3;
 	}
+
+	TileSet = 0;
 }

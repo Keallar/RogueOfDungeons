@@ -12,18 +12,11 @@ GameObject::GameObject(const char* texturesheet, SDL_Renderer* renderer) : ren (
 }
 
 GameObject::GameObject(const char* texturesheet, SDL_Renderer* renderer, int x, int y, int w, int h) : 
-	ren(renderer)
+	ren(renderer), xpos (x), ypos(y), weight(w), height (h)
 {
 	objTexture = textureManager::LoadTexture(texturesheet, renderer);
-	Rect.x = x;
-	Rect.y = y;
-	Rect.w = w;
-	Rect.h = h;
 }
-SDL_Rect GameObject::GetRect()
-{
-	return Rect;
-}
+
 GameObject::~GameObject()
 {
 

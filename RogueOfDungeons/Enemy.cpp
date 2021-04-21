@@ -31,9 +31,8 @@ Enemy::~Enemy()
 
 void Enemy::Render() 
 {
-	enemyAnimation->Render(GameObject::xpos, GameObject::ypos);
+	enemyAnimation->Render(Rect.x, Rect.y);
 }
-
 void Enemy::clean()
 {
 	SDL_DestroyTexture(enemyTexture);
@@ -87,7 +86,7 @@ void Enemy::ChahgeHpEnemy(int valueOfChangingHp)
 	if ((FlagManager::flagMeleeAttackPlayer == 1 || 
 		FlagManager::flagRangeAttack == 1))
 	{
-		Enemy::HP -= valueOfChangingHp;
+		Enemy::HP += valueOfChangingHp;
 		cout << "HpEnemy Changing" << endl;
 	}
 }
@@ -112,25 +111,25 @@ void Enemy::GetLoc(int arr[22][32])
 }
 
 void Enemy::GetEnemyFirstCoords() {
-	GameObject::xpos = (rand() % 30) * 32;
-	GameObject::ypos = (rand() % 20) * 32;
+	Rect.x = (rand() % 30) * 32;
+	Rect.y = (rand() % 20) * 32;
 	if (generate != 4 && generate != 5) {
-		while ((enemyLoc[GameObject::ypos / 32][GameObject::xpos / 32] == -2) ||
-			((enemyLoc[GameObject::ypos / 32][(GameObject::xpos / 32) - 1] != -1) ||
-			(enemyLoc[GameObject::ypos / 32][(GameObject::xpos / 32) + 1] != -1) ||
-			(enemyLoc[(GameObject::ypos / 32) - 1][GameObject::xpos / 32] != -1) ||
-			(enemyLoc[(GameObject::ypos / 32) + 1][GameObject::xpos / 32] != -1)))
+		while ((enemyLoc[Rect.y / 32][Rect.x / 32] == -2) ||
+			((enemyLoc[Rect.y / 32][(Rect.x / 32) - 1] != -1) ||
+			(enemyLoc[Rect.y / 32][(Rect.x / 32) + 1] != -1) ||
+			(enemyLoc[(Rect.y / 32) - 1][Rect.x / 32] != -1) ||
+			(enemyLoc[(Rect.y / 32) + 1][Rect.x / 32] != -1)))
 		{
-			GameObject::xpos = (rand() % 30) * 32;
-			GameObject::ypos = (rand() % 20) * 32;
+			Rect.x = (rand() % 30) * 32;
+			Rect.y = (rand() % 20) * 32;
 		}
 	}
 	else 
 	{
-		while ((enemyLoc[GameObject::ypos / 32][GameObject::xpos / 32] == -2))
+		while ((enemyLoc[Rect.y / 32][Rect.x / 32] == -2))
 		{
-			GameObject::xpos = (rand() % 30) * 32;
-			GameObject::ypos = (rand() % 20) * 32;
+			Rect.x = (rand() % 30) * 32;
+			Rect.y = (rand() % 20) * 32;
 		}
 	}
 }
@@ -199,21 +198,21 @@ bool Enemy::WAY(int ax, int ay, int bx, int by)   // поиск пути из €чейки (ax, a
 	px[0] = ax;
 	py[0] = ay;         
 	//мен€етс€ позици€ enemy
-	GameObject::xpos = px[1] * 32;
-	GameObject::ypos = py[1] * 32;
+	Rect.x = px[1] * 32;
+	Rect.y = py[1] * 32;
 	return true;
 }
 
 void Enemy::Update()
 {
-	/*if ((abs(GameObject::xpos / 32 - EntityPosition::Coords[0] / 32) +
-		abs(GameObject::ypos / 32 - EntityPosition::Coords[1] / 32)) < 14){*/
+	/*if ((abs(Rect.x / 32 - EntityPosition::Coords[0] / 32) +
+		abs(Rect.y / 32 - EntityPosition::Coords[1] / 32)) < 14){*/
 		//движение enemy (поиск кратчайшего пути)
-		if ((abs(GameObject::xpos / 32 - EntityPosition::Coords[0] / 32) +
-			abs(GameObject::ypos / 32 - EntityPosition::Coords[1] / 32)) > 1 &&
+		if ((abs(Rect.x / 32 - EntityPosition::Coords[0] / 32) +
+			abs(Rect.y / 32 - EntityPosition::Coords[1] / 32)) > 1 &&
 			FlagManager::flagPlayer == 0 && FlagManager::flagEnemy == 1)
 		{
-			WAY(GameObject::xpos / 32, GameObject::ypos / 32,
+			WAY(Rect.x / 32, Rect.y / 32,
 				EntityPosition::Coords[0] / 32, EntityPosition::Coords[1] / 32);
 
 				FlagManager::flagPlayer = 1;
@@ -253,14 +252,14 @@ void Enemy::enemyTurn()
 void Enemy::meleeAttackEnemy()
 {
 	//атака enemy первым, если игрок первый подошЄл 
-	if ((((GameObject::xpos == EntityPosition::Coords[0]) &&
-		(GameObject::ypos == EntityPosition::Coords[1] + 32)) ||
-		((GameObject::xpos == EntityPosition::Coords[0]) &&
-			(GameObject::ypos == EntityPosition::Coords[1] - 32)) ||
-		((GameObject::ypos == EntityPosition::Coords[1]) &&
-			(GameObject::xpos == EntityPosition::Coords[0] + 32)) ||
-		((GameObject::ypos == EntityPosition::Coords[1]) &&
-			(GameObject::xpos == EntityPosition::Coords[0] - 32))) &&
+	if ((((Rect.x == EntityPosition::Coords[0]) &&
+		(Rect.y == EntityPosition::Coords[1] + 32)) ||
+		((Rect.x == EntityPosition::Coords[0]) &&
+			(Rect.y == EntityPosition::Coords[1] - 32)) ||
+		((Rect.y == EntityPosition::Coords[1]) &&
+			(Rect.x == EntityPosition::Coords[0] + 32)) ||
+		((Rect.y == EntityPosition::Coords[1]) &&
+			(Rect.x == EntityPosition::Coords[0] - 32))) &&
 		(FlagManager::flagMeleeAttackEnemy == 1 && FlagManager::flagEnemy == 1))
 	{
 		Enemy::enemyTurn();

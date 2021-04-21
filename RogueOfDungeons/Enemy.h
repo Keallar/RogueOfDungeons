@@ -49,13 +49,13 @@ public:
 	void meleeAttackEnemy();
 	void attackOfEnemy();
 	int enemyDamageCalculation();
-	static void enemyTurn(); 
+	void enemyTurn(); 
 	int getDamageEnemy();
 
 	static int HP;
 	static int HpMax;
 	static int GetHpEnemy(int numOfHp);
 	static void CheckHpEnemy();
-	static void ChahgeHpEnemy(int valueOfChangingHp);
+	void ChahgeHpEnemy(int valueOfChangingHp);
 };
 

@@ -12,7 +12,7 @@
 #include "Enemy.h"
 #include "Player.h"
 
-Level::Level(SDL_Renderer* renderer) : ren (renderer)
+Level::Level(SDL_Renderer* renderer) 
 {
 	floorLvl = 0;
 	TileTexture = textureManager::LoadTexture("images/Tiles.png", ren);

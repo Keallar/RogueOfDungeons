@@ -52,8 +52,8 @@ class MouseButtonsPlayer
 private:
 	static Mouse mouseCoordsPlayer;
 public:
-	static void buttonsForAttack();
-	static void buttonForRangeAttack();
+	static void buttonsForAttack(int x, int y);
+	static void buttonForRangeAttack(int x, int y);
 };
 
 

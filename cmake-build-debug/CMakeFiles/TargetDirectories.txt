@@ -1,0 +1,3 @@
+C:/Users/evgen/source/Projects/RogueOfDungeons/cmake-build-debug/CMakeFiles/RogueOfDungeons.dir
+C:/Users/evgen/source/Projects/RogueOfDungeons/cmake-build-debug/CMakeFiles/edit_cache.dir
+C:/Users/evgen/source/Projects/RogueOfDungeons/cmake-build-debug/CMakeFiles/rebuild_cache.dir

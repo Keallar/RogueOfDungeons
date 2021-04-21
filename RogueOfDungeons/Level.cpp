@@ -12,7 +12,7 @@
 #include "Enemy.h"
 #include "Player.h"
 
-Level::Level(SDL_Renderer* renderer) 
+Level::Level(SDL_Renderer* renderer) : ren (renderer)
 {
 	TileSet = 0;
 	floorLvl = 0;
@@ -82,13 +82,6 @@ void Level::deletePlayer()
 	}
 }
 
-int Level::GetGeneration()
-{
-	return 0;
-}
-
-
-
 void Level::deleteEnemy()
 {
 	if (Enemy::HP <= 0)
@@ -139,8 +132,8 @@ void Level::Update()
 	if (Enemy::HP <= 0 && enemyTurtle != nullptr)
 	{
 		Level::deleteEnemy();
-		enemyTurtle->Rect.x = 0;
-		enemyTurtle->Rect.y = 0;
+		EntityPosition::Coords[2] = 0;
+		EntityPosition::Coords[3] = 0;
 	}
 }
 
@@ -180,9 +173,9 @@ void Level::Render()
 	}		
 	if (enemyTurtle != nullptr)
 	{
-		if (Dark[enemyTurtle->Rect.y/32][enemyTurtle->Rect.x/32] == 0)
+		if (Dark[EntityPosition::Coords[3]/32][EntityPosition::Coords[2]/32] == 0) 
 		{
-			RenderManager::SetTile(enemyTurtle->Rect.x, enemyTurtle->Rect.y, 12, ren, TileTexture);
+			RenderManager::SetTile(EntityPosition::Coords[2], EntityPosition::Coords[3], 12, ren, TileTextures[0]);
 		}
 		else
 		{
@@ -360,189 +353,11 @@ void Level::handleEvents(SDL_Event eventInLvl)
 	//Передача event в Player
 	if (player)
 	{
-		switch (eventInLvl.type)
-		{
-		case SDL_KEYDOWN:
-			if (keys[SDL_SCANCODE_W])
-			{
-				if (EntityPosition::Coords[1] == 32)
-				{
-					//остановка при упоре в стену
-				}
-				else if (EntityPosition::Coords[0] == enemyTurtle->Rect.x &&
-					(EntityPosition::Coords[1] - 32) == enemyTurtle->Rect.y)
-				{
-					//остановка при попытке пройти сквозь enemy
-				}
-				else
-				{
-					if (Location[(EntityPosition::Coords[1]) / 32 - 1][(EntityPosition::Coords[0]) / 32] == 0)
-					{
-						EntityPosition::Coords[1] -= 32;
-						FlagManager::flagPlayer = 0;
-						FlagManager::flagEnemy = 1;
-					}
-					if (Location[(EntityPosition::Coords[1]) / 32 - 1][(EntityPosition::Coords[0]) / 32] == 3)
-					{
-						FlagManager::flagChest = 1;
-					}
-					if (EntityPosition::Coords[0] == enemyTurtle->Rect.x &&
-						(EntityPosition::Coords[1] - 32) == enemyTurtle->Rect.y)
-					{
-						//удар при определённой позиции Enemy
-					}
-				}
-			}
-
-			else if (keys[SDL_SCANCODE_A])
-			{
-				if (EntityPosition::Coords[0] == 32)
-				{
-					//остановка при упоре в стену
-				}
-				else if ((EntityPosition::Coords[0] - 32) == enemyTurtle->Rect.x &&
-					EntityPosition::Coords[1] == enemyTurtle->Rect.y)
-				{
-					//остановка при попытке пройти сквозь enemy
-				}
-				else
-				{
-					if (Location[(EntityPosition::Coords[1]) / 32][(EntityPosition::Coords[0]) / 32 - 1] == 0)
-					{
-						EntityPosition::Coords[0] -= 32;
-						FlagManager::flagPlayer = 0;
-						FlagManager::flagEnemy = 1;
-					}
-					if (Location[(EntityPosition::Coords[1]) / 32][(EntityPosition::Coords[0]) / 32 - 1] == 3)
-					{
-						FlagManager::flagChest = 2;
-					}
-					if ((EntityPosition::Coords[0] - 32) == enemyTurtle->Rect.x &&
-						EntityPosition::Coords[1] == enemyTurtle->Rect.y)
-					{
-						//удар при определённой позиции Enemy
-					}
-				}
-			}
-
-			else if (keys[SDL_SCANCODE_S])
-			{
-				if (EntityPosition::Coords[1] == 640)
-				{
-					//остановка при упоре в стену
-				}
-				else if (EntityPosition::Coords[0] == enemyTurtle->Rect.x &&
-					(EntityPosition::Coords[1] + 32) == enemyTurtle->Rect.y)
-				{
-					//остановка при попытке пройти сквозь enemy
-				}
-				else
-				{
-					if (Location[(EntityPosition::Coords[1]) / 32 + 1][(EntityPosition::Coords[0]) / 32] == 0)
-					{
-						EntityPosition::Coords[1] += 32;
-						FlagManager::flagPlayer = 0;
-						FlagManager::flagEnemy = 1;
-					}
-					if (Location[(EntityPosition::Coords[1]) / 32 + 1][(EntityPosition::Coords[0]) / 32] == 3)
-					{
-						FlagManager::flagChest = 3;
-					}
-					if (EntityPosition::Coords[0] == enemyTurtle->Rect.x &&
-						(EntityPosition::Coords[1] + 32) == enemyTurtle->Rect.y)
-					{
-						//удар при определённой позиции Enemy
-					}
-				}
-			}
-
-			else if (keys[SDL_SCANCODE_D])
-			{
-				if (EntityPosition::Coords[0] == 960)
-				{
-					//остановка при упоре в стену
-				}
-				else if ((EntityPosition::Coords[0] + 32) == enemyTurtle->Rect.x &&
-					EntityPosition::Coords[1] == enemyTurtle->Rect.y)
-				{
-					//остановка при попытке пройти сквозь enemy
-				}
-				else
-				{
-					if (Location[(EntityPosition::Coords[1]) / 32][(EntityPosition::Coords[0]) / 32 + 1] == 0)
-					{
-						EntityPosition::Coords[0] += 32;
-						FlagManager::flagPlayer = 0;
-						FlagManager::flagEnemy = 1;
-					}
-					if (Location[(EntityPosition::Coords[1]) / 32][(EntityPosition::Coords[0]) / 32 + 1] == 3)
-					{
-						FlagManager::flagChest = 4;
-					}
-				}
-			}
-		case SDL_MOUSEBUTTONDOWN:
-
-			if (eventInLvl.button.button == SDL_BUTTON_LEFT)
-			{
-				//атака при нажатии левой мыши
-				/*MouseButtonsPlayer::buttonForRangeAttack(enemyTurtle->Rect.x, enemyTurtle->Rect.y);
-				MouseButtonsPlayer::buttonsForAttack(enemyTurtle->Rect.x, enemyTurtle->Rect.y);*/
-				SDL_GetMouseState(&Mouse.x, &Mouse.y);
-
-				if (InputManager::MouseInArea(enemyTurtle->Rect.x, enemyTurtle->Rect.y, 32, 32, Mouse.x, Mouse.y))
-				{
-					FlagManager::flagRangeAttack = 1;
-					Attack();
-				}
-			}
-		default:
-			break;
-		}
+		player->handleEvents(eventInLvl);
 	}
 }
 //rand для рандомного выбора метода генерации
-void Level::Attack() 
-{
-	//Дальний boy
-		//if ((abs(EntityPosition::Coords[0] - enemyTurtle->Rect.x) == 0)) // разделил чтобы потом проверять на наличие стен
-		//{
-		//	{
-		//		enemyTurtle->ChahgeHpEnemy(-(player->RangeAttack()));
 
-		//		Player::ChangeManaValue(5);
-		//	}
-
-		//	Enemy::enemyTurn();
-		//}
-		//else if (abs(EntityPosition::Coords[1] - enemyTurtle->Rect.y == 0))
-		//{
-
-		//	int r = rand() % 100;
-		//	if (r < ((Player::EqItems.equipedRangeW->CHNS) -
-		//		((Player::EqItems.equipedRangeW->DCHNS) *
-		//			abs(abs(enemyTurtle->Rect.x - EntityPosition::Coords[0]) / 32 - Player::EqItems.equipedRangeW->RNG))))
-		//	{
-		//		damage = Player::EqItems.equipedRangeW->DMG + Player::DEX[0];
-		//		int ch = Player::EqItems.equipedRangeW->CHNS;
-		//		std::cout << ch << std::endl;
-		//		Player::ChangeManaValue(5);
-		//		Enemy::ChahgeHpEnemy(damage);
-		//		std::cout << "Range boy hor" << std::endl;
-		//	}
-
-
-		//	Enemy::enemyTurn();
-		//}
-	//Ближний boy
-	if (this->CheckPositionToMeleeAttack(enemyTurtle->Rect, EntityPosition::Coords[0], EntityPosition::Coords[1]) &&
-		FlagManager::flagMeleeAttackPlayer == 1 && FlagManager::flagMeleeAttackEnemy == 0 &&
-		FlagManager::flagPlayer == 1 && FlagManager::flagEnemy == 0)
-	{
-		enemyTurtle->ChahgeHpEnemy(-(player->MeleeAttack()));
-		enemyTurtle->enemyTurn();
-	}
-}
 void Level::Generate() {
 	srand(time(0));
 	generateChoose = 0;
@@ -568,15 +383,4 @@ void Level::Generate() {
 	}
 	itemsHave = 2;
 	floorLvl++;
-}
-bool Level::CheckPositionToMeleeAttack(SDL_Rect rect, int x, int y)
-{
-	if (((rect.x = x + 32) && (rect.y = y)) ||
-		((rect.x = x - 32) && (rect.y = y)) ||
-		((rect.x = x) && (rect.y = y + 32)) ||
-		((rect.x = x) && (rect.y = y - 32))) 
-	{
-		return true;
-	}
-	return false;
 }

@@ -50,8 +50,7 @@ public:
 
 	void GetLevel(int arr[22][32]);
 	void GetPlayerFirstCoords();
-    int MeleeAttack();
-    int RangeAttack();
+    static void Attack();
 	void GetItemOnLvl(int id);
 	void GetItemEquip(int id);
 	void GetItemUnEquip(int id);

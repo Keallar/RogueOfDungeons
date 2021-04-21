@@ -46,6 +46,7 @@ void RenderManager::CopyToRender(SDL_Texture* texture, SDL_Renderer* ren)
 
 void RenderManager::SetTile(int x, int y, int tile, SDL_Renderer* renderer, SDL_Texture* TileTexture) {
 	RenderManager::CopyToRender(TileTexture, renderer, x, y, 32, 32, (tile / 4) * 32, (tile % 4) * 32, 32, 32);
+	SDL_RenderCopy(renderer, TileTexture, NULL);
 }
 
 SDL_Texture* FontManager::renderText(const char* text, const char* fontFile, SDL_Color textColor, int fontSize, SDL_Renderer* renderer) 

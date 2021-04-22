@@ -616,6 +616,7 @@ void Level::Attack()
 					enemyTurtle->ChahgeHpEnemy(-(player->RangeAttack()));
 				}
 		}
+		player->ChangeManaValue(-5);
 		enemyTurtle->enemyTurn();
 	}
 

@@ -59,7 +59,7 @@ int Player::LCK[2] = {
 						1, /*LCK  previous*/
 					 };
 
-int Player::VIS = 10;
+int Player::VIS = 16;
 
 Player::Player(SDL_Renderer* renderer)
 {

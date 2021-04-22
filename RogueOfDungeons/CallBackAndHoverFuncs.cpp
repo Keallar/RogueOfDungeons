@@ -1,4 +1,5 @@
 #include "CallBackAndHoverFuncs.h"
+#include "Game.h"
 
 using namespace std;
 
@@ -40,7 +41,7 @@ void callbackFunctions::incPlayerSTR()
 void callbackFunctions::incPlayerDEX()
 {
 	//DEX
-	if (FlagManager::flagDEX == 0)
+	if (FlagManager::flagDEX == 0 && FlagManager::flagUiSpec == 1)
 	{
 		Player::ChangeValueSpecs(2);
 	}
@@ -49,7 +50,7 @@ void callbackFunctions::incPlayerDEX()
 void callbackFunctions::incPlayerINT()
 {
 	//INT
-	if (FlagManager::flagINT == 0)
+	if (FlagManager::flagINT == 0 && FlagManager::flagUiSpec == 1)
 	{
 		Player::ChangeValueSpecs(3);
 	}
@@ -58,7 +59,7 @@ void callbackFunctions::incPlayerINT()
 void callbackFunctions::incPlayerWSD()
 {
 	//WSD
-	if (FlagManager::flagWSD == 0)
+	if (FlagManager::flagWSD == 0 && FlagManager::flagUiSpec == 1)
 	{
 		Player::ChangeValueSpecs(4);
 	}
@@ -67,7 +68,7 @@ void callbackFunctions::incPlayerWSD()
 void callbackFunctions::incPlayerPHS()
 {
 	//PHS
-	if (FlagManager::flagPHS == 0)
+	if (FlagManager::flagPHS == 0 && FlagManager::flagUiSpec == 1)
 	{
 		Player::ChangeValueSpecs(5);
 	}
@@ -76,7 +77,7 @@ void callbackFunctions::incPlayerPHS()
 void callbackFunctions::incPlayerLCK()
 {
 	//LCK
-	if (FlagManager::flagLCK == 0)
+	if (FlagManager::flagLCK == 0 && FlagManager::flagUiSpec == 1)
 	{
 		Player::ChangeValueSpecs(6);
 	}
@@ -94,13 +95,15 @@ void callbackFunctions::callDrop()
 	}
 }
 
-//void hoverFunctions::callSpecWin()
-//{
-//
-//}
-
-
-void hoverForCallSpecWin()
+void hoverFunctions::callSpecWin()
 {
-	//UNDONE сделать отображение тексте SPEC
+	const char* PATH_IN_FONT = "fonts/manaspc.ttf";
+	SDL_Color color = { 255, 255, 255, 255 };
+	SDL_Texture* SPEC = FontManager::renderText("SPEC", PATH_IN_FONT, color, 32, Game::renderer);
+
+	if (SPEC != nullptr)
+	{
+		RenderManager::CopyToRender(SPEC, Game::renderer, 1230, 220, 30, 25);
+		std::cout << "Render Hover SPEC" << std::endl;
+	}
 }

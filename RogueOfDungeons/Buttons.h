@@ -2,19 +2,12 @@
 #include <SDL.h>
 #include <SDL_image.h>
 #include <string>
+#include <functional>
 
 struct Mouse
 {
 	int x;
 	int y;
-};
-
-struct ButtonRect
-{
-	int x;
-	int y;
-	int w;
-	int h;
 };
 
 class Button
@@ -24,7 +17,7 @@ private:
 	SDL_Renderer* ren;
 	SDL_Texture* buttonTexture;
 	Mouse mouse;
-	ButtonRect button;
+	SDL_Rect button;
 	void (*callback)();
 	void (*hover)();
 	bool mouseInArea(int x, int y, int w, int h);
@@ -36,17 +29,6 @@ public:
 	void updateCoords(int newx, int newy);
 };
 
-class KeyboardButtonsInLevel
-{
-private:
-	const Uint8* keys = SDL_GetKeyboardState(NULL);
-public:
-	KeyboardButtonsInLevel();
-	static void keyForCallSpecWin(const Uint8* keys);
-	static void keyForCallInvWin(const Uint8* keys);
-	static void keyForIncPlayerSpec(const Uint8* keys);
-};
-
 class MouseButtonsPlayer
 {
 private:
@@ -54,6 +36,20 @@ private:
 public:
 	static void buttonsForAttack(int x, int y);
 	static void buttonForRangeAttack(int x, int y);
+};
+
+class Keyboard
+{
+private:
+	SDL_Scancode code;
+	void (*callback)();
+	std::function <void()> scallback;
+	bool buttonIsPressed(SDL_Event& keyboardEvent);
+public:
+	Keyboard(SDL_Scancode scancode, void (*callbackFunction)());
+	Keyboard(SDL_Scancode scancode, std::function <void()> callbackFunction);
+	~Keyboard();
+	void handleEvents(SDL_Event &keyboardEvent);
 };
 
 

@@ -255,6 +255,7 @@ void Level::Update()
 	{
 		enemyTurtle->Update();
 		enemyTurtle->GetLoc(Location);
+		SDL_Delay(100);
 	}
 	if (player != nullptr)
 		player->GetLevel(Location);

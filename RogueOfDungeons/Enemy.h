@@ -55,7 +55,7 @@ public:
 	static int HP;
 	static int HpMax;
 	static int GetHpEnemy(int numOfHp);
-	static void CheckHpEnemy();
+	int CheckHpEnemy();
 	void ChahgeHpEnemy(int valueOfChangingHp);
 };
 

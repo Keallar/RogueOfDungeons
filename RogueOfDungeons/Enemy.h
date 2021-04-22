@@ -7,6 +7,8 @@
 class Enemy : public GameObject
 {
 private:
+	Uint32 Timer;
+	bool temp;
 	int DMG;
 	int expReward;
 	SDL_Renderer* ren;

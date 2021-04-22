@@ -124,7 +124,7 @@ void Level::Update()
 	{
 		enemyTurtle->Update();
 		enemyTurtle->GetLoc(Location);
-		SDL_Delay(100); //UNDONE перенести delay в Animation
+		//SDL_Delay(100); //UNDONE перенести delay в Animation
 	}
 	if (player != nullptr)
 		player->GetLevel(Location);

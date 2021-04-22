@@ -270,13 +270,15 @@ void Enemy::meleeAttackEnemy()
 		(FlagManager::flagMeleeAttackEnemy == 1 && FlagManager::flagEnemy == 1))
 	{
 		if (temp == false) {
+			Enemy::attackOfEnemy();
 			Timer = SDL_GetTicks();
 			temp = true;
 		}
 		Uint32 Timer2 = SDL_GetTicks();
 		Enemy::enemyTurn();
-		if (Timer2 - Timer >= 250) {
+		if (Timer2 - Timer >= 90) {
 			Enemy::attackOfEnemy();
+			Timer = Timer2;
 		}
 	}
 	else

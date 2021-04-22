@@ -505,7 +505,7 @@ void Level::handleEvents(SDL_Event eventInLvl)
 void Level::Attack() 
 {
 	//Дальний boy
-	if (Player::EqItems.equipedRangeW->Type == rWeapon)
+	if (Inventory::ExistingItems[Player::EqItems.WeaponId]->Type == rWeapon)
 	{
 		int PlPosx = EntityPosition::Coords[0] / 32, PlPosy = EntityPosition::Coords[1] / 32, EnPosx = (enemyTurtle->Rect.x) / 32, EnPosy = (enemyTurtle->Rect.y) / 32;
 		bool blankflag = true;

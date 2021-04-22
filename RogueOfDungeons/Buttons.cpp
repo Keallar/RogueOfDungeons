@@ -149,31 +149,6 @@ bool Keyboard::buttonIsPressed(SDL_Event& keyboardEvent)
 	return validity;
 }
 
-
-//void KeyboardButtonsInLevel::keyForIncPlayerSpec(const Uint8* keys)
-//{
-//	if (keys[SDL_SCANCODE_1] && FlagManager::flagUiSpec == 1 && FlagManager::flagSTR == 0)
-//	{
-//		Player::ChangeValueSpecs(1);
-//	}
-//	if (keys[SDL_SCANCODE_2] && FlagManager::flagUiSpec == 1 && FlagManager::flagDEX == 0)
-//	{
-//		Player::ChangeValueSpecs(2);
-//	}
-//	if (keys[SDL_SCANCODE_3] && FlagManager::flagUiSpec == 1 && FlagManager::flagINT == 0)
-//	{
-//		Player::ChangeValueSpecs(3);
-//	}
-//	if (keys[SDL_SCANCODE_4] && FlagManager::flagUiSpec == 1 && FlagManager::flagPHS == 0)
-//	{
-//		Player::ChangeValueSpecs(4);
-//	}
-//	if (keys[SDL_SCANCODE_5] && FlagManager::flagUiSpec == 1 && FlagManager::flagLCK == 0)
-//	{
-//		Player::ChangeValueSpecs(5);
-//	}
-//}
-
 Mouse MouseButtonsPlayer::mouseCoordsPlayer;
 
 void MouseButtonsPlayer::buttonsForAttack(int x, int y)

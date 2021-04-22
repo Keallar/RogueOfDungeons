@@ -25,7 +25,6 @@ public:
 	Button(const char* textureName, SDL_Renderer* renderer, SDL_Rect rect, void (*callbackFunction)(), void (*hoverFunction)());
 	void handleEvents(SDL_Event& buttonEvent);
 	void Render();
-	void RenderHover();
 	void updateCoords(int newx, int newy);
 };
 

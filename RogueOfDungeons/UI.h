@@ -36,6 +36,12 @@ private:
 	//Keyboard
 	Keyboard* keyForCallSpecInfo;
 	Keyboard* keyForcCallInvWin;
+	Keyboard* keyForIncSTR;
+	Keyboard* keyForIncDEX;
+	Keyboard* keyForIncINT;
+	Keyboard* keyForIncWSD;
+	Keyboard* keyForIncPHS;
+	Keyboard* keyForIncLCK;
 public:
 	UIInfo(SDL_Renderer* renderer);
 	void Render();

@@ -41,7 +41,7 @@ void callbackFunctions::incPlayerSTR()
 void callbackFunctions::incPlayerDEX()
 {
 	//DEX
-	if (FlagManager::flagDEX == 0)
+	if (FlagManager::flagDEX == 0 && FlagManager::flagUiSpec == 1)
 	{
 		Player::ChangeValueSpecs(2);
 	}
@@ -50,7 +50,7 @@ void callbackFunctions::incPlayerDEX()
 void callbackFunctions::incPlayerINT()
 {
 	//INT
-	if (FlagManager::flagINT == 0)
+	if (FlagManager::flagINT == 0 && FlagManager::flagUiSpec == 1)
 	{
 		Player::ChangeValueSpecs(3);
 	}
@@ -59,7 +59,7 @@ void callbackFunctions::incPlayerINT()
 void callbackFunctions::incPlayerWSD()
 {
 	//WSD
-	if (FlagManager::flagWSD == 0)
+	if (FlagManager::flagWSD == 0 && FlagManager::flagUiSpec == 1)
 	{
 		Player::ChangeValueSpecs(4);
 	}
@@ -68,7 +68,7 @@ void callbackFunctions::incPlayerWSD()
 void callbackFunctions::incPlayerPHS()
 {
 	//PHS
-	if (FlagManager::flagPHS == 0)
+	if (FlagManager::flagPHS == 0 && FlagManager::flagUiSpec == 1)
 	{
 		Player::ChangeValueSpecs(5);
 	}
@@ -77,7 +77,7 @@ void callbackFunctions::incPlayerPHS()
 void callbackFunctions::incPlayerLCK()
 {
 	//LCK
-	if (FlagManager::flagLCK == 0)
+	if (FlagManager::flagLCK == 0 && FlagManager::flagUiSpec == 1)
 	{
 		Player::ChangeValueSpecs(6);
 	}

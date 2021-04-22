@@ -2,6 +2,7 @@
 #include <SDL.h>
 #include <SDL_image.h>
 #include <string>
+#include <functional>
 
 struct Mouse
 {
@@ -42,9 +43,11 @@ class Keyboard
 private:
 	SDL_Scancode code;
 	void (*callback)();
+	std::function <void()> scallback;
 	bool buttonIsPressed(SDL_Event& keyboardEvent);
 public:
 	Keyboard(SDL_Scancode scancode, void (*callbackFunction)());
+	Keyboard(SDL_Scancode scancode, std::function <void()> callbackFunction);
 	~Keyboard();
 	void handleEvents(SDL_Event &keyboardEvent);
 };

@@ -116,6 +116,13 @@ Keyboard::Keyboard(SDL_Scancode scancode, void (*callbackFunction)()):
 		std::cout << "callback in Keyboard isn't ready" << std::endl;
 }
 
+Keyboard::Keyboard(SDL_Scancode scancode, std::function <void()> callbackFunction):
+	code (scancode), scallback(callbackFunction)
+{
+	if (scallback == NULL)
+		std::cout << "scallback in Keyboard isn't ready" << std::endl;
+}
+
 Keyboard::~Keyboard()
 {
 
@@ -123,10 +130,15 @@ Keyboard::~Keyboard()
 
 void Keyboard::handleEvents(SDL_Event& keyboardEvent)
 {
-	if (buttonIsPressed(keyboardEvent) == true && callback != NULL)
+	if (buttonIsPressed(keyboardEvent) == true && callback != NULL && scallback == NULL)
 	{
 		//std::cout << code << std::endl;
 		callback();
+	}
+	else if (buttonIsPressed(keyboardEvent) == true && scallback != NULL && callback == NULL)
+	{
+		//std::cout << code << std::endl;
+		scallback();
 	}
 }
 

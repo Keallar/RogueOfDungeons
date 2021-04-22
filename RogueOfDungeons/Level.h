@@ -49,10 +49,10 @@ private:
 	//std::vector <GameObject> textures; 
 	MouseCoords mouseCoords;
 	const Uint8* keys = SDL_GetKeyboardState(NULL);
-	Keyboard* w;
-	Keyboard* a;
-	Keyboard* s;
-	Keyboard* d;
+	Keyboard* keyW;
+	Keyboard* keyA;
+	Keyboard* keyS;
+	Keyboard* keyD;
 	//std::vector<std::pair<int, int>> pop_front(std::vector<std::pair<int, int>> vec);
 	//void OtherGeneration(int startX, int startY, int endX, int endY);
 	//bool Search(std::vector<std::pair<int, int>> vector, int x, int y);

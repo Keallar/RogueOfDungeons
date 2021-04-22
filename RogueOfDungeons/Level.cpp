@@ -31,10 +31,137 @@ Level::Level(SDL_Renderer* renderer) : ren (renderer)
 	mana = new ManaInfo(ren);
 	exp = new ExpInfo(ren);
 	uiEquiped = new UIEquipedItem(ren);
-	//w = new Keyboard(SDL_SCANCODE_W, );
-	//a = new Keyboard(SDL_SCANCODE_A, );
-	//s = new Keyboard(SDL_SCANCODE_S, );
-	//d = new Keyboard(SDL_SCANCODE_D, );
+	
+	auto pressW{
+		[=]()
+		{
+			if (EntityPosition::Coords[1] == 32)
+			{
+				//остановка при упоре в стену
+			}
+			else if (EntityPosition::Coords[0] == enemyTurtle->Rect.x &&
+				(EntityPosition::Coords[1] - 32) == enemyTurtle->Rect.y)
+			{
+				//остановка при попытке пройти сквозь enemy
+			}
+			else
+			{
+				if (Location[(EntityPosition::Coords[1]) / 32 - 1][(EntityPosition::Coords[0]) / 32] == 0)
+				{
+					EntityPosition::Coords[1] -= 32;
+					FlagManager::flagPlayer = 0;
+					FlagManager::flagEnemy = 1;
+				}
+				if (Location[(EntityPosition::Coords[1]) / 32 - 1][(EntityPosition::Coords[0]) / 32] == 3)
+				{
+					FlagManager::flagChest = 1;
+				}
+				if (EntityPosition::Coords[0] == enemyTurtle->Rect.x &&
+					(EntityPosition::Coords[1] - 32) == enemyTurtle->Rect.y)
+				{
+					//удар при определённой позиции Enemy
+				}
+			}
+		}
+	};
+	keyW = new Keyboard(SDL_SCANCODE_W, pressW);
+
+	auto pressA{
+		[=]()
+		{
+			if (EntityPosition::Coords[0] == 32)
+			{
+				//остановка при упоре в стену
+			}
+			else if ((EntityPosition::Coords[0] - 32) == enemyTurtle->Rect.x &&
+				EntityPosition::Coords[1] == enemyTurtle->Rect.y)
+			{
+				//остановка при попытке пройти сквозь enemy
+			}
+			else
+			{
+				if (Location[(EntityPosition::Coords[1]) / 32][(EntityPosition::Coords[0]) / 32 - 1] == 0)
+				{
+					EntityPosition::Coords[0] -= 32;
+					FlagManager::flagPlayer = 0;
+					FlagManager::flagEnemy = 1;
+				}
+				if (Location[(EntityPosition::Coords[1]) / 32][(EntityPosition::Coords[0]) / 32 - 1] == 3)
+				{
+					FlagManager::flagChest = 2;
+				}
+				if ((EntityPosition::Coords[0] - 32) == enemyTurtle->Rect.x &&
+					EntityPosition::Coords[1] == enemyTurtle->Rect.y)
+				{
+					//удар при определённой позиции Enemy
+				}
+			}
+		}
+	};
+	keyA = new Keyboard(SDL_SCANCODE_A, pressA);
+
+	auto pressS{
+		[=]()
+		{
+			if (EntityPosition::Coords[1] == 640)
+			{
+				//остановка при упоре в стену
+			}
+			else if (EntityPosition::Coords[0] == enemyTurtle->Rect.x &&
+				(EntityPosition::Coords[1] + 32) == enemyTurtle->Rect.y)
+			{
+				//остановка при попытке пройти сквозь enemy
+			}
+			else
+			{
+				if (Location[(EntityPosition::Coords[1]) / 32 + 1][(EntityPosition::Coords[0]) / 32] == 0)
+				{
+					EntityPosition::Coords[1] += 32;
+					FlagManager::flagPlayer = 0;
+					FlagManager::flagEnemy = 1;
+				}
+				if (Location[(EntityPosition::Coords[1]) / 32 + 1][(EntityPosition::Coords[0]) / 32] == 3)
+				{
+					FlagManager::flagChest = 3;
+				}
+				if (EntityPosition::Coords[0] == enemyTurtle->Rect.x &&
+					(EntityPosition::Coords[1] + 32) == enemyTurtle->Rect.y)
+				{
+					//удар при определённой позиции Enemy
+				}
+			}
+		}
+	};
+	keyS = new Keyboard(SDL_SCANCODE_S, pressS);
+
+	auto pressD{
+			[=]()
+		{
+			if (EntityPosition::Coords[0] == 960)
+			{
+				//остановка при упоре в стену
+			}
+			else if ((EntityPosition::Coords[0] + 32) == enemyTurtle->Rect.x &&
+				EntityPosition::Coords[1] == enemyTurtle->Rect.y)
+			{
+				//остановка при попытке пройти сквозь enemy
+			}
+			else
+			{
+				if (Location[(EntityPosition::Coords[1]) / 32][(EntityPosition::Coords[0]) / 32 + 1] == 0)
+				{
+					EntityPosition::Coords[0] += 32;
+					FlagManager::flagPlayer = 0;
+					FlagManager::flagEnemy = 1;
+				}
+				if (Location[(EntityPosition::Coords[1]) / 32][(EntityPosition::Coords[0]) / 32 + 1] == 3)
+				{
+					FlagManager::flagChest = 4;
+				}
+			}
+		}
+	};
+	keyD = new Keyboard(SDL_SCANCODE_D, pressD);
 
 	for (int i = 0; i < 22; i++) 
 	{
@@ -357,133 +484,12 @@ void Level::handleEvents(SDL_Event eventInLvl)
 		switch (eventInLvl.type)
 		{
 		case SDL_KEYDOWN:
-			auto pressW{
-				[=]()
-				{
-					if (EntityPosition::Coords[1] == 32)
-					{
-						//остановка при упоре в стену
-					}
-					else if (EntityPosition::Coords[0] == enemyTurtle->Rect.x &&
-						(EntityPosition::Coords[1] - 32) == enemyTurtle->Rect.y)
-					{	
-						//остановка при попытке пройти сквозь enemy
-					}
-					else
-					{
-						if (Location[(EntityPosition::Coords[1]) / 32 - 1][(EntityPosition::Coords[0]) / 32] == 0)
-						{
-							EntityPosition::Coords[1] -= 32;
-							FlagManager::flagPlayer = 0;
-							FlagManager::flagEnemy = 1;
-						}
-						if (Location[(EntityPosition::Coords[1]) / 32 - 1][(EntityPosition::Coords[0]) / 32] == 3)
-						{
-							FlagManager::flagChest = 1;
-						}
-						if (EntityPosition::Coords[0] == enemyTurtle->Rect.x &&
-							(EntityPosition::Coords[1] - 32) == enemyTurtle->Rect.y)
-						{
-							//удар при определённой позиции Enemy
-						}
-					}
-				}
-			};
-
-	
-			auto pressA{
-				[=]()
-				{
-					if (EntityPosition::Coords[0] == 32)
-					{
-						//остановка при упоре в стену
-					}
-					else if ((EntityPosition::Coords[0] - 32) == enemyTurtle->Rect.x &&
-						EntityPosition::Coords[1] == enemyTurtle->Rect.y)
-					{
-						//остановка при попытке пройти сквозь enemy
-					}
-					else
-					{
-						if (Location[(EntityPosition::Coords[1]) / 32][(EntityPosition::Coords[0]) / 32 - 1] == 0)
-						{
-							EntityPosition::Coords[0] -= 32;
-							FlagManager::flagPlayer = 0;
-							FlagManager::flagEnemy = 1;
-						}
-						if (Location[(EntityPosition::Coords[1]) / 32][(EntityPosition::Coords[0]) / 32 - 1] == 3)
-						{
-							FlagManager::flagChest = 2;
-						}
-						if ((EntityPosition::Coords[0] - 32) == enemyTurtle->Rect.x &&
-							EntityPosition::Coords[1] == enemyTurtle->Rect.y)
-						{
-							//удар при определённой позиции Enemy
-						}
-					}	
-				}
-			};
-
-			auto pressS{
-				[=]()
-				{
-					if (EntityPosition::Coords[1] == 640)
-					{
-						//остановка при упоре в стену
-					}
-					else if (EntityPosition::Coords[0] == enemyTurtle->Rect.x &&
-						(EntityPosition::Coords[1] + 32) == enemyTurtle->Rect.y)
-					{
-						//остановка при попытке пройти сквозь enemy
-					}
-					else
-					{
-						if (Location[(EntityPosition::Coords[1]) / 32 + 1][(EntityPosition::Coords[0]) / 32] == 0)
-						{
-							EntityPosition::Coords[1] += 32;
-							FlagManager::flagPlayer = 0;
-							FlagManager::flagEnemy = 1;
-						}
-						if (Location[(EntityPosition::Coords[1]) / 32 + 1][(EntityPosition::Coords[0]) / 32] == 3)
-						{
-							FlagManager::flagChest = 3;
-						}
-						if (EntityPosition::Coords[0] == enemyTurtle->Rect.x &&
-							(EntityPosition::Coords[1] + 32) == enemyTurtle->Rect.y)
-						{
-							//удар при определённой позиции Enemy
-						}
-					}
-				}	
-			};
-
-			auto pressD{
-				[=]()
-			{
-				if (EntityPosition::Coords[0] == 960)
-				{
-					//остановка при упоре в стену
-				}
-				else if ((EntityPosition::Coords[0] + 32) == enemyTurtle->Rect.x &&
-					EntityPosition::Coords[1] == enemyTurtle->Rect.y)
-				{
-					//остановка при попытке пройти сквозь enemy
-				}
-				else
-				{
-					if (Location[(EntityPosition::Coords[1]) / 32][(EntityPosition::Coords[0]) / 32 + 1] == 0)
-					{
-						EntityPosition::Coords[0] += 32;
-						FlagManager::flagPlayer = 0;
-						FlagManager::flagEnemy = 1;
-					}
-					if (Location[(EntityPosition::Coords[1]) / 32][(EntityPosition::Coords[0]) / 32 + 1] == 3)
-					{
-						FlagManager::flagChest = 4;
-					}
-				}
-			}
-		};
+			
+			keyW->handleEvents(eventInLvl);
+			keyA->handleEvents(eventInLvl);
+			keyS->handleEvents(eventInLvl);
+			keyD->handleEvents(eventInLvl);
+			break;
 		case SDL_MOUSEBUTTONDOWN:
 
 			if (eventInLvl.button.button == SDL_BUTTON_LEFT)
@@ -496,6 +502,7 @@ void Level::handleEvents(SDL_Event eventInLvl)
 					Attack();
 				}
 			}
+			break;
 		default:
 			break;
 		}

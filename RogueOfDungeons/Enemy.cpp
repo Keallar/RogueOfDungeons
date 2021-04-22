@@ -51,7 +51,7 @@ int Enemy::GetHpEnemy(int numOfHp)
 	}
 }
 
-void Enemy::CheckHpEnemy()
+int Enemy::CheckHpEnemy()
 {
 	if (Enemy::HP <= 0)
 	{
@@ -79,6 +79,7 @@ void Enemy::CheckHpEnemy()
 	{
 		FlagManager::flagCheckHpEnemy = 0;
 	}
+	return HP;
 }
 
 void Enemy::ChahgeHpEnemy(int valueOfChangingHp)

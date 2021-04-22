@@ -11,6 +11,7 @@
 #include "Buttons.h"
 #include "Enemy.h"
 #include "Player.h"
+#include <cmath>
 
 Level::Level(SDL_Renderer* renderer) : ren (renderer)
 {
@@ -136,11 +137,10 @@ void Level::Update()
 	{
 		Level::deletePlayer();
 	}
-	if (Enemy::HP <= 0 && enemyTurtle != nullptr)
+	if (enemyTurtle->CheckHpEnemy() <= 0 && enemyTurtle != nullptr)
 	{
+		std::cout << enemyTurtle->CheckHpEnemy();
 		Level::deleteEnemy();
-		enemyTurtle->Rect.x = 0;
-		enemyTurtle->Rect.y = 0;
 	}
 }
 
@@ -505,43 +505,130 @@ void Level::handleEvents(SDL_Event eventInLvl)
 void Level::Attack() 
 {
 	//Дальний boy
-		//if ((abs(EntityPosition::Coords[0] - enemyTurtle->Rect.x) == 0)) // разделил чтобы потом проверять на наличие стен
-		//{
-		//	{
-		//		enemyTurtle->ChahgeHpEnemy(-(player->RangeAttack()));
-
-		//		Player::ChangeManaValue(5);
-		//	}
-
-		//	Enemy::enemyTurn();
-		//}
-		//else if (abs(EntityPosition::Coords[1] - enemyTurtle->Rect.y == 0))
-		//{
-
-		//	int r = rand() % 100;
-		//	if (r < ((Player::EqItems.equipedRangeW->CHNS) -
-		//		((Player::EqItems.equipedRangeW->DCHNS) *
-		//			abs(abs(enemyTurtle->Rect.x - EntityPosition::Coords[0]) / 32 - Player::EqItems.equipedRangeW->RNG))))
-		//	{
-		//		damage = Player::EqItems.equipedRangeW->DMG + Player::DEX[0];
-		//		int ch = Player::EqItems.equipedRangeW->CHNS;
-		//		std::cout << ch << std::endl;
-		//		Player::ChangeManaValue(5);
-		//		Enemy::ChahgeHpEnemy(damage);
-		//		std::cout << "Range boy hor" << std::endl;
-		//	}
-
+	if (Player::EqItems.equipedRangeW->Type == rWeapon)
+	{
+		int PlPosx = EntityPosition::Coords[0] / 32, PlPosy = EntityPosition::Coords[1] / 32, EnPosx = (enemyTurtle->Rect.x) / 32, EnPosy = (enemyTurtle->Rect.y) / 32;
+		bool blankflag = true;
+		if ((abs(EntityPosition::Coords[0] - enemyTurtle->Rect.x) == 0)) // разделил чтобы потом проверять на наличие стен
+		{
+			if (PlPosy > EnPosy)
+			{
+				for (int i = PlPosy; i > EnPosy; i--)
+				{
+					if (Location[i][PlPosx] == 1)
+					{
+						blankflag = false;
+					}
+				}
+			}
+			else
+			{
+				for (int i = EnPosy; i > PlPosy; i--)
+				{
+					if (Location[i][PlPosx] == 1)
+					{
+						blankflag = false;
+					}
+				}
+			}
+		}
+		else if (abs(EntityPosition::Coords[1] - enemyTurtle->Rect.y == 0))
+		{
+			if (PlPosx > EnPosx)
+			{
+				for (int i = PlPosx; i > EnPosx; i--)
+				{
+					if (Location[PlPosy][i] == 1)
+					{
+						blankflag = false;
+					}
+				}
+			}
+			else
+			{
+				for (int i = EnPosy; i > PlPosy; i--)
+				{
+					if (Location[PlPosy][i] == 1)
+					{
+						blankflag = false;
+					}
+				}
+			}
+		}
+		else
+		{
+			int x, y;
+			float k = -(((float)(EnPosy - PlPosy) / (PlPosx - EnPosx)));
+			float b = -((float)(EnPosx * PlPosy - PlPosx * EnPosy) / (PlPosx - EnPosx));
+			if (PlPosx > EnPosx)
+			{
+				for (x = PlPosx; x > EnPosx; x--)
+				{
+					if (Location[(int)(k * x + b)][x] == 1)
+					{
+						blankflag = false;
+					}
+				}
+			}
+			else if (PlPosx < EnPosx)
+			{
+				for (x = EnPosx; x > PlPosx; x--)
+				{
+					if (Location[(int)(k * x + b)][x] == 1)
+					{
+						blankflag = false;
+					}
+				}
+			}
+			if (PlPosy < EnPosy)
+			{
+				for (y = EnPosy; y > PlPosy; y--)
+				{
+					if (Location[y][(int)((y - b) / k)] == 1)
+					{
+						blankflag = false;
+					}
+				}
+			}
+			else if (PlPosy > EnPosy)
+			{
+				for (y = PlPosy; y > EnPosy; y--)
+				{
+					if (Location[y][(int)((y - b) / k)] == 1)
+					{
+						blankflag = false;
+					}
+				}
+			}
+		}
+		if (blankflag == true)
+		{
+				int x = (enemyTurtle->Rect.y - EntityPosition::Coords[1]) / 32;
+				int y = (enemyTurtle->Rect.x - EntityPosition::Coords[0]) / 32;
+				int i = rand() % 100;
+				if (i < ((Player::EqItems.equipedRangeW->CHNS) -
+					((Player::EqItems.equipedRangeW->DCHNS) *
+						abs(((float)(sqrt(x * x + y * y))) - Player::EqItems.equipedRangeW->RNG))))
+				{
+					std::cout << ((Player::EqItems.equipedRangeW->CHNS) -
+						((Player::EqItems.equipedRangeW->DCHNS) *
+							abs(((float)(sqrt(x * x + y * y))) - Player::EqItems.equipedRangeW->RNG)));
+					enemyTurtle->ChahgeHpEnemy(-(player->RangeAttack()));
+				}
+		}
+		enemyTurtle->enemyTurn();
+	}
 
 		//	Enemy::enemyTurn();
 		//}
 	//Ближний boy
-	if (this->CheckPositionToMeleeAttack(enemyTurtle->Rect, EntityPosition::Coords[0], EntityPosition::Coords[1]) &&
-		FlagManager::flagMeleeAttackPlayer == 1 && FlagManager::flagMeleeAttackEnemy == 0 &&
-		FlagManager::flagPlayer == 1 && FlagManager::flagEnemy == 0)
-	{
-		enemyTurtle->ChahgeHpEnemy(-(player->MeleeAttack()));
-		enemyTurtle->enemyTurn();
-	}
+	if (this->CheckPositionToMeleeAttack(enemyTurtle->Rect, EntityPosition::Coords[0], EntityPosition::Coords[1]) == true &&
+			FlagManager::flagMeleeAttackPlayer == 1 && FlagManager::flagMeleeAttackEnemy == 0 &&
+			FlagManager::flagPlayer == 1 && FlagManager::flagEnemy == 0)
+		{
+			enemyTurtle->ChahgeHpEnemy(-(player->MeleeAttack()));
+			enemyTurtle->enemyTurn();
+		}
 }
 void Level::Generate() {
 	srand(time(0));

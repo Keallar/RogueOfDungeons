@@ -59,7 +59,7 @@ int Player::LCK[2] = {
 						1, /*LCK  previous*/
 					 };
 
-int Player::VIS = 3;
+int Player::VIS = 10;
 
 Player::Player(SDL_Renderer* renderer)
 {
@@ -552,9 +552,12 @@ int Player::RangeAttack()
 {
 	if ((Inventory::ExistingItems[Player::EqItems.WeaponId]->Type == rWeapon) &&
 		FlagManager::flagRangeAttack == 1 &&
-		Player::mana[0] != 0) {
+		Player::mana[0] != 0) 
+	{
+		damage = Player::EqItems.equipedRangeW->DMG;
+		std::cout << damage << "!" << std::endl;
+		return damage;
 	}
-	return 0;
 }
 /*void Player::Attack()
 {

@@ -132,12 +132,10 @@ void Keyboard::handleEvents(SDL_Event& keyboardEvent)
 {
 	if (buttonIsPressed(keyboardEvent) == true && callback != NULL && scallback == NULL)
 	{
-		//std::cout << code << std::endl;
 		callback();
 	}
 	else if (buttonIsPressed(keyboardEvent) == true && scallback != NULL && callback == NULL)
 	{
-		//std::cout << code << std::endl;
 		scallback();
 	}
 }

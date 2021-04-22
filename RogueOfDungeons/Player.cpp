@@ -554,7 +554,7 @@ int Player::RangeAttack()
 		FlagManager::flagRangeAttack == 1 &&
 		Player::mana[0] != 0) 
 	{
-		damage = Player::EqItems.equipedRangeW->DMG;
+		damage = Player::EqItems.equipedRangeW->DMG + Player::DEX[0];
 		std::cout << damage << "!" << std::endl;
 		return damage;
 	}

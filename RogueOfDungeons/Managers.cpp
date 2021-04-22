@@ -126,5 +126,7 @@ bool FlagManager::flagRangeAttack = 0;
 //check hp enemy
 bool FlagManager::flagCheckHpEnemy = 0;
 
+bool FlagManager::flagHover = 0;
+
 
 

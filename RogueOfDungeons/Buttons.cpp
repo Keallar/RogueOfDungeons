@@ -22,7 +22,7 @@ Button::Button(const char* textureName, SDL_Renderer* renderer, SDL_Rect rect)
 		buttonTexture = NULL;
 }
 //конструктор c callback и hover
-Button::Button(const char* textureName, SDL_Renderer* renderer, SDL_Rect rect, 
+Button::Button(const char* textureName, SDL_Renderer* renderer, const SDL_Rect rect, 
 	void (*callbackFunction)(), void (*hoverFunction)()):
 	nameOftexture(textureName), ren(renderer), callback(callbackFunction), hover(hoverFunction)
 {
@@ -31,9 +31,11 @@ Button::Button(const char* textureName, SDL_Renderer* renderer, SDL_Rect rect,
 	button.w = rect.w;
 	button.h = rect.h;
 
-	//UNDONE call of name callback
 	if (callback == NULL)
 		std::cout << "callback isn't ready " << std::endl;
+	
+	if (hover == NULL)
+		std::cout << "hover isn't ready" << std::endl;
 
 	if (nameOftexture != NULL)
 		buttonTexture = textureManager::LoadTexture(nameOftexture, ren);
@@ -43,37 +45,51 @@ Button::Button(const char* textureName, SDL_Renderer* renderer, SDL_Rect rect,
 
 void Button::handleEvents(SDL_Event& buttonEvent)
 {
-	if (buttonEvent.type == SDL_MOUSEBUTTONDOWN)
+	switch (buttonEvent.type)
 	{
-		if (buttonEvent.button.button == SDL_BUTTON_LEFT)
+	case SDL_MOUSEBUTTONDOWN:
+		if (buttonEvent.button.clicks == 1)
 		{
-			if (Button::mouseInArea(button.x, button.y, button.w, button.h))
+			if (buttonEvent.button.button == SDL_BUTTON_LEFT)
 			{
-				callback();
+				mouse.x = buttonEvent.button.x;
+				mouse.y = buttonEvent.button.y;
+				if (Button::mouseInArea(button.x, button.y, button.w, button.h))
+				{
+					callback();
+				}
 			}
 		}
-	}
-	else
-	{
-		if (Button::mouseInArea(button.x, button.y, button.w, button.h))
+		break;
+
+	case SDL_MOUSEMOTION:
+		mouse.x = buttonEvent.motion.x;
+		mouse.y = buttonEvent.motion.y;
+		if (Button::mouseInArea(button.x, button.y, button.w, button.h) && 
+			FlagManager::flagHover == 1 && 
+			hover != NULL)
 		{
-			if (hover != NULL)
-				hover();
+			hover();
 		}
-	} 
+		break;
+
+	default:
+		break;
+	}
 }
 
 bool Button::mouseInArea(int x, int y, int w, int h)
 {
 	bool validity;
-	SDL_GetMouseState(&mouse.x, &mouse.y);
 	if ((mouse.x >= x) && (mouse.y >= y) && (mouse.x <= x + w) && (mouse.y <= y + h))
 	{
 		validity = true;
+		FlagManager::flagHover = 1;
 	}
 	else
 	{
 		validity = false;
+		FlagManager::flagHover = 0;
 	}
 
 	return validity;
@@ -93,60 +109,56 @@ void Button::updateCoords(int newx, int newy)
 	button.y = newy;
 }
 
-KeyboardButtonsInLevel::KeyboardButtonsInLevel()
+Keyboard::Keyboard(SDL_Scancode scancode, void (*callbackFunction)()):
+	code (scancode), callback(callbackFunction)
+{
+	if (callback == NULL)
+		std::cout << "callback in Keyboard isn't ready" << std::endl;
+}
+
+Keyboard::Keyboard(SDL_Scancode scancode, std::function <void()> callbackFunction):
+	code (scancode), scallback(callbackFunction)
+{
+	if (scallback == NULL)
+		std::cout << "scallback in Keyboard isn't ready" << std::endl;
+}
+
+Keyboard::~Keyboard()
 {
 
 }
 
-void KeyboardButtonsInLevel::keyForCallSpecWin(const Uint8* keys)
+void Keyboard::handleEvents(SDL_Event& keyboardEvent)
 {
-	if (keys[SDL_SCANCODE_Q] && FlagManager::flagUiSpec == 0)
+	if (buttonIsPressed(keyboardEvent) == true && callback != NULL && scallback == NULL)
 	{
-		FlagManager::flagUiSpec = 1;
-		FlagManager::flagUI = 0;
+		//std::cout << code << std::endl;
+		callback();
 	}
-	else if (keys[SDL_SCANCODE_Q] && FlagManager::flagUI == 0)
+	else if (buttonIsPressed(keyboardEvent) == true && scallback != NULL && callback == NULL)
 	{
-		FlagManager::flagUiSpec = 0;
-		FlagManager::flagUI = 1;
+		//std::cout << code << std::endl;
+		scallback();
 	}
 }
 
-void KeyboardButtonsInLevel::keyForCallInvWin(const Uint8* keys)
+bool Keyboard::buttonIsPressed(SDL_Event& keyboardEvent)
 {
-	if (keys[SDL_SCANCODE_I] && FlagManager::flagInv == 0)
+	SDL_Scancode tempcode = keyboardEvent.key.keysym.scancode;
+	bool validity = false;
+	switch (keyboardEvent.type)
 	{
-		FlagManager::flagInv = 1;
+	case SDL_KEYDOWN:
+		if (code == tempcode)
+		validity = true;
+		break;
+	case SDL_KEYUP:
+		validity = false;
+		break;
+	default:
+		break;
 	}
-	else if (keys[SDL_SCANCODE_I] && FlagManager::flagInv == 1)
-	{
-		FlagManager::flagInv = 0;
-	}
-
-}
-
-void KeyboardButtonsInLevel::keyForIncPlayerSpec(const Uint8* keys)
-{
-	if (keys[SDL_SCANCODE_1] && FlagManager::flagUiSpec == 1 && FlagManager::flagSTR == 0)
-	{
-		Player::ChangeValueSpecs(1);
-	}
-	if (keys[SDL_SCANCODE_2] && FlagManager::flagUiSpec == 1 && FlagManager::flagDEX == 0)
-	{
-		Player::ChangeValueSpecs(2);
-	}
-	if (keys[SDL_SCANCODE_3] && FlagManager::flagUiSpec == 1 && FlagManager::flagINT == 0)
-	{
-		Player::ChangeValueSpecs(3);
-	}
-	if (keys[SDL_SCANCODE_4] && FlagManager::flagUiSpec == 1 && FlagManager::flagPHS == 0)
-	{
-		Player::ChangeValueSpecs(4);
-	}
-	if (keys[SDL_SCANCODE_5] && FlagManager::flagUiSpec == 1 && FlagManager::flagLCK == 0)
-	{
-		Player::ChangeValueSpecs(5);
-	}
+	return validity;
 }
 
 Mouse MouseButtonsPlayer::mouseCoordsPlayer;
@@ -158,7 +170,6 @@ void MouseButtonsPlayer::buttonsForAttack(int x, int y)
 	if (InputManager::MouseInArea(x, y, 32, 32, mouseCoordsPlayer.x, mouseCoordsPlayer.y))
 	{
 		FlagManager::flagMeleeAttackPlayer = 1;
-		//level->Attack();
 	}
 }
 
@@ -169,6 +180,6 @@ void MouseButtonsPlayer::buttonForRangeAttack(int x, int y)
 	if (InputManager::MouseInArea(x, y, 32, 32, mouseCoordsPlayer.x, mouseCoordsPlayer.y))
 	{
 		FlagManager::flagRangeAttack = 1;
-		//Level::Attack();
 	}
 }
+

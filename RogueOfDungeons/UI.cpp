@@ -6,6 +6,7 @@
 #include "Player.h"
 #include "Enemy.h"
 #include "CallBackAndHoverFuncs.h"
+#include "Game.h"
 
 TextInfo::TextInfo() 
 {
@@ -167,7 +168,7 @@ UIInfo::UIInfo(SDL_Renderer* renderer) : ren (renderer)
 
 	slashhhhhhhhh = FontManager::renderText("/", PATH_IN_FONT, color, 32, ren);
 
-	SPEC = FontManager::renderText("SPEC", PATH_IN_FONT, color, 32, ren);
+	//SPEC = FontManager::renderText("SPEC", PATH_IN_FONT, color, 32, ren);
 
 	//HP
 	hpBar = textureManager::LoadTexture("images/hp.png", ren);
@@ -182,8 +183,32 @@ UIInfo::UIInfo(SDL_Renderer* renderer) : ren (renderer)
 	xpText = FontManager::renderText("XP", PATH_IN_FONT, color, 64, ren);
 
 	//Buttons
-	buttonForCallSpecInfo = new Button("images/Button.png", ren, { 1230, 240, 32, 32 }, callbackFunctions::callSpecOrInfoWin, NULL);
+	buttonForCallSpecInfo = new Button("images/Button.png", ren , { 1230, 240, 32, 32 }, callbackFunctions::callSpecOrInfoWin, hoverFunctions::callSpecWin);
 	buttonForCallInvWin = new Button("images/Button.png", ren, { 1050, 665, 25, 22 }, callbackFunctions::callInvWin, NULL);
+
+	//Keyboard
+	keyForCallSpecInfo = new Keyboard(SDL_SCANCODE_Q, callbackFunctions::callSpecOrInfoWin);
+	keyForcCallInvWin = new Keyboard(SDL_SCANCODE_I, callbackFunctions::callInvWin);
+	keyForIncSTR = new Keyboard(SDL_SCANCODE_1, callbackFunctions::incPlayerSTR);
+	keyForIncDEX = new Keyboard(SDL_SCANCODE_2, callbackFunctions::incPlayerDEX);
+	keyForIncINT = new Keyboard(SDL_SCANCODE_3, callbackFunctions::incPlayerINT);
+	keyForIncWSD = new Keyboard(SDL_SCANCODE_4, callbackFunctions::incPlayerWSD);
+	keyForIncPHS = new Keyboard(SDL_SCANCODE_5, callbackFunctions::incPlayerPHS);
+	keyForIncLCK = new Keyboard(SDL_SCANCODE_6, callbackFunctions::incPlayerLCK);
+}
+
+UIInfo::~UIInfo()
+{
+	delete buttonForCallSpecInfo;
+	delete buttonForCallInvWin;
+	delete keyForCallSpecInfo;
+	delete keyForcCallInvWin;
+	delete keyForIncSTR;
+	delete keyForIncDEX;
+	delete keyForIncINT;
+	delete keyForIncWSD;
+	delete keyForIncPHS;
+	delete keyForIncLCK;
 }
 
 void UIInfo::Render()
@@ -194,7 +219,7 @@ void UIInfo::Render()
 	RenderManager::CopyToRender(slashhhhhhhhh, ren, 1152, 122, 32, 20);
 	RenderManager::CopyToRender(slashhhhhhhhh, ren, 1152, 175, 32, 20);
 
-	RenderManager::CopyToRender(SPEC, ren, 1230, 220, 30, 25);
+	//RenderManager::CopyToRender(SPEC, ren, 1230, 220, 30, 25);
 
 	//HP
 	RenderManager::CopyToRender(hpBar, ren, 1080, 40, 160, 32, 0, 0, 128, 16);
@@ -220,8 +245,19 @@ void UIInfo::AlwaysRender()
 
 void UIInfo::handleEvents(SDL_Event& eventInUiInfo)
 {
+	//Buttons
 	buttonForCallSpecInfo->handleEvents(eventInUiInfo);
 	buttonForCallInvWin->handleEvents(eventInUiInfo);
+
+	//Keyboard
+	keyForCallSpecInfo->handleEvents(eventInUiInfo);
+	keyForcCallInvWin->handleEvents(eventInUiInfo);
+	keyForIncSTR->handleEvents(eventInUiInfo);
+	keyForIncDEX->handleEvents(eventInUiInfo);
+	keyForIncINT->handleEvents(eventInUiInfo);
+	keyForIncWSD->handleEvents(eventInUiInfo);
+	keyForIncPHS->handleEvents(eventInUiInfo);
+	keyForIncLCK->handleEvents(eventInUiInfo);
 }
 
 UISpecifications::UISpecifications(SDL_Renderer* renderer) : ren (renderer)
@@ -232,30 +268,92 @@ UISpecifications::UISpecifications(SDL_Renderer* renderer) : ren (renderer)
 	specBlock = textureManager::LoadTexture("images/InfoBlock.png", ren);
 	specifcation = FontManager::renderText("Specifications", PATH_IN_FONT, color, 64, ren);
 	buttonForCallInfoWin = new Button("images/Button.png", ren, { 1230, 240, 32, 32 });
+	
 	//STR
 	STR = FontManager::renderText("STR", PATH_IN_FONT, color, 64, ren);
 	valueSTR = FontManager::renderText("1", PATH_IN_FONT, color, 32, ren);
-	buttonForIncPlayerSTR = new Button("images/Button.png", ren, { 1230, 50, 16, 20 }, callbackFunctions::incPlayerSTR, NULL);
+	auto incSTR{
+		[]() 
+		{
+			if (FlagManager::flagSTR == 0 && FlagManager::flagUiSpec == 1)
+			{
+				Player::ChangeValueSpecs(1);
+			}
+		}
+	};
+	buttonForIncPlayerSTR = new Button("images/Button.png", ren, { 1230, 50, 16, 20 }, incSTR, NULL);
+
 	//DEX
 	DEX = FontManager::renderText("DEX", PATH_IN_FONT, color, 64, ren);
 	valueDEX = FontManager::renderText("1", PATH_IN_FONT, color, 32, ren);
-	buttonForIncPlayerDEX = new Button("images/Button.png", ren, { 1230, 80, 16, 20 }, callbackFunctions::incPlayerDEX, NULL);
+	auto incDEX{
+		[]() 
+		{
+			if (FlagManager::flagDEX == 0 && FlagManager::flagUiSpec == 1)
+			{
+				Player::ChangeValueSpecs(2);
+			}
+		}
+	};
+	buttonForIncPlayerDEX = new Button("images/Button.png", ren, { 1230, 80, 16, 20 }, incDEX, NULL);
+
 	//INT
 	INT = FontManager::renderText("INT", PATH_IN_FONT, color, 64, ren);
 	valueINT = FontManager::renderText("1", PATH_IN_FONT, color, 32, ren);
-	buttonForIncPlayerINT = new Button("images/Button.png", ren, { 1230, 110, 16, 20 }, callbackFunctions::incPlayerINT, NULL);
+	auto incINT{
+		[]()
+		{
+			if (FlagManager::flagINT == 0 && FlagManager::flagUiSpec == 1)
+			{
+				Player::ChangeValueSpecs(3);
+			}
+		}
+	};
+	buttonForIncPlayerINT = new Button("images/Button.png", ren, { 1230, 110, 16, 20 }, incINT, NULL);
+	
 	//WSD
 	WSD = FontManager::renderText("WSD", PATH_IN_FONT, color, 64, ren);
 	valueWSD = FontManager::renderText("1", PATH_IN_FONT, color, 32, ren);
-	buttonForIncPlayerWSD = new Button("images/Button.png", ren, { 1230, 140, 16, 20 }, callbackFunctions::incPlayerWSD, NULL);
+	auto incWSD{
+		[]()
+		{
+			if (FlagManager::flagWSD == 0 && FlagManager::flagUiSpec == 1)
+			{
+				Player::ChangeValueSpecs(4);
+			}
+		}
+	};
+	buttonForIncPlayerWSD = new Button("images/Button.png", ren, { 1230, 140, 16, 20 }, incWSD, NULL);
+	
 	//PHS
 	PHS = FontManager::renderText("PHS", PATH_IN_FONT, color, 64, ren);
 	valuePHS = FontManager::renderText("1", PATH_IN_FONT, color, 32, ren);
-	buttonForIncPlayerPHS = new Button("images/Button.png", ren, { 1230, 170, 16, 20 }, callbackFunctions::incPlayerPHS, NULL);
+	auto incPHS{
+		[]()
+		{
+			if (FlagManager::flagPHS == 0 && FlagManager::flagUiSpec == 1)
+			{
+				Player::ChangeValueSpecs(5);
+			}
+		}
+	};
+	buttonForIncPlayerPHS = new Button("images/Button.png", ren, { 1230, 170, 16, 20 }, incPHS, NULL);
+	
 	//LCK
 	LCK = FontManager::renderText("LCK", PATH_IN_FONT, color, 64, ren);
 	valueLCK = FontManager::renderText("1", PATH_IN_FONT, color, 32, ren);
-	buttonForIncPlayerLCK = new Button("images/Button.png", ren, { 1230, 200, 16, 20 }, callbackFunctions::incPlayerLCK, NULL);
+
+	auto incLCK{
+		[]()
+		{
+			if (FlagManager::flagLCK == 0 && FlagManager::flagUiSpec == 1)
+			{
+				Player::ChangeValueSpecs(6);
+			}
+		}
+	};
+	buttonForIncPlayerLCK = new Button("images/Button.png", ren, { 1230, 200, 16, 20 }, incLCK, NULL);
+
 	//numbers
 	one = FontManager::renderText("(1)", PATH_IN_FONT, color, 64, ren);
 	two = FontManager::renderText("(2)", PATH_IN_FONT, color, 64, ren);
@@ -267,7 +365,13 @@ UISpecifications::UISpecifications(SDL_Renderer* renderer) : ren (renderer)
 
 UISpecifications::~UISpecifications()
 {
-
+	delete buttonForCallInfoWin;
+	delete buttonForIncPlayerSTR;
+	delete buttonForIncPlayerDEX;
+	delete buttonForIncPlayerINT;
+	delete buttonForIncPlayerWSD;
+	delete buttonForIncPlayerPHS;
+	delete buttonForIncPlayerLCK;
 }
 
 void UISpecifications::Render()

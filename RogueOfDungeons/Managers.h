@@ -66,6 +66,7 @@ public:
 	static bool flagRangeAttack;
 	static int flagDrop;
 	static bool flagHaveDrop;
+	static bool flagHover;
 };
 
 

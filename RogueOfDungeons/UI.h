@@ -32,8 +32,19 @@ private:
 	//Buttons
 	Button* buttonForCallSpecInfo;
 	Button* buttonForCallInvWin;
+
+	//Keyboard
+	Keyboard* keyForCallSpecInfo;
+	Keyboard* keyForcCallInvWin;
+	Keyboard* keyForIncSTR;
+	Keyboard* keyForIncDEX;
+	Keyboard* keyForIncINT;
+	Keyboard* keyForIncWSD;
+	Keyboard* keyForIncPHS;
+	Keyboard* keyForIncLCK;
 public:
 	UIInfo(SDL_Renderer* renderer);
+	~UIInfo();
 	void Render();
 	void AlwaysRender();
 	void handleEvents(SDL_Event& eventInUiInfo);

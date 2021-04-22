@@ -21,5 +21,5 @@ public:
 class hoverFunctions
 {
 public:
-	void callSpecWin(SDL_Renderer* ren, SDL_Texture* hoverTexture);
+	static void callSpecWin();
 };

@@ -67,8 +67,10 @@ Player::Player(SDL_Renderer* renderer)
 	PlayerTexture = textureManager::LoadTexture("images/Hero.png", ren);
 	playerAnimation = new Animation(ren, PlayerTexture);
 	generate = -1;
-	for (int i = 0; i < 22; i++) {
-		for (int j = 0; j < 32; j++) {
+	for (int i = 0; i < 22; i++) 
+	{
+		for (int j = 0; j < 32; j++)
+		{
 			Location[i][j] = 0;
 		}
 	}
@@ -460,15 +462,19 @@ void Player::GetItemEquip(int id)
 	FlagManager::flagEquip = -1;
 }
 
-void Player::GetItemUnEquip(int id) {
-	if (inventory->InventoryCount() != 16) {
-		if (id == 0) {
+void Player::GetItemUnEquip(int id) 
+{
+	if (inventory->InventoryCount() != 16) 
+	{
+		if (id == 0) 
+		{
 			inventory->AddItem(EqItems.WeaponId);
 			EqItems.WeaponId = 0;
 			EqItems.equipedMeleeW = inventory->GetRealMelee(0);
 			EqItems.equipedRangeW = nullptr;
 		}
-		if (id == 1) {
+		if (id == 1) 
+		{
 			inventory->AddItem(EqItems.ArmorId);
 			EqItems.ArmorId = -1;
 			EqItems.equipedArmor = nullptr;

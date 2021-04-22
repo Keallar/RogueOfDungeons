@@ -36,8 +36,6 @@ Level::Level(SDL_Renderer* renderer) : ren (renderer)
 	//s = new Keyboard(SDL_SCANCODE_S, );
 	//d = new Keyboard(SDL_SCANCODE_D, );
 
-	//keyboard = new Keyboard();
-
 	for (int i = 0; i < 22; i++) 
 	{
 		for (int j = 0; j < 32; j++)
@@ -72,7 +70,6 @@ Level::~Level()
 	delete mana;
 	delete exp;
 	delete uiEquiped;
-	//delete keyboard;
 	delete animation;
 }
 

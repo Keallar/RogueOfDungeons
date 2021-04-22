@@ -44,6 +44,7 @@ private:
 	Keyboard* keyForIncLCK;
 public:
 	UIInfo(SDL_Renderer* renderer);
+	~UIInfo();
 	void Render();
 	void AlwaysRender();
 	void handleEvents(SDL_Event& eventInUiInfo);

@@ -67,8 +67,10 @@ Player::Player(SDL_Renderer* renderer)
 	PlayerTexture = textureManager::LoadTexture("images/Hero.png", ren);
 	playerAnimation = new Animation(ren, PlayerTexture);
 	generate = -1;
-	for (int i = 0; i < 22; i++) {
-		for (int j = 0; j < 32; j++) {
+	for (int i = 0; i < 22; i++) 
+	{
+		for (int j = 0; j < 32; j++)
+		{
 			Location[i][j] = 0;
 		}
 	}

@@ -272,7 +272,6 @@ UISpecifications::UISpecifications(SDL_Renderer* renderer) : ren (renderer)
 	//STR
 	STR = FontManager::renderText("STR", PATH_IN_FONT, color, 64, ren);
 	valueSTR = FontManager::renderText("1", PATH_IN_FONT, color, 32, ren);
-
 	auto incSTR{
 		[]() 
 		{
@@ -287,7 +286,6 @@ UISpecifications::UISpecifications(SDL_Renderer* renderer) : ren (renderer)
 	//DEX
 	DEX = FontManager::renderText("DEX", PATH_IN_FONT, color, 64, ren);
 	valueDEX = FontManager::renderText("1", PATH_IN_FONT, color, 32, ren);
-
 	auto incDEX{
 		[]() 
 		{
@@ -302,7 +300,6 @@ UISpecifications::UISpecifications(SDL_Renderer* renderer) : ren (renderer)
 	//INT
 	INT = FontManager::renderText("INT", PATH_IN_FONT, color, 64, ren);
 	valueINT = FontManager::renderText("1", PATH_IN_FONT, color, 32, ren);
-
 	auto incINT{
 		[]()
 		{
@@ -317,7 +314,6 @@ UISpecifications::UISpecifications(SDL_Renderer* renderer) : ren (renderer)
 	//WSD
 	WSD = FontManager::renderText("WSD", PATH_IN_FONT, color, 64, ren);
 	valueWSD = FontManager::renderText("1", PATH_IN_FONT, color, 32, ren);
-
 	auto incWSD{
 		[]()
 		{
@@ -332,7 +328,6 @@ UISpecifications::UISpecifications(SDL_Renderer* renderer) : ren (renderer)
 	//PHS
 	PHS = FontManager::renderText("PHS", PATH_IN_FONT, color, 64, ren);
 	valuePHS = FontManager::renderText("1", PATH_IN_FONT, color, 32, ren);
-
 	auto incPHS{
 		[]()
 		{
@@ -347,7 +342,7 @@ UISpecifications::UISpecifications(SDL_Renderer* renderer) : ren (renderer)
 	//LCK
 	LCK = FontManager::renderText("LCK", PATH_IN_FONT, color, 64, ren);
 	valueLCK = FontManager::renderText("1", PATH_IN_FONT, color, 32, ren);
-	
+
 	auto incLCK{
 		[]()
 		{

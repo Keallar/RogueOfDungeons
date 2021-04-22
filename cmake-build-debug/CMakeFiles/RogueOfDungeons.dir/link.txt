@@ -1,3 +1,0 @@
-"C:\Program Files\JetBrains\CLion 2021.1\bin\cmake\win\bin\cmake.exe" -E rm -f CMakeFiles\RogueOfDungeons.dir/objects.a
-C:\MinGw\mingw64\bin\ar.exe cr CMakeFiles\RogueOfDungeons.dir/objects.a @CMakeFiles\RogueOfDungeons.dir\objects1.rsp
-C:\MinGw\mingw64\bin\g++.exe -g -Wl,--whole-archive CMakeFiles\RogueOfDungeons.dir/objects.a -Wl,--no-whole-archive -o RogueOfDungeons.exe -Wl,--out-implib,libRogueOfDungeons.dll.a -Wl,--major-image-version,0,--minor-image-version,0 @CMakeFiles\RogueOfDungeons.dir\linklibs.rsp

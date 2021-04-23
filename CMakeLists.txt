@@ -1,27 +1,41 @@
 cmake_minimum_required(VERSION 3.5)
 
-project(RougeOfDungeons LANGUAGES CXX)
+project(RogueOfDungeons LANGUAGES CXX)
 
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-include_directories(thirdParty/include src)
+include_directories(RogueOfDungeons)
 
-link_directories(thirdParty/libs)
-set (PROJECT_LIBS SDL2main SDL2 SDL2_image SDL2_ttf)
+include_directories(SDL2_image-2.0.5/include
+    SDL2_ttf-2.0.15/include
+    SDL2-2.0.14/include)
 
-link_libraries(${PROJECT_LIBS})
+link_directories(SDL2_image-2.0.5/lib
+    SDL2_ttf-2.0.15/lib
+    SDL2-2.0.14/lib)
 
-file(GLOB_RECURSE PROJECT_SOURCES src/*.cpp src/*.h data/*.txt data/*.json)
+link_libraries(SDL2main SDL2 SDL2_image SDL2_ttf)
 
-add_executable(RougeOfDungeons ${PROJECT_SOURCES})
+file(GLOB_RECURSE PROJECT_SOURCES ${CMAKE_SOURCE_DIR}/RogueOfDungeons/*.cpp ${CMAKE_SOURCE_DIR}/RogueOfDungeons/*.h)
+file(GLOB_RECURSE PROJECT_DLLS ${CMAKE_SOURCE_DIR}/RogueOfDungeons/*.dll)
 
-add_custom_command(TARGET RougeOfDungeons PRE_BUILD
-                   COMMAND ${CMAKE_COMMAND} -E copy_directory
-                       ${CMAKE_SOURCE_DIR}/thirdParty/bin $<TARGET_FILE_DIR:RougeOfDungeons>)
+add_executable(RogueOfDungeons ${PROJECT_SOURCES})
 
-if(EXISTS ${CMAKE_SOURCE_DIR}/data)
-    add_custom_command(TARGET RougeOfDungeons PRE_BUILD
+foreach(dll ${PROJECT_DLLS})
+add_custom_command(TARGET RogueOfDungeons PRE_BUILD
+                  COMMAND ${CMAKE_COMMAND} -E copy
+                      ${dll} $<TARGET_FILE_DIR:RogueOfDungeons>)
+endforeach()
+
+if(EXISTS ${CMAKE_SOURCE_DIR}/RogueOfDungeons/images)
+    add_custom_command(TARGET RogueOfDungeons PRE_BUILD
                       COMMAND ${CMAKE_COMMAND} -E copy_directory
-                          ${CMAKE_SOURCE_DIR}/data $<TARGET_FILE_DIR:RougeOfDungeons>/data)
+                          ${CMAKE_SOURCE_DIR}/RogueOfDungeons/images $<TARGET_FILE_DIR:RogueOfDungeons>/images)
+endif()
+
+if(EXISTS ${CMAKE_SOURCE_DIR}/RogueOfDungeons/fonts)
+    add_custom_command(TARGET RogueOfDungeons PRE_BUILD
+                      COMMAND ${CMAKE_COMMAND} -E copy_directory
+                          ${CMAKE_SOURCE_DIR}/RogueOfDungeons/fonts $<TARGET_FILE_DIR:RogueOfDungeons>/images)
 endif()

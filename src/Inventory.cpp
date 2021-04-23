@@ -11,7 +11,7 @@ std::map <int, InventoryItem*>::iterator Inventory::it;
 Inventory::Inventory()
 {
 	std::ifstream file;
-	file.open("Items.txt");
+    file.open("data/Items.txt");
 	int ItemNumber = 0;
 	while (file) {
 		std::string Type;

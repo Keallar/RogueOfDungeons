@@ -8,3 +8,7 @@ Now you can just uplaod Rogue of dungeons and try it.
 INFORMATION ABOUT GAME
 -----------------------------------
 This game is developing on own engine. Now without story.
+***
+PROJECT FEATURES
+-----------------------------------
+Later...

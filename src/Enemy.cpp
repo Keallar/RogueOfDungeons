@@ -13,6 +13,8 @@ int Enemy::HpMax = 0;
 
 Enemy::Enemy(const char* texturesheet, int framesOfAnimationForAttack, SDL_Renderer* renderer, int HealthP, int MaxHealthP, int Damage, int EXPR)
 {
+	temp = false;
+	Timer = 0;
 	generate = -1;
 	expReward = EXPR;
 	HP = HealthP;
@@ -234,6 +236,7 @@ void Enemy::attackOfEnemy()
 	}
 	else if (completeEnemyAnimation == 1)
 	{
+		temp = false;
 		completeEnemyAnimation = 0;
 		Player::ChangeHpValue(-Enemy::enemyDamageCalculation());
 		std::cout << "Heat" << std::endl;
@@ -263,9 +266,17 @@ void Enemy::meleeAttackEnemy()
 			(EntityPosition::Coords[2] == EntityPosition::Coords[0] - 32))) &&
 		(FlagManager::flagMeleeAttackEnemy == 1 && FlagManager::flagEnemy == 1))
 	{
+		if (temp == false) {
+			Enemy::attackOfEnemy();
+			Timer = SDL_GetTicks();
+			temp = true;
+		}
+		Uint32 Timer2 = SDL_GetTicks();
 		Enemy::enemyTurn();
-		
-		Enemy::attackOfEnemy();
+		if (Timer2 - Timer >= 90) {
+			Enemy::attackOfEnemy();
+			Timer = Timer2;
+		}
 	}
 	else
 	{

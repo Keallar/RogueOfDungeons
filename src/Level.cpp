@@ -1,4 +1,4 @@
-﻿#pragma once
+#pragma once
 #include "Game.h"
 #include "Level.h"
 #include "Managers.h"
@@ -84,6 +84,7 @@ Level::Level(SDL_Renderer* renderer) : ren (renderer)
 				if (Location[(EntityPosition::Coords[1]) / 32][(EntityPosition::Coords[0]) / 32 - 1] == 0)
 				{
 					EntityPosition::Coords[0] -= 32;
+                    std::cout << "A\n";
 					FlagManager::flagPlayer = 0;
 					FlagManager::flagEnemy = 1;
 				}
@@ -159,6 +160,11 @@ Level::Level(SDL_Renderer* renderer) : ren (renderer)
 				{
 					FlagManager::flagChest = 4;
 				}
+                if (EntityPosition::Coords[0] == enemyTurtle->Rect.x &&
+                    (EntityPosition::Coords[0] + 32) == enemyTurtle->Rect.y)
+                {
+                    //удар при определённой позиции Enemy
+                }
 			}
 		}
 	};
@@ -486,7 +492,7 @@ void Level::handleEvents(SDL_Event eventInLvl)
 		{
 		case SDL_KEYDOWN:
 			
-			keyW->handleEvents(eventInLvl);
+            keyW->handleEvents(eventInLvl);
 			keyA->handleEvents(eventInLvl);
 			keyS->handleEvents(eventInLvl);
 			keyD->handleEvents(eventInLvl);
@@ -641,7 +647,7 @@ void Level::Attack()
 }
 void Level::Generate() {
 	srand(time(0));
-	generateChoose = 0;
+    generateChoose = 5;
 	player->generate = generateChoose;
 	enemyTurtle->generate = generateChoose;
 	if (generateChoose == 0) {

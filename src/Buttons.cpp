@@ -123,7 +123,7 @@ Keyboard::~Keyboard()
 
 void Keyboard::handleEvents(SDL_Event& keyboardEvent)
 {
-    if (buttonIsPressed(keyboardEvent) == true && callback != NULL && callback == NULL)
+    if (buttonIsPressed(keyboardEvent) == true)
     {
         callback();
     }

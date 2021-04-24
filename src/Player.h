@@ -1,6 +1,6 @@
 #pragma once
 #include "SDL.h"
-#include "inventory.h"
+#include "Inventory.h"
 #include "GameObject.h"
 #include "Animation.h"
 

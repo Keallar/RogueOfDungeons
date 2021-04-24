@@ -3,6 +3,7 @@
 #include <SDL_image.h>
 #include <string>
 #include <functional>
+#include <iostream>
 
 struct Mouse
 {

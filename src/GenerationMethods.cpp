@@ -1,4 +1,3 @@
-#pragma once
 #include "Game.h"
 #include "Level.h"
 #include "Managers.h"
@@ -38,8 +37,10 @@ int Level::GetLocation(int x, int y) {
 }
 
 //ф-я для безопасного измменения массива
-void Level::ChangeLocation(int x, int y) {
-	if (x >= 0, x < 32, y >= 0, y < 22) {
+void Level::ChangeLocation(int x, int y)
+{
+    if (x >= 0 && x < 32 && y >= 0 && y < 22)
+    {
 		textureLocation[y][x] = 0;
 	}
 }

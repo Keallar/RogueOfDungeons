@@ -1,4 +1,4 @@
-﻿#pragma once
+#pragma once
 #include <vector>
 #include "Enemy.h"
 #include "Player.h"
@@ -37,7 +37,7 @@ private:
 	UiHpEnemyInfo* uiEnemyHpInfo;
 	UIInfo* uiInfo;
 	UIItem* uiItem;
-	UIEnemyInfo* uiEnemy;
+    //UIEnemyInfo* uiEnemy;
 	UISpecifications* uiSpec;
 	UIEquipedItem* uiEquiped;
 	//Keyboard* keyboard;

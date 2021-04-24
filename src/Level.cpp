@@ -1,4 +1,3 @@
-#pragma once
 #include "Game.h"
 #include "Level.h"
 #include "Managers.h"
@@ -25,7 +24,7 @@ Level::Level(SDL_Renderer* renderer) : ren (renderer)
 	uiEnemyHpInfo = new UiHpEnemyInfo(ren);
 	uiInfo = new UIInfo(ren);
 	uiItem = new UIItem(ren);
-	uiEnemy = new UIEnemyInfo(ren);
+    //uiEnemy = new UIEnemyInfo(ren);
 	uiSpec = new UISpecifications(ren);
 	uiInv = new UIInventory(ren);
 	hp = new HpInfo(ren);
@@ -198,7 +197,7 @@ Level::~Level()
 	delete enemyTurtle;
 	delete uiInfo;
 	delete uiItem;
-	delete uiEnemy;
+  //delete uiEnemy;
 	delete uiSpec;
 	delete hp;
 	delete mana;
@@ -386,7 +385,7 @@ void Level::Render()
 
 			if (FlagManager::flagUiEnemy == 1)
 			{
-				uiEnemy->Render();
+                //uiEnemy->Render();
 				uiEnemyHpInfo->Render();
 			}
 
@@ -478,13 +477,15 @@ void Level::handleEvents(SDL_Event eventInLvl)
 		//Вызов окна Inventory по нажатию мыши
 		uiInv->handleEvents(eventInLvl);
 
-        if (eventInLvl.button.button == SDL_BUTTON_RIGHT)
-		{
-			//Вызов infoEnemy по нажатию мыши
-			uiEnemyHpInfo->callEnemyInfo();
-		}
-	}
-
+        if (eventInLvl.type == SDL_MOUSEBUTTONDOWN)
+        {
+            if (eventInLvl.button.button == SDL_BUTTON_RIGHT)
+            {
+                //Вызов infoEnemy по нажатию мыши
+                uiEnemyHpInfo->callEnemyInfo();
+            }
+        }
+    }
 	//Передача event в Player
 	if (player)
 	{
@@ -546,7 +547,7 @@ void Level::Attack()
 				}
 			}
 		}
-		else if (abs(EntityPosition::Coords[1] - enemyTurtle->Rect.y == 0))
+        else if (/*abs*/(EntityPosition::Coords[1] - enemyTurtle->Rect.y == 0))
 		{
 			if (PlPosx > EnPosx)
 			{

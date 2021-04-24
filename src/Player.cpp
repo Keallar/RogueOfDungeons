@@ -1,10 +1,10 @@
-﻿#include "Player.h"
+#include "Player.h"
 #include "GameObject.h"
 #include "Managers.h"
 #include <iostream>
 #include "EntityPosition.h"
 #include "UI.h"
-#include "inventory.h"
+#include "Inventory.h"
 #include "Enemy.h"
 #include "Buttons.h"
 #include <iostream>
@@ -98,17 +98,22 @@ Player::~Player()
 
 int Player::GetHP(int numOfArr)
 {
+    int temp = 0;
 	switch (numOfArr)
 	{
 	case 0:
-		return HP[0];
+        temp = HP[0];
+        break;
 	case 1:
-		return HP[1];
+        temp = HP[1];
+        break;
 	case 2:
-		return HP[2];
+        temp = HP[2];
+        break;
 	default:
 		break;
 	}
+    return temp;
 }
 
 int Player::GetEXP(int numOfArr)
@@ -551,8 +556,8 @@ int	Player::MeleeAttack()
 		std::cout << "Melee boy" << std::endl;
 			damage = Player::EqItems.equipedMeleeW->DMG + Player::STR[0];
 			std::cout << damage << std::endl;
-			return damage;
 	}
+    return damage;
 }
 int Player::RangeAttack() 
 {
@@ -562,8 +567,8 @@ int Player::RangeAttack()
 	{
 		damage = Player::EqItems.equipedRangeW->DMG + Player::DEX[0];
 		std::cout << damage << "!" << std::endl;
-		return damage;
 	}
+    return damage;
 }
 /*void Player::Attack()
 {

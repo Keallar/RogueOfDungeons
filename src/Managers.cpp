@@ -1,4 +1,4 @@
-﻿#pragma once
+#pragma once
 #include "Managers.h"
 #include "SDL.h"
 #include "SDL_image.h"
@@ -15,14 +15,16 @@ SDL_Texture* textureManager::LoadTexture(const char* texName, SDL_Renderer* ren)
 
 bool InputManager::MouseInArea(int x, int y, int w, int h, int MouseX, int MouseY) 
 {
+    bool temp;
 	if ((MouseX >= x) && (MouseX <= x + w) && (MouseY >= y) && (MouseY <= y + h)) 
 	{
-		return true;
+        temp = true;
 	}
 	else 
 	{
-		return false;
+        temp = false;
 	}
+    return  temp;
 }
 
 
@@ -44,7 +46,8 @@ void RenderManager::CopyToRender(SDL_Texture* texture, SDL_Renderer* ren)
 	SDL_RenderCopy(ren, texture, NULL, NULL);
 }
 
-void RenderManager::SetTile(int x, int y, int tile, SDL_Renderer* renderer, SDL_Texture* TileTexture) {
+void RenderManager::SetTile(int x, int y, int tile, SDL_Renderer* renderer, SDL_Texture* TileTexture)
+{
 	RenderManager::CopyToRender(TileTexture, renderer, x, y, 32, 32, (tile / 4) * 32, (tile % 4) * 32, 32, 32);
 }
 

@@ -23,7 +23,7 @@ Button::Button(const char* textureName, SDL_Renderer* renderer, SDL_Rect rect)
 }
 //конструктор c callback и hover
 Button::Button(const char* textureName, SDL_Renderer* renderer, const SDL_Rect rect, 
-	void (*callbackFunction)(), void (*hoverFunction)()):
+    void (*callbackFunction)(), void (*hoverFunction)()):
 	nameOftexture(textureName), ren(renderer), callback(callbackFunction), hover(hoverFunction)
 {
 	button.x = rect.x;

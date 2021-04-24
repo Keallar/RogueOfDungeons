@@ -18,12 +18,12 @@ private:
 	SDL_Texture* buttonTexture;
 	Mouse mouse;
 	SDL_Rect button;
-	void (*callback)();
+    void (*callback)();
 	void (*hover)();
 	bool mouseInArea(int x, int y, int w, int h);
 public:
 	Button(const char* textureName, SDL_Renderer* renderer, SDL_Rect rect);
-	Button(const char* textureName, SDL_Renderer* renderer, SDL_Rect rect, void (*callbackFunction)(), void (*hoverFunction)());
+    Button(const char* textureName, SDL_Renderer* renderer, SDL_Rect rect, void (*callbackFunction)(), void (*hoverFunction)());
 	void handleEvents(SDL_Event& buttonEvent);
 	void Render();
 	void updateCoords(int newx, int newy);

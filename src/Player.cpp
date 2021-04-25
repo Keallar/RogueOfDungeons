@@ -118,33 +118,42 @@ int Player::GetHP(int numOfArr)
 
 int Player::GetEXP(int numOfArr)
 {
+    int temp = 0;
 	switch (numOfArr)
 	{
 	case 0:
-		return exp[0];
+        temp = exp[0];
+        break;
 	case 1:
-		return exp[1];
+        temp = exp[1];
+        break;
 	case 2:
-		return exp[2];
+        temp = exp[2];
+        break;
 	default:
 		break;
 	}
+return temp;
 }
 
 int Player::GetMana(int numOfArr)
 {
+    int temp = 0;
 	switch (numOfArr)
 	{
 	case 0:
-		return mana[0];
+        temp = mana[0];
+        break;
 	case 1:
-		return mana[1];
+        temp = mana[1];
+        break;
 	case 2:
-		return mana[2];
+        temp = mana[2];
+        break;
 	default:
 		break;
 	}
-
+    return temp;
 }
 
 //Получение значения характеристик (STR, DEX, INT, WSD, PHS, LCK)

@@ -24,7 +24,6 @@ Level::Level(SDL_Renderer* renderer) : ren (renderer)
 	uiEnemyHpInfo = new UiHpEnemyInfo(ren);
 	uiInfo = new UIInfo(ren);
 	uiItem = new UIItem(ren);
-    //uiEnemy = new UIEnemyInfo(ren);
 	uiSpec = new UISpecifications(ren);
 	uiInv = new UIInventory(ren);
 	hp = new HpInfo(ren);

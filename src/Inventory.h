@@ -81,12 +81,3 @@ public:
 	static std::map <int, InventoryItem*> ExistingItems;
 	static std::map <int, InventoryItem*>::iterator it;
 };
-/*class EquipedItems 
-{
-private:
-public:
-	int Equiped[3];
-	EquipedItems();
-	void EquipItem();
-};*/
-//static std::map <int, InventoryItem>::iterator it;

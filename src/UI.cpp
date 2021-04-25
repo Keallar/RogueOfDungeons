@@ -594,7 +594,7 @@ void UIInventory::clickForItemsInInv()
 		if (InputManager::MouseInArea((780 + 36 * (i % 4)), (100 + ((i / 4) * 50)), 32, 32, xMouseCoord, yMouseCoord) &&
 			Inventory::inventoryFace[i] != -1 && FlagManager::flagInv == 1)
 		{
-			std::cout << "Item " + i << std::endl;
+            //std::cout << "Item " + i << std::endl;
 			if (FlagManager::flagHaveDrop == false) 
 			{
 				FlagManager::flagEquip = i;

@@ -478,8 +478,10 @@ void Level::handleEvents(SDL_Event eventInLvl)
 
         if (eventInLvl.type == SDL_MOUSEBUTTONDOWN)
         {
+           // SDL_GetMouseState(mouseCoords.x, mouseCoords.y);
             if (eventInLvl.button.button == SDL_BUTTON_RIGHT)
             {
+                //if (InputManager::MouseInArea(enemyTurtle->Rect.x, enemyTurtle->Rect.y, 32, 32))
                 //Вызов infoEnemy по нажатию мыши
                 uiEnemyHpInfo->callEnemyInfo();
             }

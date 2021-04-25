@@ -24,7 +24,7 @@ int Player::mana[3] = {
 					  };
 
 int Player::exp[3] = { 
-					   0, /*exp  now*/
+                       0,  /*exp  now*/
 					   0,  /*exp  previous*/
 					   100   /*exp max */
 					 };

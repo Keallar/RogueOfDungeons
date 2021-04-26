@@ -324,7 +324,7 @@ void Level::Render()
         {
             if (Dark[enemy->Rect.y/32][enemy->Rect.x/32] == 0)
             {
-                RenderManager::SetTile(EntityPosition::Coords[2], EntityPosition::Coords[3], 12, ren, TileTextures[0]);
+                RenderManager::SetTile(enemy->Rect.y, enemy->Rect.x, 12, ren, TileTextures[0]);
             }
             else
             {
@@ -492,7 +492,7 @@ void Level::handleEvents(SDL_Event eventInLvl)
 
 
     //Передача event в Player
-    if (player)
+    if (player && FlagManager::flagPlayer == 1)
     {
         keyW->handleEvents(eventInLvl);
         keyA->handleEvents(eventInLvl);

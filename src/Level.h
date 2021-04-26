@@ -34,13 +34,14 @@ private:
 	SDL_Renderer* ren;
 	Player* player;
 	Enemy* enemyTurtle;
+    Enemy* SecondEnemyTurtle;
     UIEnemyInfo* uiEnemyInfo;
 	UIInfo* uiInfo;
 	UIItem* uiItem;
 	UISpecifications* uiSpec;
 	UIEquipedItem* uiEquiped;
 	Animation* animation;
-	std::vector <Enemy> enemies;
+    std::vector <Enemy*> enemies;
 	UIInventory* uiInv;
 	MouseCoords mouseCoords;
 	const Uint8* keys = SDL_GetKeyboardState(NULL);

@@ -516,23 +516,24 @@ void UIInventory::handleEvents(SDL_Event& eventInInv)
 
 void UIInventory::clickForItemsInInv()
 {
-    SDL_GetMouseState(&xMouseCoord, &yMouseCoord);
-    for (int i = 0; i < 16; i++)
-    {
-        if (InputManager::MouseInArea((780 + 36 * (i % 4)), (100 + ((i / 4) * 50)), 32, 32, xMouseCoord, yMouseCoord) &&
-                Inventory::inventoryFace[i] != -1 && FlagManager::flagInv == 1)
-        {
-            //std::cout << "Item " + i << std::endl;
-            if (FlagManager::flagHaveDrop == false)
-            {
-                FlagManager::flagEquip = i;
-            }
-            else
-            {
-                FlagManager::flagDrop = i;
-            }
-        }
-    }
+	SDL_GetMouseState(&xMouseCoord, &yMouseCoord);
+	
+	for (int i = 0; i < 16; i++)
+	{
+		if (InputManager::MouseInArea((780 + 36 * (i % 4)), (100 + ((i / 4) * 50)), 32, 32, xMouseCoord, yMouseCoord) &&
+			Inventory::inventoryFace[i] != -1 && FlagManager::flagInv == 1)
+		{
+			if (FlagManager::flagHaveDrop == false) 
+			{
+				FlagManager::flagEquip = i;
+			}
+			else
+			{
+				FlagManager::flagDrop = i;
+			}
+		}
+	}
+	
 }
 
 

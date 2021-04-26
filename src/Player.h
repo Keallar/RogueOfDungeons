@@ -56,7 +56,6 @@ public:
 	void GetItemEquip(int id);
 	void GetItemUnEquip(int id);
 	void GetItemDrop(int id);
-    //static void meleeAttackPlayer();
 
     static int GetHP(int numOfArr);
     static int GetEXP(int numOfArr);

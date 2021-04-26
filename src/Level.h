@@ -5,6 +5,7 @@
 #include "UI.h"
 #include "GameObject.h"
 #include "Buttons.h"
+#include "UiPlayer.h"
 
 struct MouseCoords
 {
@@ -27,36 +28,28 @@ private:
 	int textureLocation[22][32];
 	int Location[22][32];
 	int Dark[22][32];
-	//int Location2[22][32];
 	int TileSet;
 	SDL_Texture* TileTextures[5];
 	SDL_Texture* PlayBackground;
 	SDL_Renderer* ren;
 	Player* player;
 	Enemy* enemyTurtle;
-	UiHpEnemyInfo* uiEnemyHpInfo;
+    UIEnemyInfo* uiEnemyInfo;
 	UIInfo* uiInfo;
 	UIItem* uiItem;
-    //UIEnemyInfo* uiEnemy;
 	UISpecifications* uiSpec;
 	UIEquipedItem* uiEquiped;
-	//Keyboard* keyboard;
-	Button* buttonForCallSpecInfo;
-	Button* buttonForCallInvWin;
 	Animation* animation;
 	std::vector <Enemy> enemies;
 	UIInventory* uiInv;
-	//std::vector <GameObject> textures; 
 	MouseCoords mouseCoords;
 	const Uint8* keys = SDL_GetKeyboardState(NULL);
     Keyboard* keyW = 0;
     Keyboard* keyA = 0;
     Keyboard* keyS = 0;
     Keyboard* keyD = 0;
-	//std::vector<std::pair<int, int>> pop_front(std::vector<std::pair<int, int>> vec);
-	//void OtherGeneration(int startX, int startY, int endX, int endY);
-	//bool Search(std::vector<std::pair<int, int>> vector, int x, int y);
-	//int SearchNum(std::vector<std::pair<int, int>> vector, int x, int y);
+    Button* buttonForPlayerAttack;
+
 	void ChangeDark(int i, int j);
 	void ChunkGenerationMethod();
 	void ChunkGenerationMethod2();
@@ -84,6 +77,5 @@ public:
 	void ChangeLocation(int x, int y);
 	void ChangeLevel(int x, int y, int LocationChange, int TextureChange);
 };
-
 
 

@@ -34,6 +34,7 @@ private:
 	SDL_Renderer* ren;
 	Player* player;
 	Enemy* enemyTurtle;
+    Enemy* SecondEnemyTurtle;
 	UiHpEnemyInfo* uiEnemyHpInfo;
 	UIInfo* uiInfo;
 	UIItem* uiItem;
@@ -44,7 +45,7 @@ private:
 	Button* buttonForCallSpecInfo;
 	Button* buttonForCallInvWin;
 	Animation* animation;
-	std::vector <Enemy> enemies;
+    std::vector <Enemy*> enemies;
 	UIInventory* uiInv;
 	//std::vector <GameObject> textures; 
 	MouseCoords mouseCoords;

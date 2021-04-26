@@ -97,10 +97,11 @@ void Game::handleEvents()
 		default:
 			break;
 		}
-		
 		if (level)
 		{
+            std::cout<<"Preevents";
 			level->handleEvents(event);
+
 		}
 	}
 }

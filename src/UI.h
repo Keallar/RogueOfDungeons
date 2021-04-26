@@ -202,7 +202,7 @@ private:
 	SDL_Texture* hpEnemyInfo;
 	SDL_Texture* specfifcationsEnemy;
 public:
-	UIEnemyInfo(SDL_Renderer* rendrerer);
+    UIEnemyInfo(SDL_Renderer* rendrerer);
 	void Render();
 };
 
@@ -227,10 +227,10 @@ private:
 	SDL_Texture* hpMaxEnemy;
 	SDL_Texture* slashhhhhhhhh;
 public:
-	UiHpEnemyInfo(SDL_Renderer* renderer);
+    UiHpEnemyInfo(SDL_Renderer* renderer);
 	~UiHpEnemyInfo();
 	void Render();
-	void Update();
+    void Update();
 	void UpdateMax();
 	void callEnemyInfo();
 };

@@ -555,7 +555,6 @@ UIInventory::UIInventory(SDL_Renderer* renderer) : ren(renderer)
 {
 	SDL_Color color = { 255, 255, 255, 255 };
 	const char* PATH_IN_FONT = "data/fonts/manaspc.ttf";
-
 	inventoryBlock = textureManager::LoadTexture("data/images/InfoBlock.png", ren);
 	inventoryText = FontManager::renderText("Inventory", PATH_IN_FONT, color, 64, ren);
 	buttonForCallDpor = new Button("data/images/Button.png", ren, { 790, 665, 25, 22 }, callbackFunctions::callDrop, NULL);
@@ -594,7 +593,6 @@ void UIInventory::clickForItemsInInv()
 		if (InputManager::MouseInArea((780 + 36 * (i % 4)), (100 + ((i / 4) * 50)), 32, 32, xMouseCoord, yMouseCoord) &&
 			Inventory::inventoryFace[i] != -1 && FlagManager::flagInv == 1)
 		{
-			std::cout << "Item " + i << std::endl;
 			if (FlagManager::flagHaveDrop == false) 
 			{
 				FlagManager::flagEquip = i;
@@ -627,15 +625,15 @@ void UIEnemyInfo::Render()
 
 UiHpEnemyInfo::UiHpEnemyInfo(SDL_Renderer* renderer)
 {
-	ren = renderer;
-	std::string stringValue1 = std::to_string(Enemy::GetHpEnemy(0));
-	const char* TEXT_VALUE_CURRENT = stringValue1.c_str();
-	hpTextEnemy = FontManager::renderText("HP", PATH_IN_FONT, color, 64, ren);
-	hpCurrentTextEnemy = FontManager::renderText(TEXT_VALUE_CURRENT, PATH_IN_FONT, color, 32, ren);
-	slashhhhhhhhh = FontManager::renderText("/", PATH_IN_FONT, color, 32, ren);
-	std::string stringValue2 = std::to_string(Enemy::GetHpEnemy(1));
-	const char* TEXT_VALUE_MAX = stringValue2.c_str();
-	hpMaxEnemy = FontManager::renderText(TEXT_VALUE_MAX, PATH_IN_FONT, color, 32, ren);
+    //ren = renderer;
+    //std::string stringValue1 = std::to_string(enemy->GetHpEnemy(0));
+    //const char* TEXT_VALUE_CURRENT = stringValue1.c_str();
+    //hpTextEnemy = FontManager::renderText("HP", PATH_IN_FONT, color, 64, ren);
+    //hpCurrentTextEnemy = FontManager::renderText(TEXT_VALUE_CURRENT, PATH_IN_FONT, color, 32, ren);
+    //slashhhhhhhhh = FontManager::renderText("/", PATH_IN_FONT, color, 32, ren);
+    //std::string stringValue2 = std::to_string(enemy->GetHpEnemy(1));
+    //const char* TEXT_VALUE_MAX = stringValue2.c_str();
+    //hpMaxEnemy = FontManager::renderText(TEXT_VALUE_MAX, PATH_IN_FONT, color, 32, ren);
 }
 
 UiHpEnemyInfo::~UiHpEnemyInfo()
@@ -655,9 +653,9 @@ void UiHpEnemyInfo::Update()
 {
 	SDL_DestroyTexture(hpCurrentTextEnemy);
 	hpCurrentTextEnemy = 0;
-	std::string stringTemp = std::to_string(Enemy::GetHpEnemy(0));
-	const char* CHAR_VALUE = stringTemp.c_str();
-	hpCurrentTextEnemy = FontManager::renderText(CHAR_VALUE, PATH_IN_FONT, color, 32, ren);
+    //std::string stringTemp = std::to_string(enemy->GetHpEnemy(0));
+    //const char* CHAR_VALUE = stringTemp.c_str();
+    //hpCurrentTextEnemy = FontManager::renderText(CHAR_VALUE, PATH_IN_FONT, color, 32, ren);
 }
 
 void UiHpEnemyInfo::UpdateMax()

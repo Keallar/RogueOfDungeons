@@ -79,7 +79,6 @@ public:
 	void clickForItemsInInv();
 };
 
-private:
 
 class UIEquipedItem 
 {

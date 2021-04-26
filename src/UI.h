@@ -32,16 +32,11 @@ private:
 	//Buttons
 	Button* buttonForCallSpecInfo;
 	Button* buttonForCallInvWin;
+    Button* buttonForCallEnemyInfo;
 
 	//Keyboard
 	Keyboard* keyForCallSpecInfo;
 	Keyboard* keyForcCallInvWin;
-	Keyboard* keyForIncSTR;
-	Keyboard* keyForIncDEX;
-	Keyboard* keyForIncINT;
-	Keyboard* keyForIncWSD;
-	Keyboard* keyForIncPHS;
-	Keyboard* keyForIncLCK;
 public:
 	UIInfo(SDL_Renderer* renderer);
 	~UIInfo();
@@ -139,7 +134,15 @@ private:
 	Button* buttonForIncPlayerWSD;
 	Button* buttonForIncPlayerPHS;
 	Button* buttonForIncPlayerLCK;
-	//other
+
+    //keys
+    Keyboard* keyForIncSTR;
+    Keyboard* keyForIncDEX;
+    Keyboard* keyForIncINT;
+    Keyboard* keyForIncWSD;
+    Keyboard* keyForIncPHS;
+    Keyboard* keyForIncLCK;
+    //other
 	SDL_Texture* one;
 	SDL_Texture* two;
 	SDL_Texture* three;

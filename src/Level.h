@@ -38,8 +38,6 @@ private:
 	UIItem* uiItem;
 	UISpecifications* uiSpec;
 	UIEquipedItem* uiEquiped;
-	Button* buttonForCallSpecInfo;
-	Button* buttonForCallInvWin;
 	Animation* animation;
 	std::vector <Enemy> enemies;
 	UIInventory* uiInv;

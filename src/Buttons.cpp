@@ -7,7 +7,7 @@
 #include "Level.h"
 #include "Game.h"
 
-//??????????? ??? callback ? hover
+
 Button::Button(const char* textureName, SDL_Renderer* renderer, SDL_Rect rect)
     :nameOftexture(textureName), ren(renderer)
 {
@@ -21,10 +21,32 @@ Button::Button(const char* textureName, SDL_Renderer* renderer, SDL_Rect rect)
     else
         buttonTexture = NULL;
 }
-//??????????? c callback ? hover
-Button::Button(const char* textureName, SDL_Renderer* renderer, const SDL_Rect rect,
-    void (*callbackFunction)(), void (*hoverFunction)()):
-    nameOftexture(textureName), ren(renderer), callback(callbackFunction), hover(hoverFunction)
+
+Button::Button(std::string textButton, const char* textureName, SDL_Renderer* renderer, const SDL_Rect rect,
+    std::function <void()> callbackFunction, std::function <void()> hoverFunction):
+    buttonText (textButton),nameOftexture(textureName), ren(renderer), callback(callbackFunction), hover(hoverFunction)
+{
+    button.x = rect.x;
+    button.y = rect.y;
+    button.w = rect.w;
+    button.h = rect.h;
+
+    if (callback == NULL)
+        std::cout << "callback isn't ready " << std::endl;
+
+    if (hover == NULL)
+        std::cout << "hover isn't ready" << std::endl;
+
+    if (nameOftexture != NULL)
+        buttonTexture = textureManager::LoadTexture(nameOftexture, ren);
+    else
+        buttonTexture = NULL;
+}
+
+Button::Button(std::string textButton, SDL_Rect rect, std::function <void()> callbackFunction,
+               std::function <void()> hoverFunction):
+    buttonText (textButton), callback(callbackFunction), hover(hoverFunction)
+
 {
     button.x = rect.x;
     button.y = rect.y;
@@ -50,13 +72,28 @@ void Button::handleEvents(SDL_Event& buttonEvent)
     case SDL_MOUSEBUTTONDOWN:
         if (buttonEvent.button.clicks == 1)
         {
-            if (buttonEvent.button.button == SDL_BUTTON_LEFT)
+            if (buttonText == "left" || buttonText == "LEFT" || buttonText == "Left")
             {
-                mouse.x = buttonEvent.button.x;
-                mouse.y = buttonEvent.button.y;
-                if (Button::mouseInArea(button.x, button.y, button.w, button.h))
+                if (buttonEvent.button.button == SDL_BUTTON_LEFT)
                 {
-                    callback();
+                    mouse.x = buttonEvent.button.x;
+                    mouse.y = buttonEvent.button.y;
+                    if (Button::mouseInArea(button.x, button.y, button.w, button.h))
+                    {
+                        callback();
+                    }
+                }
+            }
+            else if (buttonText == "right" || buttonText == "RIGHT" || buttonText == "Right")
+            {
+                if (buttonEvent.button.button == SDL_BUTTON_RIGHT)
+                {
+                    mouse.x = buttonEvent.button.x;
+                    mouse.y = buttonEvent.button.y;
+                    if (Button::mouseInArea(button.x, button.y, button.w, button.h))
+                    {
+                        callback();
+                    }
                 }
             }
         }

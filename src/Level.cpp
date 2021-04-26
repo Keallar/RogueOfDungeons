@@ -21,7 +21,7 @@ Level::Level(SDL_Renderer* renderer) : ren (renderer)
     PlayBackground = textureManager::LoadTexture("data/images/Playback.png", ren);
     player = new Player(ren);
     enemyTurtle = new Enemy("data/images/Turtle.png", 4, ren, 8, 8, 3, 4);
-    uiEnemyHpInfo = new UIEnemyInfo(ren);
+    uiEnemyInfo = new UIEnemyInfo(ren, enemyTurtle);
     uiInfo = new UIInfo(ren);
     uiItem = new UIItem(ren);
     uiSpec = new UISpecifications(ren);
@@ -276,6 +276,7 @@ void Level::Update()
         std::cout << enemyTurtle->CheckHpEnemy();
         Level::deleteEnemy();
     }
+    uiEnemyInfo->Update();
 }
 
 void Level::Start()
@@ -378,13 +379,13 @@ void Level::Render()
 
             if (FlagManager::flagCheckHpEnemy == 1)
             {
-                uiEnemyHpInfo->Update();
+                uiEnemyInfo->Update(enemyTurtle);
             }
 
             if (FlagManager::flagUiEnemy == 1)
             {
                 //uiEnemy->Render();
-                uiEnemyHpInfo->Render();
+                uiEnemyInfo->Render();
             }
 
             //Update значений hp, mana и  exp
@@ -479,6 +480,9 @@ void Level::handleEvents(SDL_Event eventInLvl)
 
         //Вызов окна Inventory по нажатию мыши
         uiInv->handleEvents(eventInLvl);
+
+        //if (eventInLvl.button.button == SDL_BUTTON_RIGHT)
+        uiEnemyInfo->handleEvents(eventInLvl);
     }
 
 

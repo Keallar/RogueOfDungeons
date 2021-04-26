@@ -4,6 +4,7 @@
 #include "SDL_ttf.h"
 #include "string"
 #include "Buttons.h"
+#include "Enemy.h"
 
 class UIInfo
 {
@@ -32,7 +33,6 @@ private:
 	//Buttons
 	Button* buttonForCallSpecInfo;
 	Button* buttonForCallInvWin;
-    Button* buttonForCallEnemyInfo;
 
 	//Keyboard
 	Keyboard* keyForCallSpecInfo;
@@ -186,6 +186,7 @@ private:
 	int xMouseCoord;
 	int yMouseCoord;
 	Button* buttonForCallDpor;
+    Button* buttonForInvItems;
 public:
 	UIInventory(SDL_Renderer* renderer);
 	~UIInventory();
@@ -210,17 +211,20 @@ public:
 class UIEnemyInfo : public TextInfo
 {
 private:
+    Enemy* tempEnemy;
 	SDL_Renderer* ren;
-    SDL_Texture* enemy;
+    SDL_Texture* enemyTex;
     SDL_Texture* hpEnemyBar;
 	SDL_Texture* hpTextEnemy;
 	SDL_Texture* hpCurrentTextEnemy;
 	SDL_Texture* hpMaxEnemy;
 	SDL_Texture* slashhhhhhhhh;
+    Button* buttonForCallEnemyInfo;
 public:
-    UIEnemyInfo(SDL_Renderer* renderer);
+    UIEnemyInfo(SDL_Renderer* renderer, Enemy* enemy);
     void Render() override;
     void Update() override;
+    void Update(Enemy* enemy);
     void UpdateMax() override;
-	void callEnemyInfo();
+    void handleEvents(SDL_Event &eventInUiEnemyInfo);
 };

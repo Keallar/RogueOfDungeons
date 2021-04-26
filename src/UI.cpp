@@ -198,7 +198,7 @@ UIInfo::UIInfo(SDL_Renderer* renderer) : ren (renderer)
             }
         }
     };
-    buttonForCallSpecInfo = new Button("data/images/Button.png", ren , { 1230, 240, 32, 32 }, callSpecOrInfoWin, hoverFunctions::callSpecWin);
+    buttonForCallSpecInfo = new Button("left", "data/images/Button.png", ren , { 1230, 240, 32, 32 }, callSpecOrInfoWin, hoverFunctions::callSpecWin);
     keyForCallSpecInfo = new Keyboard(SDL_SCANCODE_Q, callSpecOrInfoWin);
     auto callInvWin{
         []()
@@ -213,30 +213,14 @@ UIInfo::UIInfo(SDL_Renderer* renderer) : ren (renderer)
             }
         }
     };
-    buttonForCallInvWin = new Button("data/images/Button.png", ren, { 1050, 665, 25, 22 }, callInvWin, NULL);
+    buttonForCallInvWin = new Button("left", "data/images/Button.png", ren, { 1050, 665, 25, 22 }, callInvWin, NULL);
     keyForcCallInvWin = new Keyboard(SDL_SCANCODE_I, callInvWin);
-    auto callEnemyInfo{
-        []()
-        {
-            if (FlagManager::flagUiEnemy == 0)
-            {
-                FlagManager::flagUiEnemy = 1;
-                std::cout << "EnemyInfo\n";
-            }
-            else if (FlagManager::flagUiEnemy == 1)
-            {
-                FlagManager::flagUiEnemy = 0;
-            }
-        }
-    };
-    buttonForCallEnemyInfo = new Button(NULL, ren, {EntityPosition::Coords[2], EntityPosition::Coords[3], 32, 32}, callEnemyInfo, NULL);
 }
 
 UIInfo::~UIInfo()
 {
     delete buttonForCallSpecInfo;
     delete buttonForCallInvWin;
-    delete buttonForCallEnemyInfo;
     delete keyForCallSpecInfo;
     delete keyForcCallInvWin;
 
@@ -279,8 +263,6 @@ void UIInfo::handleEvents(SDL_Event& eventInUiInfo)
     //Buttons
     buttonForCallSpecInfo->handleEvents(eventInUiInfo);
     buttonForCallInvWin->handleEvents(eventInUiInfo);
-    buttonForCallEnemyInfo->updateCoords (EntityPosition::Coords[2], EntityPosition::Coords[3]);
-    buttonForCallEnemyInfo->handleEvents(eventInUiInfo);
 
     //Keyboard
     keyForCallSpecInfo->handleEvents(eventInUiInfo);
@@ -309,7 +291,7 @@ UISpecifications::UISpecifications(SDL_Renderer* renderer) : ren (renderer)
             }
         }
     };
-    buttonForIncPlayerSTR = new Button("data/images/Button.png", ren, { 1230, 50, 16, 20 }, incSTR, NULL);
+    buttonForIncPlayerSTR = new Button("left", "data/images/Button.png", ren, { 1230, 50, 16, 20 }, incSTR, NULL);
     keyForIncSTR = new Keyboard(SDL_SCANCODE_1, incSTR);
     //DEX
     DEX = FontManager::renderText("DEX", PATH_IN_FONT, color, 64, ren);
@@ -323,7 +305,7 @@ UISpecifications::UISpecifications(SDL_Renderer* renderer) : ren (renderer)
             }
         }
     };
-    buttonForIncPlayerDEX = new Button("data/images/Button.png", ren, { 1230, 80, 16, 20 }, incDEX, NULL);
+    buttonForIncPlayerDEX = new Button("left", "data/images/Button.png", ren, { 1230, 80, 16, 20 }, incDEX, NULL);
     keyForIncDEX = new Keyboard(SDL_SCANCODE_2, incDEX);
     //INT
     INT = FontManager::renderText("INT", PATH_IN_FONT, color, 64, ren);
@@ -337,7 +319,7 @@ UISpecifications::UISpecifications(SDL_Renderer* renderer) : ren (renderer)
             }
         }
     };
-    buttonForIncPlayerINT = new Button("data/images/Button.png", ren, { 1230, 110, 16, 20 }, incINT, NULL);
+    buttonForIncPlayerINT = new Button("left", "data/images/Button.png", ren, { 1230, 110, 16, 20 }, incINT, NULL);
     keyForIncINT = new Keyboard(SDL_SCANCODE_3, incINT);
     //WSD
     WSD = FontManager::renderText("WSD", PATH_IN_FONT, color, 64, ren);
@@ -351,7 +333,7 @@ UISpecifications::UISpecifications(SDL_Renderer* renderer) : ren (renderer)
             }
         }
     };
-    buttonForIncPlayerWSD = new Button("data/images/Button.png", ren, { 1230, 140, 16, 20 }, incWSD, NULL);
+    buttonForIncPlayerWSD = new Button("left", "data/images/Button.png", ren, { 1230, 140, 16, 20 }, incWSD, NULL);
     keyForIncWSD = new Keyboard(SDL_SCANCODE_4, incWSD);
     //PHS
     PHS = FontManager::renderText("PHS", PATH_IN_FONT, color, 64, ren);
@@ -365,7 +347,7 @@ UISpecifications::UISpecifications(SDL_Renderer* renderer) : ren (renderer)
             }
         }
     };
-    buttonForIncPlayerPHS = new Button("data/images/Button.png", ren, { 1230, 170, 16, 20 }, incPHS, NULL);
+    buttonForIncPlayerPHS = new Button("left","data/images/Button.png", ren, { 1230, 170, 16, 20 }, incPHS, NULL);
     keyForIncPHS = new Keyboard(SDL_SCANCODE_5, incPHS);
     //LCK
     LCK = FontManager::renderText("LCK", PATH_IN_FONT, color, 64, ren);
@@ -380,7 +362,7 @@ UISpecifications::UISpecifications(SDL_Renderer* renderer) : ren (renderer)
             }
         }
     };
-    buttonForIncPlayerLCK = new Button("data/images/Button.png", ren, { 1230, 200, 16, 20 }, incLCK, NULL);
+    buttonForIncPlayerLCK = new Button("left", "data/images/Button.png", ren, { 1230, 200, 16, 20 }, incLCK, NULL);
     keyForIncLCK = new Keyboard(SDL_SCANCODE_6, incLCK);
 
     //numbers
@@ -617,7 +599,7 @@ UIInventory::UIInventory(SDL_Renderer* renderer) : ren(renderer)
             }
         }
     };
-    buttonForCallDpor = new Button("data/images/Button.png", ren, { 790, 665, 25, 22 }, callDrop , NULL);
+    buttonForCallDpor = new Button("left","data/images/Button.png", ren, { 790, 665, 25, 22 }, callDrop , NULL);
 }
 
 void UIInventory::Render()
@@ -633,6 +615,28 @@ void UIInventory::Render()
             Inventory::it = Inventory::ExistingItems.find(Inventory::inventoryFace[i]);
             item = textureManager::LoadTexture((Inventory::it->second)->ItemTexture, ren);
             RenderManager::CopyToRender(item, ren, (780 + 36 * (i % 4)), (100 + ((i / 4) * 50)), 32, 32);
+            auto callInvItems{
+                [=]()
+                {
+                    SDL_GetMouseState(&xMouseCoord, &yMouseCoord);
+                    for (int i = 0; i < 16; i++)
+                    {
+                        if (InputManager::MouseInArea((780 + 36 * (i % 4)), (100 + ((i / 4) * 50)), 32, 32, xMouseCoord, yMouseCoord) &&
+                                Inventory::inventoryFace[i] != -1 && FlagManager::flagInv == 1)
+                        {
+                            //std::cout << "Item " + i << std::endl;
+                            if (FlagManager::flagHaveDrop == false)
+                            {
+                                FlagManager::flagEquip = i;
+                            }
+                            else
+                            {
+                                FlagManager::flagDrop = i;
+                            }
+                        }
+                    }
+                }
+            };
             SDL_DestroyTexture(item);
             item = 0;
         }
@@ -647,7 +651,6 @@ void UIInventory::handleEvents(SDL_Event& eventInInv)
 void UIInventory::clickForItemsInInv()
 {
     SDL_GetMouseState(&xMouseCoord, &yMouseCoord);
-
     for (int i = 0; i < 16; i++)
     {
         if (InputManager::MouseInArea((780 + 36 * (i % 4)), (100 + ((i / 4) * 50)), 32, 32, xMouseCoord, yMouseCoord) &&
@@ -664,30 +667,43 @@ void UIInventory::clickForItemsInInv()
             }
         }
     }
-
 }
 
 
-UIEnemyInfo::UIEnemyInfo(SDL_Renderer* renderer)
+UIEnemyInfo::UIEnemyInfo(SDL_Renderer* renderer, Enemy* enemy)
 {
+    tempEnemy = enemy;
     ren = renderer;
-    std::string stringValue1 = std::to_string(Enemy::GetHpEnemy(0));
+    std::string stringValue1 = std::to_string(enemy->GetHpEnemy(0));
     const char* TEXT_VALUE_CURRENT = stringValue1.c_str();
-    enemy = FontManager::renderText("Enemy", PATH_IN_FONT, color, 32, ren);
+    enemyTex = FontManager::renderText("Enemy", PATH_IN_FONT, color, 32, ren);
     hpEnemyBar = textureManager::LoadTexture("data/images/EnemyBar.png", ren);
     hpTextEnemy = FontManager::renderText("HP", PATH_IN_FONT, color, 64, ren);
     hpCurrentTextEnemy = FontManager::renderText(TEXT_VALUE_CURRENT, PATH_IN_FONT, color, 32, ren);
     slashhhhhhhhh = FontManager::renderText("/", PATH_IN_FONT, color, 32, ren);
-    std::string stringValue2 = std::to_string(Enemy::GetHpEnemy(1));
+    std::string stringValue2 = std::to_string(enemy->GetHpEnemy(1));
     const char* TEXT_VALUE_MAX = stringValue2.c_str();
     hpMaxEnemy = FontManager::renderText(TEXT_VALUE_MAX, PATH_IN_FONT, color, 32, ren);
+    auto callEnemyInfo{
+        []()
+        {
+            if (FlagManager::flagUiEnemy == 0)
+            {
+                FlagManager::flagUiEnemy = 1;
+                std::cout << "EnemyInfo\n";
+            }
+            else if (FlagManager::flagUiEnemy == 1)
+            {
+                FlagManager::flagUiEnemy = 0;
+            }
+        }
+    };
+    buttonForCallEnemyInfo = new Button("right", NULL, ren, {tempEnemy->Rect.x,tempEnemy ->Rect.y, 32, 32}, callEnemyInfo, NULL);
 }
-
-
 
 void UIEnemyInfo::Render()
 {
-    RenderManager::CopyToRender(enemy, ren, 1116, 250, 64, 32);
+    RenderManager::CopyToRender(enemyTex, ren, 1116, 250, 64, 32);
     RenderManager::CopyToRender(hpEnemyBar, ren, 1080, 290, 190, 45, 20, 5, 256, 32);
     RenderManager::CopyToRender(hpTextEnemy, ren, 1050, 300, 25, 22);
     RenderManager::CopyToRender(hpCurrentTextEnemy, ren, 1120, 325, 32, 20);
@@ -697,9 +713,14 @@ void UIEnemyInfo::Render()
 
 void UIEnemyInfo::Update()
 {
+     buttonForCallEnemyInfo->updateCoords(tempEnemy->Rect.x, tempEnemy->Rect.y);
+}
+
+void UIEnemyInfo::Update(Enemy* enemy)
+{
     SDL_DestroyTexture(hpCurrentTextEnemy);
     hpCurrentTextEnemy = 0;
-    std::string stringTemp = std::to_string(Enemy::GetHpEnemy(0));
+    std::string stringTemp = std::to_string(enemy->GetHpEnemy(0));
     const char* CHAR_VALUE = stringTemp.c_str();
     hpCurrentTextEnemy = FontManager::renderText(CHAR_VALUE, PATH_IN_FONT, color, 32, ren);
 }
@@ -709,3 +730,7 @@ void UIEnemyInfo::UpdateMax()
 
 }
 
+void UIEnemyInfo::handleEvents(SDL_Event &eventInUiEnemyInfo)
+{
+    buttonForCallEnemyInfo->handleEvents(eventInUiEnemyInfo);
+}

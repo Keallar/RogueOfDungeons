@@ -33,7 +33,7 @@ private:
 	SDL_Renderer* ren;
 	Player* player;
 	Enemy* enemyTurtle;
-    UIEnemyInfo* uiEnemyHpInfo;
+    UIEnemyInfo* uiEnemyInfo;
 	UIInfo* uiInfo;
 	UIItem* uiItem;
 	UISpecifications* uiSpec;

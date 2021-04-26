@@ -55,11 +55,6 @@ Level::Level(SDL_Renderer* renderer) : ren (renderer)
                 {
                     FlagManager::flagChest = 1;
                 }
-                if (EntityPosition::Coords[0] == enemyTurtle->Rect.x &&
-                        (EntityPosition::Coords[1] - 32) == enemyTurtle->Rect.y)
-                {
-                    //удар при определённой позиции Enemy
-                }
             }
         }
     };
@@ -88,11 +83,6 @@ Level::Level(SDL_Renderer* renderer) : ren (renderer)
                 if (Location[(EntityPosition::Coords[1]) / 32][(EntityPosition::Coords[0]) / 32 - 1] == 3)
                 {
                     FlagManager::flagChest = 2;
-                }
-                if ((EntityPosition::Coords[0] - 32) == enemyTurtle->Rect.x &&
-                        EntityPosition::Coords[1] == enemyTurtle->Rect.y)
-                {
-                    //удар при определённой позиции Enemy
                 }
             }
         }
@@ -123,11 +113,6 @@ Level::Level(SDL_Renderer* renderer) : ren (renderer)
                 {
                     FlagManager::flagChest = 3;
                 }
-                if (EntityPosition::Coords[0] == enemyTurtle->Rect.x &&
-                        (EntityPosition::Coords[1] + 32) == enemyTurtle->Rect.y)
-                {
-                    //удар при определённой позиции Enemy
-                }
             }
         }
     };
@@ -157,15 +142,19 @@ Level::Level(SDL_Renderer* renderer) : ren (renderer)
                 {
                     FlagManager::flagChest = 4;
                 }
-                if (EntityPosition::Coords[0] == enemyTurtle->Rect.x &&
-                        (EntityPosition::Coords[0] + 32) == enemyTurtle->Rect.y)
-                {
-                    //удар при определённой позиции Enemy
-                }
             }
         }
     };
     keyD = new Keyboard(SDL_SCANCODE_D, pressD);
+
+    auto playerAttack{
+        [=]()
+        {
+            player->playerTurn();
+            Attack();
+        }
+    };
+    buttonForPlayerAttack = new Button("left", NULL, ren, {enemyTurtle->Rect.x, enemyTurtle->Rect.y, 32, 32}, playerAttack, NULL);
 
     for (int i = 0; i < 22; i++)
     {
@@ -195,7 +184,7 @@ Level::~Level()
     delete enemyTurtle;
     delete uiInfo;
     delete uiItem;
-    //delete uiEnemy;
+    delete uiEnemyInfo;
     delete uiSpec;
     delete hp;
     delete mana;
@@ -218,8 +207,6 @@ int Level::GetGeneration()
 {
     return 0;
 }
-
-
 
 void Level::deleteEnemy()
 {
@@ -258,7 +245,6 @@ void Level::Update()
     {
         enemyTurtle->Update();
         enemyTurtle->GetLoc(Location);
-        //SDL_Delay(100); //UNDONE перенести delay в Animation
     }
     if (player != nullptr)
         player->GetLevel(Location);
@@ -277,6 +263,7 @@ void Level::Update()
         Level::deleteEnemy();
     }
     uiEnemyInfo->Update();
+    buttonForPlayerAttack->updateCoords(enemyTurtle->Rect.x, enemyTurtle->Rect.y);
 }
 
 void Level::Start()
@@ -384,7 +371,6 @@ void Level::Render()
 
             if (FlagManager::flagUiEnemy == 1)
             {
-                //uiEnemy->Render();
                 uiEnemyInfo->Render();
             }
 
@@ -489,32 +475,15 @@ void Level::handleEvents(SDL_Event eventInLvl)
     //Передача event в Player
     if (player)
     {
-        switch (eventInLvl.type)
-        {
-        case SDL_KEYDOWN:
-            keyW->handleEvents(eventInLvl);
-            keyA->handleEvents(eventInLvl);
-            keyS->handleEvents(eventInLvl);
-            keyD->handleEvents(eventInLvl);
-            break;
-        case SDL_MOUSEBUTTONDOWN:
-            if (eventInLvl.button.button == SDL_BUTTON_LEFT)
-            {
-                SDL_GetMouseState(&Mouse.x, &Mouse.y);
+        keyW->handleEvents(eventInLvl);
+        keyA->handleEvents(eventInLvl);
+        keyS->handleEvents(eventInLvl);
+        keyD->handleEvents(eventInLvl);
 
-                if (InputManager::MouseInArea(enemyTurtle->Rect.x, enemyTurtle->Rect.y, 32, 32, Mouse.x, Mouse.y))
-                {
-                    FlagManager::flagRangeAttack = 1;
-                    Attack();
-                }
-            }
-            break;
-        default:
-            break;
-        }
+        buttonForPlayerAttack->handleEvents(eventInLvl);
     }
 }
-//rand для рандомного выбора метода генерации
+
 void Level::Attack() 
 {
     //Дальний boy
@@ -633,8 +602,6 @@ void Level::Attack()
         enemyTurtle->enemyTurn();
     }
 
-    //	Enemy::enemyTurn();
-    //}
     //Ближний boy
     else if (this->CheckPositionToMeleeAttack(enemyTurtle->Rect, EntityPosition::Coords[0], EntityPosition::Coords[1]) == true &&
              FlagManager::flagMeleeAttackPlayer == 1 && FlagManager::flagMeleeAttackEnemy == 0 &&
@@ -644,27 +611,34 @@ void Level::Attack()
         enemyTurtle->enemyTurn();
     }
 }
-void Level::Generate() {
+void Level::Generate()
+{
     srand(time(0));
     generateChoose = 5;
     player->generate = generateChoose;
     enemyTurtle->generate = generateChoose;
-    if (generateChoose == 0) {
+    if (generateChoose == 0)
+    {
         ChunkGenerationMethod();
     }
-    if (generateChoose == 4) {
+    if (generateChoose == 4)
+    {
         LabGeneration();
     }
-    if (generateChoose == 5) {
+    if (generateChoose == 5)
+    {
         CastleLabGeneration();
     }
-    if (generateChoose == 1) {
+    if (generateChoose == 1)
+    {
         RoomGenerationMethod2();
     }
-    if (generateChoose == 2) {
+    if (generateChoose == 2)
+    {
         ChunkGenerationMethod2();
     }
-    for (int i = 0; i < 3; i++) {
+    for (int i = 0; i < 3; i++)
+    {
         itemsOnLvl[i] = rand() % 4 + 1;
     }
     itemsHave = 2;

@@ -63,6 +63,9 @@ Button::Button(std::string textButton, SDL_Rect rect, std::function <void()> cal
         buttonTexture = textureManager::LoadTexture(nameOftexture, ren);
     else
         buttonTexture = NULL;
+
+    if (ren == NULL)
+        ren = NULL;
 }
 
 void Button::handleEvents(SDL_Event& buttonEvent)
@@ -150,7 +153,7 @@ Keyboard::Keyboard(SDL_Scancode scancode, std::function <void()> callbackFunctio
     code (scancode), callback(callbackFunction)
 {
     if (callback == NULL)
-        std::cout << "scallback in Keyboard isn't ready" << std::endl;
+        std::cout << "callback in Keyboard isn't ready" << std::endl;
 }
 
 Keyboard::~Keyboard()
@@ -185,25 +188,4 @@ bool Keyboard::buttonIsPressed(SDL_Event& keyboardEvent)
     return validity;
 }
 
-Mouse MouseButtonsPlayer::mouseCoordsPlayer;
-
-void MouseButtonsPlayer::buttonsForAttack(int x, int y)
-{
-    SDL_GetMouseState(&mouseCoordsPlayer.x, &mouseCoordsPlayer.y);
-
-    if (InputManager::MouseInArea(x, y, 32, 32, mouseCoordsPlayer.x, mouseCoordsPlayer.y))
-    {
-        FlagManager::flagMeleeAttackPlayer = 1;
-    }
-}
-
-void MouseButtonsPlayer::buttonForRangeAttack(int x, int y)
-{
-    SDL_GetMouseState(&mouseCoordsPlayer.x, &mouseCoordsPlayer.y);
-
-    if (InputManager::MouseInArea(x, y, 32, 32, mouseCoordsPlayer.x, mouseCoordsPlayer.y))
-    {
-        FlagManager::flagRangeAttack = 1;
-    }
-}
 

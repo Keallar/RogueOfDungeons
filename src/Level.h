@@ -47,6 +47,7 @@ private:
     Keyboard* keyA = 0;
     Keyboard* keyS = 0;
     Keyboard* keyD = 0;
+    Button* buttonForPlayerAttack;
 
 	void ChangeDark(int i, int j);
 	void ChunkGenerationMethod();
@@ -75,6 +76,5 @@ public:
 	void ChangeLocation(int x, int y);
 	void ChangeLevel(int x, int y, int LocationChange, int TextureChange);
 };
-
 
 

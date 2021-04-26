@@ -5,7 +5,6 @@
 #include "Inventory.h"
 #include "Player.h"
 #include "Enemy.h"
-#include "CallBackAndHoverFuncs.h"
 #include "Game.h"
 
 TextInfo::TextInfo() 
@@ -198,7 +197,7 @@ UIInfo::UIInfo(SDL_Renderer* renderer) : ren (renderer)
             }
         }
     };
-    buttonForCallSpecInfo = new Button("left", "data/images/Button.png", ren , { 1230, 240, 32, 32 }, callSpecOrInfoWin, hoverFunctions::callSpecWin);
+    buttonForCallSpecInfo = new Button("left", "data/images/Button.png", ren , { 1230, 240, 32, 32 }, callSpecOrInfoWin, NULL);
     keyForCallSpecInfo = new Keyboard(SDL_SCANCODE_Q, callSpecOrInfoWin);
     auto callInvWin{
         []()

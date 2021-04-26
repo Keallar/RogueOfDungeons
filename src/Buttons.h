@@ -30,15 +30,6 @@ public:
 	void updateCoords(int newx, int newy);
 };
 
-class MouseButtonsPlayer
-{
-private:
-	static Mouse mouseCoordsPlayer;
-public:
-	static void buttonsForAttack(int x, int y);
-	static void buttonForRangeAttack(int x, int y);
-};
-
 class Keyboard
 {
 private:
@@ -49,6 +40,15 @@ public:
 	Keyboard(SDL_Scancode scancode, std::function <void()> callbackFunction);
 	~Keyboard();
 	void handleEvents(SDL_Event &keyboardEvent);
+};
+
+class MouseButtonsPlayer
+{
+private:
+    static Mouse mouseCoordsPlayer;
+public:
+    static void buttonsForAttack(int x, int y);
+    static void buttonForRangeAttack(int x, int y);
 };
 
 

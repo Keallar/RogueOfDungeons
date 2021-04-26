@@ -608,28 +608,14 @@ void UIInventory::clickForItemsInInv()
 	
 }
 
-UIEnemyInfo::UIEnemyInfo(SDL_Renderer* renderer) : ren(renderer)
-{
-	pathInFont = "data/fonts/manaspc.ttf";
-	SDL_Color color = { 255, 255, 255, 255 };
 
-	enemy = FontManager::renderText("Enemy", pathInFont, color, 32, ren);
-	hpEmenyBar = textureManager::LoadTexture("data/images/EnemyBar.png", ren);
-}
-
-void UIEnemyInfo::Render()
+UIEnemyInfo::UIEnemyInfo(SDL_Renderer* renderer)
 {
-	RenderManager::CopyToRender(enemy, ren, 1116, 250, 64, 32);
-	RenderManager::CopyToRender(hpEmenyBar, ren, 1080, 290, 190, 45, 20, 5, 256, 32);
-	RenderManager::CopyToRender(hpEnemyText, ren, 1050, 300, 25, 22);
-	RenderManager::CopyToRender(hpEnemyInfo, ren, 1130, 325, 32, 20);
-}
-
-UiHpEnemyInfo::UiHpEnemyInfo(SDL_Renderer* renderer)
-{
-	ren = renderer;
+    ren = renderer;
 	std::string stringValue1 = std::to_string(Enemy::GetHpEnemy(0));
 	const char* TEXT_VALUE_CURRENT = stringValue1.c_str();
+    enemy = FontManager::renderText("Enemy", PATH_IN_FONT, color, 32, ren);
+    hpEnemyBar = textureManager::LoadTexture("data/images/EnemyBar.png", ren);
 	hpTextEnemy = FontManager::renderText("HP", PATH_IN_FONT, color, 64, ren);
 	hpCurrentTextEnemy = FontManager::renderText(TEXT_VALUE_CURRENT, PATH_IN_FONT, color, 32, ren);
 	slashhhhhhhhh = FontManager::renderText("/", PATH_IN_FONT, color, 32, ren);
@@ -638,20 +624,19 @@ UiHpEnemyInfo::UiHpEnemyInfo(SDL_Renderer* renderer)
 	hpMaxEnemy = FontManager::renderText(TEXT_VALUE_MAX, PATH_IN_FONT, color, 32, ren);
 }
 
-UiHpEnemyInfo::~UiHpEnemyInfo()
-{
 
-}
 
-void UiHpEnemyInfo::Render()
+void UIEnemyInfo::Render()
 {
+    RenderManager::CopyToRender(enemy, ren, 1116, 250, 64, 32);
+    RenderManager::CopyToRender(hpEnemyBar, ren, 1080, 290, 190, 45, 20, 5, 256, 32);
 	RenderManager::CopyToRender(hpTextEnemy, ren, 1050, 300, 25, 22);
 	RenderManager::CopyToRender(hpCurrentTextEnemy, ren, 1120, 325, 32, 20);
 	RenderManager::CopyToRender(slashhhhhhhhh, ren, 1152, 325, 32, 20);
 	RenderManager::CopyToRender(hpMaxEnemy, ren, 1180, 325, 32, 20);
 }
 
-void UiHpEnemyInfo::Update()
+void UIEnemyInfo::Update()
 {
 	SDL_DestroyTexture(hpCurrentTextEnemy);
 	hpCurrentTextEnemy = 0;
@@ -660,12 +645,12 @@ void UiHpEnemyInfo::Update()
 	hpCurrentTextEnemy = FontManager::renderText(CHAR_VALUE, PATH_IN_FONT, color, 32, ren);
 }
 
-void UiHpEnemyInfo::UpdateMax()
+void UIEnemyInfo::UpdateMax()
 {
 
 }
 
-void UiHpEnemyInfo::callEnemyInfo()
+void UIEnemyInfo::callEnemyInfo()
 {
 	if (FlagManager::flagUiEnemy == 0)
 	{

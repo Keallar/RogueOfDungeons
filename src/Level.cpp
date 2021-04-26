@@ -21,7 +21,7 @@ Level::Level(SDL_Renderer* renderer) : ren (renderer)
     PlayBackground = textureManager::LoadTexture("data/images/Playback.png", ren);
 	player = new Player(ren);
     enemyTurtle = new Enemy("data/images/Turtle.png", 4, ren, 8, 8, 3, 4);
-	uiEnemyHpInfo = new UiHpEnemyInfo(ren);
+    uiEnemyHpInfo = new UIEnemyInfo(ren);
 	uiInfo = new UIInfo(ren);
 	uiItem = new UIItem(ren);
 	uiSpec = new UISpecifications(ren);

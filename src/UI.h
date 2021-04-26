@@ -191,20 +191,6 @@ public:
 	void clickForItemsInInv();
 };
 
-class UIEnemyInfo
-{
-private:
-	const char* pathInFont;
-	SDL_Renderer* ren;
-	SDL_Texture* enemy;
-	SDL_Texture* hpEmenyBar;
-	SDL_Texture* hpEnemyText;
-	SDL_Texture* hpEnemyInfo;
-	SDL_Texture* specfifcationsEnemy;
-public:
-	UIEnemyInfo(SDL_Renderer* rendrerer);
-	void Render();
-};
 
 class UIEquipedItem 
 {
@@ -218,19 +204,20 @@ public:
 	void clickForItemsInInv();
 };
 
-class UiHpEnemyInfo : public TextInfo
+class UIEnemyInfo : public TextInfo
 {
 private:
 	SDL_Renderer* ren;
+    SDL_Texture* enemy;
+    SDL_Texture* hpEnemyBar;
 	SDL_Texture* hpTextEnemy;
 	SDL_Texture* hpCurrentTextEnemy;
 	SDL_Texture* hpMaxEnemy;
 	SDL_Texture* slashhhhhhhhh;
 public:
-	UiHpEnemyInfo(SDL_Renderer* renderer);
-	~UiHpEnemyInfo();
-	void Render();
-	void Update();
-	void UpdateMax();
+    UIEnemyInfo(SDL_Renderer* renderer);
+    void Render() override;
+    void Update() override;
+    void UpdateMax() override;
 	void callEnemyInfo();
 };

@@ -26,7 +26,6 @@ private:
 public:
     Button(const char* textureName, SDL_Renderer* renderer, SDL_Rect rect);
     Button(std::string textButton, const char* textureName, SDL_Renderer* renderer, SDL_Rect rect, std::function <void()> callbackFunction, std::function <void()>hoverFunction);
-    Button(std::string textButton, SDL_Rect rect, std::function <void()> callbackFunction, std::function <void()> hoverFunction);
 	void handleEvents(SDL_Event& buttonEvent);
 	void Render();
 	void updateCoords(int newx, int newy);

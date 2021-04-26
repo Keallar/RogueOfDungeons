@@ -7,7 +7,6 @@
 #include "Level.h"
 #include "Game.h"
 
-
 Button::Button(const char* textureName, SDL_Renderer* renderer, SDL_Rect rect)
     :nameOftexture(textureName), ren(renderer)
 {
@@ -41,31 +40,6 @@ Button::Button(std::string textButton, const char* textureName, SDL_Renderer* re
         buttonTexture = textureManager::LoadTexture(nameOftexture, ren);
     else
         buttonTexture = NULL;
-}
-
-Button::Button(std::string textButton, SDL_Rect rect, std::function <void()> callbackFunction,
-               std::function <void()> hoverFunction):
-    buttonText (textButton), callback(callbackFunction), hover(hoverFunction)
-
-{
-    button.x = rect.x;
-    button.y = rect.y;
-    button.w = rect.w;
-    button.h = rect.h;
-
-    if (callback == NULL)
-        std::cout << "callback isn't ready " << std::endl;
-
-    if (hover == NULL)
-        std::cout << "hover isn't ready" << std::endl;
-
-    if (nameOftexture != NULL)
-        buttonTexture = textureManager::LoadTexture(nameOftexture, ren);
-    else
-        buttonTexture = NULL;
-
-    if (ren == NULL)
-        ren = NULL;
 }
 
 void Button::handleEvents(SDL_Event& buttonEvent)

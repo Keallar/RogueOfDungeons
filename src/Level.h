@@ -5,6 +5,7 @@
 #include "UI.h"
 #include "GameObject.h"
 #include "Buttons.h"
+#include "UiPlayer.h"
 
 struct MouseCoords
 {

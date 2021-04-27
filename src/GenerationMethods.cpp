@@ -589,7 +589,7 @@ void Level::CastleLabGeneration() {
 
     int PortalX = rand()%20+1;
     int PortalY = rand()%30+1;
-    while (Location[PortalX][PortalY] != 0) {
+    while (textureLocation[PortalX][PortalY] != 0) {
         PortalX = rand()%20+1;
         PortalY = rand()%30+1;
     }

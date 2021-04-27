@@ -297,6 +297,25 @@ void Level::Update()
 
 void Level::Start()
 {
+    for (int i = 0; i < 22; i++)
+    {
+        for (int j = 0; j < 32; j++)
+        {
+            textureLocation[i][j] = 1;
+            Location[i][j] = 1;
+            Dark[i][j] = 0;
+        }
+    }
+    for (int i = 0; i < 22; i++)
+    {
+        for (int j = 0; j < 32; j++)
+        {
+            if (i == 0 || i == 21 || j == 0 || j == 31)
+            {
+                Dark[i][j] = 1;
+            }
+        }
+    }
     for(Enemy* enemy : enemies) {
       delete enemy;
       enemy = new Enemy("data/images/Turtle.png", 4, ren, 8, 8, 3, 4);

@@ -58,6 +58,10 @@ Level::Level(SDL_Renderer* renderer) : ren (renderer)
                 {
                     FlagManager::flagChest = 1;
                 }
+                if (Location[(EntityPosition::Coords[1]) / 32 - 1][(EntityPosition::Coords[0]) / 32] == 4)
+                {
+                    Start();
+                }
             }
         }
     };
@@ -86,6 +90,10 @@ Level::Level(SDL_Renderer* renderer) : ren (renderer)
                 if (Location[(EntityPosition::Coords[1]) / 32][(EntityPosition::Coords[0]) / 32 - 1] == 3)
                 {
                     FlagManager::flagChest = 2;
+                }
+                if (Location[(EntityPosition::Coords[1]) / 32][(EntityPosition::Coords[0]) / 32 - 1] == 4)
+                {
+                    Start();
                 }
             }
         }
@@ -116,6 +124,10 @@ Level::Level(SDL_Renderer* renderer) : ren (renderer)
                 {
                     FlagManager::flagChest = 3;
                 }
+                if (Location[(EntityPosition::Coords[1]) / 32 + 1][(EntityPosition::Coords[0]) / 32] == 4)
+                {
+                    Start();
+                }
             }
         }
     };
@@ -144,6 +156,10 @@ Level::Level(SDL_Renderer* renderer) : ren (renderer)
                 if (Location[(EntityPosition::Coords[1]) / 32][(EntityPosition::Coords[0]) / 32 + 1] == 3)
                 {
                     FlagManager::flagChest = 4;
+                }
+                if (Location[(EntityPosition::Coords[1]) / 32][(EntityPosition::Coords[0]) / 32 + 1] == 4)
+                {
+                    Start();
                 }
             }
         }
@@ -281,6 +297,10 @@ void Level::Update()
 
 void Level::Start()
 {
+    for(Enemy* enemy : enemies) {
+      delete enemy;
+      enemy = new Enemy("data/images/Turtle.png", 4, ren, 8, 8, 3, 4);
+    }
     Generate();
     player->GetLevel(Location);
     player->GetPlayerFirstCoords();
@@ -324,7 +344,7 @@ void Level::Render()
         {
             if (Dark[enemy->Rect.y/32][enemy->Rect.x/32] == 0)
             {
-                RenderManager::SetTile(enemy->Rect.y, enemy->Rect.x, 12, ren, TileTextures[0]);
+                RenderManager::SetTile(enemy->Rect.x, enemy->Rect.y, 12, ren, TileTextures[0]);
             }
             else
             {

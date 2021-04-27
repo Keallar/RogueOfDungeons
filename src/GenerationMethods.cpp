@@ -584,6 +584,18 @@ void Level::CastleLabGeneration() {
 		}
 	}
 
+
+    //ставим портал
+
+    int PortalX = rand()%20+1;
+    int PortalY = rand()%30+1;
+    while (Location[PortalX][PortalY] != 0) {
+        PortalX = rand()%20+1;
+        PortalY = rand()%30+1;
+    }
+    Location[PortalX][PortalY] = 4;
+    textureLocation[PortalX][PortalY] = 15;
+
 	//заполяем массив, которых хранит инфу, где стены, а где можно ходить
 
 	for (int i = 0; i < 22; i++) {

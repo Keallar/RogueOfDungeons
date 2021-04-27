@@ -157,6 +157,17 @@ void Level::ChunkGenerationMethod() {
 
 	//заполяем массив, которых хранит инфу, где стены, а где можно ходить
 
+    //ставим портал
+
+    int PortalX = rand()%20+1;
+    int PortalY = rand()%30+1;
+    while (textureLocation[PortalX][PortalY] != 0) {
+        PortalX = rand()%20+1;
+        PortalY = rand()%30+1;
+    }
+    Location[PortalX][PortalY] = 4;
+    textureLocation[PortalX][PortalY] = 15;
+
 	for (int i = 0; i < 22; i++) {
 		for (int j = 0; j < 32; j++) {
 			if ((textureLocation[i][j] == 0) || (textureLocation[i][j] == 4) || (textureLocation[i][j] == 6)) {
@@ -374,6 +385,16 @@ void Level::LabGeneration() {
 			}
 		}
 	}
+    //ставим портал
+
+    int PortalX = rand()%20+1;
+    int PortalY = rand()%30+1;
+    while (textureLocation[PortalX][PortalY] != 0) {
+        PortalX = rand()%20+1;
+        PortalY = rand()%30+1;
+    }
+    Location[PortalX][PortalY] = 4;
+    textureLocation[PortalX][PortalY] = 15;
 
 	//заполяем массив, которых хранит инфу, где стены, а где можно ходить
 
@@ -767,6 +788,17 @@ void Level::RoomGenerationMethod2() {
 		}
 	}
 
+    //ставим портал
+
+    int PortalX = rand()%20+1;
+    int PortalY = rand()%30+1;
+    while (textureLocation[PortalX][PortalY] != 0) {
+        PortalX = rand()%20+1;
+        PortalY = rand()%30+1;
+    }
+    Location[PortalX][PortalY] = 4;
+    textureLocation[PortalX][PortalY] = 15;
+
 	//щагружаем инфу о том, где стены, а где можно ходить, в массив
 
 	for (int i = 0; i < 22; i++) {
@@ -966,6 +998,18 @@ void Level::ChunkGenerationMethod2() {
 			}
 		}
 	}
+
+
+    //ставим портал
+
+    int PortalX = rand()%20+1;
+    int PortalY = rand()%30+1;
+    while (textureLocation[PortalX][PortalY] != 0) {
+        PortalX = rand()%20+1;
+        PortalY = rand()%30+1;
+    }
+    Location[PortalX][PortalY] = 4;
+    textureLocation[PortalX][PortalY] = 15;
 
 	//заполяем массив, которых хранит инфу, где стены, а где можно ходить
 

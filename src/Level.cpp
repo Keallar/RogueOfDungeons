@@ -676,7 +676,8 @@ void Level::Attack()
 void Level::Generate()
 {
     srand(time(0));
-    generateChoose = 5;
+    generateChoose = rand() % 6;
+    if (generateChoose == 3) generateChoose = 2;
     player->generate = generateChoose;
     for(Enemy* enemy : enemies)
     {

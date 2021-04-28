@@ -20,11 +20,14 @@ Level::Level(SDL_Renderer* renderer) : ren (renderer)
     TileTextures[1] = textureManager::LoadTexture("data/images/CaslteTiles.png", ren);
     PlayBackground = textureManager::LoadTexture("data/images/Playback.png", ren);
     player = new Player(ren);
-    enemyTurtle = new Enemy("data/images/Turtle.png", 4, ren, 8, 8, 3, 4);
+    //enemyTurtle = new Enemy();
     SecondEnemyTurtle = new Enemy("data/images/Turtle.png", 4, ren, 10, 10, 3, 4);
-    enemies.push_back(enemyTurtle);
+    //enemies.push_back(enemyTurtle);
     enemies.push_back(SecondEnemyTurtle);
-    uiEnemyInfo = new UIEnemyInfo(ren, enemyTurtle);
+    for (Enemy* enemy : enemies)
+    {
+    uiEnemyInfo = new UIEnemyInfo(ren, enemy);
+    }
     uiInfo = new UIInfo(ren);
     uiItem = new UIItem(ren);
     uiSpec = new UISpecifications(ren);
@@ -37,16 +40,22 @@ Level::Level(SDL_Renderer* renderer) : ren (renderer)
     auto pressW{
         [=]()
         {
-            if (EntityPosition::Coords[1] == 32)
+            bool wFlag = true;
+            for (Enemy* enemy : enemies)
             {
-                //остановка при упоре в стену
+                if (EntityPosition::Coords[1] == 32)
+                {
+                    //остановка при упоре в стену
+                    wFlag = false;
+                }
+                else if (EntityPosition::Coords[0] == enemy->Rect.x &&
+                         (EntityPosition::Coords[1] - 32) == enemy->Rect.y)
+                {
+                    wFlag = false;
+                    //остановка при попытке пройти сквозь enemy
+                }
             }
-            else if (EntityPosition::Coords[0] == enemyTurtle->Rect.x &&
-                     (EntityPosition::Coords[1] - 32) == enemyTurtle->Rect.y)
-            {
-                //остановка при попытке пройти сквозь enemy
-            }
-            else
+            if (wFlag == true)
             {
                 if (Location[(EntityPosition::Coords[1]) / 32 - 1][(EntityPosition::Coords[0]) / 32] == 0)
                 {
@@ -70,16 +79,22 @@ Level::Level(SDL_Renderer* renderer) : ren (renderer)
     auto pressA{
         [=]()
         {
-            if (EntityPosition::Coords[0] == 32)
+            bool AFlag = true;
+            for (Enemy* enemy : enemies)
             {
-                //остановка при упоре в стену
+                if (EntityPosition::Coords[0] == 32)
+                {
+                    //остановка при упоре в стену
+                    AFlag = false;
+                }
+                else if ((EntityPosition::Coords[0] - 32) == enemy->Rect.x &&
+                         EntityPosition::Coords[1] == enemy->Rect.y)
+                {
+                    AFlag = false;
+                    //остановка при попытке пройти сквозь enemy
+                }
             }
-            else if ((EntityPosition::Coords[0] - 32) == enemyTurtle->Rect.x &&
-                     EntityPosition::Coords[1] == enemyTurtle->Rect.y)
-            {
-                //остановка при попытке пройти сквозь enemy
-            }
-            else
+            if (AFlag == true)
             {
                 if (Location[(EntityPosition::Coords[1]) / 32][(EntityPosition::Coords[0]) / 32 - 1] == 0)
                 {
@@ -103,16 +118,22 @@ Level::Level(SDL_Renderer* renderer) : ren (renderer)
     auto pressS{
         [=]()
         {
-            if (EntityPosition::Coords[1] == 640)
+            bool sFlag = true;
+            for (Enemy* enemy : enemies)
             {
-                //остановка при упоре в стену
+                if (EntityPosition::Coords[1] == 640)
+                {
+                    sFlag = false;
+                    //остановка при упоре в стену
+                }
+                else if (EntityPosition::Coords[0] == enemy->Rect.x &&
+                         (EntityPosition::Coords[1] + 32) == enemy->Rect.y)
+                {
+                    sFlag = false;
+                    //остановка при попытке пройти сквозь enemy
+                }
             }
-            else if (EntityPosition::Coords[0] == enemyTurtle->Rect.x &&
-                     (EntityPosition::Coords[1] + 32) == enemyTurtle->Rect.y)
-            {
-                //остановка при попытке пройти сквозь enemy
-            }
-            else
+            if(sFlag == true)
             {
                 if (Location[(EntityPosition::Coords[1]) / 32 + 1][(EntityPosition::Coords[0]) / 32] == 0)
                 {
@@ -136,16 +157,22 @@ Level::Level(SDL_Renderer* renderer) : ren (renderer)
     auto pressD{
         [=]()
         {
-            if (EntityPosition::Coords[0] == 960)
+            bool dFlag = true;
+            for(Enemy* enemy : enemies)
             {
-                //остановка при упоре в стену
+                if (EntityPosition::Coords[0] == 960)
+                {
+                    dFlag = false;
+                    //остановка при упоре в стену
+                }
+                else if ((EntityPosition::Coords[0] + 32) == enemy->Rect.x &&
+                         EntityPosition::Coords[1] == enemy->Rect.y)
+                {
+                    dFlag = false;
+                    //остановка при попытке пройти сквозь enemy
+                }
             }
-            else if ((EntityPosition::Coords[0] + 32) == enemyTurtle->Rect.x &&
-                     EntityPosition::Coords[1] == enemyTurtle->Rect.y)
-            {
-                //остановка при попытке пройти сквозь enemy
-            }
-            else
+            if(dFlag == true)
             {
                 if (Location[(EntityPosition::Coords[1]) / 32][(EntityPosition::Coords[0]) / 32 + 1] == 0)
                 {
@@ -173,8 +200,10 @@ Level::Level(SDL_Renderer* renderer) : ren (renderer)
             Attack();
         }
     };
-    buttonForPlayerAttack = new Button("left", NULL, ren, {enemyTurtle->Rect.x, enemyTurtle->Rect.y, 32, 32}, playerAttack, NULL);
-
+    for (Enemy* enemy : enemies)
+    {
+        buttonForPlayerAttack = new Button("left", NULL, ren, {0, 0, 32, 32}, playerAttack, NULL);
+    }
     for (int i = 0; i < 22; i++)
     {
         for (int j = 0; j < 32; j++)
@@ -200,7 +229,10 @@ Level::~Level()
 {
     //WTF нельзя делитнуть инвентарь (вылезает ошибка линковщика)
     delete player;
-    delete enemyTurtle;
+    for (Enemy* enemy : enemies)
+    {
+    delete enemy;
+    }
     delete uiInfo;
     delete uiItem;
     delete uiEnemyInfo;
@@ -250,7 +282,7 @@ void Level::Update()
             ChangeDark(i, j);
         }
     }
-    if (enemyTurtle == nullptr)
+    if (enemies.size() == 0)
     {
         FlagManager::flagEnemy = 0;
         FlagManager::flagPlayer = 1;
@@ -280,6 +312,7 @@ void Level::Update()
             //std::cout << enemy->CheckHpEnemy();
             Level::deleteEnemy();
         }
+        //buttonForPlayerAttack->updateCoords(enemy->Rect.x, enemy->Rect.y);
     }
 
     //удаление player (enemy) при hp <= 0
@@ -287,12 +320,8 @@ void Level::Update()
     {
         Level::deletePlayer();
     }
-    if (enemyTurtle->CheckHpEnemy() <= 0 && enemyTurtle != nullptr)
-    {
-        Level::deleteEnemy();
-    }
     uiEnemyInfo->Update();
-    buttonForPlayerAttack->updateCoords(enemyTurtle->Rect.x, enemyTurtle->Rect.y);
+   // buttonForPlayerAttack->updateCoords(enemyTurtle->Rect.x, enemyTurtle->Rect.y);
 }
 
 void Level::Start()
@@ -316,9 +345,10 @@ void Level::Start()
             }
         }
     }
-    for(Enemy* enemy : enemies) {
-      delete enemy;
-      enemy = new Enemy("data/images/Turtle.png", 4, ren, 8, 8, 3, 4);
+    for(int i = 0; i<1; i++) {
+      //delete enemy;
+      Enemy* enemy = new Enemy("data/images/Turtle.png", 4, ren, 8, 8, 3, 4);
+      enemies.push_back(enemy);
     }
     Generate();
     player->GetLevel(Location);
@@ -424,7 +454,10 @@ void Level::Render()
 
             if (FlagManager::flagCheckHpEnemy == 1)
             {
-                uiEnemyInfo->Update(enemyTurtle);
+                for (Enemy* enemy : enemies)
+                {
+                uiEnemyInfo->Update(enemy);
+                }
             }
 
             if (FlagManager::flagUiEnemy == 1)
@@ -540,136 +573,155 @@ void Level::handleEvents(SDL_Event eventInLvl)
 
         buttonForPlayerAttack->handleEvents(eventInLvl);
     }
+    for (Enemy* enemy : enemies)
+    {
+        int mouseX = 0, mouseY = 0;
+        SDL_GetMouseState(&mouseX, &mouseY);
+        if((mouseX<=enemy->Rect.x+32)&&(mouseX>=enemy->Rect.x)&&
+                (mouseY<=enemy->Rect.y+32)&&(mouseY>=enemy->Rect.y))
+        {
+            buttonForPlayerAttack->updateCoords(enemy->Rect.x, enemy->Rect.y);
+            break;
+        }
+    }
 }
 
 void Level::Attack() 
 {
+    int mouseX , mouseY;
+    SDL_GetMouseState(&mouseX, &mouseY);
     //Дальний boy
     for (Enemy* enemy : enemies)
     {
-        if (Inventory::ExistingItems[Player::EqItems.WeaponId]->Type == rWeapon)
+        buttonForPlayerAttack->updateCoords(enemy->Rect.x, enemy->Rect.y);
+        std::cout<<enemy->Rect.x<< " " << enemy->Rect.y << std::endl;
+        if((mouseX<=enemy->Rect.x+32)&&(mouseX>=enemy->Rect.x)&&
+                (mouseY<=enemy->Rect.y+32)&&(mouseY>=enemy->Rect.y))
         {
-            int PlPosx = EntityPosition::Coords[0] / 32, PlPosy = EntityPosition::Coords[1] / 32, EnPosx = (enemy->Rect.x) / 32, EnPosy = (enemy->Rect.y) / 32;
-            bool blankflag = true;
-            if ((abs(EntityPosition::Coords[0] - enemy->Rect.x) == 0)) // разделил чтобы потом проверять на наличие стен
+            if (Inventory::ExistingItems[Player::EqItems.WeaponId]->Type == rWeapon)
             {
-                if (PlPosy > EnPosy)
+                int PlPosx = EntityPosition::Coords[0] / 32, PlPosy = EntityPosition::Coords[1] / 32, EnPosx = (enemy->Rect.x) / 32, EnPosy = (enemy->Rect.y) / 32;
+                bool blankflag = true;
+                if ((abs(EntityPosition::Coords[0] - enemy->Rect.x) == 0)) // разделил чтобы потом проверять на наличие стен
                 {
-                    for (int i = PlPosy; i > EnPosy; i--)
+                    if (PlPosy > EnPosy)
                     {
-                        if (Location[i][PlPosx] == 1)
+                        for (int i = PlPosy; i > EnPosy; i--)
                         {
-                            blankflag = false;
+                            if (Location[i][PlPosx] == 1)
+                            {
+                                blankflag = false;
+                            }
+                        }
+                    }
+                    else
+                    {
+                        for (int i = EnPosy; i > PlPosy; i--)
+                        {
+                            if (Location[i][PlPosx] == 1)
+                            {
+                                blankflag = false;
+                            }
+                        }
+                    }
+                }
+                else if (/*abs*/(EntityPosition::Coords[1] - enemy->Rect.y == 0))
+                {
+                    if (PlPosx > EnPosx)
+                    {
+                        for (int i = PlPosx; i > EnPosx; i--)
+                        {
+                            if (Location[PlPosy][i] == 1)
+                            {
+                                blankflag = false;
+                            }
+                        }
+                    }
+                    else
+                    {
+                        for (int i = EnPosy; i > PlPosy; i--)
+                        {
+                            if (Location[PlPosy][i] == 1)
+                            {
+                                blankflag = false;
+                            }
                         }
                     }
                 }
                 else
                 {
-                    for (int i = EnPosy; i > PlPosy; i--)
+                    int x, y;
+                    float k = -(((float)(EnPosy - PlPosy) / (PlPosx - EnPosx)));
+                    float b = -((float)(EnPosx * PlPosy - PlPosx * EnPosy) / (PlPosx - EnPosx));
+                    if (PlPosx > EnPosx)
                     {
-                        if (Location[i][PlPosx] == 1)
+                        for (x = PlPosx; x > EnPosx; x--)
                         {
-                            blankflag = false;
+                            if (Location[(int)(k * x + b)][x] == 1)
+                            {
+                                blankflag = false;
+                            }
+                        }
+                    }
+                    else if (PlPosx < EnPosx)
+                    {
+                        for (x = EnPosx; x > PlPosx; x--)
+                        {
+                            if (Location[(int)(k * x + b)][x] == 1)
+                            {
+                                blankflag = false;
+                            }
+                        }
+                    }
+                    if (PlPosy < EnPosy)
+                    {
+                        for (y = EnPosy; y > PlPosy; y--)
+                        {
+                            if (Location[y][(int)((y - b) / k)] == 1)
+                            {
+                                blankflag = false;
+                            }
+                        }
+                    }
+                    else if (PlPosy > EnPosy)
+                    {
+                        for (y = PlPosy; y > EnPosy; y--)
+                        {
+                            if (Location[y][(int)((y - b) / k)] == 1)
+                            {
+                                blankflag = false;
+                            }
                         }
                     }
                 }
-            }
-            else if (/*abs*/(EntityPosition::Coords[1] - enemy->Rect.y == 0))
-            {
-                if (PlPosx > EnPosx)
+
+                if (blankflag == true)
                 {
-                    for (int i = PlPosx; i > EnPosx; i--)
+                    int x = (enemy->Rect.y - EntityPosition::Coords[1]) / 32;
+                    int y = (enemy->Rect.x - EntityPosition::Coords[0]) / 32;
+                    int i = rand() % 100;
+                    if (i < ((Player::EqItems.equipedRangeW->CHNS) -
+                             ((Player::EqItems.equipedRangeW->DCHNS) *
+                              abs(((float)(sqrt(x * x + y * y))) - Player::EqItems.equipedRangeW->RNG))))
                     {
-                        if (Location[PlPosy][i] == 1)
-                        {
-                            blankflag = false;
-                        }
+                        std::cout << ((Player::EqItems.equipedRangeW->CHNS) -
+                                      ((Player::EqItems.equipedRangeW->DCHNS) *
+                                       abs(((float)(sqrt(x * x + y * y))) - Player::EqItems.equipedRangeW->RNG)));
+                        enemy->ChahgeHpEnemy(-(player->RangeAttack()));
                     }
                 }
-                else
-                {
-                    for (int i = EnPosy; i > PlPosy; i--)
-                    {
-                        if (Location[PlPosy][i] == 1)
-                        {
-                            blankflag = false;
-                        }
-                    }
-                }
-            }
-            else
-            {
-                int x, y;
-                float k = -(((float)(EnPosy - PlPosy) / (PlPosx - EnPosx)));
-                float b = -((float)(EnPosx * PlPosy - PlPosx * EnPosy) / (PlPosx - EnPosx));
-                if (PlPosx > EnPosx)
-                {
-                    for (x = PlPosx; x > EnPosx; x--)
-                    {
-                        if (Location[(int)(k * x + b)][x] == 1)
-                        {
-                            blankflag = false;
-                        }
-                    }
-                }
-                else if (PlPosx < EnPosx)
-                {
-                    for (x = EnPosx; x > PlPosx; x--)
-                    {
-                        if (Location[(int)(k * x + b)][x] == 1)
-                        {
-                            blankflag = false;
-                        }
-                    }
-                }
-                if (PlPosy < EnPosy)
-                {
-                    for (y = EnPosy; y > PlPosy; y--)
-                    {
-                        if (Location[y][(int)((y - b) / k)] == 1)
-                        {
-                            blankflag = false;
-                        }
-                    }
-                }
-                else if (PlPosy > EnPosy)
-                {
-                    for (y = PlPosy; y > EnPosy; y--)
-                    {
-                        if (Location[y][(int)((y - b) / k)] == 1)
-                        {
-                            blankflag = false;
-                        }
-                    }
-                }
+                player->ChangeManaValue(-5);
+                enemyTurtle->enemyTurn();// ВАЖНО
             }
 
-            if (blankflag == true)
+            //Ближний boy
+            else if (this->CheckPositionToMeleeAttack(enemy->Rect, EntityPosition::Coords[0], EntityPosition::Coords[1]) == true &&
+                     FlagManager::flagMeleeAttackPlayer == 1 && FlagManager::flagMeleeAttackEnemy == 0 &&
+                     FlagManager::flagPlayer == 1 && FlagManager::flagEnemy == 0)
             {
-                int x = (enemy->Rect.y - EntityPosition::Coords[1]) / 32;
-                int y = (enemy->Rect.x - EntityPosition::Coords[0]) / 32;
-                int i = rand() % 100;
-                if (i < ((Player::EqItems.equipedRangeW->CHNS) -
-                         ((Player::EqItems.equipedRangeW->DCHNS) *
-                          abs(((float)(sqrt(x * x + y * y))) - Player::EqItems.equipedRangeW->RNG))))
-                {
-                    std::cout << ((Player::EqItems.equipedRangeW->CHNS) -
-                                  ((Player::EqItems.equipedRangeW->DCHNS) *
-                                   abs(((float)(sqrt(x * x + y * y))) - Player::EqItems.equipedRangeW->RNG)));
-                    enemy->ChahgeHpEnemy(-(player->RangeAttack()));
-                }
+                enemy->ChahgeHpEnemy(-(player->MeleeAttack()));
+                enemyTurtle->enemyTurn(); // ТОЖЕ ВАЖНО
             }
-            player->ChangeManaValue(-5);
-            enemyTurtle->enemyTurn();// ВАЖНО
-        }
-
-        //Ближний boy
-        else if (this->CheckPositionToMeleeAttack(enemy->Rect, EntityPosition::Coords[0], EntityPosition::Coords[1]) == true &&
-                 FlagManager::flagMeleeAttackPlayer == 1 && FlagManager::flagMeleeAttackEnemy == 0 &&
-                 FlagManager::flagPlayer == 1 && FlagManager::flagEnemy == 0)
-        {
-            enemy->ChahgeHpEnemy(-(player->MeleeAttack()));
-            enemyTurtle->enemyTurn(); // ТОЖЕ ВАЖНО
         }
     }
 }

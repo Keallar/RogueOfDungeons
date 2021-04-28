@@ -579,9 +579,9 @@ void UIEnemyInfo::Render()
     RenderManager::CopyToRender(hpMaxEnemy, ren, 1180, 325, 32, 20);
 }
 
-void UIEnemyInfo::Update(Enemy* enemy)
+void UIEnemyInfo::Update()
 {
-    tempEnemy = enemy;
+    //tempEnemy = enemy;
     SDL_DestroyTexture(hpCurrentTextEnemy);
     hpCurrentTextEnemy = 0;
     std::string stringTemp = std::to_string(tempEnemy->GetHpEnemy(0));

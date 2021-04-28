@@ -22,12 +22,11 @@ Level::Level(SDL_Renderer* renderer) : ren (renderer)
     player = new Player(ren);
     //enemyTurtle = new Enemy();
     SecondEnemyTurtle = new Enemy("data/images/Turtle.png", 4, ren, 10, 10, 3, 4);
+    tempUiEnemyInfo = new UIEnemyInfo(ren, SecondEnemyTurtle);
     //enemies.push_back(enemyTurtle);
     enemies.push_back(SecondEnemyTurtle);
-    for (Enemy* enemy : enemies)
-    {
-        uiEnemyInfo = new UIEnemyInfo(ren, enemy);
-    }
+    uiEnemyInfo.push_back(tempUiEnemyInfo);
+
     uiInfo = new UIInfo(ren);
     uiItem = new UIItem(ren);
     uiSpec = new UISpecifications(ren);
@@ -243,7 +242,7 @@ Level::~Level()
     }
     delete uiInfo;
     delete uiItem;
-    delete uiEnemyInfo;
+   // delete uiEnemyInfo;
     delete uiSpec;
     delete hp;
     delete mana;
@@ -332,9 +331,12 @@ void Level::Update()
             //std::cout << enemy->CheckHpEnemy();
             Level::deleteEnemy();
         }
+        for (UIEnemyInfo* info : uiEnemyInfo)
+        {
+            info->Update();
+            info->UpdateMax(enemy);
+        }
         buttonForPlayerAttack->updateCoords(enemy->Rect.x, enemy->Rect.y);
-        for (Enemy* enemy: enemies)
-            uiEnemyInfo->Update(enemy);
     }
 
     //удаление player при hp <= 0
@@ -483,15 +485,16 @@ void Level::Render()
 
             if (FlagManager::flagCheckHpEnemy == 1)
             {
-                for (Enemy* enemy : enemies)
+                for (UIEnemyInfo* info : uiEnemyInfo)
                 {
-                    uiEnemyInfo->Update(enemy);
+                    info->Update();
                 }
             }
 
             if (FlagManager::flagUiEnemy == 1)
             {
-                uiEnemyInfo->Render();
+                for (UIEnemyInfo* info : uiEnemyInfo)
+                    info->Render();
             }
 
             //Update значений hp, mana и  exp
@@ -590,7 +593,8 @@ void Level::handleEvents(SDL_Event eventInLvl)
         uiInv->handleEvents(eventInLvl);
 
         //if (eventInLvl.button.button == SDL_BUTTON_RIGHT)
-        uiEnemyInfo->handleEvents(eventInLvl);
+        for (UIEnemyInfo* info: uiEnemyInfo)
+            info->handleEvents(eventInLvl);
 
     }
 

@@ -537,13 +537,11 @@ void UIInventory::clickForItemsInInv()
 }
 
 
-UIEnemyInfo::UIEnemyInfo(SDL_Renderer* renderer, Enemy* enemy)
+UIEnemyInfo::UIEnemyInfo(SDL_Renderer* renderer, Enemy* enemy):
+    ren (renderer), tempEnemy(enemy)
 {
     PATH_IN_FONT = "data/fonts/manaspc.ttf";
     color = { 255, 255, 255, 255 };
-
-    tempEnemy = enemy;
-    ren = renderer;
     std::string stringValue1 = std::to_string(enemy->GetHpEnemy(0));
     const char* TEXT_VALUE_CURRENT = stringValue1.c_str();
     enemyTex = FontManager::renderText("Enemy", PATH_IN_FONT, color, 32, ren);
@@ -581,23 +579,26 @@ void UIEnemyInfo::Render()
     RenderManager::CopyToRender(hpMaxEnemy, ren, 1180, 325, 32, 20);
 }
 
-void UIEnemyInfo::Update()
-{
-     buttonForCallEnemyInfo->updateCoords(tempEnemy->Rect.x, tempEnemy->Rect.y);
-}
-
 void UIEnemyInfo::Update(Enemy* enemy)
 {
+    tempEnemy = enemy;
     SDL_DestroyTexture(hpCurrentTextEnemy);
     hpCurrentTextEnemy = 0;
-    std::string stringTemp = std::to_string(enemy->GetHpEnemy(0));
+    std::string stringTemp = std::to_string(tempEnemy->GetHpEnemy(0));
     const char* CHAR_VALUE = stringTemp.c_str();
     hpCurrentTextEnemy = FontManager::renderText(CHAR_VALUE, PATH_IN_FONT, color, 32, ren);
+
+    buttonForCallEnemyInfo->updateCoords(tempEnemy->Rect.x, tempEnemy->Rect.y);
 }
 
-void UIEnemyInfo::UpdateMax()
+void UIEnemyInfo::UpdateMax(Enemy* enemy)
 {
-
+    tempEnemy = enemy;
+    SDL_DestroyTexture(hpCurrentTextEnemy);
+    hpMaxEnemy = 0;
+    std::string stringTemp = std::to_string(tempEnemy->GetHpEnemy(2));
+    const char* CHAR_VALUE = stringTemp.c_str();
+    hpMaxEnemy = FontManager::renderText(CHAR_VALUE, PATH_IN_FONT, color, 32, ren);
 }
 
 void UIEnemyInfo::handleEvents(SDL_Event &eventInUiEnemyInfo)

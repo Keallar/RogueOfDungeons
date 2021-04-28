@@ -51,6 +51,8 @@ Level::Level(SDL_Renderer* renderer) : ren (renderer)
                 else if (EntityPosition::Coords[0] == enemy->Rect.x &&
                          (EntityPosition::Coords[1] - 32) == enemy->Rect.y)
                 {
+                    player->playerTurn();
+                    Attack();
                     wFlag = false;
                     //остановка при попытке пройти сквозь enemy
                 }
@@ -62,7 +64,6 @@ Level::Level(SDL_Renderer* renderer) : ren (renderer)
                     EntityPosition::Coords[1] -= 32;
                     FlagManager::flagPlayer = 0;
                     FlagManager::flagEnemy = 1;
-                    std::cout << "W" << std::endl;
                 }
                 if (Location[(EntityPosition::Coords[1]) / 32 - 1][(EntityPosition::Coords[0]) / 32] == 3)
                 {
@@ -91,6 +92,8 @@ Level::Level(SDL_Renderer* renderer) : ren (renderer)
                 else if ((EntityPosition::Coords[0] - 32) == enemy->Rect.x &&
                          EntityPosition::Coords[1] == enemy->Rect.y)
                 {
+                    player->playerTurn();
+                    Attack();
                     AFlag = false;
                     //остановка при попытке пройти сквозь enemy
                 }
@@ -130,6 +133,8 @@ Level::Level(SDL_Renderer* renderer) : ren (renderer)
                 else if (EntityPosition::Coords[0] == enemy->Rect.x &&
                          (EntityPosition::Coords[1] + 32) == enemy->Rect.y)
                 {
+                    player->playerTurn();
+                    Attack();
                     sFlag = false;
                     //остановка при попытке пройти сквозь enemy
                 }
@@ -169,6 +174,8 @@ Level::Level(SDL_Renderer* renderer) : ren (renderer)
                 else if ((EntityPosition::Coords[0] + 32) == enemy->Rect.x &&
                          EntityPosition::Coords[1] == enemy->Rect.y)
                 {
+                    player->playerTurn();
+                    Attack();
                     dFlag = false;
                     //остановка при попытке пройти сквозь enemy
                 }
@@ -271,7 +278,8 @@ int Level::GetGeneration()
 
 void Level::deleteEnemy()
 {
-    for(Enemy* enemy : enemies){
+    for(Enemy* enemy : enemies)
+    {
         if (enemy->GetHpEnemy(0) <= 0)
         {
             enemies.erase(std::remove(enemies.begin(), enemies.end(), enemy));
@@ -325,14 +333,16 @@ void Level::Update()
             Level::deleteEnemy();
         }
         buttonForPlayerAttack->updateCoords(enemy->Rect.x, enemy->Rect.y);
+        for (Enemy* enemy: enemies)
+            uiEnemyInfo->Update(enemy);
     }
 
-    //удаление player (enemy) при hp <= 0
+    //удаление player при hp <= 0
     if (Player::GetHP(0) <= 0 && player != nullptr)
     {
+        player->Update();
         Level::deletePlayer();
     }
-    uiEnemyInfo->Update();
     buttonW->updateCoords(EntityPosition::Coords[0], EntityPosition::Coords[1] - 32);
     buttonA->updateCoords(EntityPosition::Coords[0] - 32, EntityPosition::Coords[1]);
     buttonS->updateCoords(EntityPosition::Coords[0], EntityPosition::Coords[1] + 32);
@@ -360,7 +370,8 @@ void Level::Start()
             }
         }
     }
-    for(int i = 0; i<1; i++) {
+    for(int i = 0; i<1; i++)
+    {
         //delete enemy;
         Enemy* enemy = new Enemy("data/images/Turtle.png", 4, ren, 8, 8, 3, 4);
         enemies.push_back(enemy);
@@ -390,10 +401,12 @@ void Level::Render()
     {
         for (int j = 0; j < 32; j++)
         {
-            if (Dark[i][j] == 1) {
+            if (Dark[i][j] == 1)
+            {
                 RenderManager::SetTile(j * 32, i * 32, textureLocation[i][j], ren, TileTextures[TileSet]);
             }
-            else {
+            else
+            {
                 RenderManager::SetTile(j * 32, i * 32, 12, ren, TileTextures[0]);
             }
         }
@@ -412,6 +425,7 @@ void Level::Render()
             }
             else
             {
+                //по-моему тут надо не одного врага проверять...
                 enemy->Render();
             }
         }

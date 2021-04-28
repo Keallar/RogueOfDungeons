@@ -8,8 +8,6 @@
 
 using namespace std;
 
-
-
 Enemy::Enemy(const char* texturesheet, int framesOfAnimationForAttack, SDL_Renderer* renderer, int HealthP, int MaxHealthP, int Damage, int EXPR)
 {
     HP = HealthP;
@@ -43,15 +41,17 @@ void Enemy::clean()
 
 int Enemy::GetHpEnemy(int numOfHp)
 {
+    int temp = 0;
 	switch (numOfHp)
 	{
 	case 0:
-		return HP;
+        temp = HP;
 	case 1:
-		return HpMax;
+        temp = HpMax;
 	default:
 		break;
 	}
+    return temp;
 }
 
 int Enemy::CheckHpEnemy()

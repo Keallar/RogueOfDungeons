@@ -159,30 +159,32 @@ int Player::GetMana(int numOfArr)
 //Получение значения характеристик (STR, DEX, INT, WSD, PHS, LCK)
 int Player::GetSpecValue(int numSpec)
 {
+    int temp = 0;
 	switch (numSpec)
 	{
 	case 1:
-		return STR[0];
+        temp = STR[0];
 		break;
 	case 2:
-		return DEX[0];
+        temp = DEX[0];
 		break;
 	case 3:
-		return INT[0];
+        temp = INT[0];
 		break;
 	case 4:
-		return WSD[0];
+        temp = WSD[0];
 		break;
 	case 5:
-		return PHS[0];
+        temp = PHS[0];
 		break;
 	case 6:
-		return LCK[0];
+        temp = LCK[0];
 		break;
 	default:
 		std::cout << "Error in GetSpecValue!" << std::endl;
 		break;
-	}
+    }
+    return temp;
 }
 
 //Изменение значения характеристики (STR, DEX, INT, PHS, LCK) на +1
@@ -215,14 +217,15 @@ void Player::ChangeValueSpecs(int numOfSpec)
 
 //Изменение текущего значения hp
 void Player::ChangeHpValue(int valueOfChangingHp)
-{	
-	HP[0] += valueOfChangingHp;
+{	if (HP[0] != 0)
+        HP[0] += valueOfChangingHp;
 }
 
 //Изменение текущего значения mana
 void Player::ChangeManaValue(int valueOfChangingMana)
 {
-	mana[0] += valueOfChangingMana;
+    if (mana[0] != 0)
+        mana[0] += valueOfChangingMana;
 }
 
 //Изменение текущего значения exp
@@ -579,76 +582,3 @@ int Player::RangeAttack()
 	}
     return damage;
 }
-/*void Player::Attack()
-{
-	//Дальний boy
-	if ((Inventory::ExistingItems[Player::EqItems.WeaponId]->Type == rWeapon) && 
-		FlagManager::flagRangeAttack == 1 &&
-		Player::mana[0] != 0) 
-	{
-		if ((abs(EntityPosition::Coords[0]-GameObject::xpos) == 0)) // разделил чтобы потом проверять на наличие стен
-		{ 
-			int i = rand() % 100;
-			std::cout << i << std::endl;
-			if (i < ((Player::EqItems.equipedRangeW->CHNS) -
-				((Player::EqItems.equipedRangeW->DCHNS) * 
-					abs(abs(Rect.y - EntityPosition::Coords[1])/32 - Player::EqItems.equipedRangeW->RNG)))) 
-			{
-				std::cout << i << "*" << ((Player::EqItems.equipedRangeW->CHNS) -
-					((Player::EqItems.equipedRangeW->DCHNS) *
-						abs(abs(GameObject::xpos - EntityPosition::Coords[0]) - Player::EqItems.equipedRangeW->RNG))) << "";
-				damage = Player::EqItems.equipedRangeW->DMG + Player::DEX[0];
-				int ch = Player::EqItems.equipedRangeW->CHNS;
-				std::cout << ch << std::endl;
-				Player::ChangeManaValue(5);
-				Enemy::ChahgeHpEnemy(damage);
-				
-				std::cout << "Range boy vert" << std::endl;
-			}
-			
-			Enemy::enemyTurn();
-		}
-		else if (abs(EntityPosition::Coords[1] - Rect.y == 0))
-		{
-
-			int r = rand() % 100;
-			std::cout << r << " *" << ((Player::EqItems.equipedRangeW->CHNS) -
-				((Player::EqItems.equipedRangeW->DCHNS) *
-					abs(abs(GameObject::xpos - EntityPosition::Coords[0])/32 - Player::EqItems.equipedRangeW->RNG))) << "*";
-			if (r < ((Player::EqItems.equipedRangeW->CHNS) -
-				((Player::EqItems.equipedRangeW->DCHNS) *
-					abs(abs(GameObject::xpos - EntityPosition::Coords[0])/32 - Player::EqItems.equipedRangeW->RNG))))
-			{
-				std::cout << r << std::endl;
-				damage = Player::EqItems.equipedRangeW->DMG + Player::DEX[0];
-				int ch = Player::EqItems.equipedRangeW->CHNS;
-				std::cout << ch << std::endl;
-				Player::ChangeManaValue(5);
-				Enemy::ChahgeHpEnemy(damage);
-				std::cout << "Range boy hor" << std::endl;
-			}
-			
-
-			Enemy::enemyTurn();
-		}
-	}//Ближний boy
-	else if ((Inventory::ExistingItems[Player::EqItems.WeaponId]->Type == weapon) &&
-		(((EntityPosition::Coords[0] == GameObject::xpos - 32) &&
-		(EntityPosition::Coords[1] == Rect.y)) ||
-		((EntityPosition::Coords[0] == GameObject::xpos + 32) &&
-			(EntityPosition::Coords[1] == Rect.y)) ||
-		((EntityPosition::Coords[0] == GameObject::xpos) &&
-			(EntityPosition::Coords[1] == Rect.y - 32)) ||
-		((EntityPosition::Coords[0] == GameObject::xpos) &&
-			(EntityPosition::Coords[1] == Rect.y + 32))) &&
-		FlagManager::flagMeleeAttackPlayer == 1 && FlagManager::flagMeleeAttackEnemy == 0 &&
-		FlagManager::flagPlayer == 1 && FlagManager::flagEnemy == 0)
-	{
-		std::cout << "Melee boy" << std::endl;
-		damage = Player::EqItems.equipedMeleeW->DMG + Player::STR[0];
-		std::cout << damage << std::endl;
-		Enemy::ChahgeHpEnemy(damage);
-
-		Enemy::enemyTurn();
-	}
-}*/

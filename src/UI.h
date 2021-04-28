@@ -95,10 +95,10 @@ public:
 class UIEnemyInfo
 {
 private:
+    SDL_Renderer* ren;
     const char* PATH_IN_FONT;
     SDL_Color color;
     Enemy* tempEnemy;
-	SDL_Renderer* ren;
     SDL_Texture* enemyTex;
     SDL_Texture* hpEnemyBar;
 	SDL_Texture* hpTextEnemy;
@@ -109,9 +109,8 @@ private:
 public:
     UIEnemyInfo(SDL_Renderer* renderer, Enemy* enemy);
     void Render();
-    void Update();
     void Update(Enemy* enemy);
-    void UpdateMax();
+    void UpdateMax(Enemy* enemy);
     void handleEvents(SDL_Event &eventInUiEnemyInfo);
 };
 

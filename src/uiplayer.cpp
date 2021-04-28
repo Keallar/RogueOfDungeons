@@ -31,9 +31,13 @@ HpInfo::~HpInfo()
 
 void HpInfo::Update()
 {
+    std::string stringTemp;
     SDL_DestroyTexture(hpText);
     hpText = 0;
-    std::string stringTemp = std::to_string(Player::GetHP(0));
+    if (Player::GetHP(0) == 0)
+         stringTemp = std::to_string(0);
+    else
+         stringTemp = std::to_string(Player::GetHP(0));
     const char* CHAR_VALUE = stringTemp.c_str();
     hpText = FontManager::renderText(CHAR_VALUE, PATH_IN_FONT, color, 32, ren);
 }

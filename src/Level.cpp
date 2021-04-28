@@ -49,9 +49,7 @@ Level::Level(SDL_Renderer* renderer) : ren (renderer)
                 }
                 else if (EntityPosition::Coords[0] == enemy->Rect.x &&
                          (EntityPosition::Coords[1] - 32) == enemy->Rect.y)
-                {
-                    player->playerTurn();
-                    Attack();
+                {               
                     wFlag = false;
                     //остановка при попытке пройти сквозь enemy
                 }
@@ -90,9 +88,7 @@ Level::Level(SDL_Renderer* renderer) : ren (renderer)
                 }
                 else if ((EntityPosition::Coords[0] - 32) == enemy->Rect.x &&
                          EntityPosition::Coords[1] == enemy->Rect.y)
-                {
-                    player->playerTurn();
-                    Attack();
+                {               
                     AFlag = false;
                     //остановка при попытке пройти сквозь enemy
                 }
@@ -131,9 +127,7 @@ Level::Level(SDL_Renderer* renderer) : ren (renderer)
                 }
                 else if (EntityPosition::Coords[0] == enemy->Rect.x &&
                          (EntityPosition::Coords[1] + 32) == enemy->Rect.y)
-                {
-                    player->playerTurn();
-                    Attack();
+                {                   
                     sFlag = false;
                     //остановка при попытке пройти сквозь enemy
                 }
@@ -172,9 +166,7 @@ Level::Level(SDL_Renderer* renderer) : ren (renderer)
                 }
                 else if ((EntityPosition::Coords[0] + 32) == enemy->Rect.x &&
                          EntityPosition::Coords[1] == enemy->Rect.y)
-                {
-                    player->playerTurn();
-                    Attack();
+                {                   
                     dFlag = false;
                     //остановка при попытке пройти сквозь enemy
                 }
@@ -331,11 +323,11 @@ void Level::Update()
             //std::cout << enemy->CheckHpEnemy();
             Level::deleteEnemy();
         }
-        for (UIEnemyInfo* info : uiEnemyInfo)
-        {
-            info->Update();
-            info->UpdateMax(enemy);
-        }
+//        for (UIEnemyInfo* info : uiEnemyInfo)
+//        {
+//            info->Update();
+//            info->UpdateMax(enemy);
+//        }
         buttonForPlayerAttack->updateCoords(enemy->Rect.x, enemy->Rect.y);
     }
 
@@ -485,10 +477,10 @@ void Level::Render()
 
             if (FlagManager::flagCheckHpEnemy == 1)
             {
-                for (UIEnemyInfo* info : uiEnemyInfo)
-                {
-                    info->Update();
-                }
+//                for (UIEnemyInfo* info : uiEnemyInfo)
+//                {
+//                    info->Update();
+//                }
             }
 
             if (FlagManager::flagUiEnemy == 1)

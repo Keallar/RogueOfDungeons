@@ -123,6 +123,7 @@ void Button::updateCoords(int newx, int newy)
     button.y = newy;
 }
 
+
 Keyboard::Keyboard(SDL_Scancode scancode, std::function <void()> callbackFunction):
     code (scancode), callback(callbackFunction)
 {

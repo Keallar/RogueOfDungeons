@@ -110,7 +110,7 @@ public:
     UIEnemyInfo(SDL_Renderer* renderer, Enemy* enemy);
     void Render();
     void Update(Enemy* enemy);
-    void UpdateMax();
+    void UpdateMax(Enemy* enemy);
     void handleEvents(SDL_Event &eventInUiEnemyInfo);
 };
 

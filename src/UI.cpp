@@ -579,7 +579,7 @@ void UIEnemyInfo::Render()
     RenderManager::CopyToRender(hpMaxEnemy, ren, 1180, 325, 32, 20);
 }
 
-void UIEnemyInfo::Update()
+void UIEnemyInfo::Update(Enemy* enemy)
 {
     //tempEnemy = enemy;
     SDL_DestroyTexture(hpCurrentTextEnemy);

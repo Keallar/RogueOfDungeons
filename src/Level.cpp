@@ -20,11 +20,14 @@ Level::Level(SDL_Renderer* renderer) : ren (renderer)
     TileTextures[1] = textureManager::LoadTexture("data/images/CaslteTiles.png", ren);
     PlayBackground = textureManager::LoadTexture("data/images/Playback.png", ren);
     player = new Player(ren);
-    enemyTurtle = new Enemy("data/images/Turtle.png", 4, ren, 8, 8, 3, 4);
+    //enemyTurtle = new Enemy();
     SecondEnemyTurtle = new Enemy("data/images/Turtle.png", 4, ren, 10, 10, 3, 4);
-    enemies.push_back(enemyTurtle);
+    //enemies.push_back(enemyTurtle);
     enemies.push_back(SecondEnemyTurtle);
-    uiEnemyInfo = new UIEnemyInfo(ren, enemyTurtle);
+    for (Enemy* enemy : enemies)
+    {
+    uiEnemyInfo = new UIEnemyInfo(ren, enemy);
+    }
     uiInfo = new UIInfo(ren);
     uiItem = new UIItem(ren);
     uiSpec = new UISpecifications(ren);
@@ -37,16 +40,22 @@ Level::Level(SDL_Renderer* renderer) : ren (renderer)
     auto pressW{
         [=]()
         {
-            if (EntityPosition::Coords[1] == 32)
+            bool wFlag = true;
+            for (Enemy* enemy : enemies)
             {
-                //остановка при упоре в стену
+                if (EntityPosition::Coords[1] == 32)
+                {
+                    //остановка при упоре в стену
+                    wFlag = false;
+                }
+                else if (EntityPosition::Coords[0] == enemy->Rect.x &&
+                         (EntityPosition::Coords[1] - 32) == enemy->Rect.y)
+                {
+                    wFlag = false;
+                    //остановка при попытке пройти сквозь enemy
+                }
             }
-            else if (EntityPosition::Coords[0] == enemyTurtle->Rect.x &&
-                     (EntityPosition::Coords[1] - 32) == enemyTurtle->Rect.y)
-            {
-                //остановка при попытке пройти сквозь enemy
-            }
-            else
+            if (wFlag == true)
             {
                 if (Location[(EntityPosition::Coords[1]) / 32 - 1][(EntityPosition::Coords[0]) / 32] == 0)
                 {
@@ -70,16 +79,22 @@ Level::Level(SDL_Renderer* renderer) : ren (renderer)
     auto pressA{
         [=]()
         {
-            if (EntityPosition::Coords[0] == 32)
+            bool AFlag = true;
+            for (Enemy* enemy : enemies)
             {
-                //остановка при упоре в стену
+                if (EntityPosition::Coords[0] == 32)
+                {
+                    //остановка при упоре в стену
+                    AFlag = false;
+                }
+                else if ((EntityPosition::Coords[0] - 32) == enemy->Rect.x &&
+                         EntityPosition::Coords[1] == enemy->Rect.y)
+                {
+                    AFlag = false;
+                    //остановка при попытке пройти сквозь enemy
+                }
             }
-            else if ((EntityPosition::Coords[0] - 32) == enemyTurtle->Rect.x &&
-                     EntityPosition::Coords[1] == enemyTurtle->Rect.y)
-            {
-                //остановка при попытке пройти сквозь enemy
-            }
-            else
+            if (AFlag == true)
             {
                 if (Location[(EntityPosition::Coords[1]) / 32][(EntityPosition::Coords[0]) / 32 - 1] == 0)
                 {
@@ -103,16 +118,22 @@ Level::Level(SDL_Renderer* renderer) : ren (renderer)
     auto pressS{
         [=]()
         {
-            if (EntityPosition::Coords[1] == 640)
+            bool sFlag = true;
+            for (Enemy* enemy : enemies)
             {
-                //остановка при упоре в стену
+                if (EntityPosition::Coords[1] == 640)
+                {
+                    sFlag = false;
+                    //остановка при упоре в стену
+                }
+                else if (EntityPosition::Coords[0] == enemy->Rect.x &&
+                         (EntityPosition::Coords[1] + 32) == enemy->Rect.y)
+                {
+                    sFlag = false;
+                    //остановка при попытке пройти сквозь enemy
+                }
             }
-            else if (EntityPosition::Coords[0] == enemyTurtle->Rect.x &&
-                     (EntityPosition::Coords[1] + 32) == enemyTurtle->Rect.y)
-            {
-                //остановка при попытке пройти сквозь enemy
-            }
-            else
+            if(sFlag == true)
             {
                 if (Location[(EntityPosition::Coords[1]) / 32 + 1][(EntityPosition::Coords[0]) / 32] == 0)
                 {
@@ -136,16 +157,22 @@ Level::Level(SDL_Renderer* renderer) : ren (renderer)
     auto pressD{
         [=]()
         {
-            if (EntityPosition::Coords[0] == 960)
+            bool dFlag = true;
+            for(Enemy* enemy : enemies)
             {
-                //остановка при упоре в стену
+                if (EntityPosition::Coords[0] == 960)
+                {
+                    dFlag = false;
+                    //остановка при упоре в стену
+                }
+                else if ((EntityPosition::Coords[0] + 32) == enemy->Rect.x &&
+                         EntityPosition::Coords[1] == enemy->Rect.y)
+                {
+                    dFlag = false;
+                    //остановка при попытке пройти сквозь enemy
+                }
             }
-            else if ((EntityPosition::Coords[0] + 32) == enemyTurtle->Rect.x &&
-                     EntityPosition::Coords[1] == enemyTurtle->Rect.y)
-            {
-                //остановка при попытке пройти сквозь enemy
-            }
-            else
+            if(dFlag == true)
             {
                 if (Location[(EntityPosition::Coords[1]) / 32][(EntityPosition::Coords[0]) / 32 + 1] == 0)
                 {
@@ -173,8 +200,10 @@ Level::Level(SDL_Renderer* renderer) : ren (renderer)
             Attack();
         }
     };
-    buttonForPlayerAttack = new Button("left", NULL, ren, {enemyTurtle->Rect.x, enemyTurtle->Rect.y, 32, 32}, playerAttack, NULL);
-
+    for (Enemy* enemy : enemies)
+    {
+        buttonForPlayerAttack = new Button("left", NULL, ren, {enemy->Rect.x, enemy->Rect.y, 32, 32}, playerAttack, NULL);
+    }
     for (int i = 0; i < 22; i++)
     {
         for (int j = 0; j < 32; j++)
@@ -200,7 +229,10 @@ Level::~Level()
 {
     //WTF нельзя делитнуть инвентарь (вылезает ошибка линковщика)
     delete player;
-    delete enemyTurtle;
+    for (Enemy* enemy : enemies)
+    {
+    delete enemy;
+    }
     delete uiInfo;
     delete uiItem;
     delete uiEnemyInfo;
@@ -250,7 +282,7 @@ void Level::Update()
             ChangeDark(i, j);
         }
     }
-    if (enemyTurtle == nullptr)
+    if (enemies.size() == 0)
     {
         FlagManager::flagEnemy = 0;
         FlagManager::flagPlayer = 1;
@@ -264,10 +296,12 @@ void Level::Update()
         player->GetLevel(Location);
     for(Enemy* enemy : enemies)
     {
+        std::cout << enemies.size();
         if (enemy != nullptr &&
                 FlagManager::flagPlayer == 0 && FlagManager::flagEnemy == 1)
         {
             enemy->Update();
+            std::cout << enemies.size();
             enemy->GetLoc(Location);
         }
 
@@ -280,6 +314,7 @@ void Level::Update()
             //std::cout << enemy->CheckHpEnemy();
             Level::deleteEnemy();
         }
+        buttonForPlayerAttack->updateCoords(enemy->Rect.x, enemy->Rect.y);
     }
 
     //удаление player (enemy) при hp <= 0
@@ -287,12 +322,8 @@ void Level::Update()
     {
         Level::deletePlayer();
     }
-    if (enemyTurtle->CheckHpEnemy() <= 0 && enemyTurtle != nullptr)
-    {
-        Level::deleteEnemy();
-    }
     uiEnemyInfo->Update();
-    buttonForPlayerAttack->updateCoords(enemyTurtle->Rect.x, enemyTurtle->Rect.y);
+   // buttonForPlayerAttack->updateCoords(enemyTurtle->Rect.x, enemyTurtle->Rect.y);
 }
 
 void Level::Start()
@@ -316,9 +347,10 @@ void Level::Start()
             }
         }
     }
-    for(Enemy* enemy : enemies) {
-      delete enemy;
-      enemy = new Enemy("data/images/Turtle.png", 4, ren, 8, 8, 3, 4);
+    for(int i = 0; i<1; i++) {
+      //delete enemy;
+      Enemy* enemy = new Enemy("data/images/Turtle.png", 4, ren, 8, 8, 3, 4);
+      enemies.push_back(enemy);
     }
     Generate();
     player->GetLevel(Location);
@@ -424,7 +456,10 @@ void Level::Render()
 
             if (FlagManager::flagCheckHpEnemy == 1)
             {
-                uiEnemyInfo->Update(enemyTurtle);
+                for (Enemy* enemy : enemies)
+                {
+                uiEnemyInfo->Update(enemy);
+                }
             }
 
             if (FlagManager::flagUiEnemy == 1)

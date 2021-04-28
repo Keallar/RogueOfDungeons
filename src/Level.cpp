@@ -26,7 +26,7 @@ Level::Level(SDL_Renderer* renderer) : ren (renderer)
     enemies.push_back(SecondEnemyTurtle);
     for (Enemy* enemy : enemies)
     {
-    uiEnemyInfo = new UIEnemyInfo(ren, enemy);
+        uiEnemyInfo = new UIEnemyInfo(ren, enemy);
     }
     uiInfo = new UIInfo(ren);
     uiItem = new UIItem(ren);
@@ -62,6 +62,7 @@ Level::Level(SDL_Renderer* renderer) : ren (renderer)
                     EntityPosition::Coords[1] -= 32;
                     FlagManager::flagPlayer = 0;
                     FlagManager::flagEnemy = 1;
+                    std::cout << "W" << std::endl;
                 }
                 if (Location[(EntityPosition::Coords[1]) / 32 - 1][(EntityPosition::Coords[0]) / 32] == 3)
                 {
@@ -75,7 +76,7 @@ Level::Level(SDL_Renderer* renderer) : ren (renderer)
         }
     };
     keyW = new Keyboard(SDL_SCANCODE_W, pressW);
-
+    buttonW = new Button("left", NULL, ren, {EntityPosition::Coords[0], EntityPosition::Coords[1] - 32, 32, 32}, pressW, NULL);
     auto pressA{
         [=]()
         {
@@ -114,7 +115,7 @@ Level::Level(SDL_Renderer* renderer) : ren (renderer)
         }
     };
     keyA = new Keyboard(SDL_SCANCODE_A, pressA);
-
+    buttonA = new Button("left", NULL, ren, {EntityPosition::Coords[0] - 32, EntityPosition::Coords[1], 32, 32}, pressA, NULL);
     auto pressS{
         [=]()
         {
@@ -153,7 +154,7 @@ Level::Level(SDL_Renderer* renderer) : ren (renderer)
         }
     };
     keyS = new Keyboard(SDL_SCANCODE_S, pressS);
-
+    buttonS = new Button("left", NULL, ren, {EntityPosition::Coords[0], EntityPosition::Coords[1] + 32, 32, 32}, pressS, NULL);
     auto pressD{
         [=]()
         {
@@ -192,7 +193,7 @@ Level::Level(SDL_Renderer* renderer) : ren (renderer)
         }
     };
     keyD = new Keyboard(SDL_SCANCODE_D, pressD);
-
+    buttonD = new Button("left", NULL, ren, {EntityPosition::Coords[0] + 32, EntityPosition::Coords[1], 32, 32}, pressD, NULL);
     auto playerAttack{
         [=]()
         {
@@ -231,7 +232,7 @@ Level::~Level()
     delete player;
     for (Enemy* enemy : enemies)
     {
-    delete enemy;
+        delete enemy;
     }
     delete uiInfo;
     delete uiItem;
@@ -242,6 +243,15 @@ Level::~Level()
     delete exp;
     delete uiEquiped;
     delete animation;
+    delete keyW;
+    delete keyA;
+    delete keyS;
+    delete keyW;
+    delete keyD;
+    delete buttonW;
+    delete buttonA;
+    delete buttonS;
+    delete buttonD;
 }
 
 void Level::deletePlayer()
@@ -296,12 +306,12 @@ void Level::Update()
         player->GetLevel(Location);
     for(Enemy* enemy : enemies)
     {
-        std::cout << enemies.size();
+        //std::cout << enemies.size();
         if (enemy != nullptr &&
                 FlagManager::flagPlayer == 0 && FlagManager::flagEnemy == 1)
         {
             enemy->Update();
-            std::cout << enemies.size();
+            // std::cout << enemies.size();
             enemy->GetLoc(Location);
         }
 
@@ -323,7 +333,10 @@ void Level::Update()
         Level::deletePlayer();
     }
     uiEnemyInfo->Update();
-   // buttonForPlayerAttack->updateCoords(enemyTurtle->Rect.x, enemyTurtle->Rect.y);
+    buttonW->updateCoords(EntityPosition::Coords[0], EntityPosition::Coords[1] - 32);
+    buttonA->updateCoords(EntityPosition::Coords[0] - 32, EntityPosition::Coords[1]);
+    buttonS->updateCoords(EntityPosition::Coords[0], EntityPosition::Coords[1] + 32);
+    buttonD->updateCoords(EntityPosition::Coords[0] + 32, EntityPosition::Coords[1]);
 }
 
 void Level::Start()
@@ -348,9 +361,9 @@ void Level::Start()
         }
     }
     for(int i = 0; i<1; i++) {
-      //delete enemy;
-      Enemy* enemy = new Enemy("data/images/Turtle.png", 4, ren, 8, 8, 3, 4);
-      enemies.push_back(enemy);
+        //delete enemy;
+        Enemy* enemy = new Enemy("data/images/Turtle.png", 4, ren, 8, 8, 3, 4);
+        enemies.push_back(enemy);
     }
     Generate();
     player->GetLevel(Location);
@@ -458,7 +471,7 @@ void Level::Render()
             {
                 for (Enemy* enemy : enemies)
                 {
-                uiEnemyInfo->Update(enemy);
+                    uiEnemyInfo->Update(enemy);
                 }
             }
 
@@ -549,6 +562,8 @@ void Level::handleEvents(SDL_Event eventInLvl)
 
             //Взаимодействие с Equiped Items
             uiEquiped->clickForItemsInInv();
+            break;
+            break;
         }
 
         //Вызов окна Spec по нажатию мыши
@@ -562,6 +577,7 @@ void Level::handleEvents(SDL_Event eventInLvl)
 
         //if (eventInLvl.button.button == SDL_BUTTON_RIGHT)
         uiEnemyInfo->handleEvents(eventInLvl);
+
     }
 
 
@@ -574,6 +590,10 @@ void Level::handleEvents(SDL_Event eventInLvl)
         keyD->handleEvents(eventInLvl);
 
         buttonForPlayerAttack->handleEvents(eventInLvl);
+        buttonW->handleEvents(eventInLvl);
+        buttonA->handleEvents(eventInLvl);
+        buttonS->handleEvents(eventInLvl);
+        buttonD->handleEvents(eventInLvl);
     }
 }
 

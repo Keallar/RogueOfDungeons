@@ -683,7 +683,7 @@ void Level::RoomGenerationMethod2() {
 	//...
 	for (int i = 0; i < 2; i++) {
 		for (int j = 0; j < 4; j++) {
-			std::cout << RoomSectors[i][j] << " ";
+            std::cout << RoomSectors[i][j] << " ";
 		}
 	}
 	//рисуем дороги, судя по инфе про чанки

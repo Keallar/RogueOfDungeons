@@ -8,11 +8,10 @@
 
 using namespace std;
 
-int Enemy::HP = 0;
-int Enemy::HpMax = 0;
-
 Enemy::Enemy(const char* texturesheet, int framesOfAnimationForAttack, SDL_Renderer* renderer, int HealthP, int MaxHealthP, int Damage, int EXPR)
 {
+    HP = HealthP;
+    HpMax = MaxHealthP;
 	temp = false;
 	Timer = 0;
 	generate = -1;
@@ -42,22 +41,24 @@ void Enemy::clean()
 
 int Enemy::GetHpEnemy(int numOfHp)
 {
+    int temp = 0;
 	switch (numOfHp)
 	{
 	case 0:
-		return HP;
+        temp = HP;
 	case 1:
-		return HpMax;
+        temp = HpMax;
 	default:
 		break;
 	}
+    return temp;
 }
 
 int Enemy::CheckHpEnemy()
 {
-	if (Enemy::HP <= 0)
+    if (HP <= 0)
 	{
-		static int iter = 0;
+        int iter = 0;
 		if (iter == 0)
 		{
 			FlagManager::flagCheckHpEnemy = 1;
@@ -73,11 +74,11 @@ int Enemy::CheckHpEnemy()
 		}
 
 	}
-	else if (Enemy::HP != Enemy::HpMax && FlagManager::flagCheckHpEnemy == 0)
+    else if (HP != HpMax && FlagManager::flagCheckHpEnemy == 0)
 	{
 		FlagManager::flagCheckHpEnemy = 1;
 	}
-	else if (Enemy::HP == Enemy::HpMax && FlagManager::flagCheckHpEnemy == 1)
+    else if (HP == HpMax && FlagManager::flagCheckHpEnemy == 1)
 	{
 		FlagManager::flagCheckHpEnemy = 0;
 	}
@@ -89,8 +90,8 @@ void Enemy::ChahgeHpEnemy(int valueOfChangingHp)
 	if ((FlagManager::flagMeleeAttackPlayer == 1 || 
 		FlagManager::flagRangeAttack == 1))
 	{
-		Enemy::HP += valueOfChangingHp;
-		cout << "HpEnemy Changing" << endl;
+        HP += valueOfChangingHp;
+        cout << "HpEnemy Changing" << endl;
 	}
 }
 
@@ -129,7 +130,7 @@ void Enemy::GetEnemyFirstCoords() {
 	}
 	else 
 	{
-		while ((enemyLoc[Rect.y / 32][Rect.x / 32] == -2))
+        while (enemyLoc[Rect.y / 32][Rect.x / 32] == -2)
 		{
 			Rect.x = (rand() % 30) * 32;
 			Rect.y = (rand() % 20) * 32;
@@ -242,7 +243,7 @@ void Enemy::attackOfEnemy()
 		temp = false;
 		completeEnemyAnimation = 0;
 		Player::ChangeHpValue(-Enemy::enemyDamageCalculation());
-		std::cout << "Heat" << std::endl;
+        std::cout << "Hit" << std::endl;
 		Player::playerTurn();
 	}
 }

@@ -35,8 +35,7 @@ private:
 	Player* player;
 	Enemy* enemyTurtle;
     Enemy* SecondEnemyTurtle;
-    UIEnemyInfo* tempUiEnemyInfo;
-    std::vector <UIEnemyInfo*> uiEnemyInfo;
+    UIEnemyInfo* uiEnemyInfo;
 	UIInfo* uiInfo;
 	UIItem* uiItem;
 	UISpecifications* uiSpec;

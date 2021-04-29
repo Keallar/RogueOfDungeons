@@ -581,7 +581,7 @@ void UIEnemyInfo::Render()
 
 void UIEnemyInfo::Update(Enemy* enemy)
 {
-    //tempEnemy = enemy;
+    tempEnemy = enemy;
     SDL_DestroyTexture(hpCurrentTextEnemy);
     hpCurrentTextEnemy = 0;
     std::string stringTemp = std::to_string(tempEnemy->GetHpEnemy(0));

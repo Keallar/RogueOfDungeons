@@ -22,10 +22,9 @@ Level::Level(SDL_Renderer* renderer) : ren (renderer)
     player = new Player(ren);
     //enemyTurtle = new Enemy();
     SecondEnemyTurtle = new Enemy("data/images/Turtle.png", 4, ren, 10, 10, 3, 4);
-    tempUiEnemyInfo = new UIEnemyInfo(ren, SecondEnemyTurtle);
+    uiEnemyInfo = new UIEnemyInfo(ren, SecondEnemyTurtle);
     //enemies.push_back(enemyTurtle);
     enemies.push_back(SecondEnemyTurtle);
-    uiEnemyInfo.push_back(tempUiEnemyInfo);
 
     uiInfo = new UIInfo(ren);
     uiItem = new UIItem(ren);
@@ -49,7 +48,7 @@ Level::Level(SDL_Renderer* renderer) : ren (renderer)
                 }
                 else if (EntityPosition::Coords[0] == enemy->Rect.x &&
                          (EntityPosition::Coords[1] - 32) == enemy->Rect.y)
-                {               
+                {
                     wFlag = false;
                     //остановка при попытке пройти сквозь enemy
                 }
@@ -88,7 +87,7 @@ Level::Level(SDL_Renderer* renderer) : ren (renderer)
                 }
                 else if ((EntityPosition::Coords[0] - 32) == enemy->Rect.x &&
                          EntityPosition::Coords[1] == enemy->Rect.y)
-                {               
+                {
                     AFlag = false;
                     //остановка при попытке пройти сквозь enemy
                 }
@@ -127,7 +126,7 @@ Level::Level(SDL_Renderer* renderer) : ren (renderer)
                 }
                 else if (EntityPosition::Coords[0] == enemy->Rect.x &&
                          (EntityPosition::Coords[1] + 32) == enemy->Rect.y)
-                {                   
+                {
                     sFlag = false;
                     //остановка при попытке пройти сквозь enemy
                 }
@@ -166,7 +165,7 @@ Level::Level(SDL_Renderer* renderer) : ren (renderer)
                 }
                 else if ((EntityPosition::Coords[0] + 32) == enemy->Rect.x &&
                          EntityPosition::Coords[1] == enemy->Rect.y)
-                {                   
+                {
                     dFlag = false;
                     //остановка при попытке пройти сквозь enemy
                 }
@@ -199,10 +198,8 @@ Level::Level(SDL_Renderer* renderer) : ren (renderer)
             Attack();
         }
     };
-    for (Enemy* enemy : enemies)
-    {
-        buttonForPlayerAttack = new Button("left", NULL, ren, {0, 0, 32, 32}, playerAttack, NULL);
-    }
+    buttonForPlayerAttack = new Button("left", NULL, ren, {0, 0, 32, 32}, playerAttack, NULL);
+
     for (int i = 0; i < 22; i++)
     {
         for (int j = 0; j < 32; j++)
@@ -480,8 +477,7 @@ void Level::Render()
 
             if (FlagManager::flagUiEnemy == 1)
             {
-                for (UIEnemyInfo* info : uiEnemyInfo)
-                    info->Render();
+                uiEnemyInfo->Render();
             }
 
             //Update значений hp, mana и  exp
@@ -579,9 +575,8 @@ void Level::handleEvents(SDL_Event eventInLvl)
         //Вызов окна Inventory по нажатию мыши
         uiInv->handleEvents(eventInLvl);
 
-        //if (eventInLvl.button.button == SDL_BUTTON_RIGHT)
-        for (UIEnemyInfo* info: uiEnemyInfo)
-            info->handleEvents(eventInLvl);
+        //Вызов InfoEnemy
+        uiEnemyInfo->handleEvents(eventInLvl);
 
     }
 
@@ -608,6 +603,7 @@ void Level::handleEvents(SDL_Event eventInLvl)
                 (mouseY<=enemy->Rect.y+32)&&(mouseY>=enemy->Rect.y))
         {
             buttonForPlayerAttack->updateCoords(enemy->Rect.x, enemy->Rect.y);
+            uiEnemyInfo->Update(enemy);
             break;
         }
     }

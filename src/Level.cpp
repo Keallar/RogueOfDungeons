@@ -201,7 +201,7 @@ Level::Level(SDL_Renderer* renderer) : ren (renderer)
     };
     for (Enemy* enemy : enemies)
     {
-        buttonForPlayerAttack = new Button("left", NULL, ren, {enemy->Rect.x, enemy->Rect.y, 32, 32}, playerAttack, NULL);
+        buttonForPlayerAttack = new Button("left", NULL, ren, {0, 0, 32, 32}, playerAttack, NULL);
     }
     for (int i = 0; i < 22; i++)
     {
@@ -323,12 +323,7 @@ void Level::Update()
             //std::cout << enemy->CheckHpEnemy();
             Level::deleteEnemy();
         }
-//        for (UIEnemyInfo* info : uiEnemyInfo)
-//        {
-//            info->Update();
-//            info->UpdateMax(enemy);
-//        }
-        buttonForPlayerAttack->updateCoords(enemy->Rect.x, enemy->Rect.y);
+        //buttonForPlayerAttack->updateCoords(enemy->Rect.x, enemy->Rect.y);
     }
 
     //удаление player при hp <= 0
@@ -605,143 +600,163 @@ void Level::handleEvents(SDL_Event eventInLvl)
         buttonS->handleEvents(eventInLvl);
         buttonD->handleEvents(eventInLvl);
     }
+    for (Enemy* enemy : enemies)
+    {
+        int mouseX = 0, mouseY = 0;
+        SDL_GetMouseState(&mouseX, &mouseY);
+        if((mouseX<=enemy->Rect.x+32)&&(mouseX>=enemy->Rect.x)&&
+                (mouseY<=enemy->Rect.y+32)&&(mouseY>=enemy->Rect.y))
+        {
+            buttonForPlayerAttack->updateCoords(enemy->Rect.x, enemy->Rect.y);
+            break;
+        }
+    }
 }
 
 void Level::Attack() 
 {
+    int mouseX , mouseY;
+    SDL_GetMouseState(&mouseX, &mouseY);
     //Дальний boy
     for (Enemy* enemy : enemies)
     {
-        if (Inventory::ExistingItems[Player::EqItems.WeaponId]->Type == rWeapon)
+        buttonForPlayerAttack->updateCoords(enemy->Rect.x, enemy->Rect.y);
+        std::cout<<enemy->Rect.x<< " " << enemy->Rect.y << std::endl;
+        if((mouseX<=enemy->Rect.x+32)&&(mouseX>=enemy->Rect.x)&&
+                (mouseY<=enemy->Rect.y+32)&&(mouseY>=enemy->Rect.y))
         {
-            int PlPosx = EntityPosition::Coords[0] / 32, PlPosy = EntityPosition::Coords[1] / 32, EnPosx = (enemy->Rect.x) / 32, EnPosy = (enemy->Rect.y) / 32;
-            bool blankflag = true;
-            if ((abs(EntityPosition::Coords[0] - enemy->Rect.x) == 0)) // разделил чтобы потом проверять на наличие стен
+            if (Inventory::ExistingItems[Player::EqItems.WeaponId]->Type == rWeapon)
             {
-                if (PlPosy > EnPosy)
+                int PlPosx = EntityPosition::Coords[0] / 32, PlPosy = EntityPosition::Coords[1] / 32, EnPosx = (enemy->Rect.x) / 32, EnPosy = (enemy->Rect.y) / 32;
+                bool blankflag = true;
+                if ((abs(EntityPosition::Coords[0] - enemy->Rect.x) == 0)) // разделил чтобы потом проверять на наличие стен
                 {
-                    for (int i = PlPosy; i > EnPosy; i--)
+                    if (PlPosy > EnPosy)
                     {
-                        if (Location[i][PlPosx] == 1)
+                        for (int i = PlPosy; i > EnPosy; i--)
                         {
-                            blankflag = false;
+                            if (Location[i][PlPosx] == 1)
+                            {
+                                blankflag = false;
+                            }
+                        }
+                    }
+                    else
+                    {
+                        for (int i = EnPosy; i > PlPosy; i--)
+                        {
+                            if (Location[i][PlPosx] == 1)
+                            {
+                                blankflag = false;
+                            }
+                        }
+                    }
+                }
+                else if (/*abs*/(EntityPosition::Coords[1] - enemy->Rect.y == 0))
+                {
+                    if (PlPosx > EnPosx)
+                    {
+                        for (int i = PlPosx; i > EnPosx; i--)
+                        {
+                            if (Location[PlPosy][i] == 1)
+                            {
+                                blankflag = false;
+                            }
+                        }
+                    }
+                    else
+                    {
+                        for (int i = EnPosy; i > PlPosy; i--)
+                        {
+                            if (Location[PlPosy][i] == 1)
+                            {
+                                blankflag = false;
+                            }
                         }
                     }
                 }
                 else
                 {
-                    for (int i = EnPosy; i > PlPosy; i--)
+                    int x, y;
+                    float k = -(((float)(EnPosy - PlPosy) / (PlPosx - EnPosx)));
+                    float b = -((float)(EnPosx * PlPosy - PlPosx * EnPosy) / (PlPosx - EnPosx));
+                    if (PlPosx > EnPosx)
                     {
-                        if (Location[i][PlPosx] == 1)
+                        for (x = PlPosx; x > EnPosx; x--)
                         {
-                            blankflag = false;
+                            if (Location[(int)(k * x + b)][x] == 1)
+                            {
+                                blankflag = false;
+                            }
+                        }
+                    }
+                    else if (PlPosx < EnPosx)
+                    {
+                        for (x = EnPosx; x > PlPosx; x--)
+                        {
+                            if (Location[(int)(k * x + b)][x] == 1)
+                            {
+                                blankflag = false;
+                            }
+                        }
+                    }
+                    if (PlPosy < EnPosy)
+                    {
+                        for (y = EnPosy; y > PlPosy; y--)
+                        {
+                            if (Location[y][(int)((y - b) / k)] == 1)
+                            {
+                                blankflag = false;
+                            }
+                        }
+                    }
+                    else if (PlPosy > EnPosy)
+                    {
+                        for (y = PlPosy; y > EnPosy; y--)
+                        {
+                            if (Location[y][(int)((y - b) / k)] == 1)
+                            {
+                                blankflag = false;
+                            }
                         }
                     }
                 }
-            }
-            else if (/*abs*/(EntityPosition::Coords[1] - enemy->Rect.y == 0))
-            {
-                if (PlPosx > EnPosx)
+
+                if (blankflag == true)
                 {
-                    for (int i = PlPosx; i > EnPosx; i--)
+                    int x = (enemy->Rect.y - EntityPosition::Coords[1]) / 32;
+                    int y = (enemy->Rect.x - EntityPosition::Coords[0]) / 32;
+                    int i = rand() % 100;
+                    if (i < ((Player::EqItems.equipedRangeW->CHNS) -
+                             ((Player::EqItems.equipedRangeW->DCHNS) *
+                              abs(((float)(sqrt(x * x + y * y))) - Player::EqItems.equipedRangeW->RNG))))
                     {
-                        if (Location[PlPosy][i] == 1)
-                        {
-                            blankflag = false;
-                        }
+                        std::cout << ((Player::EqItems.equipedRangeW->CHNS) -
+                                      ((Player::EqItems.equipedRangeW->DCHNS) *
+                                       abs(((float)(sqrt(x * x + y * y))) - Player::EqItems.equipedRangeW->RNG)));
+                        enemy->ChahgeHpEnemy(-(player->RangeAttack()));
                     }
                 }
-                else
-                {
-                    for (int i = EnPosy; i > PlPosy; i--)
-                    {
-                        if (Location[PlPosy][i] == 1)
-                        {
-                            blankflag = false;
-                        }
-                    }
-                }
-            }
-            else
-            {
-                int x, y;
-                float k = -(((float)(EnPosy - PlPosy) / (PlPosx - EnPosx)));
-                float b = -((float)(EnPosx * PlPosy - PlPosx * EnPosy) / (PlPosx - EnPosx));
-                if (PlPosx > EnPosx)
-                {
-                    for (x = PlPosx; x > EnPosx; x--)
-                    {
-                        if (Location[(int)(k * x + b)][x] == 1)
-                        {
-                            blankflag = false;
-                        }
-                    }
-                }
-                else if (PlPosx < EnPosx)
-                {
-                    for (x = EnPosx; x > PlPosx; x--)
-                    {
-                        if (Location[(int)(k * x + b)][x] == 1)
-                        {
-                            blankflag = false;
-                        }
-                    }
-                }
-                if (PlPosy < EnPosy)
-                {
-                    for (y = EnPosy; y > PlPosy; y--)
-                    {
-                        if (Location[y][(int)((y - b) / k)] == 1)
-                        {
-                            blankflag = false;
-                        }
-                    }
-                }
-                else if (PlPosy > EnPosy)
-                {
-                    for (y = PlPosy; y > EnPosy; y--)
-                    {
-                        if (Location[y][(int)((y - b) / k)] == 1)
-                        {
-                            blankflag = false;
-                        }
-                    }
-                }
+                player->ChangeManaValue(-5);
+                enemyTurtle->enemyTurn();// ВАЖНО
             }
 
-            if (blankflag == true)
+            //Ближний boy
+            else if (this->CheckPositionToMeleeAttack(enemy->Rect, EntityPosition::Coords[0], EntityPosition::Coords[1]) == true &&
+                     FlagManager::flagMeleeAttackPlayer == 1 && FlagManager::flagMeleeAttackEnemy == 0 &&
+                     FlagManager::flagPlayer == 1 && FlagManager::flagEnemy == 0)
             {
-                int x = (enemy->Rect.y - EntityPosition::Coords[1]) / 32;
-                int y = (enemy->Rect.x - EntityPosition::Coords[0]) / 32;
-                int i = rand() % 100;
-                if (i < ((Player::EqItems.equipedRangeW->CHNS) -
-                         ((Player::EqItems.equipedRangeW->DCHNS) *
-                          abs(((float)(sqrt(x * x + y * y))) - Player::EqItems.equipedRangeW->RNG))))
-                {
-                    std::cout << ((Player::EqItems.equipedRangeW->CHNS) -
-                                  ((Player::EqItems.equipedRangeW->DCHNS) *
-                                   abs(((float)(sqrt(x * x + y * y))) - Player::EqItems.equipedRangeW->RNG)));
-                    enemy->ChahgeHpEnemy(-(player->RangeAttack()));
-                }
+                enemy->ChahgeHpEnemy(-(player->MeleeAttack()));
+                enemyTurtle->enemyTurn(); // ТОЖЕ ВАЖНО
             }
-            player->ChangeManaValue(-5);
-            enemyTurtle->enemyTurn();// ВАЖНО
-        }
-
-        //Ближний boy
-        else if (this->CheckPositionToMeleeAttack(enemy->Rect, EntityPosition::Coords[0], EntityPosition::Coords[1]) == true &&
-                 FlagManager::flagMeleeAttackPlayer == 1 && FlagManager::flagMeleeAttackEnemy == 0 &&
-                 FlagManager::flagPlayer == 1 && FlagManager::flagEnemy == 0)
-        {
-            enemy->ChahgeHpEnemy(-(player->MeleeAttack()));
-            enemyTurtle->enemyTurn(); // ТОЖЕ ВАЖНО
         }
     }
 }
 void Level::Generate()
 {
     srand(time(0));
-    generateChoose = 5;
+    generateChoose = rand() % 6;
+    if (generateChoose == 3) generateChoose = 2;
     player->generate = generateChoose;
     for(Enemy* enemy : enemies)
     {

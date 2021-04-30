@@ -322,6 +322,27 @@ void Level::Update()
     buttonS->updateCoords(EntityPosition::Coords[0], EntityPosition::Coords[1] + 32);
     buttonD->updateCoords(EntityPosition::Coords[0] + 32, EntityPosition::Coords[1]);  
 
+    if (FlagManager::flagUiEnemy == 1)
+    {
+        uiEnemyInfo->Render();
+    }
+
+    //Update значений hp, mana и  exp у playera
+    if (FlagManager::flagCheckHP == 1)
+    {
+        hp->Update();
+    }
+
+    if (FlagManager::flagCheckMana == 1)
+    {
+        mana->Update();
+    }
+
+    if (FlagManager::flagCheckExp == 1)
+    {
+        exp->Update();
+    }
+
 }
 
 void Level::Start()
@@ -461,33 +482,9 @@ void Level::Render()
             mana->Render();
             exp->Render();
 
-            if (FlagManager::flagCheckHpEnemy == 1)
-            {
-//                for (UIEnemyInfo* info : uiEnemyInfo)
-//                {
-//                    info->Update();
-//                }
-            }
-
             if (FlagManager::flagUiEnemy == 1)
             {
                 uiEnemyInfo->Render();
-            }
-
-            //Update значений hp, mana и  exp
-            if (FlagManager::flagCheckHP == 1)
-            {
-                hp->Update();
-            }
-
-            if (FlagManager::flagCheckMana == 1)
-            {
-                mana->Update();
-            }
-
-            if (FlagManager::flagCheckExp == 1)
-            {
-                exp->Update();
             }
         }
 
@@ -589,6 +586,7 @@ void Level::handleEvents(SDL_Event eventInLvl)
         buttonS->handleEvents(eventInLvl);
         buttonD->handleEvents(eventInLvl);
     }
+
     for (Enemy* enemy : enemies)
     {
         int mouseX = 0, mouseY = 0;
@@ -598,6 +596,8 @@ void Level::handleEvents(SDL_Event eventInLvl)
         {
             buttonForPlayerAttack->updateCoords(enemy->Rect.x, enemy->Rect.y);
             uiEnemyInfo->Update(enemy);
+            //std::cout << "uiEnemyInfo was updated\n";
+
             break;
         }
     }

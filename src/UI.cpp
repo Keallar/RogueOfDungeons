@@ -12,6 +12,7 @@
 UIInfo::UIInfo(SDL_Renderer* renderer) : ren (renderer)
 {
     PATH_IN_FONT = "data/fonts/manaspc.ttf";
+    flagHoverSpec = false;
 
     //Version
     versionBLock = FontManager::renderText("ROGUE OF DUNGEONS V-0.1 ALPHA", PATH_IN_FONT, color, 32, ren);
@@ -21,7 +22,7 @@ UIInfo::UIInfo(SDL_Renderer* renderer) : ren (renderer)
 
     slashhhhhhhhh = FontManager::renderText("/", PATH_IN_FONT, color, 32, ren);
 
-    //SPEC = FontManager::renderText("SPEC", PATH_IN_FONT, color, 32, ren);
+    SPEC = FontManager::renderText("SPEC", PATH_IN_FONT, color, 32, ren);
 
     //HP
     hpBar = textureManager::LoadTexture("data/images/hp.png", ren);
@@ -51,7 +52,17 @@ UIInfo::UIInfo(SDL_Renderer* renderer) : ren (renderer)
             }
         }
     };
-    buttonForCallSpecInfo = new Button("left", "data/images/Button.png", ren , { 1230, 240, 32, 32 }, callSpecOrInfoWin, NULL);
+    auto hoverSpec{
+        [=]()
+        {
+            if (flagHoverSpec == 0)
+                flagHoverSpec = 1;
+            else if (flagHoverSpec == 1)
+                flagHoverSpec = 0;
+        }
+    };
+    buttonForCallSpecInfo = new Button("left", "data/images/Button.png", ren , { 1230, 240, 32, 32 },
+                                       callSpecOrInfoWin, hoverSpec);
     keyForCallSpecInfo = new Keyboard(SDL_SCANCODE_Q, callSpecOrInfoWin);
     auto callInvWin{
         []()
@@ -66,21 +77,8 @@ UIInfo::UIInfo(SDL_Renderer* renderer) : ren (renderer)
             }
         }
     };
-    auto hoverSpec{
-        [=]()
-        {
-            const char* PATH_IN_FONT = "data/fonts/manaspc.ttf";
-            SDL_Color color = { 255, 255, 255, 255 };
-            SDL_Texture* SPEC = FontManager::renderText("SPEC", PATH_IN_FONT, color, 32, ren);
-
-            if (SPEC != nullptr)
-            {
-                RenderManager::CopyToRender(SPEC, Game::renderer, 1230, 220, 30, 25);
-                std::cout << "Render Hover SPEC" << std::endl;
-            }
-        }
-    };
-    buttonForCallInvWin = new Button("left", "data/images/Button.png", ren, { 1050, 665, 25, 22 }, callInvWin, hoverSpec);
+    buttonForCallInvWin = new Button("left", "data/images/Button.png", ren, { 1050, 665, 25, 22 },
+                                     callInvWin, NULL);
     keyForcCallInvWin = new Keyboard(SDL_SCANCODE_I, callInvWin);
 }
 
@@ -100,7 +98,8 @@ void UIInfo::Render()
     RenderManager::CopyToRender(slashhhhhhhhh, ren, 1152, 122, 32, 20);
     RenderManager::CopyToRender(slashhhhhhhhh, ren, 1152, 175, 32, 20);
 
-    //RenderManager::CopyToRender(SPEC, ren, 1230, 220, 30, 25);
+    if (flagHoverSpec == 1)
+        RenderManager::CopyToRender(SPEC, ren, 1230, 220, 30, 25);
 
     //HP
     RenderManager::CopyToRender(hpBar, ren, 1080, 40, 160, 32, 0, 0, 128, 16);
@@ -516,24 +515,24 @@ void UIInventory::handleEvents(SDL_Event& eventInInv)
 
 void UIInventory::clickForItemsInInv()
 {
-	SDL_GetMouseState(&xMouseCoord, &yMouseCoord);
-	
-	for (int i = 0; i < 16; i++)
-	{
-		if (InputManager::MouseInArea((780 + 36 * (i % 4)), (100 + ((i / 4) * 50)), 32, 32, xMouseCoord, yMouseCoord) &&
-			Inventory::inventoryFace[i] != -1 && FlagManager::flagInv == 1)
-		{
-			if (FlagManager::flagHaveDrop == false) 
-			{
-				FlagManager::flagEquip = i;
-			}
-			else
-			{
-				FlagManager::flagDrop = i;
-			}
-		}
-	}
-	
+    SDL_GetMouseState(&xMouseCoord, &yMouseCoord);
+
+    for (int i = 0; i < 16; i++)
+    {
+        if (InputManager::MouseInArea((780 + 36 * (i % 4)), (100 + ((i / 4) * 50)), 32, 32, xMouseCoord, yMouseCoord) &&
+                Inventory::inventoryFace[i] != -1 && FlagManager::flagInv == 1)
+        {
+            if (FlagManager::flagHaveDrop == false)
+            {
+                FlagManager::flagEquip = i;
+            }
+            else
+            {
+                FlagManager::flagDrop = i;
+            }
+        }
+    }
+
 }
 
 
@@ -558,7 +557,7 @@ UIEnemyInfo::UIEnemyInfo(SDL_Renderer* renderer, Enemy* enemy):
             if (FlagManager::flagUiEnemy == 0)
             {
                 FlagManager::flagUiEnemy = 1;
-                std::cout << "EnemyInfo\n";
+                //std::cout << "EnemyInfo\n";
             }
             else if (FlagManager::flagUiEnemy == 1)
             {

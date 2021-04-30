@@ -118,14 +118,13 @@ int Map::CountingNeighbours(int x, int y, int NeighbourNumber) {
 }
 
 void Map::PuttingPortal() {
-    int PortalX = rand()%20+1;
-    int PortalY = rand()%30+1;
-    while (textureLocation[PortalX][PortalY] != 0) {
-        PortalX = rand()%20+1;
-        PortalY = rand()%30+1;
+    portal.x = rand()%20+1;
+    portal.y = rand()%30+1;
+    while (textureLocation[portal.x][portal.y] != 0) {
+        portal.x = rand()%20+1;
+        portal.y = rand()%30+1;
     }
-    Location[PortalX][PortalY] = 4;
-    textureLocation[PortalX][PortalY] = 15;
+    Location[portal.x][portal.y] = 5;
 }
 
 void Map::SetWallsForTileSet() {

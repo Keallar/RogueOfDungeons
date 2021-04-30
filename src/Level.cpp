@@ -289,6 +289,7 @@ void Level::Update()
             enemy->Update();
             // std::cout << enemies.size();
             enemy->GetLoc(LevelMap->Location);
+            player->playerTurn();//UNDONE Я уверен, что он не должен передавать здесь ход, но это пока что все фиксит, потому пусть пока поюудет
         }
 
         if (enemy != nullptr)
@@ -299,6 +300,11 @@ void Level::Update()
         {
             //std::cout << enemy->CheckHpEnemy();
             Level::deleteEnemy();
+            std::cout << enemies.size() << std::endl;
+            if (enemies.size() == 0) {
+                LevelMap->Location[LevelMap->portal.x][LevelMap->portal.y] = 4;
+                LevelMap->textureLocation[LevelMap->portal.x][LevelMap->portal.y] = 15;
+            }
         }
         //buttonForPlayerAttack->updateCoords(enemy->Rect.x, enemy->Rect.y);
     }
@@ -312,7 +318,8 @@ void Level::Update()
     buttonW->updateCoords(EntityPosition::Coords[0], EntityPosition::Coords[1] - 32);
     buttonA->updateCoords(EntityPosition::Coords[0] - 32, EntityPosition::Coords[1]);
     buttonS->updateCoords(EntityPosition::Coords[0], EntityPosition::Coords[1] + 32);
-    buttonD->updateCoords(EntityPosition::Coords[0] + 32, EntityPosition::Coords[1]);
+    buttonD->updateCoords(EntityPosition::Coords[0] + 32, EntityPosition::Coords[1]);  
+
 }
 
 void Level::Start()
@@ -719,7 +726,7 @@ void Level::Attack()
                     }
                 }
                 player->ChangeManaValue(-5);
-                enemyTurtle->enemyTurn();// ВАЖНО
+                enemies[0]->enemyTurn();// ВАЖНО
             }
 
             //Ближний boy
@@ -728,7 +735,7 @@ void Level::Attack()
                      FlagManager::flagPlayer == 1 && FlagManager::flagEnemy == 0)
             {
                 enemy->ChahgeHpEnemy(-(player->MeleeAttack()));
-                enemyTurtle->enemyTurn(); // ТОЖЕ ВАЖНО
+                enemies[0]->enemyTurn(); // ТОЖЕ ВАЖНО
             }
         }
     }

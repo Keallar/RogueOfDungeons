@@ -17,6 +17,10 @@ class Map
 public:
     Map();
     ~Map();
+    struct Portal {
+        int x;
+        int y;
+    } portal;
     int generateChoose;
     int itemsOnLvl[3];
     int itemsHave;

@@ -7,6 +7,7 @@
 #include "Inventory.h"
 #include "Enemy.h"
 #include "Buttons.h"
+#include "TextureBase.h"
 #include <iostream>
 
 Equiped Player::EqItems = { -1, nullptr, nullptr, -1};
@@ -63,8 +64,9 @@ int Player::VIS = 16;
 
 Player::Player(SDL_Renderer* renderer)
 {
+    GameTextures = TextureBase::Instance();
 	ren = renderer;
-	PlayerTexture = textureManager::LoadTexture("data/images/Hero.png", ren);
+    PlayerTexture = GameTextures->GetTexture("Hero");
 	playerAnimation = new Animation(ren, PlayerTexture);
 	generate = -1;
 	for (int i = 0; i < 22; i++) 

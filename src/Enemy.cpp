@@ -51,6 +51,7 @@ int Enemy::GetHpEnemy(int numOfHp)
 	default:
 		break;
 	}
+    //std::cout << temp << std::endl;
     return temp;
 }
 
@@ -59,28 +60,31 @@ int Enemy::CheckHpEnemy()
     if (HP <= 0)
 	{
         int iter = 0;
-		if (iter == 0)
-		{
-			FlagManager::flagCheckHpEnemy = 1;
-			HpMax = HP;
-			iter++;
-			FlagManager::flagEnemy = 0;
-			FlagManager::flagMeleeAttackEnemy = 0;
-		}
-		else if (iter == 1)
-		{
-			FlagManager::flagEnemy = 0;
-			FlagManager::flagMeleeAttackEnemy = 0;
-		}
+        if (iter == 0)
+        {
+            FlagManager::flagCheckHpEnemy = 1;
+            HpMax = HP;
+            iter++;
+            FlagManager::flagEnemy = 0;
+            FlagManager::flagMeleeAttackEnemy = 0;
+        }
+        else if (iter == 1)
+        {
+            FlagManager::flagEnemy = 0;
+            FlagManager::flagMeleeAttackEnemy = 0;
+        }
 
 	}
     else if (HP != HpMax && FlagManager::flagCheckHpEnemy == 0)
 	{
 		FlagManager::flagCheckHpEnemy = 1;
+        //std::cout << "CheckHpEnemy = 1\n";
+        Enemy::HpMax = HP;
 	}
     else if (HP == HpMax && FlagManager::flagCheckHpEnemy == 1)
 	{
 		FlagManager::flagCheckHpEnemy = 0;
+        //std::cout << "CheckHpEnemy = 0\n";
 	}
 	return HP;
 }
@@ -229,7 +233,6 @@ void Enemy::Update()
 		Enemy::meleeAttackEnemy();
 
 		Enemy::CheckHpEnemy();
-	//}
 }
 
 void Enemy::attackOfEnemy()

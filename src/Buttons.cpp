@@ -22,7 +22,7 @@ Button::Button(const char* textureName, SDL_Renderer* renderer, SDL_Rect rect)
 }
 
 Button::Button(std::string textButton, const char* textureName, SDL_Renderer* renderer, const SDL_Rect rect,
-    std::function <void()> callbackFunction, std::function <void()> hoverFunction):
+               std::function <void()> callbackFunction, std::function <void()> hoverFunction):
     buttonText (textButton),nameOftexture(textureName), ren(renderer), callback(callbackFunction), hover(hoverFunction)
 {
     button.x = rect.x;
@@ -80,8 +80,8 @@ void Button::handleEvents(SDL_Event& buttonEvent)
         mouse.x = buttonEvent.motion.x;
         mouse.y = buttonEvent.motion.y;
         if (Button::mouseInArea(button.x, button.y, button.w, button.h) &&
-            FlagManager::flagHover == 1 &&
-            hover != NULL)
+                FlagManager::flagHover == 1 &&
+                hover != NULL)
         {
             hover();
         }
@@ -152,7 +152,7 @@ bool Keyboard::buttonIsPressed(SDL_Event& keyboardEvent)
     {
     case SDL_KEYDOWN:
         if (code == tempcode)
-        validity = true;
+            validity = true;
         break;
     case SDL_KEYUP:
         validity = false;

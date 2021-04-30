@@ -320,7 +320,6 @@ void Level::Update()
             //std::cout << enemy->CheckHpEnemy();
             Level::deleteEnemy();
         }
-        //buttonForPlayerAttack->updateCoords(enemy->Rect.x, enemy->Rect.y);
     }
 
     //удаление player при hp <= 0
@@ -334,19 +333,27 @@ void Level::Update()
     buttonS->updateCoords(EntityPosition::Coords[0], EntityPosition::Coords[1] + 32);
     buttonD->updateCoords(EntityPosition::Coords[0] + 32, EntityPosition::Coords[1]);
 
-    for (Enemy* enemy : enemies)
+    if (FlagManager::flagUiEnemy == 1)
     {
-        int mouseX = 0, mouseY = 0;
-        SDL_GetMouseState(&mouseX, &mouseY);
-        if((mouseX<=enemy->Rect.x+32)&&(mouseX>=enemy->Rect.x)&&
-                (mouseY<=enemy->Rect.y+32)&&(mouseY>=enemy->Rect.y))
-        {
-            buttonForPlayerAttack->updateCoords(enemy->Rect.x, enemy->Rect.y);
-            if (FlagManager::flagCheckHpEnemy == 1)
-                 uiEnemyInfo->Update(enemy);
-            break;
-        }
+        uiEnemyInfo->Render();
     }
+
+    //Update значений hp, mana и  exp у playera
+    if (FlagManager::flagCheckHP == 1)
+    {
+        hp->Update();
+    }
+
+    if (FlagManager::flagCheckMana == 1)
+    {
+        mana->Update();
+    }
+
+    if (FlagManager::flagCheckExp == 1)
+    {
+        exp->Update();
+    }
+
 }
 
 void Level::Start()
@@ -425,7 +432,6 @@ void Level::Render()
             }
             else
             {
-                //по-моему тут надо не одного врага проверять...
                 enemy->Render();
             }
         }
@@ -481,33 +487,9 @@ void Level::Render()
             mana->Render();
             exp->Render();
 
-            if (FlagManager::flagCheckHpEnemy == 1)
-            {
-//                for (Enemy* enemy : enemies)
-//                {
-//                    uiEnemyInfo->Update(enemy);
-//                }
-            }
-
             if (FlagManager::flagUiEnemy == 1)
             {
                 uiEnemyInfo->Render();
-            }
-
-            //Update значений hp, mana и  exp
-            if (FlagManager::flagCheckHP == 1)
-            {
-                hp->Update();
-            }
-
-            if (FlagManager::flagCheckMana == 1)
-            {
-                mana->Update();
-            }
-
-            if (FlagManager::flagCheckExp == 1)
-            {
-                exp->Update();
             }
         }
 
@@ -608,6 +590,21 @@ void Level::handleEvents(SDL_Event eventInLvl)
         buttonA->handleEvents(eventInLvl);
         buttonS->handleEvents(eventInLvl);
         buttonD->handleEvents(eventInLvl);
+    }
+
+    for (Enemy* enemy : enemies)
+    {
+        int mouseX = 0, mouseY = 0;
+        SDL_GetMouseState(&mouseX, &mouseY);
+        if((mouseX<=enemy->Rect.x+32)&&(mouseX>=enemy->Rect.x)&&
+                (mouseY<=enemy->Rect.y+32)&&(mouseY>=enemy->Rect.y))
+        {
+            buttonForPlayerAttack->updateCoords(enemy->Rect.x, enemy->Rect.y);
+            uiEnemyInfo->Update(enemy);
+            //std::cout << "uiEnemyInfo was updated\n";
+
+            break;
+        }
     }
 }
 

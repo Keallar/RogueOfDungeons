@@ -81,6 +81,7 @@ Player::Player(SDL_Renderer* renderer)
 	inventory->AddItem(2);
 	inventory->AddItem(5);
 	inventory->AddItem(3);
+    inventory->AddItem(4);
 	inventory->AddItem(6);
 	inventory->AddItem(7);
 	inventory->Update();

@@ -280,6 +280,7 @@ void Level::Update()
     }
     if (player != nullptr)
         player->GetLevel(LevelMap->Location);
+
     for(Enemy* enemy : enemies)
     {
         //std::cout << enemies.size();
@@ -291,10 +292,6 @@ void Level::Update()
             enemy->GetLoc(LevelMap->Location);
             player->playerTurn();//UNDONE Я уверен, что он не должен передавать здесь ход, но это пока что все фиксит, потому пусть пока поюудет
         }
-
-        if (enemy != nullptr)
-            enemy->GetLoc(LevelMap->Location);
-
         //удаление player (enemy) при hp <= 0
         if (enemy->CheckHpEnemy() <= 0 && enemy != nullptr)
         {
@@ -306,7 +303,12 @@ void Level::Update()
                 LevelMap->textureLocation[LevelMap->portal.x][LevelMap->portal.y] = 15;
             }
         }
+
+        if (enemy != nullptr)
+            enemy->GetLoc(LevelMap->Location);
+
         //buttonForPlayerAttack->updateCoords(enemy->Rect.x, enemy->Rect.y);
+
     }
 
     //удаление player при hp <= 0

@@ -51,21 +51,6 @@ UIInfo::UIInfo(SDL_Renderer* renderer) : ren (renderer)
             }
         }
     };
-    buttonForCallSpecInfo = new Button("left", "data/images/Button.png", ren , { 1230, 240, 32, 32 }, callSpecOrInfoWin, NULL);
-    keyForCallSpecInfo = new Keyboard(SDL_SCANCODE_Q, callSpecOrInfoWin);
-    auto callInvWin{
-        []()
-        {
-            if (FlagManager::flagInv == 0)
-            {
-                FlagManager::flagInv = 1;
-            }
-            else if (FlagManager::flagInv == 1)
-            {
-                FlagManager::flagInv = 0;
-            }
-        }
-    };
     auto hoverSpec{
         [=]()
         {
@@ -80,7 +65,24 @@ UIInfo::UIInfo(SDL_Renderer* renderer) : ren (renderer)
             }
         }
     };
-    buttonForCallInvWin = new Button("left", "data/images/Button.png", ren, { 1050, 665, 25, 22 }, callInvWin, hoverSpec);
+    buttonForCallSpecInfo = new Button("left", "data/images/Button.png", ren , { 1230, 240, 32, 32 },
+                                       callSpecOrInfoWin, hoverSpec);
+    keyForCallSpecInfo = new Keyboard(SDL_SCANCODE_Q, callSpecOrInfoWin);
+    auto callInvWin{
+        []()
+        {
+            if (FlagManager::flagInv == 0)
+            {
+                FlagManager::flagInv = 1;
+            }
+            else if (FlagManager::flagInv == 1)
+            {
+                FlagManager::flagInv = 0;
+            }
+        }
+    };
+    buttonForCallInvWin = new Button("left", "data/images/Button.png", ren, { 1050, 665, 25, 22 },
+                                     callInvWin, NULL);
     keyForcCallInvWin = new Keyboard(SDL_SCANCODE_I, callInvWin);
 }
 

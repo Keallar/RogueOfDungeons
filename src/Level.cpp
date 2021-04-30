@@ -333,6 +333,20 @@ void Level::Update()
     buttonA->updateCoords(EntityPosition::Coords[0] - 32, EntityPosition::Coords[1]);
     buttonS->updateCoords(EntityPosition::Coords[0], EntityPosition::Coords[1] + 32);
     buttonD->updateCoords(EntityPosition::Coords[0] + 32, EntityPosition::Coords[1]);
+
+    for (Enemy* enemy : enemies)
+    {
+        int mouseX = 0, mouseY = 0;
+        SDL_GetMouseState(&mouseX, &mouseY);
+        if((mouseX<=enemy->Rect.x+32)&&(mouseX>=enemy->Rect.x)&&
+                (mouseY<=enemy->Rect.y+32)&&(mouseY>=enemy->Rect.y))
+        {
+            buttonForPlayerAttack->updateCoords(enemy->Rect.x, enemy->Rect.y);
+            if (FlagManager::flagCheckHpEnemy == 1)
+                 uiEnemyInfo->Update(enemy);
+            break;
+        }
+    }
 }
 
 void Level::Start()
@@ -469,9 +483,9 @@ void Level::Render()
 
             if (FlagManager::flagCheckHpEnemy == 1)
             {
-//                for (UIEnemyInfo* info : uiEnemyInfo)
+//                for (Enemy* enemy : enemies)
 //                {
-//                    info->Update();
+//                    uiEnemyInfo->Update(enemy);
 //                }
             }
 
@@ -594,18 +608,6 @@ void Level::handleEvents(SDL_Event eventInLvl)
         buttonA->handleEvents(eventInLvl);
         buttonS->handleEvents(eventInLvl);
         buttonD->handleEvents(eventInLvl);
-    }
-    for (Enemy* enemy : enemies)
-    {
-        int mouseX = 0, mouseY = 0;
-        SDL_GetMouseState(&mouseX, &mouseY);
-        if((mouseX<=enemy->Rect.x+32)&&(mouseX>=enemy->Rect.x)&&
-                (mouseY<=enemy->Rect.y+32)&&(mouseY>=enemy->Rect.y))
-        {
-            buttonForPlayerAttack->updateCoords(enemy->Rect.x, enemy->Rect.y);
-            uiEnemyInfo->Update(enemy);
-            break;
-        }
     }
 }
 

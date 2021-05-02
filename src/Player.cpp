@@ -217,7 +217,8 @@ void Player::ChangeValueSpecs(int numOfSpec)
 
 //Изменение текущего значения hp
 void Player::ChangeHpValue(int valueOfChangingHp)
-{	if (HP[0] != 0 && HP[0] <= HP[2])
+{
+    if (HP[0] != 0 && HP[0] <= HP[2])
         HP[0] += valueOfChangingHp;
 }
 
@@ -285,7 +286,12 @@ void Player::CheckMANA()
 //Проверка изменения EXP
 void Player::CheckEXP()
 {
-	if (Player::exp[0] != Player::exp[1] && FlagManager::flagCheckExp == 0)
+    if (Player::exp[0] == Player::exp[2])
+    {
+        Player::exp[0] = 0;
+        ChangeMaxExpValue();
+    }
+    else if (Player::exp[0] != Player::exp[1] && FlagManager::flagCheckExp == 0)
 	{
 		FlagManager::flagCheckExp = 1;
 		Player::exp[1] = Player::exp[0];

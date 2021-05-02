@@ -19,6 +19,7 @@ private:
 	int framesOfAnimForMove;
 	int framesOfAnimaForIdle;
     int HP = 0;
+    int prevHp = 0;
     int HpMax = 0;
 	const int rows = 22, cols = 32;
 	int enemyLoc[22][32];
@@ -55,7 +56,7 @@ public:
 	void enemyTurn(); 
 	int getDamageEnemy();
     int GetHpEnemy(int numOfHp);
-	int CheckHpEnemy();
+    void CheckHpEnemy();
 	void ChahgeHpEnemy(int valueOfChangingHp);
 };
 

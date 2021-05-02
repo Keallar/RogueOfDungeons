@@ -42,7 +42,6 @@ public:
 	static int VIS;
     static int damage;
     static Equiped EqItems;
-    //static int Id; // UNDONE сделать getid
     Player(SDL_Renderer* ren);
     ~Player() override;
     void Update() override;
@@ -72,10 +71,11 @@ public:
     static void ChangeMaxManaValue();
     static void ChangeMaxExpValue();
 
-    static void playerTurn();
-
     static void CheckHP();
     static void CheckEXP();
     static void CheckMANA();
-    static void CheckSpecVaue(int numSpec);	
+    static void CheckSpecVaue(int numSpec);
+
+    static void playerTurn();
+
 };

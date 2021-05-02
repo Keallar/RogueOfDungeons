@@ -34,7 +34,7 @@ void Game::init(const char* title, int xpos, int ypos, int width, int height, bo
 	{
 		flags = SDL_WINDOW_FULLSCREEN;
 	}
-	if ((SDL_Init(SDL_INIT_EVERYTHING) == 0)||(TTF_Init == 0))
+    if ((SDL_Init(SDL_INIT_EVERYTHING) == 0))
 	{
 		std::cout << "ABOBA";	
 

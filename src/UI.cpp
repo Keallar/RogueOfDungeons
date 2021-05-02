@@ -548,7 +548,7 @@ UIEnemyInfo::UIEnemyInfo(SDL_Renderer* renderer, Enemy* enemy):
     hpTextEnemy = FontManager::renderText("HP", PATH_IN_FONT, color, 64, ren);
     hpCurrentTextEnemy = FontManager::renderText(TEXT_VALUE_CURRENT, PATH_IN_FONT, color, 32, ren);
     slashhhhhhhhh = FontManager::renderText("/", PATH_IN_FONT, color, 32, ren);
-    std::string stringValue2 = std::to_string(enemy->GetHpEnemy(1));
+    std::string stringValue2 = std::to_string(enemy->GetHpEnemy(2));
     const char* TEXT_VALUE_MAX = stringValue2.c_str();
     hpMaxEnemy = FontManager::renderText(TEXT_VALUE_MAX, PATH_IN_FONT, color, 32, ren);
     auto callEnemyInfo{
@@ -557,7 +557,6 @@ UIEnemyInfo::UIEnemyInfo(SDL_Renderer* renderer, Enemy* enemy):
             if (FlagManager::flagUiEnemy == 0)
             {
                 FlagManager::flagUiEnemy = 1;
-                //std::cout << "EnemyInfo\n";
             }
             else if (FlagManager::flagUiEnemy == 1)
             {
@@ -593,7 +592,7 @@ void UIEnemyInfo::Update(Enemy* enemy)
 void UIEnemyInfo::UpdateMax(Enemy* enemy)
 {
     tempEnemy = enemy;
-    SDL_DestroyTexture(hpCurrentTextEnemy);
+    SDL_DestroyTexture(hpMaxEnemy);
     hpMaxEnemy = 0;
     std::string stringTemp = std::to_string(tempEnemy->GetHpEnemy(2));
     const char* CHAR_VALUE = stringTemp.c_str();

@@ -19,11 +19,11 @@ void Animation::Render(int xposition, int yposition)
 	RenderManager::CopyToRender(animTexture, ren, xposition, yposition, 32, 32, xanim, yanim, 32, 32);
 }
 
-void Animation::UpdateTexture(const char* newTexture)
+void Animation::UpdateTexture(std::string newTexture)
 {
 	SDL_DestroyTexture(animTexture);
 	animTexture = 0;
-	animTexture = textureManager::LoadTexture(newTexture, ren);
+    animTexture = GameTexture->GetTexture(newTexture);
 }
 
 bool Animation::animationPlusForX(int numOfFrames, bool complete)

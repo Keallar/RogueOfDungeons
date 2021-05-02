@@ -209,7 +209,7 @@ Level::~Level()
     }
     delete uiInfo;
     delete uiItem;
-   // delete uiEnemyInfo;
+    // delete uiEnemyInfo;
     delete uiSpec;
     delete hp;
     delete mana;
@@ -271,7 +271,7 @@ void Level::Update()
         FlagManager::flagTurn = 0;
     }
     if (player != nullptr &&
-              FlagManager::flagTurn == 0)
+            FlagManager::flagTurn == 0)
     {
         player->Update();
     }
@@ -285,8 +285,11 @@ void Level::Update()
         {
             enemy->Update();
             enemy->GetLoc(LevelMap->Location);
-            player->playerTurn();//UNDONE Я уверен, что он не должен передавать здесь ход,
-                                      //но это пока что все фиксит, потому пусть пока побудет
+
+            if(enemy == enemies[enemies.size()-1])
+            {
+                player->playerTurn();//UNDONE Я уверен, что он не должен передавать здесь ход, но это пока что все фиксит, потому пусть пока поюуде
+            }
         }
         //удаление player (enemy) при hp <= 0
         if (enemy->GetHpEnemy(0) <= 0 && enemy != nullptr)
@@ -314,7 +317,7 @@ void Level::Update()
     buttonW->updateCoords(EntityPosition::Coords[0], EntityPosition::Coords[1] - 32);
     buttonA->updateCoords(EntityPosition::Coords[0] - 32, EntityPosition::Coords[1]);
     buttonS->updateCoords(EntityPosition::Coords[0], EntityPosition::Coords[1] + 32);
-    buttonD->updateCoords(EntityPosition::Coords[0] + 32, EntityPosition::Coords[1]);  
+    buttonD->updateCoords(EntityPosition::Coords[0] + 32, EntityPosition::Coords[1]);
 
     if (FlagManager::flagUiEnemy == 1)
     {

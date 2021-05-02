@@ -65,12 +65,12 @@ int Enemy::CheckHpEnemy()
             FlagManager::flagCheckHpEnemy = 1;
             HpMax = HP;
             iter++;
-            FlagManager::flagEnemy = 0;
+            FlagManager::flagTurn = 0;
             FlagManager::flagMeleeAttackEnemy = 0;
         }
         else if (iter == 1)
         {
-            FlagManager::flagEnemy = 0;
+            FlagManager::flagTurn = 0;
             FlagManager::flagMeleeAttackEnemy = 0;
         }
 
@@ -220,14 +220,12 @@ void Enemy::Update()
 		abs(Rect.y / 32 - EntityPosition::Coords[1] / 32)) < 14){*/
 		//�������� enemy (����� ����������� ����)
 		if ((abs(Rect.x / 32 - EntityPosition::Coords[0] / 32) +
-			abs(Rect.y / 32 - EntityPosition::Coords[1] / 32)) > 1 &&
-			FlagManager::flagPlayer == 0 && FlagManager::flagEnemy == 1)
+            abs(Rect.y / 32 - EntityPosition::Coords[1] / 32)) > 1)
 		{
 			WAY(Rect.x / 32, Rect.y / 32,
 				EntityPosition::Coords[0] / 32, EntityPosition::Coords[1] / 32);
 
-				FlagManager::flagPlayer = 1;
-				FlagManager::flagEnemy = 0;
+
 		}
 
 		Enemy::meleeAttackEnemy();
@@ -253,10 +251,9 @@ void Enemy::attackOfEnemy()
 
 void Enemy::enemyTurn()
 {
-	FlagManager::flagPlayer = 0;
+    FlagManager::flagTurn = 1;
 	FlagManager::flagMeleeAttackPlayer = 0;
 	FlagManager::flagRangeAttack = 0;
-	FlagManager::flagEnemy = 1;
 	FlagManager::flagMeleeAttackEnemy = 1;
 }
 
@@ -270,8 +267,7 @@ void Enemy::meleeAttackEnemy()
 		((Rect.y == EntityPosition::Coords[1]) &&
 			(Rect.x == EntityPosition::Coords[0] + 32)) ||
 		((Rect.y == EntityPosition::Coords[1]) &&
-			(Rect.x == EntityPosition::Coords[0] - 32))) &&
-		(FlagManager::flagMeleeAttackEnemy == 1 && FlagManager::flagEnemy == 1))
+            (Rect.x == EntityPosition::Coords[0] - 32))))
 	{
 		if (temp == false) {
 			Enemy::attackOfEnemy();
@@ -287,7 +283,7 @@ void Enemy::meleeAttackEnemy()
 	}
 	else
 	{
-		Player::playerTurn();
+        //Player::playerTurn();
 	}
 }
 

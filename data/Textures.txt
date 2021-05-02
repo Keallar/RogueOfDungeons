@@ -1,1 +1,2 @@
 Hero data/images/Hero.png
+HeroLether data/images/HeroLether.png

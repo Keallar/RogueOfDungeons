@@ -93,10 +93,7 @@ Player::Player(SDL_Renderer* renderer)
 
 Player::~Player()
 {
-	if (HP[0] <= 0)
-	{
-		SDL_DestroyTexture(PlayerTexture);
-	}
+
 }
 
 int Player::GetHP(int numOfArr)
@@ -469,8 +466,8 @@ void Player::GetItemEquip(int id)
 			{
 				SDL_DestroyTexture(PlayerTexture);
 				PlayerTexture = 0;
-				PlayerTexture = textureManager::LoadTexture("data/images/HeroLether.png", ren);
-				playerAnimation->UpdateTexture("data/images/HeroLether.png");
+                PlayerTexture = GameTextures->GetTexture("HeroLether");
+                playerAnimation->UpdateTexture("data/images/HeroLether.png");
 			}
 		}
 		if (Inventory::ExistingItems[ItemId]->Type == potion) {
@@ -500,7 +497,7 @@ void Player::GetItemUnEquip(int id)
 			EqItems.equipedArmor = nullptr;
 			SDL_DestroyTexture(PlayerTexture);
 			PlayerTexture = 0;
-			PlayerTexture = textureManager::LoadTexture("data/images/Hero.png", ren);
+            PlayerTexture = GameTextures->GetTexture("Hero");
 			playerAnimation->UpdateTexture("data/images/Hero.png");
 		}
 	}

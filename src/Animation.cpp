@@ -5,7 +5,8 @@
 Animation::Animation(SDL_Renderer* renderer, SDL_Texture* texture) : 
 	ren(renderer), animTexture(texture)
 {
-	xanim = 0;
+    GameTexture = TextureBase::Instance();
+    xanim = 0;
 	yanim = 0;
 }
 
@@ -21,7 +22,7 @@ void Animation::Render(int xposition, int yposition)
 
 void Animation::UpdateTexture(std::string newTexture)
 {
-	SDL_DestroyTexture(animTexture);
+    SDL_DestroyTexture(animTexture);
 	animTexture = 0;
     animTexture = GameTexture->GetTexture(newTexture);
 }

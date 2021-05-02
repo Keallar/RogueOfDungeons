@@ -473,7 +473,7 @@ void Player::GetItemEquip(int id)
 				SDL_DestroyTexture(PlayerTexture);
 				PlayerTexture = 0;
                 PlayerTexture = GameTextures->GetTexture("HeroLether");
-                playerAnimation->UpdateTexture("data/images/HeroLether.png");
+                playerAnimation->UpdateTexture("HeroLether");
 			}
 		}
 		if (Inventory::ExistingItems[ItemId]->Type == potion) {

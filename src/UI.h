@@ -95,26 +95,5 @@ public:
 	void clickForItemsInInv();
 };
 
-class UIEnemyInfo
-{
-private:
-    SDL_Renderer* ren;
-    const char* PATH_IN_FONT;
-    SDL_Color color;
-    Enemy* tempEnemy;
-    SDL_Texture* enemyTex;
-    SDL_Texture* hpEnemyBar;
-	SDL_Texture* hpTextEnemy;
-	SDL_Texture* hpCurrentTextEnemy;
-	SDL_Texture* hpMaxEnemy;
-	SDL_Texture* slashhhhhhhhh;
-    Button* buttonForCallEnemyInfo;
-public:
-    UIEnemyInfo(SDL_Renderer* renderer, Enemy* enemy);
-    void Render();
-    void Update(Enemy* enemy);
-    void UpdateMax(Enemy* enemy);
-    void handleEvents(SDL_Event &eventInUiEnemyInfo);
-};
 
 

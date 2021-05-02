@@ -12,6 +12,7 @@
 #include "Player.h"
 #include "Map.h"
 #include <cmath>
+#include "UiEnemy.h"
 
 Level::Level(SDL_Renderer* renderer) : ren (renderer)
 {
@@ -23,7 +24,7 @@ Level::Level(SDL_Renderer* renderer) : ren (renderer)
     //enemyTurtle = new Enemy();
     SecondEnemyTurtle = new Enemy("data/images/Turtle.png", 4, ren, 10, 10, 3, 4);
 
-    uiEnemyInfo = new UIEnemyInfo(ren, SecondEnemyTurtle);
+    UiEnemy = new UIEnemy(ren, SecondEnemyTurtle);
     //enemies.push_back(enemyTurtle);
 
     enemies.push_back(SecondEnemyTurtle);
@@ -209,7 +210,7 @@ Level::~Level()
     }
     delete uiInfo;
     delete uiItem;
-    // delete uiEnemyInfo;
+    // delete UIEnemy;
     delete uiSpec;
     delete hp;
     delete mana;
@@ -321,7 +322,7 @@ void Level::Update()
 
     if (FlagManager::flagUiEnemy == 1)
     {
-        uiEnemyInfo->Render();
+        UiEnemy->Render();
     }
 
     //Update значений hp, mana и  exp у playera
@@ -480,7 +481,7 @@ void Level::Render()
 
             if (FlagManager::flagUiEnemy == 1)
             {
-                uiEnemyInfo->Render();
+                UiEnemy->Render();
             }
         }
 
@@ -563,7 +564,7 @@ void Level::handleEvents(SDL_Event eventInLvl)
         uiInv->handleEvents(eventInLvl);
 
         //Вызов InfoEnemy
-        uiEnemyInfo->handleEvents(eventInLvl);
+        UiEnemy->handleEvents(eventInLvl);
 
     }
 
@@ -591,8 +592,8 @@ void Level::handleEvents(SDL_Event eventInLvl)
                 (mouseY<=enemy->Rect.y+32)&&(mouseY>=enemy->Rect.y) &&
                 eventInLvl.button.clicks == 1)
         {
-            uiEnemyInfo->Update(enemy);
-            uiEnemyInfo->UpdateMax(enemy);
+            UiEnemy->Update(enemy);
+            UiEnemy->UpdateMax(enemy);
             if (eventInLvl.button.button == SDL_BUTTON_LEFT)
             {
                 buttonForPlayerAttack->updateCoords(enemy->Rect.x, enemy->Rect.y);

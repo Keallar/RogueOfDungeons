@@ -7,6 +7,7 @@
 #include "Inventory.h"
 #include "Enemy.h"
 #include "Buttons.h"
+#include "TextureBase.h"
 #include <iostream>
 
 Equiped Player::EqItems = { -1, nullptr, nullptr, -1};
@@ -63,8 +64,9 @@ int Player::VIS = 16;
 
 Player::Player(SDL_Renderer* renderer)
 {
+    GameTextures = TextureBase::Instance();
 	ren = renderer;
-	PlayerTexture = textureManager::LoadTexture("data/images/Hero.png", ren);
+    PlayerTexture = GameTextures->GetTexture("Hero");
 	playerAnimation = new Animation(ren, PlayerTexture);
 	generate = -1;
 	for (int i = 0; i < 22; i++) 
@@ -81,6 +83,7 @@ Player::Player(SDL_Renderer* renderer)
 	inventory->AddItem(2);
 	inventory->AddItem(5);
 	inventory->AddItem(3);
+    inventory->AddItem(4);
 	inventory->AddItem(6);
 	inventory->AddItem(7);
 	inventory->Update();
@@ -90,10 +93,7 @@ Player::Player(SDL_Renderer* renderer)
 
 Player::~Player()
 {
-	if (HP[0] <= 0)
-	{
-		SDL_DestroyTexture(PlayerTexture);
-	}
+
 }
 
 int Player::GetHP(int numOfArr)
@@ -466,8 +466,8 @@ void Player::GetItemEquip(int id)
 			{
 				SDL_DestroyTexture(PlayerTexture);
 				PlayerTexture = 0;
-				PlayerTexture = textureManager::LoadTexture("data/images/HeroLether.png", ren);
-				playerAnimation->UpdateTexture("data/images/HeroLether.png");
+                PlayerTexture = GameTextures->GetTexture("HeroLether");
+                playerAnimation->UpdateTexture("data/images/HeroLether.png");
 			}
 		}
 		if (Inventory::ExistingItems[ItemId]->Type == potion) {
@@ -497,7 +497,7 @@ void Player::GetItemUnEquip(int id)
 			EqItems.equipedArmor = nullptr;
 			SDL_DestroyTexture(PlayerTexture);
 			PlayerTexture = 0;
-			PlayerTexture = textureManager::LoadTexture("data/images/Hero.png", ren);
+            PlayerTexture = GameTextures->GetTexture("Hero");
 			playerAnimation->UpdateTexture("data/images/Hero.png");
 		}
 	}

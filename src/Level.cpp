@@ -10,12 +10,12 @@
 #include "Buttons.h"
 #include "Enemy.h"
 #include "Player.h"
+#include "Map.h"
 #include <cmath>
 
 Level::Level(SDL_Renderer* renderer) : ren (renderer)
 {
-    TileSet = 0;
-    floorLvl = 0;
+    LevelMap = new Map();
     TileTextures[0] = textureManager::LoadTexture("data/images/Tiles.png", ren);
     TileTextures[1] = textureManager::LoadTexture("data/images/CaslteTiles.png", ren);
     PlayBackground = textureManager::LoadTexture("data/images/Playback.png", ren);
@@ -55,17 +55,17 @@ Level::Level(SDL_Renderer* renderer) : ren (renderer)
             }
             if (wFlag == true)
             {
-                if (Location[(EntityPosition::Coords[1]) / 32 - 1][(EntityPosition::Coords[0]) / 32] == 0)
+                if (LevelMap->Location[(EntityPosition::Coords[1]) / 32 - 1][(EntityPosition::Coords[0]) / 32] == 0)
                 {
                     EntityPosition::Coords[1] -= 32;
                     FlagManager::flagPlayer = 0;
                     FlagManager::flagEnemy = 1;
                 }
-                if (Location[(EntityPosition::Coords[1]) / 32 - 1][(EntityPosition::Coords[0]) / 32] == 3)
+                if (LevelMap->Location[(EntityPosition::Coords[1]) / 32 - 1][(EntityPosition::Coords[0]) / 32] == 3)
                 {
                     FlagManager::flagChest = 1;
                 }
-                if (Location[(EntityPosition::Coords[1]) / 32 - 1][(EntityPosition::Coords[0]) / 32] == 4)
+                if (LevelMap->Location[(EntityPosition::Coords[1]) / 32 - 1][(EntityPosition::Coords[0]) / 32] == 4)
                 {
                     Start();
                 }
@@ -94,17 +94,17 @@ Level::Level(SDL_Renderer* renderer) : ren (renderer)
             }
             if (AFlag == true)
             {
-                if (Location[(EntityPosition::Coords[1]) / 32][(EntityPosition::Coords[0]) / 32 - 1] == 0)
+                if (LevelMap->Location[(EntityPosition::Coords[1]) / 32][(EntityPosition::Coords[0]) / 32 - 1] == 0)
                 {
                     EntityPosition::Coords[0] -= 32;
                     FlagManager::flagPlayer = 0;
                     FlagManager::flagEnemy = 1;
                 }
-                if (Location[(EntityPosition::Coords[1]) / 32][(EntityPosition::Coords[0]) / 32 - 1] == 3)
+                if (LevelMap->Location[(EntityPosition::Coords[1]) / 32][(EntityPosition::Coords[0]) / 32 - 1] == 3)
                 {
                     FlagManager::flagChest = 2;
                 }
-                if (Location[(EntityPosition::Coords[1]) / 32][(EntityPosition::Coords[0]) / 32 - 1] == 4)
+                if (LevelMap->Location[(EntityPosition::Coords[1]) / 32][(EntityPosition::Coords[0]) / 32 - 1] == 4)
                 {
                     Start();
                 }
@@ -133,17 +133,17 @@ Level::Level(SDL_Renderer* renderer) : ren (renderer)
             }
             if(sFlag == true)
             {
-                if (Location[(EntityPosition::Coords[1]) / 32 + 1][(EntityPosition::Coords[0]) / 32] == 0)
+                if (LevelMap->Location[(EntityPosition::Coords[1]) / 32 + 1][(EntityPosition::Coords[0]) / 32] == 0)
                 {
                     EntityPosition::Coords[1] += 32;
                     FlagManager::flagPlayer = 0;
                     FlagManager::flagEnemy = 1;
                 }
-                if (Location[(EntityPosition::Coords[1]) / 32 + 1][(EntityPosition::Coords[0]) / 32] == 3)
+                if (LevelMap->Location[(EntityPosition::Coords[1]) / 32 + 1][(EntityPosition::Coords[0]) / 32] == 3)
                 {
                     FlagManager::flagChest = 3;
                 }
-                if (Location[(EntityPosition::Coords[1]) / 32 + 1][(EntityPosition::Coords[0]) / 32] == 4)
+                if (LevelMap->Location[(EntityPosition::Coords[1]) / 32 + 1][(EntityPosition::Coords[0]) / 32] == 4)
                 {
                     Start();
                 }
@@ -172,17 +172,17 @@ Level::Level(SDL_Renderer* renderer) : ren (renderer)
             }
             if(dFlag == true)
             {
-                if (Location[(EntityPosition::Coords[1]) / 32][(EntityPosition::Coords[0]) / 32 + 1] == 0)
+                if (LevelMap->Location[(EntityPosition::Coords[1]) / 32][(EntityPosition::Coords[0]) / 32 + 1] == 0)
                 {
                     EntityPosition::Coords[0] += 32;
                     FlagManager::flagPlayer = 0;
                     FlagManager::flagEnemy = 1;
                 }
-                if (Location[(EntityPosition::Coords[1]) / 32][(EntityPosition::Coords[0]) / 32 + 1] == 3)
+                if (LevelMap->Location[(EntityPosition::Coords[1]) / 32][(EntityPosition::Coords[0]) / 32 + 1] == 3)
                 {
                     FlagManager::flagChest = 4;
                 }
-                if (Location[(EntityPosition::Coords[1]) / 32][(EntityPosition::Coords[0]) / 32 + 1] == 4)
+                if (LevelMap->Location[(EntityPosition::Coords[1]) / 32][(EntityPosition::Coords[0]) / 32 + 1] == 4)
                 {
                     Start();
                 }
@@ -199,26 +199,6 @@ Level::Level(SDL_Renderer* renderer) : ren (renderer)
         }
     };
     buttonForPlayerAttack = new Button("left", NULL, ren, {0, 0, 32, 32}, playerAttack, NULL);
-
-    for (int i = 0; i < 22; i++)
-    {
-        for (int j = 0; j < 32; j++)
-        {
-            textureLocation[i][j] = 1;
-            Location[i][j] = 1;
-            Dark[i][j] = 0;
-        }
-    }
-    for (int i = 0; i < 22; i++)
-    {
-        for (int j = 0; j < 32; j++)
-        {
-            if (i == 0 || i == 21 || j == 0 || j == 31)
-            {
-                Dark[i][j] = 1;
-            }
-        }
-    }
 }
 
 Level::~Level()
@@ -299,7 +279,8 @@ void Level::Update()
         player->Update();
     }
     if (player != nullptr)
-        player->GetLevel(Location);
+        player->GetLevel(LevelMap->Location);
+
     for(Enemy* enemy : enemies)
     {
         //std::cout << enemies.size();
@@ -308,18 +289,26 @@ void Level::Update()
         {
             enemy->Update();
             // std::cout << enemies.size();
-            enemy->GetLoc(Location);
+            enemy->GetLoc(LevelMap->Location);
+            player->playerTurn();//UNDONE Я уверен, что он не должен передавать здесь ход, но это пока что все фиксит, потому пусть пока поюудет
         }
-
-        if (enemy != nullptr)
-            enemy->GetLoc(Location);
-
         //удаление player (enemy) при hp <= 0
         if (enemy->CheckHpEnemy() <= 0 && enemy != nullptr)
         {
             //std::cout << enemy->CheckHpEnemy();
             Level::deleteEnemy();
+            std::cout << enemies.size() << std::endl;
+            if (enemies.size() == 0) {
+                LevelMap->Location[LevelMap->portal.x][LevelMap->portal.y] = 4;
+                LevelMap->textureLocation[LevelMap->portal.x][LevelMap->portal.y] = 15;
+            }
         }
+
+        if (enemy != nullptr)
+            enemy->GetLoc(LevelMap->Location);
+
+        //buttonForPlayerAttack->updateCoords(enemy->Rect.x, enemy->Rect.y);
+
     }
 
     //удаление player при hp <= 0
@@ -331,7 +320,7 @@ void Level::Update()
     buttonW->updateCoords(EntityPosition::Coords[0], EntityPosition::Coords[1] - 32);
     buttonA->updateCoords(EntityPosition::Coords[0] - 32, EntityPosition::Coords[1]);
     buttonS->updateCoords(EntityPosition::Coords[0], EntityPosition::Coords[1] + 32);
-    buttonD->updateCoords(EntityPosition::Coords[0] + 32, EntityPosition::Coords[1]);
+    buttonD->updateCoords(EntityPosition::Coords[0] + 32, EntityPosition::Coords[1]);  
 
     if (FlagManager::flagUiEnemy == 1)
     {
@@ -362,9 +351,9 @@ void Level::Start()
     {
         for (int j = 0; j < 32; j++)
         {
-            textureLocation[i][j] = 1;
-            Location[i][j] = 1;
-            Dark[i][j] = 0;
+            LevelMap->textureLocation[i][j] = 1;
+            LevelMap->Location[i][j] = 1;
+            LevelMap->Dark[i][j] = 0;
         }
     }
     for (int i = 0; i < 22; i++)
@@ -373,7 +362,7 @@ void Level::Start()
         {
             if (i == 0 || i == 21 || j == 0 || j == 31)
             {
-                Dark[i][j] = 1;
+                LevelMap->Dark[i][j] = 1;
             }
         }
     }
@@ -383,12 +372,17 @@ void Level::Start()
         Enemy* enemy = new Enemy("data/images/Turtle.png", 4, ren, 8, 8, 3, 4);
         enemies.push_back(enemy);
     }
-    Generate();
-    player->GetLevel(Location);
+    LevelMap->GenerateMap();
+    player->generate = LevelMap->generateChoose;
+    for(Enemy* enemy : enemies)
+    {
+        enemy->generate = LevelMap->generateChoose;
+    }
+    player->GetLevel(LevelMap->Location);
     player->GetPlayerFirstCoords();
     for(Enemy* enemy : enemies)
     {
-        enemy->GetLoc(Location);
+        enemy->GetLoc(LevelMap->Location);
         enemy->GetEnemyFirstCoords();
     }
 }
@@ -397,7 +391,7 @@ void Level::ChangeDark(int i, int j)
 {
     if (i >= 0 && i < 22 && j >= 0 && j < 32)
     {
-        Dark[i][j] = 1;
+        LevelMap->Dark[i][j] = 1;
     }
 }
 
@@ -408,9 +402,9 @@ void Level::Render()
     {
         for (int j = 0; j < 32; j++)
         {
-            if (Dark[i][j] == 1)
+            if (LevelMap->Dark[i][j] == 1)
             {
-                RenderManager::SetTile(j * 32, i * 32, textureLocation[i][j], ren, TileTextures[TileSet]);
+                RenderManager::SetTile(j * 32, i * 32, LevelMap->textureLocation[i][j], ren, TileTextures[LevelMap->TileSet]);
             }
             else
             {
@@ -426,12 +420,13 @@ void Level::Render()
     {
         if (enemy != nullptr)
         {
-            if (Dark[enemy->Rect.y/32][enemy->Rect.x/32] == 0)
+            if (LevelMap->Dark[enemy->Rect.y/32][enemy->Rect.x/32] == 0)
             {
                 RenderManager::SetTile(enemy->Rect.x, enemy->Rect.y, 12, ren, TileTextures[0]);
             }
             else
             {
+                //по-моему тут надо не одного врага проверять...
                 enemy->Render();
             }
         }
@@ -500,31 +495,31 @@ void Level::Render()
                 switch (FlagManager::flagChest)
                 {
                 case 1:
-                    textureLocation[(EntityPosition::Coords[1]) / 32 - 1][(EntityPosition::Coords[0]) / 32] = 0;
-                    Location[(EntityPosition::Coords[1]) / 32 - 1][(EntityPosition::Coords[0]) / 32] = 0;
-                    player->GetItemOnLvl(itemsOnLvl[itemsHave]);
-                    itemsHave--;
+                    LevelMap->textureLocation[(EntityPosition::Coords[1]) / 32 - 1][(EntityPosition::Coords[0]) / 32] = 0;
+                    LevelMap->Location[(EntityPosition::Coords[1]) / 32 - 1][(EntityPosition::Coords[0]) / 32] = 0;
+                    player->GetItemOnLvl(LevelMap->itemsOnLvl[LevelMap->itemsHave]);
+                    LevelMap->itemsHave--;
                     FlagManager::flagChest = 0;
                     break;
                 case 2:
-                    textureLocation[(EntityPosition::Coords[1]) / 32][(EntityPosition::Coords[0]) / 32 - 1] = 0;
-                    Location[(EntityPosition::Coords[1]) / 32][(EntityPosition::Coords[0]) / 32 - 1] = 0;
-                    player->GetItemOnLvl(itemsOnLvl[itemsHave]);
-                    itemsHave--;
+                    LevelMap->textureLocation[(EntityPosition::Coords[1]) / 32][(EntityPosition::Coords[0]) / 32 - 1] = 0;
+                    LevelMap->Location[(EntityPosition::Coords[1]) / 32][(EntityPosition::Coords[0]) / 32 - 1] = 0;
+                    player->GetItemOnLvl(LevelMap->itemsOnLvl[LevelMap->itemsHave]);
+                    LevelMap->itemsHave--;
                     FlagManager::flagChest = 0;
                     break;
                 case 3:
-                    textureLocation[(EntityPosition::Coords[1]) / 32 + 1][(EntityPosition::Coords[0]) / 32] = 0;
-                    Location[(EntityPosition::Coords[1]) / 32 + 1][(EntityPosition::Coords[0]) / 32] = 0;
-                    player->GetItemOnLvl(itemsOnLvl[itemsHave]);
-                    itemsHave--;
+                    LevelMap->textureLocation[(EntityPosition::Coords[1]) / 32 + 1][(EntityPosition::Coords[0]) / 32] = 0;
+                    LevelMap->Location[(EntityPosition::Coords[1]) / 32 + 1][(EntityPosition::Coords[0]) / 32] = 0;
+                    player->GetItemOnLvl(LevelMap->itemsOnLvl[LevelMap->itemsHave]);
+                    LevelMap->itemsHave--;
                     FlagManager::flagChest = 0;
                     break;
                 case 4:
-                    textureLocation[(EntityPosition::Coords[1]) / 32][(EntityPosition::Coords[0]) / 32 + 1] = 0;
-                    Location[(EntityPosition::Coords[1]) / 32][(EntityPosition::Coords[0]) / 32 + 1] = 0;
-                    player->GetItemOnLvl(itemsOnLvl[itemsHave]);
-                    itemsHave--;
+                    LevelMap->textureLocation[(EntityPosition::Coords[1]) / 32][(EntityPosition::Coords[0]) / 32 + 1] = 0;
+                    LevelMap-> Location[(EntityPosition::Coords[1]) / 32][(EntityPosition::Coords[0]) / 32 + 1] = 0;
+                    player->GetItemOnLvl(LevelMap->itemsOnLvl[LevelMap->itemsHave]);
+                    LevelMap->itemsHave--;
                     FlagManager::flagChest = 0;
                     break;
                 }
@@ -540,8 +535,8 @@ void Level::Render()
 //возможность изменять уровень из вне
 void Level::ChangeLevel(int x, int y, int LocationChange, int TextureChange) 
 {
-    Location[x][y] = LocationChange;
-    textureLocation[x][y] = TextureChange;
+    LevelMap->Location[x][y] = LocationChange;
+    LevelMap->textureLocation[x][y] = TextureChange;
 }
 
 //Обновление данных объектов
@@ -630,7 +625,7 @@ void Level::Attack()
                     {
                         for (int i = PlPosy; i > EnPosy; i--)
                         {
-                            if (Location[i][PlPosx] == 1)
+                            if (LevelMap->Location[i][PlPosx] == 1)
                             {
                                 blankflag = false;
                             }
@@ -640,7 +635,7 @@ void Level::Attack()
                     {
                         for (int i = EnPosy; i > PlPosy; i--)
                         {
-                            if (Location[i][PlPosx] == 1)
+                            if (LevelMap->Location[i][PlPosx] == 1)
                             {
                                 blankflag = false;
                             }
@@ -653,7 +648,7 @@ void Level::Attack()
                     {
                         for (int i = PlPosx; i > EnPosx; i--)
                         {
-                            if (Location[PlPosy][i] == 1)
+                            if (LevelMap->Location[PlPosy][i] == 1)
                             {
                                 blankflag = false;
                             }
@@ -663,7 +658,7 @@ void Level::Attack()
                     {
                         for (int i = EnPosy; i > PlPosy; i--)
                         {
-                            if (Location[PlPosy][i] == 1)
+                            if (LevelMap->Location[PlPosy][i] == 1)
                             {
                                 blankflag = false;
                             }
@@ -679,7 +674,7 @@ void Level::Attack()
                     {
                         for (x = PlPosx; x > EnPosx; x--)
                         {
-                            if (Location[(int)(k * x + b)][x] == 1)
+                            if (LevelMap->Location[(int)(k * x + b)][x] == 1)
                             {
                                 blankflag = false;
                             }
@@ -689,7 +684,7 @@ void Level::Attack()
                     {
                         for (x = EnPosx; x > PlPosx; x--)
                         {
-                            if (Location[(int)(k * x + b)][x] == 1)
+                            if (LevelMap->Location[(int)(k * x + b)][x] == 1)
                             {
                                 blankflag = false;
                             }
@@ -699,7 +694,7 @@ void Level::Attack()
                     {
                         for (y = EnPosy; y > PlPosy; y--)
                         {
-                            if (Location[y][(int)((y - b) / k)] == 1)
+                            if (LevelMap->Location[y][(int)((y - b) / k)] == 1)
                             {
                                 blankflag = false;
                             }
@@ -709,7 +704,7 @@ void Level::Attack()
                     {
                         for (y = PlPosy; y > EnPosy; y--)
                         {
-                            if (Location[y][(int)((y - b) / k)] == 1)
+                            if (LevelMap->Location[y][(int)((y - b) / k)] == 1)
                             {
                                 blankflag = false;
                             }
@@ -733,7 +728,7 @@ void Level::Attack()
                     }
                 }
                 player->ChangeManaValue(-5);
-                enemyTurtle->enemyTurn();// ВАЖНО
+                enemies[0]->enemyTurn();// ВАЖНО
             }
 
             //Ближний boy
@@ -742,41 +737,10 @@ void Level::Attack()
                      FlagManager::flagPlayer == 1 && FlagManager::flagEnemy == 0)
             {
                 enemy->ChahgeHpEnemy(-(player->MeleeAttack()));
-                enemyTurtle->enemyTurn(); // ТОЖЕ ВАЖНО
+                enemies[0]->enemyTurn(); // ТОЖЕ ВАЖНО
             }
         }
     }
-}
-void Level::Generate()
-{
-    srand(time(0));
-    generateChoose = rand() % 6;
-    if (generateChoose == 3) generateChoose = 2;
-    player->generate = generateChoose;
-    for(Enemy* enemy : enemies)
-    {
-        enemy->generate = generateChoose;
-    }
-    if (generateChoose == 0) {
-        ChunkGenerationMethod();
-    }
-    if (generateChoose == 4) {
-        LabGeneration();
-    }
-    if (generateChoose == 5) {
-        CastleLabGeneration();
-    }
-    if (generateChoose == 1) {
-        RoomGenerationMethod2();
-    }
-    if (generateChoose == 2) {
-        ChunkGenerationMethod2();
-    }
-    for (int i = 0; i < 3; i++) {
-        itemsOnLvl[i] = rand() % 4 + 1;
-    }
-    itemsHave = 2;
-    floorLvl++;
 }
 
 bool Level::CheckPositionToMeleeAttack(SDL_Rect rect, int x, int y)

@@ -22,8 +22,10 @@ Level::Level(SDL_Renderer* renderer) : ren (renderer)
     player = new Player(ren);
     //enemyTurtle = new Enemy();
     SecondEnemyTurtle = new Enemy("data/images/Turtle.png", 4, ren, 10, 10, 3, 4);
+
     uiEnemyInfo = new UIEnemyInfo(ren, SecondEnemyTurtle);
     //enemies.push_back(enemyTurtle);
+
     enemies.push_back(SecondEnemyTurtle);
 
     uiInfo = new UIInfo(ren);
@@ -58,8 +60,7 @@ Level::Level(SDL_Renderer* renderer) : ren (renderer)
                 if (LevelMap->Location[(EntityPosition::Coords[1]) / 32 - 1][(EntityPosition::Coords[0]) / 32] == 0)
                 {
                     EntityPosition::Coords[1] -= 32;
-                    FlagManager::flagPlayer = 0;
-                    FlagManager::flagEnemy = 1;
+                    FlagManager::flagTurn = 1;
                 }
                 if (LevelMap->Location[(EntityPosition::Coords[1]) / 32 - 1][(EntityPosition::Coords[0]) / 32] == 3)
                 {
@@ -97,8 +98,7 @@ Level::Level(SDL_Renderer* renderer) : ren (renderer)
                 if (LevelMap->Location[(EntityPosition::Coords[1]) / 32][(EntityPosition::Coords[0]) / 32 - 1] == 0)
                 {
                     EntityPosition::Coords[0] -= 32;
-                    FlagManager::flagPlayer = 0;
-                    FlagManager::flagEnemy = 1;
+                    FlagManager::flagTurn = 1;
                 }
                 if (LevelMap->Location[(EntityPosition::Coords[1]) / 32][(EntityPosition::Coords[0]) / 32 - 1] == 3)
                 {
@@ -136,8 +136,7 @@ Level::Level(SDL_Renderer* renderer) : ren (renderer)
                 if (LevelMap->Location[(EntityPosition::Coords[1]) / 32 + 1][(EntityPosition::Coords[0]) / 32] == 0)
                 {
                     EntityPosition::Coords[1] += 32;
-                    FlagManager::flagPlayer = 0;
-                    FlagManager::flagEnemy = 1;
+                    FlagManager::flagTurn = 1;
                 }
                 if (LevelMap->Location[(EntityPosition::Coords[1]) / 32 + 1][(EntityPosition::Coords[0]) / 32] == 3)
                 {
@@ -175,8 +174,7 @@ Level::Level(SDL_Renderer* renderer) : ren (renderer)
                 if (LevelMap->Location[(EntityPosition::Coords[1]) / 32][(EntityPosition::Coords[0]) / 32 + 1] == 0)
                 {
                     EntityPosition::Coords[0] += 32;
-                    FlagManager::flagPlayer = 0;
-                    FlagManager::flagEnemy = 1;
+                    FlagManager::flagTurn = 1;
                 }
                 if (LevelMap->Location[(EntityPosition::Coords[1]) / 32][(EntityPosition::Coords[0]) / 32 + 1] == 3)
                 {
@@ -270,11 +268,10 @@ void Level::Update()
     }
     if (enemies.size() == 0)
     {
-        FlagManager::flagEnemy = 0;
-        FlagManager::flagPlayer = 1;
+        FlagManager::flagTurn = 0;
     }
     if (player != nullptr &&
-            FlagManager::flagPlayer == 1 && FlagManager::flagEnemy == 0)
+              FlagManager::flagTurn == 0)
     {
         player->Update();
     }
@@ -284,7 +281,7 @@ void Level::Update()
     for(Enemy* enemy : enemies)
     {
         if (enemy != nullptr &&
-                FlagManager::flagPlayer == 0 && FlagManager::flagEnemy == 1)
+                FlagManager::flagTurn != 0)
         {
             enemy->Update();
             enemy->GetLoc(LevelMap->Location);
@@ -569,7 +566,7 @@ void Level::handleEvents(SDL_Event eventInLvl)
 
 
     //Передача event в Player
-    if (player && FlagManager::flagPlayer == 1)
+    if (player && FlagManager::flagTurn == 0)
     {
         keyW->handleEvents(eventInLvl);
         keyA->handleEvents(eventInLvl);
@@ -733,7 +730,7 @@ void Level::Attack()
             //Ближний boy
             else if (this->CheckPositionToMeleeAttack(enemy->Rect, EntityPosition::Coords[0], EntityPosition::Coords[1]) == true &&
                      FlagManager::flagMeleeAttackPlayer == 1 && FlagManager::flagMeleeAttackEnemy == 0 &&
-                     FlagManager::flagPlayer == 1 && FlagManager::flagEnemy == 0)
+                     FlagManager::flagTurn == 0)
             {
                 enemy->ChahgeHpEnemy(-(player->MeleeAttack()));
                 enemies[0]->enemyTurn(); // ТОЖЕ ВАЖНО

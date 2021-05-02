@@ -561,10 +561,9 @@ int Player::damage = 0;
 
 void Player::playerTurn()
 {
-	FlagManager::flagPlayer = 1;
 	FlagManager::flagMeleeAttackPlayer = 1;
 	FlagManager::flagRangeAttack = 1;
-	FlagManager::flagEnemy = 0;
+    FlagManager::flagTurn = 0;
 	FlagManager::flagMeleeAttackEnemy = 0;
 }
 int	Player::MeleeAttack() 

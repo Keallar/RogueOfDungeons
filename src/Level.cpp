@@ -283,22 +283,22 @@ void Level::Update()
 
     for(Enemy* enemy : enemies)
     {
-        //std::cout << enemies.size();
         if (enemy != nullptr &&
                 FlagManager::flagPlayer == 0 && FlagManager::flagEnemy == 1)
         {
             enemy->Update();
-            // std::cout << enemies.size();
             enemy->GetLoc(LevelMap->Location);
-            player->playerTurn();//UNDONE Я уверен, что он не должен передавать здесь ход, но это пока что все фиксит, потому пусть пока поюудет
+            player->playerTurn();//UNDONE Я уверен, что он не должен передавать здесь ход,
+                                      //но это пока что все фиксит, потому пусть пока побудет
         }
         //удаление player (enemy) при hp <= 0
-        if (enemy->CheckHpEnemy() <= 0 && enemy != nullptr)
+        if (enemy->GetHpEnemy(0) <= 0 && enemy != nullptr)
         {
             //std::cout << enemy->CheckHpEnemy();
             Level::deleteEnemy();
             std::cout << enemies.size() << std::endl;
-            if (enemies.size() == 0) {
+            if (enemies.size() == 0)
+            {
                 LevelMap->Location[LevelMap->portal.x][LevelMap->portal.y] = 4;
                 LevelMap->textureLocation[LevelMap->portal.x][LevelMap->portal.y] = 15;
             }
@@ -306,9 +306,6 @@ void Level::Update()
 
         if (enemy != nullptr)
             enemy->GetLoc(LevelMap->Location);
-
-        //buttonForPlayerAttack->updateCoords(enemy->Rect.x, enemy->Rect.y);
-
     }
 
     //удаление player при hp <= 0
@@ -426,7 +423,6 @@ void Level::Render()
             }
             else
             {
-                //по-моему тут надо не одного врага проверять...
                 enemy->Render();
             }
         }
@@ -592,12 +588,15 @@ void Level::handleEvents(SDL_Event eventInLvl)
         int mouseX = 0, mouseY = 0;
         SDL_GetMouseState(&mouseX, &mouseY);
         if((mouseX<=enemy->Rect.x+32)&&(mouseX>=enemy->Rect.x)&&
-                (mouseY<=enemy->Rect.y+32)&&(mouseY>=enemy->Rect.y))
+                (mouseY<=enemy->Rect.y+32)&&(mouseY>=enemy->Rect.y) &&
+                eventInLvl.button.clicks == 1)
         {
-            buttonForPlayerAttack->updateCoords(enemy->Rect.x, enemy->Rect.y);
             uiEnemyInfo->Update(enemy);
-            //std::cout << "uiEnemyInfo was updated\n";
-
+            uiEnemyInfo->UpdateMax(enemy);
+            if (eventInLvl.button.button == SDL_BUTTON_LEFT)
+            {
+                buttonForPlayerAttack->updateCoords(enemy->Rect.x, enemy->Rect.y);
+            }
             break;
         }
     }

@@ -26,20 +26,20 @@ private:
     int damageInput;
     Animation* playerAnimation;
     bool completePlayerAnimation;
-
-    const Uint8* keys = SDL_GetKeyboardState(NULL);
+    static int HP[3];
+    static int exp[3];
+    static int mana[3];
+    static int STR[2];
+    static int DEX[2];
+    static int INT[2];
+    static int WSD[2];
+    static int PHS[2];
+    static int LCK[2];
+    static int pointOfSpec[3];
+    static int levelOfPlayer[3];
 public:
 	bool InventoryBlock();
 	int generate;
-	static int HP[3];
-	static int exp[3];
-	static int mana[3];
-	static int STR[2];
-	static int DEX[2];
-	static int INT[2];
-    static int WSD[2];
-	static int PHS[2];
-	static int LCK[2];
 	static int VIS;
     static int damage;
     static Equiped EqItems;
@@ -64,6 +64,8 @@ public:
     static int GetEXP(int numOfArr);
     static int GetMana(int numOfArr);
     static int GetSpecValue(int numSpec);
+    static int GetPointOfSpec(int numPoint);
+    static int GetLevelOfPlayer(int numLvl);
 
     static void ChangeHpValue(int valueOfChangingHp);
     static void ChangeManaValue(int valueOfChangingMana);
@@ -76,7 +78,9 @@ public:
     static void CheckHP();
     static void CheckEXP();
     static void CheckMANA();
-    static void CheckSpecVaue(int numSpec);
+    static void CheckSpecValue(int numSpec);
+    static void CheckPointOfSpec();
+    static void CheckLevelOfPlayer();
 
     static void playerTurn();
 

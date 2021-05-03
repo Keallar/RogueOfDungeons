@@ -550,12 +550,15 @@ void Level::handleEvents(SDL_Event eventInLvl)
         {
         case SDL_MOUSEBUTTONDOWN:
         case SDL_KEYDOWN:
-            //Взаимодействие с Items в Inventory
-            uiInv->clickForItemsInInv();
+            if (eventInLvl.button.button == SDL_BUTTON_LEFT)
+            {
+                //Взаимодействие с Items в Inventory
+                uiInv->clickForItemsInInv();
 
-            //Взаимодействие с Equiped Items
-            uiEquiped->clickForItemsInInv();
-            break;
+                //Взаимодействие с Equiped Items
+                uiEquiped->clickForItemsInInv();
+                break;
+            }
         }
 
         //Вызов окна Spec по нажатию мыши

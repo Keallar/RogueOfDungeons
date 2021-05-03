@@ -152,7 +152,6 @@ void UIInfo::handleEvents(SDL_Event& eventInUiInfo)
 }
 
 
-
 UIEquipedItem::UIEquipedItem(SDL_Renderer* renderer) : ren (renderer)
 {
 

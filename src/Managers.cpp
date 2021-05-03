@@ -79,7 +79,7 @@ bool FlagManager::flagUiSpec = 0;
 bool FlagManager::flagUiEnemy = 0;
 bool FlagManager::flagInv = 0;
 bool FlagManager::flagHover = 0;
-//Checks
+//Checks of main characters
 bool FlagManager::flagCheckHP = 0;
 bool FlagManager::flagCheckMana = 0;
 bool FlagManager::flagCheckExp = 0;
@@ -89,15 +89,16 @@ int FlagManager::flagChest = 0;
 int FlagManager::flagEquip = -1;
 int FlagManager::flagUnEquip = -1;
 int FlagManager::flagDrop = -1;
-//Specs
+//Specs and level of player
 bool FlagManager::flagPointOfSpec = 0;
+bool FlagManager::flagLevelOfPlayer = 0;
 bool FlagManager::flagSTR = 0;
 bool FlagManager::flagDEX = 0;
 bool FlagManager::flagINT = 0;
 bool FlagManager::flagWSD = 0;
 bool FlagManager::flagPHS = 0;
 bool FlagManager::flagLCK = 0;
-//Fight
+//Fight system enemy and player
 int FlagManager::flagMeleeAttackPlayer = 0;
 int FlagManager::flagMeleeAttackEnemy = 0;
 bool FlagManager::flagRangeAttack = 0;

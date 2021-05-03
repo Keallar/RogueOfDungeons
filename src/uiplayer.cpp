@@ -336,7 +336,7 @@ void UISpecifications::Update()
 {
     SDL_DestroyTexture(pointOfSpec);
     pointOfSpec = 0;
-    std::string stringTemp = std::to_string(Player::GetPointOfSpec());
+    std::string stringTemp = std::to_string(Player::GetPointOfSpec(0));
     const char* CHAR_VALUE = stringTemp.c_str();
     pointOfSpec = FontManager::renderText(CHAR_VALUE, PATH_IN_FONT, color, 32, ren);
 }

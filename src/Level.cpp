@@ -320,11 +320,6 @@ void Level::Update()
     buttonS->updateCoords(EntityPosition::Coords[0], EntityPosition::Coords[1] + 32);
     buttonD->updateCoords(EntityPosition::Coords[0] + 32, EntityPosition::Coords[1]);
 
-    if (FlagManager::flagUiEnemy == 1)
-    {
-        UiEnemy->Render();
-    }
-
     //Update значений hp, mana и exp у playera
     if (FlagManager::flagCheckHP == 1)
     {
@@ -343,8 +338,14 @@ void Level::Update()
         exp->Update();
         exp->UpdateMax();
     }
-
-    uiSpec->Update();
+    if (FlagManager::flagPointOfSpec == 1)
+    {
+        uiSpec->Update();
+    }
+    if (FlagManager::flagLevelOfPlayer == 1)
+    {
+        uiInfo->Update();
+    }
 }
 
 void Level::Start()

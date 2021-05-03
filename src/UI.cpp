@@ -34,6 +34,10 @@ UIInfo::UIInfo(SDL_Renderer* renderer) : ren (renderer)
     xpBar = textureManager::LoadTexture("data/images/XP.png", ren);
     xpText = FontManager::renderText("XP", PATH_IN_FONT, color, 64, ren);
 
+    //Level Of Player
+    textLevelOfPlayer = FontManager::renderText("Level:", PATH_IN_FONT, color, 32, ren);
+    levelOfPlayer = FontManager::renderText("1", PATH_IN_FONT, color, 32, ren);
+
     //Buttons
     auto callSpecOrInfoWin{
         []()
@@ -111,6 +115,10 @@ void UIInfo::Render()
     RenderManager::CopyToRender(xpBar, ren, 1080, 150, 200, 32, 21, 10, 128, 16);
     RenderManager::CopyToRender(xpText, ren, 1050, 152, 25, 22);
 
+    //Level of Player
+    RenderManager::CopyToRender(textLevelOfPlayer, ren, 1125, 210, 65, 25 );
+    RenderManager::CopyToRender(levelOfPlayer, ren, 1187, 212, 22, 22);
+
     //Buttons
     buttonForCallSpecInfo->Render();
 }
@@ -119,6 +127,16 @@ void UIInfo::AlwaysRender()
 {
     RenderManager::CopyToRender(versionBLock, ren, 0, 705, 170, 9);
     buttonForCallInvWin->Render();
+}
+
+void UIInfo::Update()
+{
+    SDL_DestroyTexture(levelOfPlayer);
+    levelOfPlayer = 0;
+    std::string stringTemp = std::to_string(Player::GetLevelOfPlayer(0));
+    const char* CHAR_VALUE = stringTemp.c_str();
+    levelOfPlayer = FontManager::renderText(CHAR_VALUE, PATH_IN_FONT, color, 32, ren);
+
 }
 
 void UIInfo::handleEvents(SDL_Event& eventInUiInfo)

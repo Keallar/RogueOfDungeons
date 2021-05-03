@@ -17,7 +17,6 @@ struct Equiped
 class Player : public GameObject
 {
 private:
-    int changingValue = 0;
     TextureBase* GameTextures;
 	Inventory* inventory;
     int Location[22][32];
@@ -35,7 +34,8 @@ private:
     static int WSD[2];
     static int PHS[2];
     static int LCK[2];
-    static int pointOfSpec;
+    static int pointOfSpec[3];
+    static int levelOfPlayer[3];
 public:
 	bool InventoryBlock();
 	int generate;
@@ -62,7 +62,8 @@ public:
     static int GetEXP(int numOfArr);
     static int GetMana(int numOfArr);
     static int GetSpecValue(int numSpec);
-    static int GetPointOfSpec();
+    static int GetPointOfSpec(int numPoint);
+    static int GetLevelOfPlayer(int numLvl);
 
     static void ChangeHpValue(int valueOfChangingHp);
     static void ChangeManaValue(int valueOfChangingMana);
@@ -77,6 +78,7 @@ public:
     static void CheckMANA();
     static void CheckSpecValue(int numSpec);
     static void CheckPointOfSpec();
+    static void CheckLevelOfPlayer();
 
     static void playerTurn();
 

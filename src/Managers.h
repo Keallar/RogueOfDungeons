@@ -32,13 +32,6 @@ public:
 	static SDL_Texture* renderText(const char* text, const char * fontFile, SDL_Color textColor, int fontSize, SDL_Renderer* renderer);
 };
 
-class Timer
-{
-public:
-	Timer();
-	void add(std::chrono::milliseconds delay, std::function<void()> callback, bool asynchronous = true);
-};
-
 class FlagManager
 {
 public:
@@ -52,6 +45,7 @@ public:
 	static int flagChest;
 	static bool flagUiEnemy;
     static bool flagPointOfSpec;
+    static bool flagLevelOfPlayer;
 	static bool flagSTR;
 	static bool flagDEX;
 	static bool flagINT;

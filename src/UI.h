@@ -18,6 +18,10 @@ private:
 	SDL_Texture* slashhhhhhhhh;
 	SDL_Texture* SPEC;
 
+    //Level
+    SDL_Texture* textLevelOfPlayer;
+    SDL_Texture* levelOfPlayer;
+
     //flags
     bool flagHoverSpec;
 	
@@ -45,6 +49,7 @@ public:
 	~UIInfo();
 	void Render();
 	void AlwaysRender();
+    void Update();
 	void handleEvents(SDL_Event& eventInUiInfo);
 };
 

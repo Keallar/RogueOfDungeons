@@ -51,6 +51,7 @@ public:
 	static bool flagInv;
 	static int flagChest;
 	static bool flagUiEnemy;
+    static bool flagPointOfSpec;
 	static bool flagSTR;
 	static bool flagDEX;
 	static bool flagINT;

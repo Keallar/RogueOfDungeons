@@ -252,7 +252,7 @@ void Level::deleteEnemy()
             enemies.erase(std::remove(enemies.begin(), enemies.end(), enemy));
             std::cout << "Delete enemy" << std::endl;
             FlagManager::flagUiEnemy = 0;
-            player->ChangeExpValue(5);
+            player->ChangeExpValue(100);
         }
     }
 }
@@ -325,22 +325,26 @@ void Level::Update()
         UiEnemy->Render();
     }
 
-    //Update значений hp, mana и  exp у playera
+    //Update значений hp, mana и exp у playera
     if (FlagManager::flagCheckHP == 1)
     {
         hp->Update();
+        //hp->UpdateMax(); //WTF
     }
 
     if (FlagManager::flagCheckMana == 1)
     {
         mana->Update();
+        //mana->UpdateMax(); //WTF
     }
 
     if (FlagManager::flagCheckExp == 1)
     {
         exp->Update();
+        exp->UpdateMax();
     }
 
+    uiSpec->Update();
 }
 
 void Level::Start()
@@ -550,7 +554,6 @@ void Level::handleEvents(SDL_Event eventInLvl)
 
             //Взаимодействие с Equiped Items
             uiEquiped->clickForItemsInInv();
-            break;
             break;
         }
 

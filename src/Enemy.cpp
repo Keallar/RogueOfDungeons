@@ -83,13 +83,13 @@ void Enemy::CheckHpEnemy()
     else if (HP != prevHp && FlagManager::flagCheckHpEnemy == 0)
     {
         FlagManager::flagCheckHpEnemy = 1;
-        std::cout << "CheckHpEnemy = 1\n";
+        //std::cout << "CheckHpEnemy = 1\n";
         Enemy::prevHp = HP;
     }
     else if (HP == prevHp && FlagManager::flagCheckHpEnemy == 1)
     {
         FlagManager::flagCheckHpEnemy = 0;
-        std::cout << "CheckHpEnemy = 0\n";
+        //std::cout << "CheckHpEnemy = 0\n";
     }
 }
 

@@ -62,6 +62,8 @@ int Player::LCK[2] = {
 
 int Player::VIS = 16;
 
+int Player::pointOfSpec = 0;
+
 Player::Player(SDL_Renderer* renderer)
 {
     GameTextures = TextureBase::Instance();
@@ -187,32 +189,48 @@ int Player::GetSpecValue(int numSpec)
     return temp;
 }
 
+int Player::GetPointOfSpec()
+{
+    return pointOfSpec;
+}
+
 //Изменение значения характеристики (STR, DEX, INT, PHS, LCK) на +1
 void Player::ChangeValueSpecs(int numOfSpec)
 {
-	switch (numOfSpec)
-	{
-	case 1: //STR
-		STR[0] += 1;
-		break;
-	case 2: //DEX
-		DEX[0] += 1;
-		break;
-	case 3: //INT
-		INT[0] += 1;
-		break;
-	case 4:
-		WSD[0] += 1;
-		break;
-	case 5: //PHS
-		PHS[0] += 1;
-		break;
-	case 6: //LCK
-		LCK[0] += 1;
-		break;
-	default:
-		break;
-	}
+    if (FlagManager::flagPointOfSpec == 1 &&
+            pointOfSpec != 0)
+    {
+        switch (numOfSpec)
+        {
+        case 1: //STR
+            STR[0] += 1;
+            pointOfSpec -= 1;
+            break;
+        case 2: //DEX
+            DEX[0] += 1;
+            pointOfSpec -= 1;
+            break;
+        case 3: //INT
+            INT[0] += 1;
+            pointOfSpec -= 1;
+            break;
+        case 4:
+            WSD[0] += 1;
+            pointOfSpec -= 1;
+            break;
+        case 5: //PHS
+            PHS[0] += 1;
+            pointOfSpec -= 1;
+            break;
+        case 6: //LCK
+            LCK[0] += 1;
+            pointOfSpec -= 1;
+            break;
+        default:
+            std::cout << "Error in ChangeSpecValue!" << std::endl;
+            break;
+        }
+    }
 }
 
 //Изменение текущего значения hp
@@ -290,20 +308,31 @@ void Player::CheckEXP()
     {
         Player::exp[0] = 0;
         ChangeMaxExpValue();
+        pointOfSpec += 1;
+        CheckPointOfSpec();
+        FlagManager::flagCheckExp = 1;
     }
     else if (Player::exp[0] != Player::exp[1] && FlagManager::flagCheckExp == 0)
-	{
+    {
 		FlagManager::flagCheckExp = 1;
 		Player::exp[1] = Player::exp[0];
 	}
 	else if (Player::exp[0] == Player::exp[1] && FlagManager::flagCheckExp == 1)
-	{
-		FlagManager::flagCheckExp = 0;
-	}
+    {
+        FlagManager::flagCheckExp = 0;
+    }
+}
+
+void Player::CheckPointOfSpec()
+{
+    if (pointOfSpec != 0)
+        FlagManager::flagPointOfSpec = 1;
+    else
+        FlagManager::flagPointOfSpec = 0;
 }
 
 //Проверка изменения значений характеристик (STR, DEX, INT, PHS, LCK)
-void Player::CheckSpecVaue(int numSpec)
+void Player::CheckSpecValue(int numSpec)
 {
 	switch (numSpec)
 	{
@@ -415,8 +444,10 @@ void Player::GetPlayerFirstCoords()
 	}
 }
 
-void Player::GetItemDrop(int id) {
-	if (id != -1) {
+void Player::GetItemDrop(int id)
+{
+    if (id != -1)
+    {
 		inventory->inventory[id] = -1;
 	}
 	FlagManager::flagDrop = -1;
@@ -539,18 +570,19 @@ void Player::Update()
 	Player::CheckHP();
 	Player::CheckMANA();
 	Player::CheckEXP();
-	Player::CheckSpecVaue(1); //STR
-	Player::CheckSpecVaue(2); //DEX
-	Player::CheckSpecVaue(3); //INT
-	Player::CheckSpecVaue(4); //WSD
-	Player::CheckSpecVaue(5); //PHS
-	Player::CheckSpecVaue(6); //LCK
+    Player::CheckPointOfSpec();
+    Player::CheckSpecValue(1); //STR
+    Player::CheckSpecValue(2); //DEX
+    Player::CheckSpecValue(3); //INT
+    Player::CheckSpecValue(4); //WSD
+    Player::CheckSpecValue(5); //PHS
+    Player::CheckSpecValue(6); //LCK
 }
 
-void Player::handleEvents(SDL_Event playerEvent)
-{
+//void Player::handleEvents(SDL_Event playerEvent)
+//{
 	
-}
+//}
 
 void Player::clean()
 {

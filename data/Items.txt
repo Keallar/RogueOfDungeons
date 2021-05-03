@@ -2,7 +2,7 @@ weapon 0 1 data/images/Punch.png Punch
 weapon 1 1 data/images/ShortSword.png ShortSword
 weapon 2 2 data/images/Spear.png Spear
 rWeapon 1 4 60 15 data/images/ShortBow.png ShortBow
-rWeapon 2 5 50 10 data/images/FireBall.png FireBall
+magic 2 5 1 fire point data/images/FireBall.png FireBall
 armor 1 data/images/LetherArmor.png LetherArmor
 potion 4 0 data/images/SmallHpPotion.png SmallHpPotion
 potion 0 4 data/images/SmallMpPotion.png SmallMpPotion

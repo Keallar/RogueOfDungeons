@@ -10,7 +10,7 @@
 #include "TextureBase.h"
 #include <iostream>
 
-Equiped Player::EqItems = { -1, nullptr, nullptr, -1};
+Equiped Player::EqItems = { -1, nullptr, nullptr, nullptr, -1, nullptr};
 
 int Player::HP[3] = {
 					 10, /*hp  now*/
@@ -440,6 +440,7 @@ void Player::GetItemEquip(int id)
 			EqItems.WeaponId = ItemId;
 			EqItems.equipedMeleeW = inventory->GetRealMelee(ItemId);
 			EqItems.equipedRangeW = nullptr;
+            EqItems.equipedMagic = nullptr;
 		}
 		if (Inventory::ExistingItems[ItemId]->Type == rWeapon) 
 		{
@@ -455,7 +456,24 @@ void Player::GetItemEquip(int id)
 			
 			EqItems.equipedRangeW = inventory->GetRealRange(ItemId);
 			EqItems.equipedMeleeW = nullptr;
+            EqItems.equipedMagic = nullptr;
 		}
+        if (Inventory::ExistingItems[ItemId]->Type == magic)
+        {
+            if (EqItems.WeaponId > 0)
+            {
+                inventory->inventory[id] = EqItems.WeaponId;
+            }
+            else
+            {
+                inventory->inventory[id] = -1;
+            }
+            EqItems.WeaponId = ItemId;
+
+            EqItems.equipedMagic = inventory->GetRealMagic(ItemId);
+            EqItems.equipedMeleeW = nullptr;
+            EqItems.equipedRangeW = nullptr;
+        }
 		if (Inventory::ExistingItems[ItemId]->Type == armor) 
 		{
 			if (EqItems.ArmorId > 0) {
@@ -587,3 +605,14 @@ int Player::RangeAttack()
 	}
     return damage;
 }
+int Player::MagicAttack()
+{
+    if ((Inventory::ExistingItems[Player::EqItems.WeaponId]->Type == magic) &&
+        Player::mana[0] != 0)
+    {
+        damage = Player::EqItems.equipedMagic->DMG + Player::INT[0];
+        std::cout << damage << "!" << std::endl;
+    }
+    return damage;
+}
+

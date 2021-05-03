@@ -552,6 +552,7 @@ void Level::handleEvents(SDL_Event eventInLvl)
             uiEquiped->clickForItemsInInv();
             break;
             break;
+            break;
         }
 
         //Вызов окна Spec по нажатию мыши
@@ -584,6 +585,10 @@ void Level::handleEvents(SDL_Event eventInLvl)
         buttonD->handleEvents(eventInLvl);
     }
 
+    CheckButton(eventInLvl);
+}
+
+void Level::CheckButton(SDL_Event& eventInLvl) {
     for (Enemy* enemy : enemies)
     {
         int mouseX = 0, mouseY = 0;
@@ -603,141 +608,162 @@ void Level::handleEvents(SDL_Event eventInLvl)
     }
 }
 
-void Level::Attack() 
+void Level::Attack()
 {
     int mouseX , mouseY;
     SDL_GetMouseState(&mouseX, &mouseY);
-    //Дальний boy
-    for (Enemy* enemy : enemies)
-    {
-        buttonForPlayerAttack->updateCoords(enemy->Rect.x, enemy->Rect.y);
-        std::cout<<enemy->Rect.x<< " " << enemy->Rect.y << std::endl;
-        if((mouseX<=enemy->Rect.x+32)&&(mouseX>=enemy->Rect.x)&&
-                (mouseY<=enemy->Rect.y+32)&&(mouseY>=enemy->Rect.y))
-        {
-            if (Inventory::ExistingItems[Player::EqItems.WeaponId]->Type == rWeapon)
-            {
-                int PlPosx = EntityPosition::Coords[0] / 32, PlPosy = EntityPosition::Coords[1] / 32, EnPosx = (enemy->Rect.x) / 32, EnPosy = (enemy->Rect.y) / 32;
-                bool blankflag = true;
-                if ((abs(EntityPosition::Coords[0] - enemy->Rect.x) == 0)) // разделил чтобы потом проверять на наличие стен
-                {
-                    if (PlPosy > EnPosy)
-                    {
-                        for (int i = PlPosy; i > EnPosy; i--)
-                        {
-                            if (LevelMap->Location[i][PlPosx] == 1)
-                            {
-                                blankflag = false;
-                            }
-                        }
-                    }
-                    else
-                    {
-                        for (int i = EnPosy; i > PlPosy; i--)
-                        {
-                            if (LevelMap->Location[i][PlPosx] == 1)
-                            {
-                                blankflag = false;
-                            }
-                        }
+    if (Inventory::ExistingItems[Player::EqItems.WeaponId]->Type == magic) {
+        int mouseX = 0, mouseY = 0;
+        SDL_GetMouseState(&mouseX, &mouseY);
+        buttonForPlayerAttack->updateCoords(mouseX, mouseY);
+        for (Enemy* enemy : enemies) {
+            UiEnemy->Update(enemy);
+            UiEnemy->UpdateMax(enemy);
+        }
+        int splash = Player::EqItems.equipedMagic->SPL;
+        for(int i = (mouseX - splash); i <= (mouseX + splash); i++) {
+            for(int j = (mouseY - splash); j <= (mouseY + splash); j++) {
+                for(Enemy* enemy : enemies) {
+                    if(enemy->Rect.x/32 == i && enemy->Rect.y/32 == j) {
+                        enemy->ChahgeHpEnemy(-(player->MagicAttack()));
                     }
                 }
-                else if (/*abs*/(EntityPosition::Coords[1] - enemy->Rect.y == 0))
-                {
-                    if (PlPosx > EnPosx)
-                    {
-                        for (int i = PlPosx; i > EnPosx; i--)
-                        {
-                            if (LevelMap->Location[PlPosy][i] == 1)
-                            {
-                                blankflag = false;
-                            }
-                        }
-                    }
-                    else
-                    {
-                        for (int i = EnPosy; i > PlPosy; i--)
-                        {
-                            if (LevelMap->Location[PlPosy][i] == 1)
-                            {
-                                blankflag = false;
-                            }
-                        }
-                    }
-                }
-                else
-                {
-                    int x, y;
-                    float k = -(((float)(EnPosy - PlPosy) / (PlPosx - EnPosx)));
-                    float b = -((float)(EnPosx * PlPosy - PlPosx * EnPosy) / (PlPosx - EnPosx));
-                    if (PlPosx > EnPosx)
-                    {
-                        for (x = PlPosx; x > EnPosx; x--)
-                        {
-                            if (LevelMap->Location[(int)(k * x + b)][x] == 1)
-                            {
-                                blankflag = false;
-                            }
-                        }
-                    }
-                    else if (PlPosx < EnPosx)
-                    {
-                        for (x = EnPosx; x > PlPosx; x--)
-                        {
-                            if (LevelMap->Location[(int)(k * x + b)][x] == 1)
-                            {
-                                blankflag = false;
-                            }
-                        }
-                    }
-                    if (PlPosy < EnPosy)
-                    {
-                        for (y = EnPosy; y > PlPosy; y--)
-                        {
-                            if (LevelMap->Location[y][(int)((y - b) / k)] == 1)
-                            {
-                                blankflag = false;
-                            }
-                        }
-                    }
-                    else if (PlPosy > EnPosy)
-                    {
-                        for (y = PlPosy; y > EnPosy; y--)
-                        {
-                            if (LevelMap->Location[y][(int)((y - b) / k)] == 1)
-                            {
-                                blankflag = false;
-                            }
-                        }
-                    }
-                }
-
-                if (blankflag == true)
-                {
-                    int x = (enemy->Rect.y - EntityPosition::Coords[1]) / 32;
-                    int y = (enemy->Rect.x - EntityPosition::Coords[0]) / 32;
-                    int i = rand() % 100;
-                    if (i < ((Player::EqItems.equipedRangeW->CHNS) -
-                             ((Player::EqItems.equipedRangeW->DCHNS) *
-                              abs(((float)(sqrt(x * x + y * y))) - Player::EqItems.equipedRangeW->RNG))))
-                    {
-                        std::cout << ((Player::EqItems.equipedRangeW->CHNS) -
-                                      ((Player::EqItems.equipedRangeW->DCHNS) *
-                                       abs(((float)(sqrt(x * x + y * y))) - Player::EqItems.equipedRangeW->RNG)));
-                        enemy->ChahgeHpEnemy(-(player->RangeAttack()));
-                    }
-                }
-                player->ChangeManaValue(-5);
-                enemies[0]->enemyTurn();// ВАЖНО
             }
-
-            //Ближний boy
-            else if (this->CheckPositionToMeleeAttack(enemy->Rect, EntityPosition::Coords[0], EntityPosition::Coords[1]) == true &&
-                     FlagManager::flagMeleeAttackPlayer == 1 && FlagManager::flagMeleeAttackEnemy == 0 &&
-                     FlagManager::flagTurn == 0)
+        }
+        enemies[0]->enemyTurn(); // ТОЖЕ ВАЖНО
+    }
+    else {
+        for (Enemy* enemy : enemies)
+        {
+            buttonForPlayerAttack->updateCoords(enemy->Rect.x, enemy->Rect.y);
+            std::cout<<enemy->Rect.x<< " " << enemy->Rect.y << std::endl;
+            if((mouseX<=enemy->Rect.x+32)&&(mouseX>=enemy->Rect.x)&&
+                    (mouseY<=enemy->Rect.y+32)&&(mouseY>=enemy->Rect.y))
             {
-                enemy->ChahgeHpEnemy(-(player->MeleeAttack()));
-                enemies[0]->enemyTurn(); // ТОЖЕ ВАЖНО
+                //Дальний boy
+                if (Inventory::ExistingItems[Player::EqItems.WeaponId]->Type == rWeapon)
+                {
+                    int PlPosx = EntityPosition::Coords[0] / 32, PlPosy = EntityPosition::Coords[1] / 32, EnPosx = (enemy->Rect.x) / 32, EnPosy = (enemy->Rect.y) / 32;
+                    bool blankflag = true;
+                    if ((abs(EntityPosition::Coords[0] - enemy->Rect.x) == 0)) // разделил чтобы потом проверять на наличие стен
+                    {
+                        if (PlPosy > EnPosy)
+                        {
+                            for (int i = PlPosy; i > EnPosy; i--)
+                            {
+                                if (LevelMap->Location[i][PlPosx] == 1)
+                                {
+                                    blankflag = false;
+                                }
+                            }
+                        }
+                        else
+                        {
+                            for (int i = EnPosy; i > PlPosy; i--)
+                            {
+                                if (LevelMap->Location[i][PlPosx] == 1)
+                                {
+                                    blankflag = false;
+                                }
+                            }
+                        }
+                    }
+                    else if (/*abs*/(EntityPosition::Coords[1] - enemy->Rect.y == 0))
+                    {
+                        if (PlPosx > EnPosx)
+                        {
+                            for (int i = PlPosx; i > EnPosx; i--)
+                            {
+                                if (LevelMap->Location[PlPosy][i] == 1)
+                                {
+                                    blankflag = false;
+                                }
+                            }
+                        }
+                        else
+                        {
+                            for (int i = EnPosy; i > PlPosy; i--)
+                            {
+                                if (LevelMap->Location[PlPosy][i] == 1)
+                                {
+                                    blankflag = false;
+                                }
+                            }
+                        }
+                    }
+                    else
+                    {
+                        int x, y;
+                        float k = -(((float)(EnPosy - PlPosy) / (PlPosx - EnPosx)));
+                        float b = -((float)(EnPosx * PlPosy - PlPosx * EnPosy) / (PlPosx - EnPosx));
+                        if (PlPosx > EnPosx)
+                        {
+                            for (x = PlPosx; x > EnPosx; x--)
+                            {
+                                if (LevelMap->Location[(int)(k * x + b)][x] == 1)
+                                {
+                                    blankflag = false;
+                                }
+                            }
+                        }
+                        else if (PlPosx < EnPosx)
+                        {
+                            for (x = EnPosx; x > PlPosx; x--)
+                            {
+                                if (LevelMap->Location[(int)(k * x + b)][x] == 1)
+                                {
+                                    blankflag = false;
+                                }
+                            }
+                        }
+                        if (PlPosy < EnPosy)
+                        {
+                            for (y = EnPosy; y > PlPosy; y--)
+                            {
+                                if (LevelMap->Location[y][(int)((y - b) / k)] == 1)
+                                {
+                                    blankflag = false;
+                                }
+                            }
+                        }
+                        else if (PlPosy > EnPosy)
+                        {
+                            for (y = PlPosy; y > EnPosy; y--)
+                            {
+                                if (LevelMap->Location[y][(int)((y - b) / k)] == 1)
+                                {
+                                    blankflag = false;
+                                }
+                            }
+                        }
+                    }
+
+                    if (blankflag == true)
+                    {
+                        int x = (enemy->Rect.y - EntityPosition::Coords[1]) / 32;
+                        int y = (enemy->Rect.x - EntityPosition::Coords[0]) / 32;
+                        int i = rand() % 100;
+                        if (i < ((Player::EqItems.equipedRangeW->CHNS) -
+                                 ((Player::EqItems.equipedRangeW->DCHNS) *
+                                  abs(((float)(sqrt(x * x + y * y))) - Player::EqItems.equipedRangeW->RNG))))
+                        {
+                            std::cout << ((Player::EqItems.equipedRangeW->CHNS) -
+                                          ((Player::EqItems.equipedRangeW->DCHNS) *
+                                           abs(((float)(sqrt(x * x + y * y))) - Player::EqItems.equipedRangeW->RNG)));
+                            enemy->ChahgeHpEnemy(-(player->RangeAttack()));
+                        }
+                    }
+                    player->ChangeManaValue(-5);
+                    enemies[0]->enemyTurn();// ВАЖНО
+                }
+                //Ближний boy
+                else if (this->CheckPositionToMeleeAttack(enemy->Rect, EntityPosition::Coords[0], EntityPosition::Coords[1]) == true &&
+                         FlagManager::flagMeleeAttackPlayer == 1 && FlagManager::flagMeleeAttackEnemy == 0 &&
+                         FlagManager::flagTurn == 0)
+                {
+                    enemy->ChahgeHpEnemy(-(player->MeleeAttack()));
+                    enemies[0]->enemyTurn(); // ТОЖЕ ВАЖНО
+                }
             }
         }
     }

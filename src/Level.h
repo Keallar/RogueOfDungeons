@@ -51,6 +51,7 @@ private:
 
 	void ChangeDark(int i, int j);
 	MouseCoords Mouse;
+    void CheckButton(SDL_Event& eventInLvl);
 public:
 	bool CheckPositionToMeleeAttack(SDL_Rect rect, int x, int y);
 	int GetGeneration();

@@ -37,6 +37,9 @@ UIInfo::UIInfo(SDL_Renderer* renderer) : ren (renderer)
     //Level Of Player
     textLevelOfPlayer = FontManager::renderText("Level:", PATH_IN_FONT, color, 32, ren);
     levelOfPlayer = FontManager::renderText("1", PATH_IN_FONT, color, 32, ren);
+//    int w, h;
+//    SDL_QueryTexture(levelOfPlayer, NULL, NULL, &w, &h);
+//    std::cout << w << " " << h << std::endl;
 
     //Buttons
     auto callSpecOrInfoWin{
@@ -117,7 +120,7 @@ void UIInfo::Render()
 
     //Level of Player
     RenderManager::CopyToRender(textLevelOfPlayer, ren, 1125, 210, 65, 25 );
-    RenderManager::CopyToRender(levelOfPlayer, ren, 1187, 212, 22, 22);
+    RenderManager::CopyToRender(levelOfPlayer, ren, 1187, 212, 21, 32);
 
     //Buttons
     buttonForCallSpecInfo->Render();

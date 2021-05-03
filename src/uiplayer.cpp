@@ -329,7 +329,7 @@ void UISpecifications::Render()
     RenderManager::CopyToRender(six, ren, 1250, 200, 16, 20);
     //Points
     RenderManager::CopyToRender(textPointOfSpec, ren, 1150, 400, 80, 32);
-    RenderManager::CopyToRender(pointOfSpec, ren, 1230, 403, 23, 23);
+    RenderManager::CopyToRender(pointOfSpec, ren, 1230, 403, 21, 32);
 }
 
 void UISpecifications::Update()

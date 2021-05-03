@@ -30,6 +30,7 @@ Button::Button(std::string textButton, const char* textureName, SDL_Renderer* re
     button.w = rect.w;
     button.h = rect.h;
 
+
     if (callback == NULL)
         std::cout << "callback isn't ready " << std::endl;
 
@@ -60,6 +61,7 @@ void Button::handleEvents(SDL_Event& buttonEvent)
                         callback();
                     }
                 }
+
             }
             else if (buttonText == "right" || buttonText == "RIGHT" || buttonText == "Right")
             {
@@ -71,6 +73,20 @@ void Button::handleEvents(SDL_Event& buttonEvent)
                     {
                         callback();
                     }
+                }
+            }
+            else
+            {
+                try
+                {
+                    if (buttonText != "left" || buttonText != "LEFT" ||
+                            buttonText != "Left" || buttonText != "right" ||
+                            buttonText != "RIGHT" || buttonText != "Right")
+                        throw "You entered a bank or wrong side of button mouse";
+                }
+                catch (const char* exception)
+                {
+                    std::cerr << "Catch in Button::handleEvent. Error: " << exception << std::endl;
                 }
             }
         }
@@ -86,7 +102,6 @@ void Button::handleEvents(SDL_Event& buttonEvent)
             hover();
         }
         break;
-
     default:
         break;
     }
@@ -123,12 +138,26 @@ void Button::updateCoords(int newx, int newy)
     button.y = newy;
 }
 
+void Button::updateScaleButton(int newx, int newy, int newh, int neww)
+{
+    button.x = newx;
+    button.y = newy;
+    button.w = neww;
+    button.h = newh;
+}
 
 Keyboard::Keyboard(SDL_Scancode scancode, std::function <void()> callbackFunction):
     code (scancode), callback(callbackFunction)
 {
-    if (callback == NULL)
-        std::cout << "callback in Keyboard isn't ready" << std::endl;
+    try
+    {
+        if (callback == NULL)
+           throw "callback in Keyboard is NULL";
+    }
+    catch (const char* exception)
+    {
+       std::cerr << "Catch exception in Keyboard::Keyboard. Error: " << exception << std::endl;
+    }
 }
 
 Keyboard::~Keyboard()

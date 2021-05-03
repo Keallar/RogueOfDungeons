@@ -29,6 +29,7 @@ public:
 	void handleEvents(SDL_Event& buttonEvent);
 	void Render();
     void updateCoords(int newx, int newy);
+    void updateScaleButton(int newx, int newy, int neww, int newh);
     SDL_Rect GetCoords();
 };
 

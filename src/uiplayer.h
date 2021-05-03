@@ -87,6 +87,9 @@ private:
     //LCK
     SDL_Texture* LCK;
     SDL_Texture* valueLCK;
+    //Points
+    SDL_Texture* textPointOfSpec;
+    SDL_Texture* pointOfSpec;
     //buttons
     Button* buttonForCallInfoWin;
     Button* buttonForIncPlayerSTR;

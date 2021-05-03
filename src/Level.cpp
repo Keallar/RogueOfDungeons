@@ -252,7 +252,7 @@ void Level::deleteEnemy()
             enemies.erase(std::remove(enemies.begin(), enemies.end(), enemy));
             std::cout << "Delete enemy" << std::endl;
             FlagManager::flagUiEnemy = 0;
-            player->ChangeExpValue(5);
+            player->ChangeExpValue(100);
         }
     }
 }
@@ -320,27 +320,32 @@ void Level::Update()
     buttonS->updateCoords(EntityPosition::Coords[0], EntityPosition::Coords[1] + 32);
     buttonD->updateCoords(EntityPosition::Coords[0] + 32, EntityPosition::Coords[1]);
 
-    if (FlagManager::flagUiEnemy == 1)
-    {
-        UiEnemy->Render();
-    }
-
-    //Update значений hp, mana и  exp у playera
+    //Update значений hp, mana и exp у playera
     if (FlagManager::flagCheckHP == 1)
     {
         hp->Update();
+        //hp->UpdateMax(); //WTF
     }
 
     if (FlagManager::flagCheckMana == 1)
     {
         mana->Update();
+        //mana->UpdateMax(); //WTF
     }
 
     if (FlagManager::flagCheckExp == 1)
     {
         exp->Update();
+        exp->UpdateMax();
     }
-
+    if (FlagManager::flagPointOfSpec == 1)
+    {
+        uiSpec->Update();
+    }
+    if (FlagManager::flagLevelOfPlayer == 1)
+    {
+        uiInfo->Update();
+    }
 }
 
 void Level::Start()
@@ -545,13 +550,15 @@ void Level::handleEvents(SDL_Event eventInLvl)
         {
         case SDL_MOUSEBUTTONDOWN:
         case SDL_KEYDOWN:
-            //Взаимодействие с Items в Inventory
-            uiInv->clickForItemsInInv();
+            if (eventInLvl.button.button == SDL_BUTTON_LEFT)
+            {
+                //Взаимодействие с Items в Inventory
+                uiInv->clickForItemsInInv();
 
-            //Взаимодействие с Equiped Items
-            uiEquiped->clickForItemsInInv();
-            break;
-            break;
+                //Взаимодействие с Equiped Items
+                uiEquiped->clickForItemsInInv();
+                break;
+            }
         }
 
         //Вызов окна Spec по нажатию мыши

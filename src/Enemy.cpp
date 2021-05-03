@@ -222,14 +222,14 @@ bool Enemy::WAY(int ax, int ay, int bx, int by)   // ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿
 
 void Enemy::Update()
 {
-	/*if ((abs(Rect.x / 32 - EntityPosition::Coords[0] / 32) +
-		abs(Rect.y / 32 - EntityPosition::Coords[1] / 32)) < 14){*/
-		//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ enemy (ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½)
-		if ((abs(Rect.x / 32 - EntityPosition::Coords[0] / 32) +
-            abs(Rect.y / 32 - EntityPosition::Coords[1] / 32)) > 1)
-		{
-			WAY(Rect.x / 32, Rect.y / 32,
-				EntityPosition::Coords[0] / 32, EntityPosition::Coords[1] / 32);
+    /*if ((abs(Rect.x / 32 - EntityPosition::Coords[0] / 32) +
+        abs(Rect.y / 32 - EntityPosition::Coords[1] / 32)) < 14){*/
+    //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ enemy (ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½)
+    if ((abs(Rect.x / 32 - EntityPosition::Coords[0] / 32) +
+         abs(Rect.y / 32 - EntityPosition::Coords[1] / 32)) > 1)
+    {
+        WAY(Rect.x / 32, Rect.y / 32,
+            EntityPosition::Coords[0] / 32, EntityPosition::Coords[1] / 32);
 
     }
     Enemy::meleeAttackEnemy();
@@ -255,39 +255,37 @@ void Enemy::attackOfEnemy()
 void Enemy::enemyTurn()
 {
     FlagManager::flagTurn = 1;
-	FlagManager::flagMeleeAttackPlayer = 0;
-	FlagManager::flagRangeAttack = 0;
-	FlagManager::flagMeleeAttackEnemy = 1;
+    FlagManager::flagMeleeAttackPlayer = 0;
+    FlagManager::flagRangeAttack = 0;
+    FlagManager::flagMeleeAttackEnemy = 1;
 }
 
 void Enemy::meleeAttackEnemy()
 {
-	//ï¿½ï¿½ï¿½ï¿½ï¿½ enemy ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½, ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ 
-	if ((((Rect.x == EntityPosition::Coords[0]) &&
-		(Rect.y == EntityPosition::Coords[1] + 32)) ||
-		((Rect.x == EntityPosition::Coords[0]) &&
-			(Rect.y == EntityPosition::Coords[1] - 32)) ||
-		((Rect.y == EntityPosition::Coords[1]) &&
-			(Rect.x == EntityPosition::Coords[0] + 32)) ||
-		((Rect.y == EntityPosition::Coords[1]) &&
-            (Rect.x == EntityPosition::Coords[0] - 32))))
-	{
-		if (temp == false) {
-			Enemy::attackOfEnemy();
-			Timer = SDL_GetTicks();
-			temp = true;
-		}
-		Uint32 Timer2 = SDL_GetTicks();
-		Enemy::enemyTurn();
-		if (Timer2 - Timer >= 90) {
-			Enemy::attackOfEnemy();
-			Timer = Timer2;
-		}
-	}
-	else
-	{
-        //Player::playerTurn();
-	}
+    //ï¿½ï¿½ï¿½ï¿½ï¿½ enemy ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½, ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+    if ((((Rect.x == EntityPosition::Coords[0]) &&
+          (Rect.y == EntityPosition::Coords[1] + 32)) ||
+         ((Rect.x == EntityPosition::Coords[0]) &&
+          (Rect.y == EntityPosition::Coords[1] - 32)) ||
+         ((Rect.y == EntityPosition::Coords[1]) &&
+          (Rect.x == EntityPosition::Coords[0] + 32)) ||
+         ((Rect.y == EntityPosition::Coords[1]) &&
+          (Rect.x == EntityPosition::Coords[0] - 32))))
+    {
+        if (temp == false)
+        {
+            Enemy::attackOfEnemy();
+            Timer = SDL_GetTicks();
+            temp = true;
+        }
+        Uint32 Timer2 = SDL_GetTicks();
+        Enemy::enemyTurn();
+        if (Timer2 - Timer >= 90 && temp == true)
+        {
+            Enemy::attackOfEnemy();
+            Timer = Timer2;
+        }
+    }
 }
 
 int Enemy::getDamageEnemy()

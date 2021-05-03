@@ -617,7 +617,7 @@ void Level::Attack()
     //Дальний boy
     for (Enemy* enemy : enemies)
     {
-        buttonForPlayerAttack->updateCoords(enemy->Rect.x, enemy->Rect.y);
+        //buttonForPlayerAttack->updateCoords(enemy->Rect.x, enemy->Rect.y);
         std::cout<<enemy->Rect.x<< " " << enemy->Rect.y << std::endl;
         if((mouseX<=enemy->Rect.x+32)&&(mouseX>=enemy->Rect.x)&&
                 (mouseY<=enemy->Rect.y+32)&&(mouseY>=enemy->Rect.y))

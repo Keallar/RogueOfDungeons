@@ -110,135 +110,102 @@ Player::~Player()
 
 int Player::GetHP(int numOfArr)
 {
-    int temp = 0;
     switch (numOfArr)
     {
     case 0:
-        temp = HP[0];
-        break;
+        return HP[0];
     case 1:
-        temp = HP[1];
-        break;
+        return HP[1];
     case 2:
-        temp = HP[2];
-        break;
+        return HP[2];
     default:
         break;
     }
-    return temp;
 }
 
 int Player::GetEXP(int numOfArr)
 {
-    int temp = 0;
     switch (numOfArr)
     {
     case 0:
-        temp = exp[0];
-        break;
+        return exp[0];
     case 1:
-        temp = exp[1];
-        break;
+        return exp[1];
     case 2:
-        temp = exp[2];
-        break;
+        return exp[2];
     default:
         break;
     }
-    return temp;
 }
 
 int Player::GetMana(int numOfArr)
 {
-    int temp = 0;
     switch (numOfArr)
     {
     case 0:
-        temp = mana[0];
-        break;
+        return mana[0];
     case 1:
-        temp = mana[1];
-        break;
+        return mana[1];
     case 2:
-        temp = mana[2];
-        break;
+        return mana[2];
     default:
         break;
     }
-    return temp;
 }
 
 //Получение значения характеристик (STR, DEX, INT, WSD, PHS, LCK)
 int Player::GetSpecValue(int numSpec)
 {
-    int temp = 0;
     switch (numSpec)
     {
     case 1:
-        temp = STR[0];
-        break;
+        return STR[0];
     case 2:
-        temp = DEX[0];
-        break;
+        return DEX[0];
     case 3:
-        temp = INT[0];
-        break;
+        return INT[0];
     case 4:
-        temp = WSD[0];
-        break;
+        return WSD[0];
     case 5:
-        temp = PHS[0];
-        break;
+        return PHS[0];
     case 6:
-        temp = LCK[0];
-        break;
+        return LCK[0];
     default:
         std::cout << "Error in GetSpecValue!" << std::endl;
         break;
     }
-    return temp;
 }
 
 int Player::GetPointOfSpec(int numPoint)
 {
-    int temp = 0;
     switch (numPoint)
     {
     case 0:
-        temp = pointOfSpec[0];
-        break;
+        return pointOfSpec[0];
     case 1:
-        temp = pointOfSpec[1];
-        break;
+        return pointOfSpec[1];
     case 2:
-        temp = pointOfSpec[2];
-        break;
+        return pointOfSpec[2];
     default:
         std::cout << "Error in GetPointSpec" << std::endl;
         break;
     }
-    return temp;
 }
 
 int Player::GetLevelOfPlayer(int numLvl)
 {
-    int temp = 0;
     switch (numLvl)
     {
     case 0:
-        temp = levelOfPlayer[0];
-        break;
+        return levelOfPlayer[0];
     case 1:
-        temp = levelOfPlayer[1];
-        break;
+        return levelOfPlayer[1];
     case 2:
-        temp = levelOfPlayer[2];
-        break;
+        return levelOfPlayer[2];
     default:
         std::cout << "Error in GetPointSpec" << std::endl;
         break;
     }
-    return temp;
 }
 
 //Изменение значения характеристики (STR, DEX, INT, PHS, LCK) на +1

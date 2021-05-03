@@ -138,6 +138,13 @@ void Button::updateCoords(int newx, int newy)
     button.y = newy;
 }
 
+void Button::updateScaleButton(int newx, int newy, int newh, int neww)
+{
+    button.x = newx;
+    button.y = newy;
+    button.w = neww;
+    button.h = newh;
+}
 
 Keyboard::Keyboard(SDL_Scancode scancode, std::function <void()> callbackFunction):
     code (scancode), callback(callbackFunction)

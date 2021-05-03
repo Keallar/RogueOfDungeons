@@ -6,7 +6,6 @@
 #include <iostream>
 #include <string>
 #include <thread>
-
 SDL_Texture* textureManager::LoadTexture(const char* texName, SDL_Renderer* ren) 
 {
     SDL_Texture* tex = IMG_LoadTexture(ren, texName);
@@ -96,8 +95,7 @@ void Timer::add(std::chrono::milliseconds delay, std::function<void()> callback,
 	}
 }
 
-int FlagManager::flagPlayer = 1;
-int FlagManager::flagEnemy = 0;
+int FlagManager::flagTurn = 1;
 
 bool FlagManager::flagUI = 1;
 bool FlagManager::flagUiSpec = 0;

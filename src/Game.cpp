@@ -34,7 +34,7 @@ void Game::init(const char* title, int xpos, int ypos, int width, int height, bo
 	{
 		flags = SDL_WINDOW_FULLSCREEN;
 	}
-	if ((SDL_Init(SDL_INIT_EVERYTHING) == 0)||(TTF_Init == 0))
+    if ((SDL_Init(SDL_INIT_EVERYTHING) == 0))
 	{
 		std::cout << "ABOBA";	
 
@@ -79,10 +79,10 @@ void Game::handleEvents()
 			{
 				if (InputManager::MouseInArea(640, 361, 250, 100, mouseCoord.x, mouseCoord.y))
 				{
-					Menu->flag = 0;
-					level = new Level(renderer);
-					level->Start();
-					break;
+                    Menu->flag = 0;
+                    level = new Level(renderer);
+                    level->Start();
+                    break;
 				}
 				if (InputManager::MouseInArea(640, 471, 420, 100, mouseCoord.x, mouseCoord.y))
 				{
@@ -90,17 +90,16 @@ void Game::handleEvents()
 				}
 				if (InputManager::MouseInArea(640, 581, 250, 100, mouseCoord.x, mouseCoord.y))
 				{
-					isRunning = false;
+                    isRunning = false;
 					break;
 				}
 			}
 		default:
 			break;
 		}
-		
 		if (level)
 		{
-			level->handleEvents(event);
+            level->handleEvents(event);
 		}
 	}
 }

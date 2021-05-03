@@ -2,6 +2,8 @@
 #include "Managers.h"
 #include "SDL.h"
 #include "SDL_image.h"
+#include "TextureBase.h"
+#include <string>
 
 class Animation
 {
@@ -10,11 +12,12 @@ private:
 	SDL_Texture* animTexture;
 	int xanim, yanim;
 	int xpos, ypos;
+    TextureBase* GameTexture;
 public:
 	Animation(SDL_Renderer* renderer, SDL_Texture* texture);
 	~Animation();
 	void Render(int xposition, int yposition);
-	void UpdateTexture(const char* newTexture); //Добавлять этот метод всегда, когда меняете текстуру чего-то
+    void UpdateTexture(std::string newTexture); //Добавлять этот метод всегда, когда меняете текстуру чего-то
 	bool animationPlusForX(int numOfFrames, bool complete);
 	bool animationPlusForY(int numOfFrames, bool complete);
 	bool animationMinusForX(int numOfFrames, bool complete);

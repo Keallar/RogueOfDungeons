@@ -3,6 +3,7 @@
 #include "Inventory.h"
 #include "GameObject.h"
 #include "Animation.h"
+#include "TextureBase.h"
 
 struct Equiped 
 {
@@ -16,6 +17,7 @@ struct Equiped
 class Player : public GameObject
 {
 private:
+    TextureBase* GameTextures;
 	Inventory* inventory;
     int Location[22][32];
     SDL_Texture* PlayerTexture;
@@ -40,7 +42,6 @@ public:
 	static int VIS;
     static int damage;
     static Equiped EqItems;
-    //static int Id; // UNDONE сделать getid
     Player(SDL_Renderer* ren);
     ~Player() override;
     void Update() override;
@@ -70,10 +71,11 @@ public:
     static void ChangeMaxManaValue();
     static void ChangeMaxExpValue();
 
-    static void playerTurn();
-
     static void CheckHP();
     static void CheckEXP();
     static void CheckMANA();
-    static void CheckSpecVaue(int numSpec);	
+    static void CheckSpecVaue(int numSpec);
+
+    static void playerTurn();
+
 };

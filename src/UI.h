@@ -17,6 +17,9 @@ private:
 	SDL_Texture* info;
 	SDL_Texture* slashhhhhhhhh;
 	SDL_Texture* SPEC;
+
+    //flags
+    bool flagHoverSpec;
 	
 	//HP
 	SDL_Texture* hpBar;
@@ -92,27 +95,5 @@ public:
 	void clickForItemsInInv();
 };
 
-class UIEnemyInfo
-{
-private:
-    const char* PATH_IN_FONT;
-    SDL_Color color;
-    Enemy* tempEnemy;
-	SDL_Renderer* ren;
-    SDL_Texture* enemyTex;
-    SDL_Texture* hpEnemyBar;
-	SDL_Texture* hpTextEnemy;
-	SDL_Texture* hpCurrentTextEnemy;
-	SDL_Texture* hpMaxEnemy;
-	SDL_Texture* slashhhhhhhhh;
-    Button* buttonForCallEnemyInfo;
-public:
-    UIEnemyInfo(SDL_Renderer* renderer, Enemy* enemy);
-    void Render();
-    void Update();
-    void Update(Enemy* enemy);
-    void UpdateMax();
-    void handleEvents(SDL_Event &eventInUiEnemyInfo);
-};
 
 

@@ -192,4 +192,3 @@ bool Keyboard::buttonIsPressed(SDL_Event& keyboardEvent)
     return validity;
 }
 
-

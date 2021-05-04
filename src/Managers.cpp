@@ -101,7 +101,7 @@ bool FlagManager::flagLCK = 0;
 //Fight system enemy and player
 int FlagManager::flagMeleeAttackPlayer = 0;
 int FlagManager::flagMeleeAttackEnemy = 0;
-bool FlagManager::flagRangeAttack = 0;
+bool FlagManager::flagRangeAttackPlayer = 0;
 //Check HP enemy
 bool FlagManager::flagCheckHpEnemy = 0;
 

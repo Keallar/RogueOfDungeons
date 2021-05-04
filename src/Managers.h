@@ -57,7 +57,7 @@ public:
 	static int flagMeleeAttackPlayer;
 	static int flagMeleeAttackEnemy;
 	static bool flagCheckHpEnemy;
-	static bool flagRangeAttack;
+	static bool flagRangeAttackPlayer;
 	static int flagDrop;
 	static bool flagHaveDrop;
 	static bool flagHover;

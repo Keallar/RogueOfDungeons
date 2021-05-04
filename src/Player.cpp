@@ -635,7 +635,7 @@ int Player::damage = 0;
 void Player::playerTurn()
 {
     FlagManager::flagMeleeAttackPlayer = 1;
-    FlagManager::flagRangeAttack = 1;
+    FlagManager::flagRangeAttackPlayer = 1;
     FlagManager::flagTurn = 0;
     FlagManager::flagMeleeAttackEnemy = 0;
 }
@@ -654,7 +654,7 @@ int	Player::MeleeAttack()
 int Player::RangeAttack()
 {
     if ((Inventory::ExistingItems[Player::EqItems.WeaponId]->Type == rWeapon) &&
-            FlagManager::flagRangeAttack == 1 &&
+            FlagManager::flagRangeAttackPlayer == 1 &&
             Player::mana[0] != 0)
     {
         damage = Player::EqItems.equipedRangeW->DMG + Player::DEX[0];

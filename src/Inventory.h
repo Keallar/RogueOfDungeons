@@ -48,7 +48,8 @@ public:
 
 enum class magicEl {
     ice,
-    fire
+    fire,
+    thunder
 };
 
 enum class magicType {

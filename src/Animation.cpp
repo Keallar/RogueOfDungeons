@@ -22,7 +22,6 @@ void Animation::Render(int xposition, int yposition)
 
 void Animation::UpdateTexture(std::string newTexture)
 {
-    SDL_DestroyTexture(animTexture);
 	animTexture = 0;
     animTexture = GameTexture->GetTexture(newTexture);
 }

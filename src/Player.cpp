@@ -542,20 +542,6 @@ void Player::GetItemEquip(int id)
             EqItems.equipedMeleeW = nullptr;
             EqItems.equipedRangeW = nullptr;
         }
-		if (Inventory::ExistingItems[ItemId]->Type == armor) 
-		{
-			if (EqItems.ArmorId > 0) {
-				inventory->inventory[id] = EqItems.ArmorId;
-			}
-			else 
-			{
-				inventory->inventory[id] = -1;
-			}
-			EqItems.ArmorId = ItemId;
-
-            EqItems.equipedRangeW = inventory->GetRealRange(ItemId);
-            EqItems.equipedMeleeW = nullptr;
-        }
         if (Inventory::ExistingItems[ItemId]->Type == armor)
         {
             if (EqItems.ArmorId > 0) {
@@ -570,7 +556,6 @@ void Player::GetItemEquip(int id)
             EqItems.equipedArmor = inventory->GetRealArmor(ItemId);
             if (EqItems.equipedArmor->name == "LetherArmor")
             {
-                SDL_DestroyTexture(PlayerTexture);
                 PlayerTexture = 0;
                 PlayerTexture = GameTextures->GetTexture("HeroLether");
                 playerAnimation->UpdateTexture("HeroLether");
@@ -601,10 +586,9 @@ void Player::GetItemUnEquip(int id)
             inventory->AddItem(EqItems.ArmorId);
             EqItems.ArmorId = -1;
             EqItems.equipedArmor = nullptr;
-            SDL_DestroyTexture(PlayerTexture);
             PlayerTexture = 0;
             PlayerTexture = GameTextures->GetTexture("Hero");
-            playerAnimation->UpdateTexture("data/images/Hero.png");
+            playerAnimation->UpdateTexture("Hero");
         }
     }
     FlagManager::flagUnEquip = -1;

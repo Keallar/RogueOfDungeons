@@ -62,6 +62,7 @@ Inventory::Inventory()
             file >> tempT;
             if(tempT == "ice") Eltype = magicEl::ice;
             if(tempT == "fire") Eltype = magicEl::fire;
+            if(tempT == "thunder") Eltype = magicEl::thunder;
             file >> tempT;
             if(tempT == "point") WpType = magicType::point;
             if(tempT == "field") WpType = magicType::field;

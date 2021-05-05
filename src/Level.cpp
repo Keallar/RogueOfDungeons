@@ -575,7 +575,6 @@ void Level::handleEvents(SDL_Event eventInLvl)
 
     }
 
-
     //Передача event в Player
     if (player && FlagManager::flagTurn == 0)
     {
@@ -590,28 +589,66 @@ void Level::handleEvents(SDL_Event eventInLvl)
         buttonS->handleEvents(eventInLvl);
         buttonD->handleEvents(eventInLvl);
     }
-
     CheckButton(eventInLvl);
 }
 
 void Level::CheckButton(SDL_Event& eventInLvl) {
-    for (Enemy* enemy : enemies)
-    {
-        int mouseX = 0, mouseY = 0;
-        SDL_GetMouseState(&mouseX, &mouseY);
-        if((mouseX<=enemy->Rect.x+32)&&(mouseX>=enemy->Rect.x)&&
-                (mouseY<=enemy->Rect.y+32)&&(mouseY>=enemy->Rect.y) &&
-                eventInLvl.button.clicks == 1)
-        {
-            UiEnemy->Update(enemy);
-            UiEnemy->UpdateMax(enemy);
-            if (eventInLvl.button.button == SDL_BUTTON_LEFT)
-            {
-                buttonForPlayerAttack->updateCoords(enemy->Rect.x, enemy->Rect.y);
+    if (player->EqItems.equipedMagic != nullptr) {
+        if(player->EqItems.equipedMagic->WeaponType == magicType::field) {
+            int mouseX = 0, mouseY = 0;
+            SDL_GetMouseState(&mouseX, &mouseY);
+            int temp = mouseX % 32; mouseX -= temp; temp = mouseY % 32; mouseY -= temp;
+            buttonForPlayerAttack->updateCoords(mouseX, mouseY);
+            for (Enemy* enemy : enemies) {
+                if(enemy->Rect.x == mouseX && enemy->Rect.y == mouseY) {
+                    UiEnemy->Update(enemy);
+                    UiEnemy->UpdateMax(enemy);
+                }
             }
-            break;
         }
     }
+    if((player->EqItems.equipedMagic == nullptr)||(player->EqItems.equipedMagic != nullptr && (static_cast<magicWeapon*>(Inventory::ExistingItems[Player::EqItems.WeaponId]))->WeaponType != magicType::field)) {
+        for (Enemy* enemy : enemies)
+        {
+            int mouseX = 0, mouseY = 0;
+            SDL_GetMouseState(&mouseX, &mouseY);
+            if((mouseX<=enemy->Rect.x+32)&&(mouseX>=enemy->Rect.x)&&
+                    (mouseY<=enemy->Rect.y+32)&&(mouseY>=enemy->Rect.y) &&
+                    eventInLvl.button.clicks == 1)
+            {
+                UiEnemy->Update(enemy);
+                UiEnemy->UpdateMax(enemy);
+                if (eventInLvl.button.button == SDL_BUTTON_LEFT)
+                {
+                    buttonForPlayerAttack->updateCoords(enemy->Rect.x, enemy->Rect.y);
+                }
+                break;
+            }
+        }
+    }
+}
+
+//функция работает с пикселями
+
+bool Level::FindWallsOnWay(int x1, int y1, int x2, int y2) {
+    int temp = 0;
+    temp = x1 % 32; x1 = x1 - temp + 16; temp = x2 % 32; x2 = x2 - temp + 16;
+    temp = y1 % 32; y1 = y1 - temp + 16; temp = y2 % 32; y2 = y2 - temp + 16;
+    float k = 0;
+    if (x1 != x2) k  = (float )(y2-y1)/(x2-x1);
+    bool foundWalls = false;
+    int i = 0; int x = (i+x1)/32;
+    int y = ((k*i+16)/32) + (y1/32);
+    while(!((x == x2/32)&&(y == y2/32))) {
+        x = (i+x1)/32;
+        if (x1 == x2) y += (y2-y1)/abs(y2-y1);
+        if (x1 != x2) i+=(x2-x1)/abs(x2-x1);
+        if(LevelMap->Location[y][x] != 0) {
+            foundWalls = true;
+        }
+        if (x1 != x2) y =((k*i+16)/32)+(y1/32);
+    }
+    return foundWalls;
 }
 
 void Level::Attack()
@@ -619,26 +656,36 @@ void Level::Attack()
     int mouseX , mouseY;
     SDL_GetMouseState(&mouseX, &mouseY);
     if (Inventory::ExistingItems[Player::EqItems.WeaponId]->Type == magic) {
-        int mouseX = 0, mouseY = 0;
-        SDL_GetMouseState(&mouseX, &mouseY);
-        buttonForPlayerAttack->updateCoords(mouseX, mouseY);
-        for (Enemy* enemy : enemies) {
-            UiEnemy->Update(enemy);
-            UiEnemy->UpdateMax(enemy);
-        }
-        int splash = Player::EqItems.equipedMagic->SPL;
-        for(int i = (mouseX - splash); i <= (mouseX + splash); i++) {
-            for(int j = (mouseY - splash); j <= (mouseY + splash); j++) {
-                for(Enemy* enemy : enemies) {
-                    if(enemy->Rect.x/32 == i && enemy->Rect.y/32 == j) {
-                        enemy->ChahgeHpEnemy(-(player->MagicAttack()));
+        if (player->EqItems.equipedMagic->WeaponType == magicType::field) {
+            mouseX/=32; mouseY/=32;
+            int splash = Player::EqItems.equipedMagic->SPL;
+            if (pow((mouseX-EntityPosition::Coords[0]/32), 2) + pow((mouseY-EntityPosition::Coords[1]/32), 2) <= pow(player->EqItems.equipedMagic->RNG, 2)) {
+                if(!FindWallsOnWay(EntityPosition::Coords[0], EntityPosition::Coords[1], mouseX*32, mouseY*32) || Player::EqItems.equipedMagic->WeaponEl == magicEl::thunder) {
+                    for(int i = (mouseX - splash); i <= (mouseX + splash); i++) {
+                        for(int j = (mouseY - splash); j <= (mouseY + splash); j++) {
+                            for(Enemy* enemy : enemies) {
+                                if(enemy->Rect.x/32 == i && enemy->Rect.y/32 == j) {
+                                    enemy->ChahgeHpEnemy(-((player->MagicAttack())/2));
+                                    if (enemy->Rect.x/32 == mouseX && enemy->Rect.y/32 == mouseY) {
+                                        enemy->ChahgeHpEnemy(-((player->MagicAttack())/2));
+                                    }
+                                    if (player->EqItems.equipedMagic->WeaponEl == magicEl::fire) {
+                                        enemy->ChahgeHpEnemy(-(player->GetSpecValue(3)));
+                                    }
+                                    if (player->EqItems.equipedMagic->WeaponEl == magicEl::ice) {
+                                        //UNDONE
+                                    }
+                                 }
+                            }
+                        }
                     }
+                    enemies[0]->enemyTurn(); // ТОЖЕ ВАЖНО
                 }
             }
         }
-        enemies[0]->enemyTurn(); // ТОЖЕ ВАЖНО
     }
-    else {
+
+    if ((Inventory::ExistingItems[Player::EqItems.WeaponId]->Type != magic)|| (Inventory::ExistingItems[Player::EqItems.WeaponId]->Type == magic && (static_cast<magicWeapon*>(Inventory::ExistingItems[Player::EqItems.WeaponId]))->WeaponType != magicType::field)) {
         for (Enemy* enemy : enemies)
         {
             buttonForPlayerAttack->updateCoords(enemy->Rect.x, enemy->Rect.y);
@@ -646,6 +693,23 @@ void Level::Attack()
             if((mouseX<=enemy->Rect.x+32)&&(mouseX>=enemy->Rect.x)&&
                     (mouseY<=enemy->Rect.y+32)&&(mouseY>=enemy->Rect.y))
             {
+                //magic
+                if (Inventory::ExistingItems[Player::EqItems.WeaponId]->Type == magic) {
+                    mouseX/=32; mouseY/=32;
+                    if (pow((mouseX-EntityPosition::Coords[0]/32), 2) + pow((mouseY-EntityPosition::Coords[1]/32), 2) <= pow(player->EqItems.equipedMagic->RNG, 2)) {
+                        if(!FindWallsOnWay(EntityPosition::Coords[0], EntityPosition::Coords[1], mouseX*32, mouseY*32) || Player::EqItems.equipedMagic->WeaponEl == magicEl::thunder) {
+                            enemy->ChahgeHpEnemy(-(player->MagicAttack()));
+                            if (player->EqItems.equipedMagic->WeaponEl == magicEl::fire) {
+                                enemy->ChahgeHpEnemy(-(player->GetSpecValue(3)));
+                            }
+                            if (player->EqItems.equipedMagic->WeaponEl == magicEl::ice) {
+                                //UNDONE
+                            }
+                            enemies[0]->enemyTurn(); // ТОЖЕ ВАЖНО
+                        }
+                    }
+                }
+
                 //Дальний boy
                 if (Inventory::ExistingItems[Player::EqItems.WeaponId]->Type == rWeapon)
                 {

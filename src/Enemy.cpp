@@ -96,7 +96,7 @@ void Enemy::CheckHpEnemy()
 void Enemy::ChahgeHpEnemy(int valueOfChangingHp)
 {
     if ((FlagManager::flagMeleeAttackPlayer == 1 ||
-         FlagManager::flagRangeAttack == 1) && HP != 0 &&
+         FlagManager::flagRangeAttackPlayer == 1) && HP != 0 &&
             HP <= HpMax)
     {
         HP += valueOfChangingHp;
@@ -150,19 +150,22 @@ void Enemy::GetEnemyFirstCoords()
 
 bool Enemy::WAY(int ax, int ay, int bx, int by)   // ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ (ax, ay) ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ (bx, by)
 {
-    if ((abs(EntityPosition::Coords[0] - this->Rect.x)/32 + abs(EntityPosition::Coords[1] - this->Rect.y)/32) < 14)
+    if ((abs(EntityPosition::Coords[0] - this->Rect.x)/32 +
+         abs(EntityPosition::Coords[1] - this->Rect.y)/32) < 3)
     {
         int dx[4] = { 1, 0, -1, 0 };   // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½, ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
         int dy[4] = { 0, 1, 0, -1 };   // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½, ï¿½ï¿½ï¿½ï¿½ï¿½, ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
         int d, x, y, k;
         bool stop = false;
 
-        if (enemyLoc[ay][ax] == -2 || enemyLoc[by][bx] == -2) return false;  // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ (ax, ay) ï¿½ï¿½ï¿½ (bx, by) - ï¿½ï¿½ï¿½ï¿½ï¿½
+        if (enemyLoc[ay][ax] == -2 || enemyLoc[by][bx] == -2)
+            return false;  // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ (ax, ay) ï¿½ï¿½ï¿½ (bx, by) - ï¿½ï¿½ï¿½ï¿½ï¿½
 
         // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½
         d = 0;
         enemyLoc[ay][ax] = 0;            // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ 0
         do {
+            FlagManager::flagInAreaOfAnemy = 1;
             stop = true;               // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½, ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
             for (y = 0; y < 22; ++y)
             {
@@ -178,11 +181,8 @@ bool Enemy::WAY(int ax, int ay, int bx, int by)   // ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿
                             {
                                 stop = false;              // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
                                 enemyLoc[iy][ix] = d + 1;
-
                             }
-
                         }
-
                     }
                 }
             }
@@ -222,9 +222,6 @@ bool Enemy::WAY(int ax, int ay, int bx, int by)   // ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿
 
 void Enemy::Update()
 {
-    /*if ((abs(Rect.x / 32 - EntityPosition::Coords[0] / 32) +
-        abs(Rect.y / 32 - EntityPosition::Coords[1] / 32)) < 14){*/
-    //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ enemy (ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½)
     if ((abs(Rect.x / 32 - EntityPosition::Coords[0] / 32) +
          abs(Rect.y / 32 - EntityPosition::Coords[1] / 32)) > 1)
     {
@@ -241,6 +238,7 @@ void Enemy::attackOfEnemy()
     if (completeEnemyAnimation == 0)
     {
         completeEnemyAnimation = enemyAnimation->animationPlusForX(framesOfAnimForAttack, completeEnemyAnimation);
+        Enemy::enemyTurn();
     }
     else if (completeEnemyAnimation == 1)
     {
@@ -255,14 +253,14 @@ void Enemy::attackOfEnemy()
 void Enemy::enemyTurn()
 {
     FlagManager::flagTurn = 1;
+    FlagManager::flagInAreaOfAnemy = 1;
     FlagManager::flagMeleeAttackPlayer = 0;
-    FlagManager::flagRangeAttack = 0;
+    FlagManager::flagRangeAttackPlayer = 0;
     FlagManager::flagMeleeAttackEnemy = 1;
 }
 
 void Enemy::meleeAttackEnemy()
 {
-    //ï¿½ï¿½ï¿½ï¿½ï¿½ enemy ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½, ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
     if ((((Rect.x == EntityPosition::Coords[0]) &&
           (Rect.y == EntityPosition::Coords[1] + 32)) ||
          ((Rect.x == EntityPosition::Coords[0]) &&
@@ -272,6 +270,7 @@ void Enemy::meleeAttackEnemy()
          ((Rect.y == EntityPosition::Coords[1]) &&
           (Rect.x == EntityPosition::Coords[0] - 32))))
     {
+        //don't work
         if (temp == false)
         {
             Enemy::attackOfEnemy();
@@ -280,7 +279,7 @@ void Enemy::meleeAttackEnemy()
         }
         Uint32 Timer2 = SDL_GetTicks();
         Enemy::enemyTurn();
-        if (Timer2 - Timer >= 90 && temp == true)
+        if (Timer2 - Timer >= 200 && temp == true)
         {
             Enemy::attackOfEnemy();
             Timer = Timer2;

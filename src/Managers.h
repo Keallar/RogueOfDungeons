@@ -36,6 +36,7 @@ class FlagManager
 {
 public:
     static int flagTurn;
+    static int flagInAreaOfAnemy;
 	static bool flagUI;
 	static bool flagUiSpec;
 	static bool flagCheckHP;

@@ -6,7 +6,7 @@
 
 class Enemy : public GameObject
 {
-private:
+protected:
 	Uint32 Timer;
 	bool temp;
 	int DMG;
@@ -50,7 +50,7 @@ public:
 	bool WAY(int ax, int ay, int bx, int by);
 	void GetEnemyFirstCoords();
 	
-	void meleeAttackEnemy();
+    virtual void meleeAttackEnemy();
 	void attackOfEnemy();
 	int enemyDamageCalculation();
 	void enemyTurn(); 

@@ -222,9 +222,7 @@ bool Enemy::WAY(int ax, int ay, int bx, int by)   // ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿
 
 void Enemy::Update()
 {
-    /*if ((abs(Rect.x / 32 - EntityPosition::Coords[0] / 32) +
-        abs(Rect.y / 32 - EntityPosition::Coords[1] / 32)) < 14){*/
-    //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ enemy (ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½)
+    meleeAttackEnemy();
     if ((abs(Rect.x / 32 - EntityPosition::Coords[0] / 32) +
          abs(Rect.y / 32 - EntityPosition::Coords[1] / 32)) > 1)
     {
@@ -232,7 +230,6 @@ void Enemy::Update()
             EntityPosition::Coords[0] / 32, EntityPosition::Coords[1] / 32);
 
     }
-    Enemy::meleeAttackEnemy();
     Enemy::CheckHpEnemy();
 }
 

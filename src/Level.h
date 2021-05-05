@@ -8,6 +8,8 @@
 #include "UiPlayer.h"
 #include "Map.h"
 #include "UiEnemy.h"
+#include "rangeenemy.h"
+#include <memory>
 
 struct MouseCoords
 {
@@ -28,6 +30,7 @@ private:
 	Player* player;
 	Enemy* enemyTurtle;
     Enemy* SecondEnemyTurtle;
+    RangeEnemy* RangeEnemyTurtle;
     UIEnemy* UiEnemy;
 	UIInfo* uiInfo;
 	UIItem* uiItem;

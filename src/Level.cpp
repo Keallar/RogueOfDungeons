@@ -13,6 +13,7 @@
 #include "Map.h"
 #include <cmath>
 #include "UiEnemy.h"
+#include "rangeenemy.h"
 
 Level::Level(SDL_Renderer* renderer) : ren (renderer)
 {
@@ -23,12 +24,11 @@ Level::Level(SDL_Renderer* renderer) : ren (renderer)
     player = new Player(ren);
     //enemyTurtle = new Enemy();
     SecondEnemyTurtle = new Enemy("data/images/Turtle.png", 4, ren, 10, 10, 3, 4);
-
     UiEnemy = new UIEnemy(ren, SecondEnemyTurtle);
     //enemies.push_back(enemyTurtle);
-
+    RangeEnemyTurtle = new RangeEnemy("data/images/Turtle.png", 4, ren, 11, 11, 3, 4);
+    enemies.push_back(RangeEnemyTurtle);
     enemies.push_back(SecondEnemyTurtle);
-
     uiInfo = new UIInfo(ren);
     uiItem = new UIItem(ren);
     uiSpec = new UISpecifications(ren);

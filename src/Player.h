@@ -10,6 +10,7 @@ struct Equiped
 	int WeaponId;
 	meleeWeapon* equipedMeleeW;
 	rangeWeapon* equipedRangeW;
+    magicWeapon* equipedMagic;
 	int ArmorId;
 	armorItem* equipedArmor;
 };
@@ -53,6 +54,7 @@ public:
 	void GetPlayerFirstCoords();
     int MeleeAttack();
     int RangeAttack();
+    int MagicAttack();
 	void GetItemOnLvl(int id);
 	void GetItemEquip(int id);
 	void GetItemUnEquip(int id);

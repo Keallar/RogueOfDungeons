@@ -8,6 +8,7 @@ enum type
 {
 	weapon,
 	rWeapon,
+    magic,
 	armor,
 	potion
 };
@@ -45,6 +46,31 @@ public:
 	~rangeWeapon();
 };
 
+enum class magicEl {
+    ice,
+    fire,
+    thunder
+};
+
+enum class magicType {
+    field,
+    point
+};
+
+class magicWeapon: public InventoryItem
+{
+private:
+
+public:
+    int DMG;
+    int RNG;
+    int SPL;
+    magicEl WeaponEl;
+    magicType WeaponType;
+    magicWeapon(int Damage, int range, int splash, type type, magicEl ElType, magicType WeaponType, const char* WeapTex, std::string Name);
+    ~magicWeapon();
+};
+
 class armorItem : public InventoryItem
 {
 private:
@@ -78,6 +104,7 @@ public:
 	meleeWeapon* GetRealMelee(int id);
 	rangeWeapon* GetRealRange(int id);
 	armorItem* GetRealArmor(int id);
+    magicWeapon* GetRealMagic(int id);
 	static std::map <int, InventoryItem*> ExistingItems;
 	static std::map <int, InventoryItem*>::iterator it;
 };

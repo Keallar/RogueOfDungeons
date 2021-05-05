@@ -22,7 +22,10 @@ Inventory::Inventory()
 		int CHS;
 		int dCHS;
 		int DEF;
+        int SPL;
 		int HEAL;
+        magicEl Eltype;
+        magicType WpType;
 		int MpHEAL;
 		file >> Type;
 		if (Type == "weapon") {
@@ -51,6 +54,27 @@ Inventory::Inventory()
 			type ItemType = rWeapon;
 			ExistingItems[ItemNumber] = new rangeWeapon(DMG, RNG, CHS, dCHS, ItemType, Tex, Name);
 		}
+        if (Type == "magic") {
+            file >> DMG;
+            file >> RNG;
+            file >> SPL;
+            std::string tempT;
+            file >> tempT;
+            if(tempT == "ice") Eltype = magicEl::ice;
+            if(tempT == "fire") Eltype = magicEl::fire;
+            if(tempT == "thunder") Eltype = magicEl::thunder;
+            file >> tempT;
+            if(tempT == "point") WpType = magicType::point;
+            if(tempT == "field") WpType = magicType::field;
+            file >> WeapTex;
+            char* Tex = new char[WeapTex.length() + 1];
+            for (int i = 0; i <= WeapTex.length(); i++) {
+                Tex[i] = WeapTex[i];
+            }
+            file >> Name;
+            type ItemType = magic;
+            ExistingItems[ItemNumber] = new magicWeapon(DMG, RNG, SPL, ItemType,Eltype, WpType, Tex, Name);
+        }
 		if (Type == "armor") {
 			file >> DEF;
 			file >> WeapTex;
@@ -137,6 +161,10 @@ armorItem* Inventory::GetRealArmor(int id) {
 	return static_cast<armorItem*>(ExistingItems[id]);
 }
 
+magicWeapon* Inventory::GetRealMagic(int id) {
+   return static_cast<magicWeapon*>(ExistingItems[id]);
+}
+
 
 rangeWeapon::rangeWeapon(int Damage, int Range, int Chance, int deltaChanse, type type, const char* WeapTex, std::string Name)
 {
@@ -165,6 +193,16 @@ meleeWeapon::~meleeWeapon() {
 
 }
 
+magicWeapon::magicWeapon(int Damage, int range, int splash, type type, magicEl weaponEl, magicType weaponType, const char* WeapTex, std::string Name) {
+    DMG = Damage;
+    SPL = splash;
+    WeaponEl = weaponEl;
+    WeaponType = weaponType;
+    Type = type;
+    RNG = range;
+    ItemTexture = WeapTex;
+    name = Name;
+}
 
 armorItem::armorItem(int Defence, type type, const char* WeapTex, std::string Name)
 {

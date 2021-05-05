@@ -210,7 +210,7 @@ Level::~Level()
     }
     delete uiInfo;
     delete uiItem;
-    // delete UIEnemy;
+    delete UiEnemy;
     delete uiSpec;
     delete hp;
     delete mana;
@@ -253,6 +253,7 @@ void Level::deleteEnemy()
             std::cout << "Delete enemy" << std::endl;
             FlagManager::flagUiEnemy = 0;
             player->ChangeExpValue(100);
+            FlagManager::flagInAreaOfAnemy = 0;
         }
     }
 }
@@ -703,11 +704,12 @@ void Level::Attack()
                                 //UNDONE
                             }
                             enemies[0]->enemyTurn(); // ТОЖЕ ВАЖНО
+                            FlagManager::flagInAreaOfAnemy = 0;
                         }
                     }
                 }
 
-                //Дальний boy
+                //Range boy
                 if (Inventory::ExistingItems[Player::EqItems.WeaponId]->Type == rWeapon)
                 {
                     int PlPosx = EntityPosition::Coords[0] / 32, PlPosy = EntityPosition::Coords[1] / 32, EnPosx = (enemy->Rect.x) / 32, EnPosy = (enemy->Rect.y) / 32;
@@ -822,14 +824,16 @@ void Level::Attack()
                     }
                     player->ChangeManaValue(-5);
                     enemies[0]->enemyTurn();// ВАЖНО
+                    FlagManager::flagInAreaOfAnemy = 0;
                 }
-                //Ближний boy
+                //Melee boy
                 else if (this->CheckPositionToMeleeAttack(enemy->Rect, EntityPosition::Coords[0], EntityPosition::Coords[1]) == true &&
                          FlagManager::flagMeleeAttackPlayer == 1 && FlagManager::flagMeleeAttackEnemy == 0 &&
                          FlagManager::flagTurn == 0)
                 {
                     enemy->ChahgeHpEnemy(-(player->MeleeAttack()));
                     enemies[0]->enemyTurn(); // ТОЖЕ ВАЖНО
+                    FlagManager::flagInAreaOfAnemy = 0;
                 }
             }
         }

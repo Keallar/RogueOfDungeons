@@ -12,9 +12,10 @@ private:
     int valueOfCoin;
 public:
     Coins();
-    ~Coins();
-    void Render();
-    void Update();
+    ~Coins() override;
+    void Render() override;
+    void Update() override;
+    void clean() override;
 };
 
 #endif // COINS_H

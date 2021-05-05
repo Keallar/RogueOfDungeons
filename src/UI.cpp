@@ -151,13 +151,11 @@ void UIInfo::handleEvents(SDL_Event& eventInUiInfo)
     //Keyboard
     keyForCallSpecInfo->handleEvents(eventInUiInfo);
     keyForcCallInvWin->handleEvents(eventInUiInfo);
-
 }
 
 
 UIEquipedItem::UIEquipedItem(SDL_Renderer* renderer) : ren (renderer)
 {
-
 }
 
 void UIEquipedItem::Render()
@@ -252,28 +250,6 @@ void UIInventory::Render()
             Inventory::it = Inventory::ExistingItems.find(Inventory::inventoryFace[i]);
             item = textureManager::LoadTexture((Inventory::it->second)->ItemTexture, ren);
             RenderManager::CopyToRender(item, ren, (780 + 36 * (i % 4)), (100 + ((i / 4) * 50)), 32, 32);
-            auto callInvItems{
-                [=]()
-                {
-                    SDL_GetMouseState(&xMouseCoord, &yMouseCoord);
-                    for (int i = 0; i < 16; i++)
-                    {
-                        if (InputManager::MouseInArea((780 + 36 * (i % 4)), (100 + ((i / 4) * 50)), 32, 32, xMouseCoord, yMouseCoord) &&
-                                Inventory::inventoryFace[i] != -1 && FlagManager::flagInv == 1)
-                        {
-                            //std::cout << "Item " + i << std::endl;
-                            if (FlagManager::flagHaveDrop == false)
-                            {
-                                FlagManager::flagEquip = i;
-                            }
-                            else
-                            {
-                                FlagManager::flagDrop = i;
-                            }
-                        }
-                    }
-                }
-            };
             SDL_DestroyTexture(item);
             item = 0;
         }
@@ -304,7 +280,6 @@ void UIInventory::clickForItemsInInv()
             }
         }
     }
-
 }
 
 

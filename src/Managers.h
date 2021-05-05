@@ -35,8 +35,10 @@ public:
 class FlagManager
 {
 public:
+    //Turn
     static int flagTurn;
     static int flagInAreaOfAnemy;
+    //UI
 	static bool flagUI;
 	static bool flagUiSpec;
 	static bool flagCheckHP;
@@ -47,20 +49,24 @@ public:
 	static bool flagUiEnemy;
     static bool flagPointOfSpec;
     static bool flagLevelOfPlayer;
+    //Specs
 	static bool flagSTR;
 	static bool flagDEX;
 	static bool flagINT;
 	static bool flagWSD;
 	static bool flagPHS;
 	static bool flagLCK;
+    //Equip Inv
 	static int flagEquip;
 	static int flagUnEquip;
+    static int flagDrop;
+    static bool flagHaveDrop;
+    //Attack
 	static int flagMeleeAttackPlayer;
 	static int flagMeleeAttackEnemy;
 	static bool flagCheckHpEnemy;
 	static bool flagRangeAttackPlayer;
-	static int flagDrop;
-	static bool flagHaveDrop;
+    //Button
 	static bool flagHover;
 };
 

@@ -290,7 +290,6 @@ void Level::Update()
         //удаление player (enemy) при hp <= 0
         if (enemy->GetHpEnemy(0) <= 0 && enemy != nullptr)
         {
-            //std::cout << enemy->CheckHpEnemy();
             Level::deleteEnemy();
             std::cout << enemies.size() << std::endl;
             if (enemies.size() == 0)

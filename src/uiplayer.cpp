@@ -10,7 +10,6 @@ TextInfo::TextInfo()
 
 TextInfo::~TextInfo()
 {
-
 }
 
 HpInfo::HpInfo(SDL_Renderer* renderer) : ren (renderer)
@@ -26,7 +25,6 @@ HpInfo::HpInfo(SDL_Renderer* renderer) : ren (renderer)
 
 HpInfo::~HpInfo()
 {
-
 }
 
 void HpInfo::Update()
@@ -77,7 +75,6 @@ ManaInfo::ManaInfo(SDL_Renderer* renderer) : ren(renderer)
 
 ManaInfo::~ManaInfo()
 {
-
 }
 
 void ManaInfo::Update()
@@ -127,7 +124,6 @@ ExpInfo::ExpInfo(SDL_Renderer* renderer) : ren (renderer)
 
 ExpInfo::~ExpInfo()
 {
-
 }
 
 void ExpInfo::Update()
@@ -406,7 +402,6 @@ void UISpecifications::Update(int value, int num)
 
 void UISpecifications::UpdateMax()
 {
-
 }
 
 void UISpecifications::handleEvents(SDL_Event& eventInSpec)

@@ -1,6 +1,7 @@
 #include "Coins.h"
 
-Coins::Coins()
+Coins::Coins(const char* texturesheet, SDL_Renderer* renderer,
+             int x, int y, int w, int h) : GameObject(texturesheet, renderer, x, y, w, h)
 {
 
 }

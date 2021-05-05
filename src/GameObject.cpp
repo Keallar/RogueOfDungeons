@@ -7,13 +7,13 @@ GameObject::GameObject()
 
 GameObject::GameObject(const char* texturesheet, SDL_Renderer* renderer) : ren (renderer)
 {
-	objTexture = textureManager::LoadTexture(texturesheet, renderer);
+    objTexture = textureManager::LoadTexture(texturesheet, ren);
 }
 
 GameObject::GameObject(const char* texturesheet, SDL_Renderer* renderer,
                        int x, int y, int w, int h) : ren(renderer)
 {
-	objTexture = textureManager::LoadTexture(texturesheet, renderer);
+    objTexture = textureManager::LoadTexture(texturesheet, ren);
 	Rect.x = x;
 	Rect.y = y;
 	Rect.w = w;

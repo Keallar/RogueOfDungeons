@@ -11,7 +11,7 @@ private:
     SDL_Rect coinRect;
     int valueOfCoin;
 public:
-    Coins();
+    Coins(const char* texturesheet, SDL_Renderer* renderer, int x, int y, int w, int h);
     ~Coins() override;
     void Render() override;
     void Update() override;

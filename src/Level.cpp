@@ -286,16 +286,10 @@ void Level::Update()
         {
             enemy->Update();
             enemy->GetLoc(LevelMap->Location);
-
-            if(enemy == enemies[enemies.size()-1])
-            {
-                player->playerTurn();//UNDONE Я уверен, что он не должен передавать здесь ход, но это пока что все фиксит, потому пусть пока поюуде
-            }
         }
         //удаление player (enemy) при hp <= 0
         if (enemy->GetHpEnemy(0) <= 0 && enemy != nullptr)
         {
-            //std::cout << enemy->CheckHpEnemy();
             Level::deleteEnemy();
             std::cout << enemies.size() << std::endl;
             if (enemies.size() == 0)
@@ -308,6 +302,8 @@ void Level::Update()
         if (enemy != nullptr)
             enemy->GetLoc(LevelMap->Location);
     }
+    if (FlagManager::flagInAreaOfAnemy == 0)
+        player->playerTurn();
 
     //удаление player при hp <= 0
     if (Player::GetHP(0) <= 0 && player != nullptr)
@@ -388,6 +384,7 @@ void Level::Start()
         enemy->GetLoc(LevelMap->Location);
         enemy->GetEnemyFirstCoords();
     }
+    player->playerTurn();
 }
 
 void Level::ChangeDark(int i, int j) 

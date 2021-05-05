@@ -24,7 +24,7 @@ class HpInfo : public TextInfo
 {
 private:
     SDL_Renderer* ren;
-    SDL_Texture* hpText;
+    SDL_Texture*  hpText;
     SDL_Texture* hpMax;
 public:
     HpInfo(SDL_Renderer* renderer);

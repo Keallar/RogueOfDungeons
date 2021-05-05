@@ -3,7 +3,6 @@
 
 GameObject::GameObject()
 {
-
 }
 
 GameObject::GameObject(const char* texturesheet, SDL_Renderer* renderer) : ren (renderer)
@@ -11,8 +10,8 @@ GameObject::GameObject(const char* texturesheet, SDL_Renderer* renderer) : ren (
 	objTexture = textureManager::LoadTexture(texturesheet, renderer);
 }
 
-GameObject::GameObject(const char* texturesheet, SDL_Renderer* renderer, int x, int y, int w, int h) : 
-	ren(renderer)
+GameObject::GameObject(const char* texturesheet, SDL_Renderer* renderer,
+                       int x, int y, int w, int h) : ren(renderer)
 {
 	objTexture = textureManager::LoadTexture(texturesheet, renderer);
 	Rect.x = x;
@@ -36,7 +35,7 @@ void GameObject::Update()
 
 void GameObject::Render()
 {
-
+    RenderManager::CopyToRender(objTexture, ren, Rect.x, Rect.y, Rect.w, Rect.h);
 }
 
 void GameObject::clean()

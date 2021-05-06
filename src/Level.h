@@ -40,15 +40,14 @@ private:
     std::vector <Enemy*> enemies;
 	UIInventory* uiInv;
 	MouseCoords mouseCoords;
-	const Uint8* keys = SDL_GetKeyboardState(NULL);
-    Keyboard* keyW = 0;
-    Button* buttonW = 0;
-    Keyboard* keyA = 0;
-    Button* buttonA = 0;
-    Keyboard* keyS = 0;
-    Button* buttonS = 0;
-    Keyboard* keyD = 0;
-    Button* buttonD = 0;
+    Keyboard* keyW;
+    Button* buttonW;
+    Keyboard* keyA;
+    Button* buttonA;
+    Keyboard* keyS;
+    Button* buttonS;
+    Keyboard* keyD ;
+    Button* buttonD;
     Button* buttonForPlayerAttack;
     Map* LevelMap;
 

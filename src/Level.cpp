@@ -14,6 +14,7 @@
 #include <cmath>
 #include "UiEnemy.h"
 #include "rangeenemy.h"
+#include "Coins.h"
 
 Level::Level(SDL_Renderer* renderer) : ren (renderer)
 {
@@ -21,7 +22,7 @@ Level::Level(SDL_Renderer* renderer) : ren (renderer)
     TileTextures[0] = textureManager::LoadTexture("data/images/Tiles.png", ren);
     TileTextures[1] = textureManager::LoadTexture("data/images/CaslteTiles.png", ren);
     PlayBackground = textureManager::LoadTexture("data/images/Playback.png", ren);
-    player = new Player(ren);
+    player = new Player("data/images/Hero.png", ren);
     //enemyTurtle = new Enemy();
     SecondEnemyTurtle = new Enemy("data/images/Turtle.png", 4, ren, 10, 10, 3, 4);
     UiEnemy = new UIEnemy(ren, SecondEnemyTurtle);

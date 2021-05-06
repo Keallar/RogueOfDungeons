@@ -72,9 +72,16 @@ int Player::levelOfPlayer[3] = {
     100	 /*level max*/
 };
 
+int Player::quantityOfCoins[3] = {
+    0, /*coins now*/
+    0, /*coins previous*/
+    100	 /*coins max*/
+};
+
 int Player::VIS = 16;
 
-Player::Player(SDL_Renderer* renderer)
+Player::Player(const char* texturesheet, SDL_Renderer* renderer):
+    GameObject(texturesheet, renderer)
 {
     GameTextures = TextureBase::Instance();
     ren = renderer;
@@ -90,7 +97,6 @@ Player::Player(SDL_Renderer* renderer)
     }
 
     inventory = new Inventory;
-
     inventory->AddItem(1);
     inventory->AddItem(2);
     inventory->AddItem(5);
@@ -101,11 +107,6 @@ Player::Player(SDL_Renderer* renderer)
     inventory->Update();
     EqItems.WeaponId = 0;
     EqItems.equipedMeleeW = inventory->GetRealMelee(0);
-}
-
-Player::~Player()
-{
-
 }
 
 int Player::GetHP(int numOfArr)
@@ -202,6 +203,22 @@ int Player::GetLevelOfPlayer(int numLvl)
         return levelOfPlayer[1];
     case 2:
         return levelOfPlayer[2];
+    default:
+        std::cout << "Error in GetPointSpec" << std::endl;
+        break;
+    }
+}
+
+int Player::GetCoinsOfPlayer(int numCoins)
+{
+    switch (numCoins)
+    {
+    case 0:
+        return quantityOfCoins[0];
+    case 1:
+        return quantityOfCoins[1];
+    case 2:
+        return quantityOfCoins[2];
     default:
         std::cout << "Error in GetPointSpec" << std::endl;
         break;
@@ -636,14 +653,12 @@ void Player::Update()
     Player::CheckSpecValue(6); //LCK
 }
 
-//void Player::handleEvents(SDL_Event playerEvent)
-//{
-
-//}
-
-void Player::clean()
+void Player::handleEvents(SDL_Event playerEvent)
 {
-    SDL_DestroyTexture(PlayerTexture);
+    switch (playerEvent.type)
+    {
+
+    }
 }
 
 int Player::damage = 0;

@@ -103,6 +103,10 @@ void Button::handleEvents(SDL_Event& buttonEvent)
         }
         break;
     default:
+        if (buttonText == "place" || buttonText == "PLACE" || buttonText == "Place")
+        {
+            callback();
+        }
         break;
     }
 }

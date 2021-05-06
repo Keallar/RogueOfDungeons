@@ -41,6 +41,10 @@ UIInfo::UIInfo(SDL_Renderer* renderer) : ren (renderer)
 //    SDL_QueryTexture(levelOfPlayer, NULL, NULL, &w, &h);
 //    std::cout << w << " " << h << std::endl;
 
+    //Coins
+    coinText = FontManager::renderText("Coins: ", PATH_IN_FONT, color, 32, ren);
+    coins = FontManager::renderText("0", PATH_IN_FONT, color, 32 ,ren);
+
     //Buttons
     auto callSpecOrInfoWin{
         []()
@@ -122,6 +126,10 @@ void UIInfo::Render()
     RenderManager::CopyToRender(textLevelOfPlayer, ren, 1125, 210, 65, 25 );
     RenderManager::CopyToRender(levelOfPlayer, ren, 1187, 212, 21, 32);
 
+    //Coins UNDONE
+    RenderManager::CopyToRender(coinText, ren, 0, 0, 0, 0);
+    RenderManager::CopyToRender(coins, ren, 0, 0, 0, 0);
+
     //Buttons
     buttonForCallSpecInfo->Render();
 }
@@ -136,10 +144,15 @@ void UIInfo::Update()
 {
     SDL_DestroyTexture(levelOfPlayer);
     levelOfPlayer = 0;
-    std::string stringTemp = std::to_string(Player::GetLevelOfPlayer(0));
-    const char* CHAR_VALUE = stringTemp.c_str();
-    levelOfPlayer = FontManager::renderText(CHAR_VALUE, PATH_IN_FONT, color, 32, ren);
+    std::string stringTemp1 = std::to_string(Player::GetLevelOfPlayer(0));
+    const char* CHAR_VALUE1 = stringTemp1.c_str();
+    levelOfPlayer = FontManager::renderText(CHAR_VALUE1, PATH_IN_FONT, color, 32, ren);
 
+    SDL_DestroyTexture(coins);
+    coins = 0;
+    std::string stringTemp2 = std::to_string(Player::GetLevelOfPlayer(0));
+    const char* CHAR_VALUE2 = stringTemp2.c_str();
+    levelOfPlayer = FontManager::renderText(CHAR_VALUE2, PATH_IN_FONT, color, 32, ren);
 }
 
 void UIInfo::handleEvents(SDL_Event& eventInUiInfo)

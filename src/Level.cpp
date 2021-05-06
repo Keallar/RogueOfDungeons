@@ -23,12 +23,9 @@ Level::Level(SDL_Renderer* renderer) : ren (renderer)
     PlayBackground = textureManager::LoadTexture("data/images/Playback.png", ren);
     player = new Player(ren);
     //enemyTurtle = new Enemy();
-    SecondEnemyTurtle = new Enemy("data/images/Turtle.png", 4, ren, 10, 10, 3, 4);
-    UiEnemy = new UIEnemy(ren, SecondEnemyTurtle);
+    Start();
+    UiEnemy = new UIEnemy(ren, enemies[1]);
     //enemies.push_back(enemyTurtle);
-    RangeEnemyTurtle = new RangeEnemy("data/images/Turtle.png", 4, ren, 11, 11, 3, 4);
-    enemies.push_back(RangeEnemyTurtle);
-    enemies.push_back(SecondEnemyTurtle);
     uiInfo = new UIInfo(ren);
     uiItem = new UIItem(ren);
     uiSpec = new UISpecifications(ren);
@@ -366,13 +363,15 @@ void Level::Start()
             }
         }
     }
-    for(int i = 0; i<1; i++)
+    for(int i = 0; i<2; i++)
     {
         //delete enemy;
-        Enemy* enemy = new Enemy("data/images/Turtle.png", 4, ren, 8, 8, 3, 4);
+        Enemy* enemy = new Enemy("data/images/Turtle.png", 4, ren, 8, 8, 3, 3);
         enemies.push_back(enemy);
     }
     LevelMap->GenerateMap();
+    RangeEnemyTurtle = new RangeEnemy("data/images/Turtle.png", 4, ren, 11, 11, 3, 2);
+    enemies.push_back(RangeEnemyTurtle);
     player->generate = LevelMap->generateChoose;
     for(Enemy* enemy : enemies)
     {

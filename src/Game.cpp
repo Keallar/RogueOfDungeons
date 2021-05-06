@@ -81,7 +81,7 @@ void Game::handleEvents()
 				{
                     Menu->flag = 0;
                     level = new Level(renderer);
-                    level->Start();
+                    //level->Start();
                     break;
 				}
 				if (InputManager::MouseInArea(640, 471, 420, 100, mouseCoord.x, mouseCoord.y))

@@ -98,10 +98,6 @@ Player::Player(SDL_Renderer* renderer)
     inventory->AddItem(4);
     inventory->AddItem(6);
     inventory->AddItem(6);
-    inventory->AddItem(6);
-    inventory->AddItem(6);
-    inventory->AddItem(6);
-    inventory->AddItem(6);
     inventory->AddItem(7);
     inventory->Update();
     EqItems.WeaponId = 0;
@@ -577,7 +573,7 @@ void Player::GetItemEquip(int id)
 
 void Player::GetItemUnEquip(int id)
 {
-    if (inventory->InventoryCount() != 16)
+    if (inventory->InventoryCount() != INVENTORY_SIZE)
     {
         if (id == 0)
         {
@@ -602,7 +598,7 @@ void Player::GetItemUnEquip(int id)
 bool Player::InventoryBlock()
 {
     int count = inventory->InventoryCount();
-    if (count == 16)
+    if (count == INVENTORY_SIZE)
     {
         return true;
     }

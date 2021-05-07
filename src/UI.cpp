@@ -243,13 +243,13 @@ void UIInventory::Render()
     RenderManager::CopyToRender(inventoryText, ren, 780, 50, 160, 32);
     buttonForCallDpor->Render();
 
-    for (int i = 0; i < 16; i++)
+    for (int i = 0; i < INVENTORY_SIZE; i++)
     {
         if (Inventory::inventoryFace[i] != -1)
         {
             Inventory::it = Inventory::ExistingItems.find(Inventory::inventoryFace[i]);
             item = textureManager::LoadTexture((Inventory::it->second)->ItemTexture, ren);
-            RenderManager::CopyToRender(item, ren, (780 + 36 * (i % 4)), (100 + ((i / 4) * 50)), 32, 32);
+            RenderManager::CopyToRender(item, ren, (770 + 36 * (i % 6)), (100 + ((i / 6) * 50)), 32, 32);
             SDL_DestroyTexture(item);
             item = 0;
         }
@@ -265,9 +265,9 @@ void UIInventory::clickForItemsInInv()
 {
     SDL_GetMouseState(&xMouseCoord, &yMouseCoord);
 
-    for (int i = 0; i < 16; i++)
+    for (int i = 0; i < INVENTORY_SIZE; i++)
     {
-        if (InputManager::MouseInArea((780 + 36 * (i % 4)), (100 + ((i / 4) * 50)), 32, 32, xMouseCoord, yMouseCoord) &&
+        if (InputManager::MouseInArea((780 + 36 * (i % 6)), (100 + ((i / 6) * 50)), 32, 32, xMouseCoord, yMouseCoord) &&
                 Inventory::inventoryFace[i] != -1 && FlagManager::flagInv == 1)
         {
             if (FlagManager::flagHaveDrop == false)

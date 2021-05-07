@@ -298,6 +298,9 @@ void Level::Update()
                 LevelMap->Location[LevelMap->portal.x][LevelMap->portal.y] = 4;
                 LevelMap->textureLocation[LevelMap->portal.x][LevelMap->portal.y] = 15;
             }
+            if(!(rand()%3)) {
+                player->GetItemOnLvl((6 + rand()%2));
+            }
         }
 
         if (enemy != nullptr)

@@ -198,6 +198,13 @@ Level::Level(SDL_Renderer* renderer) : ren (renderer)
         }
     };
     buttonForPlayerAttack = new Button("left", NULL, ren, {0, 0, 32, 32}, playerAttack, NULL);
+    auto Escape {
+        [=]()
+        {
+            player->playerEscaping = !player->playerEscaping;
+        }
+    };
+    keyH = new Keyboard(SDL_SCANCODE_H, Escape);
 }
 
 Level::~Level()
@@ -260,6 +267,7 @@ void Level::deleteEnemy()
 
 void Level::Update()
 {
+    if(player->playerEscaping) FlagManager::flagTurn = 0;
     int n = Player::VIS;
     for (int i = (EntityPosition::Coords[1] / 32) - n; i <= (EntityPosition::Coords[1] / 32) + n; i++)
     {
@@ -583,6 +591,7 @@ void Level::handleEvents(SDL_Event eventInLvl)
         keyA->handleEvents(eventInLvl);
         keyS->handleEvents(eventInLvl);
         keyD->handleEvents(eventInLvl);
+        keyH->handleEvents(eventInLvl);
 
         buttonForPlayerAttack->handleEvents(eventInLvl);
         buttonW->handleEvents(eventInLvl);

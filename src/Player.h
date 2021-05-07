@@ -38,6 +38,7 @@ private:
     static int pointOfSpec[3];
     static int levelOfPlayer[3];
 public:
+    bool playerEscaping;
 	bool InventoryBlock();
 	int generate;
 	static int VIS;

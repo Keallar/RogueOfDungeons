@@ -89,6 +89,7 @@ Player::Player(SDL_Renderer* renderer)
         }
     }
 
+    playerEscaping = false;
     inventory = new Inventory;
 
     inventory->AddItem(1);
@@ -615,7 +616,8 @@ void Player::GetItemOnLvl(int id)
 
 void Player::Render()
 {
-    playerAnimation->Render(EntityPosition::Coords[0], EntityPosition::Coords[1]);
+    if (playerEscaping) RenderManager::CopyToRender(GameTextures->GetTexture("HeroEscape"), ren, EntityPosition::Coords[0], EntityPosition::Coords[1], 32, 32, 0, 0, 32, 32);
+    if (!playerEscaping) playerAnimation->Render(EntityPosition::Coords[0], EntityPosition::Coords[1]);
 }
 
 void Player::Update()

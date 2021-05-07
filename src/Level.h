@@ -49,6 +49,7 @@ private:
     Button* buttonS = 0;
     Keyboard* keyD = 0;
     Button* buttonD = 0;
+    Keyboard* keyH = 0;
     Button* buttonForPlayerAttack;
     Map* LevelMap;
 

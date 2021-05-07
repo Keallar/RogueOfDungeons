@@ -4,7 +4,7 @@
 #include <iostream>
 #include <fstream>
 
-int Inventory::inventoryFace[16]; //������ � ���� ��, ��� ������ inventory, �� � static
+int Inventory::inventoryFace[INVENTORY_SIZE]; //������ � ���� ��, ��� ������ inventory, �� � static
 std::map <int, InventoryItem*> Inventory::ExistingItems;
 std::map <int, InventoryItem*>::iterator Inventory::it;
 
@@ -100,7 +100,7 @@ Inventory::Inventory()
 		}
 		ItemNumber++;
 	}
-	for (int i = 0; i < 16; i++) 
+    for (int i = 0; i < INVENTORY_SIZE; i++)
 	{
 		inventory[i] = -1;
 	}
@@ -119,7 +119,7 @@ void Inventory::EquipItem(int i, int j)
 
 int Inventory::InventoryCount() {
 	int count = 0;
-	for (int i = 0; i < 16; i++) {
+    for (int i = 0; i < INVENTORY_SIZE; i++) {
 		if (inventory[i] != -1) {
 			count++;
 		}
@@ -129,7 +129,7 @@ int Inventory::InventoryCount() {
 void Inventory::AddItem(int id) 
 {
 	int count = 0;
-	for (int i = 0; i < 16; i++) 
+    for (int i = 0; i < INVENTORY_SIZE; i++)
 	{
 		if (inventory[i] == -1) 
 		{
@@ -143,7 +143,7 @@ void Inventory::AddItem(int id)
 
 void Inventory::Update() 
 {
-	for (int i = 0; i < 16; i++) 
+    for (int i = 0; i < INVENTORY_SIZE; i++)
 	{
 		inventoryFace[i] = inventory[i];
 	}

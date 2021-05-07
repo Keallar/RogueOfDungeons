@@ -138,87 +138,85 @@ void Enemy::GetEnemyFirstCoords()
 
 bool Enemy::WAY(int ax, int ay, int bx, int by)   // ����� ���� �� ������ (ax, ay) � ������ (bx, by)
 {
-    if ((abs(EntityPosition::Coords[0] - this->Rect.x)/32 +
-         abs(EntityPosition::Coords[1] - this->Rect.y)/32) < 3)
-    {
-        int dx[4] = { 1, 0, -1, 0 };   // ��������, ��������������� ������� ������
-        int dy[4] = { 0, 1, 0, -1 };   // ������, �����, ����� � ������
-        int d, x, y, k;
-        bool stop = false;
+    int dx[4] = { 1, 0, -1, 0 };   // ��������, ��������������� ������� ������
+    int dy[4] = { 0, 1, 0, -1 };   // ������, �����, ����� � ������
+    int d, x, y, k;
+    bool stop = false;
 
-        if (enemyLoc[ay][ax] == -2 || enemyLoc[by][bx] == -2)
-            return false;  // ������ (ax, ay) ��� (bx, by) - �����
+    if (enemyLoc[ay][ax] == -2 || enemyLoc[by][bx] == -2)
+        return false;  // ������ (ax, ay) ��� (bx, by) - �����
 
-        // ��������������� �����
-        d = 0;
-        enemyLoc[ay][ax] = 0;            // ��������� ������ �������� 0
-        do {
-            FlagManager::flagInAreaOfAnemy = 1;
-            stop = true;               // ������������, ��� ��� ��������� ������ ��� ��������
-            for (y = 0; y < 22; ++y)
+    // ��������������� �����
+    d = 0;
+    enemyLoc[ay][ax] = 0;            // ��������� ������ �������� 0
+    do {
+        //FlagManager::flagInAreaOfAnemy = 1;
+        stop = true;               // ������������, ��� ��� ��������� ������ ��� ��������
+        for (y = 0; y < 22; ++y)
+        {
+            for (x = 0; x < 32; ++x)
             {
-                for (x = 0; x < 32; ++x)
+                if (enemyLoc[y][x] == d)                         // ������ (x, y) �������� ������ d
                 {
-                    if (enemyLoc[y][x] == d)                         // ������ (x, y) �������� ������ d
+                    for (k = 0; k < 4; ++k)                    // �������� �� ���� ������������ �������
                     {
-                        for (k = 0; k < 4; ++k)                    // �������� �� ���� ������������ �������
+                        int iy = y + dy[k], ix = x + dx[k];
+                        if (iy >= 0 && iy < H && ix >= 0 && ix < W &&
+                                enemyLoc[iy][ix] == BLANK)
                         {
-                            int iy = y + dy[k], ix = x + dx[k];
-                            if (iy >= 0 && iy < H && ix >= 0 && ix < W &&
-                                    enemyLoc[iy][ix] == BLANK)
-                            {
-                                stop = false;              // ������� ������������ ������
-                                enemyLoc[iy][ix] = d + 1;
-                            }
+                            stop = false;              // ������� ������������ ������
+                            enemyLoc[iy][ix] = d + 1;
                         }
                     }
                 }
             }
-            d++;
-        } while (!stop && enemyLoc[by][bx] == BLANK);
-        //if (enemyLoc[bx][by] == BLANK) return false;  // ���� �� ������
-        // �������������� ����
-        len = enemyLoc[by][bx];            // ����� ����������� ���� �� (ax, ay) � (bx, by)
-        x = bx;
-        y = by;
-        d = len;
-        while (d > 0)
+        }
+        d++;
+    } while (!stop && enemyLoc[by][bx] == BLANK);
+    //if (enemyLoc[bx][by] == BLANK) return false;  // ���� �� ������
+    // �������������� ����
+    len = enemyLoc[by][bx];            // ����� ����������� ���� �� (ax, ay) � (bx, by)
+    x = bx;
+    y = by;
+    d = len;
+    while (d > 0)
+    {
+        px[d] = x;
+        py[d] = y;                   // ���������� ������ (x, y) � ����
+        d--;
+        for (k = 0; k < 4; ++k)
         {
-            px[d] = x;
-            py[d] = y;                   // ���������� ������ (x, y) � ����
-            d--;
-            for (k = 0; k < 4; ++k)
+            int iy = y + dy[k], ix = x + dx[k];
+            if (iy >= 0 && iy < H && ix >= 0 && ix < W &&
+                    enemyLoc[iy][ix] == d)
             {
-                int iy = y + dy[k], ix = x + dx[k];
-                if (iy >= 0 && iy < H && ix >= 0 && ix < W &&
-                        enemyLoc[iy][ix] == d)
-                {
-                    x = x + dx[k];
-                    y = y + dy[k];           // ��������� � ������, ������� �� 1 ����� � ������
-                    break;
-                }
+                x = x + dx[k];
+                y = y + dy[k];           // ��������� � ������, ������� �� 1 ����� � ������
+                break;
             }
         }
-        px[0] = ax;
-        py[0] = ay;
-        //�������� ������� enemy
-        Rect.x = px[1] * 32;
-        Rect.y = py[1] * 32;
-        return true;
     }
+    px[0] = ax;
+    py[0] = ay;
+    //�������� ������� enemy
+    Rect.x = px[1] * 32;
+    Rect.y = py[1] * 32;
+    return true;
 }
 
 void Enemy::Update()
 {
-    meleeAttackEnemy();
-    if ((abs(Rect.x / 32 - EntityPosition::Coords[0] / 32) +
-         abs(Rect.y / 32 - EntityPosition::Coords[1] / 32)) > 1)
+    if ((abs(EntityPosition::Coords[0] - this->Rect.x)/32 +
+         abs(EntityPosition::Coords[1] - this->Rect.y)/32) < 3)
     {
-        WAY(Rect.x / 32, Rect.y / 32,
-            EntityPosition::Coords[0] / 32, EntityPosition::Coords[1] / 32);
-
+        meleeAttackEnemy();
+        if ((abs(Rect.x / 32 - EntityPosition::Coords[0] / 32) +
+             abs(Rect.y / 32 - EntityPosition::Coords[1] / 32)) > 1)
+        {
+            WAY(Rect.x / 32, Rect.y / 32, EntityPosition::Coords[0] / 32, EntityPosition::Coords[1] / 32);
+        }
     }
-    Enemy::CheckHpEnemy();
+    CheckHpEnemy();
 }
 
 void Enemy::handleEvents(SDL_Event eventInEnemy)

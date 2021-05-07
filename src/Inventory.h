@@ -4,6 +4,9 @@
 #include <vector>
 #include "SDL.h"
 #include <map>
+
+#define INVENTORY_SIZE 60
+
 enum type 
 {
 	weapon,
@@ -95,8 +98,8 @@ class Inventory
 public:
 	Inventory();
 	~Inventory();
-	int inventory[16]; // хранит в себе вcе айтемы и они лежат в inventoryFace ещё (он не static)
-	static int inventoryFace[16];
+    int inventory[INVENTORY_SIZE];
+    static int inventoryFace[INVENTORY_SIZE];
 	int InventoryCount();
 	void AddItem(int id);
 	void EquipItem(int i, int j);

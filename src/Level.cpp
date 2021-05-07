@@ -20,7 +20,7 @@ Level::Level(SDL_Renderer* renderer) : ren (renderer)
     UiEnemy = new UIEnemy(ren, SecondEnemyTurtle);
     //enemies.push_back(enemyTurtle);
     RangeEnemyTurtle = new RangeEnemy("data/images/Turtle.png", 4, ren, 11, 11, 3, 4);
-   // enemies.push_back(RangeEnemyTurtle);
+    //enemies.push_back(RangeEnemyTurtle);
     enemies.push_back(SecondEnemyTurtle);
     uiInfo = new UIInfo(ren);
     uiItem = new UIItem(ren);
@@ -306,6 +306,9 @@ void Level::Update()
             {
                 LevelMap->Location[LevelMap->portal.x][LevelMap->portal.y] = 4;
                 LevelMap->textureLocation[LevelMap->portal.x][LevelMap->portal.y] = 15;
+            }
+            if(!(rand()%3)) {
+                player->GetItemOnLvl((6 + rand()%2));
             }
         }
 

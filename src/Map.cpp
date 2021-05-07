@@ -630,7 +630,7 @@ void Map::ChunkGenerationMethod2() {
     int startTunnel = 0; int rotation = 0;
     switch (rand() % 3) {
     case 0:
-        startTunnel = rand() % 28;
+        startTunnel = rand() % 18;
         rotation = 1;
         break;
     case 1:

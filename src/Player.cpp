@@ -678,6 +678,7 @@ int Player::damage = 0;
 
 void Player::playerTurn()
 {
+    FlagManager::flagInAreaOfAnemy = 0;
     FlagManager::flagMeleeAttackPlayer = 1;
     FlagManager::flagRangeAttackPlayer = 1;
     FlagManager::flagTurn = 0;

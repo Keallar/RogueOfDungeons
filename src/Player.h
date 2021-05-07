@@ -46,7 +46,6 @@ public:
     static Equiped EqItems;
     Player(const char* texturesheet, SDL_Renderer* ren);
     void Update() override;
-    void handleEvents(SDL_Event playerEvent) override;
     void Render() override;
 
 	void GetLevel(int arr[22][32]);

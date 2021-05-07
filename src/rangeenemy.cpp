@@ -6,7 +6,7 @@
 #include "Inventory.h"
 #include "Animation.h"
 #include "Level.h"
-RangeEnemy::RangeEnemy(const char* texturesheet, int framesOfAnimationForAttack,SDL_Renderer* ren, int HealthP, int MaxHealthP, int Damage, int EXPR):Enemy(texturesheet, framesOfAnimationForAttack, ren, HealthP, MaxHealthP, Damage, EXPR)
+RangeEnemy::RangeEnemy(const char* texturesheet, int framesOfAnimationForAttack,SDL_Renderer* ren, int HealthP, int MaxHealthP, int Damage, int EXPR, int coins):Enemy(texturesheet, framesOfAnimationForAttack, ren, HealthP, MaxHealthP, Damage, EXPR, coins)
 {
 
 }

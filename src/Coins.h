@@ -20,7 +20,6 @@ public:
     Coins(const char* texturesheet, SDL_Renderer* renderer, int value, int framesOfCoin);
     ~Coins();
     void Update() override;
-    void handleEvents(SDL_Event eventInCoins) override;
     void Render() override;
     int GetValueCoins();
     SDL_Rect GetRect();

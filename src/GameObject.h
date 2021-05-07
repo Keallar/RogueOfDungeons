@@ -15,7 +15,6 @@ public:
     GameObject(const char* texturesheet, SDL_Renderer* renderer);
     virtual ~GameObject();
 	virtual void Update();
-    virtual void handleEvents(SDL_Event e);
     virtual void Render();
     void clean();
     SDL_Rect GetRect();

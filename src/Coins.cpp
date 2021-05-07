@@ -26,10 +26,6 @@ void Coins::Update()
 
 }
 
-void Coins::handleEvents(SDL_Event eventInCoins)
-{
-}
-
 void Coins::Render()
 {
     bool temp = false;

@@ -51,7 +51,7 @@ private:
     Button* buttonD;
     Button* buttonForPlayerAttack;
     Map* LevelMap;
-    Coins* coin;
+    std::vector<Coins*> coins;
 
 	void ChangeDark(int i, int j);
 	MouseCoords Mouse;

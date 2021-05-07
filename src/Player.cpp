@@ -674,18 +674,11 @@ void Player::Update()
     Player::CheckSpecValue(6); //LCK
 }
 
-void Player::handleEvents(SDL_Event playerEvent)
-{
-    switch (playerEvent.type)
-    {
-
-    }
-}
-
 int Player::damage = 0;
 
 void Player::playerTurn()
 {
+    FlagManager::flagInAreaOfAnemy = 0;
     FlagManager::flagMeleeAttackPlayer = 1;
     FlagManager::flagRangeAttackPlayer = 1;
     FlagManager::flagTurn = 0;

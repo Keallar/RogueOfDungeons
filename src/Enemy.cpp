@@ -4,12 +4,14 @@
 #include <iostream>
 #include "EntityPosition.h"
 #include "Inventory.h"
-#include "Animation.h"
 
 using namespace std;
 
-Enemy::Enemy(const char* texturesheet, int framesOfAnimationForAttack, SDL_Renderer* renderer, int HealthP, int MaxHealthP, int Damage, int EXPR)
+Enemy::Enemy(const char* texturesheet, int framesOfAnimationForAttack,
+             SDL_Renderer* renderer, int HealthP, int MaxHealthP, int Damage, int EXPR, int coins):
+    GameObject(texturesheet, renderer)
 {
+    ren = renderer;
     HP = HealthP;
     HpMax = MaxHealthP;
     prevHp = MaxHealthP;
@@ -20,44 +22,37 @@ Enemy::Enemy(const char* texturesheet, int framesOfAnimationForAttack, SDL_Rende
     HP = HealthP;
     HpMax = MaxHealthP;
     DMG = Damage;
-    ren = renderer;
+    valueOfCoins = coins;
+    coin = new Coins ("data/images/Coin.png", ren, valueOfCoins, 1);
     enemyTexture = textureManager::LoadTexture(texturesheet, ren);
     enemyAnimation = new Animation(ren, enemyTexture);
     framesOfAnimForAttack = framesOfAnimationForAttack;
     completeEnemyAnimation = 0;
 }
-Enemy::~Enemy() 
-{
-    SDL_DestroyTexture(enemyTexture);
-}
 
-void Enemy::Render() 
+void Enemy::Render()
 {
     enemyAnimation->Render(Rect.x, Rect.y);
-}
-void Enemy::clean()
-{
-    SDL_DestroyTexture(enemyTexture);
 }
 
 int Enemy::GetHpEnemy(int numOfHp)
 {
-    int temp = 0;
     switch (numOfHp)
     {
     case 0:
-        temp = HP;
-        break;
+        return HP;
     case 1:
-        temp = prevHp;
-        break;
+        return prevHp;
     case 2:
-        temp = HpMax;
-        break;
+        return HpMax;
     default:
         break;
     }
-    return temp;
+}
+
+Coins* Enemy::GetCoin()
+{
+    return coin;
 }
 
 void Enemy::CheckHpEnemy()
@@ -226,6 +221,7 @@ void Enemy::Update()
              abs(Rect.y / 32 - EntityPosition::Coords[1] / 32)) > 1)
         {
             WAY(Rect.x / 32, Rect.y / 32, EntityPosition::Coords[0] / 32, EntityPosition::Coords[1] / 32);
+            coin->SetRectCoords(Rect.x, Rect.y);
         }
     }
     CheckHpEnemy();
@@ -268,7 +264,7 @@ void Enemy::meleeAttackEnemy()
          ((Rect.y == EntityPosition::Coords[1]) &&
           (Rect.x == EntityPosition::Coords[0] - 32))))
     {
-        //don't work
+
         if (temp == false)
         {
             Enemy::attackOfEnemy();
@@ -298,3 +294,4 @@ int Enemy::enemyDamageCalculation()
         outputDamageEnemy = getDamageEnemy();
     return outputDamageEnemy;
 }
+

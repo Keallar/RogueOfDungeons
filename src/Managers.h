@@ -49,6 +49,7 @@ public:
 	static bool flagUiEnemy;
     static bool flagPointOfSpec;
     static bool flagLevelOfPlayer;
+    static bool flagCoin;
     //Specs
 	static bool flagSTR;
 	static bool flagDEX;

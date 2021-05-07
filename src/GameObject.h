@@ -1,21 +1,22 @@
 #pragma once
 #include <SDL.h>
 #include "Managers.h"
+#include "Animation.h"
 
 class GameObject
 {
 protected:
 	SDL_Texture* objTexture;
 	SDL_Renderer* ren;
+    Animation* objAnim;
 public:
-	SDL_Rect GetRect();
 	SDL_Rect Rect;
-	GameObject(); //конструктор по умлочанию
-	GameObject(const char* texturesheet, SDL_Renderer* renderer, int x, int y, int w, int h);;
-	GameObject(const char* texturesheet, SDL_Renderer* renderer);
-	virtual ~GameObject();
+    GameObject() = default;
+    GameObject(const char* texturesheet, SDL_Renderer* renderer);
+    virtual ~GameObject();
 	virtual void Update();
-	virtual void Render();
-	virtual void clean();
+    virtual void Render();
+    void clean();
+    SDL_Rect GetRect();
 };
 

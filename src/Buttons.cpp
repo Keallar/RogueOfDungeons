@@ -48,50 +48,48 @@ void Button::handleEvents(SDL_Event& buttonEvent)
     switch (buttonEvent.type)
     {
     case SDL_MOUSEBUTTONDOWN:
-        if (buttonEvent.button.clicks == 1)
+        if (buttonText == "left" || buttonText == "LEFT" || buttonText == "Left")
         {
-            if (buttonText == "left" || buttonText == "LEFT" || buttonText == "Left")
+            if (buttonEvent.button.button == SDL_BUTTON_LEFT)
             {
-                if (buttonEvent.button.button == SDL_BUTTON_LEFT)
+                mouse.x = buttonEvent.button.x;
+                mouse.y = buttonEvent.button.y;
+                if (Button::mouseInArea(button.x, button.y, button.w, button.h))
                 {
-                    mouse.x = buttonEvent.button.x;
-                    mouse.y = buttonEvent.button.y;
-                    if (Button::mouseInArea(button.x, button.y, button.w, button.h))
-                    {
-                        callback();
-                    }
+                    callback();
                 }
+            }
 
-            }
-            else if (buttonText == "right" || buttonText == "RIGHT" || buttonText == "Right")
+        }
+        else if (buttonText == "right" || buttonText == "RIGHT" || buttonText == "Right")
+        {
+            if (buttonEvent.button.button == SDL_BUTTON_RIGHT)
             {
-                if (buttonEvent.button.button == SDL_BUTTON_RIGHT)
+                mouse.x = buttonEvent.button.x;
+                mouse.y = buttonEvent.button.y;
+                if (Button::mouseInArea(button.x, button.y, button.w, button.h))
                 {
-                    mouse.x = buttonEvent.button.x;
-                    mouse.y = buttonEvent.button.y;
-                    if (Button::mouseInArea(button.x, button.y, button.w, button.h))
-                    {
-                        callback();
-                    }
-                }
-            }
-            else
-            {
-                try
-                {
-                    if (buttonText != "left" || buttonText != "LEFT" ||
-                            buttonText != "Left" || buttonText != "right" ||
-                            buttonText != "RIGHT" || buttonText != "Right")
-                        throw "You entered a bank or wrong side of button mouse";
-                }
-                catch (const char* exception)
-                {
-                    std::cerr << "Catch in Button::handleEvent. Error: " << exception << std::endl;
+                    callback();
                 }
             }
         }
+        else
+        {
+            try
+            {
+                if (buttonText != "left" || buttonText != "LEFT" ||
+                        buttonText != "Left" || buttonText != "right" ||
+                        buttonText != "RIGHT" || buttonText != "Right" ||
+                        buttonText == "place" || buttonText == "PLACE" ||
+                        buttonText == "Place")
+                    throw "You entered a bank or wrong side of button mouse";
+            }
+            catch (const char* exception)
+            {
+                std::cerr << "Catch in Button::handleEvent. Error: " << exception << std::endl;
+            }
+        }
         break;
-
     case SDL_MOUSEMOTION:
         mouse.x = buttonEvent.motion.x;
         mouse.y = buttonEvent.motion.y;
@@ -103,6 +101,10 @@ void Button::handleEvents(SDL_Event& buttonEvent)
         }
         break;
     default:
+        if (buttonText == "place" || buttonText == "PLACE" || buttonText == "Place")
+        {
+            callback();
+        }
         break;
     }
 }
@@ -152,11 +154,11 @@ Keyboard::Keyboard(SDL_Scancode scancode, std::function <void()> callbackFunctio
     try
     {
         if (callback == NULL)
-           throw "callback in Keyboard is NULL";
+            throw "callback in Keyboard is NULL";
     }
     catch (const char* exception)
     {
-       std::cerr << "Catch exception in Keyboard::Keyboard. Error: " << exception << std::endl;
+        std::cerr << "Catch exception in Keyboard::Keyboard. Error: " << exception << std::endl;
     }
 }
 

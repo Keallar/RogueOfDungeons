@@ -37,6 +37,10 @@ private:
 	SDL_Texture* mnBar;
 	SDL_Texture* mnText;
 
+    //Coins
+    SDL_Texture* coinText;
+    SDL_Texture* coins;
+
 	//Buttons
 	Button* buttonForCallSpecInfo;
 	Button* buttonForCallInvWin;

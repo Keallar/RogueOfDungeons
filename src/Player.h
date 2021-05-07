@@ -37,6 +37,7 @@ private:
     static int LCK[2];
     static int pointOfSpec[3];
     static int levelOfPlayer[3];
+    static int quantityOfCoins[3];
 public:
     bool playerEscaping;
 	bool InventoryBlock();
@@ -44,12 +45,9 @@ public:
 	static int VIS;
     static int damage;
     static Equiped EqItems;
-    Player(SDL_Renderer* ren);
-    ~Player() override;
+    Player(const char* texturesheet, SDL_Renderer* ren);
     void Update() override;
     void Render() override;
-    void handleEvents(SDL_Event playerEvent);
-    void clean() override;
 
 	void GetLevel(int arr[22][32]);
 	void GetPlayerFirstCoords();
@@ -67,6 +65,7 @@ public:
     static int GetSpecValue(int numSpec);
     static int GetPointOfSpec(int numPoint);
     static int GetLevelOfPlayer(int numLvl);
+    static int GetCoinsOfPlayer(int numCoins);
 
     static void ChangeHpValue(int valueOfChangingHp);
     static void ChangeManaValue(int valueOfChangingMana);
@@ -75,14 +74,15 @@ public:
     static void ChangeMaxHpValue();
     static void ChangeMaxManaValue();
     static void ChangeMaxExpValue();
+    static void ChangeCoins(int value);
 
-    static void CheckHP();
-    static void CheckEXP();
-    static void CheckMANA();
-    static void CheckSpecValue(int numSpec);
-    static void CheckPointOfSpec();
-    static void CheckLevelOfPlayer();
+    void CheckHP();
+    void CheckEXP();
+    void CheckMANA();
+    void CheckSpecValue(int numSpec);
+    void CheckPointOfSpec();
+    void CheckLevelOfPlayer();
+    void CheckCoinsOfPlayer();
 
     static void playerTurn();
-
 };

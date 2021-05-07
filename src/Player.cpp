@@ -72,9 +72,16 @@ int Player::levelOfPlayer[3] = {
     100	 /*level max*/
 };
 
+int Player::quantityOfCoins[3] = {
+    0, /*coins now*/
+    0, /*coins previous*/
+    100	 /*coins max*/
+};
+
 int Player::VIS = 16;
 
-Player::Player(SDL_Renderer* renderer)
+Player::Player(const char* texturesheet, SDL_Renderer* renderer):
+    GameObject(texturesheet, renderer)
 {
     GameTextures = TextureBase::Instance();
     ren = renderer;
@@ -91,7 +98,6 @@ Player::Player(SDL_Renderer* renderer)
 
     playerEscaping = false;
     inventory = new Inventory;
-
     inventory->AddItem(1);
     inventory->AddItem(2);
     inventory->AddItem(5);
@@ -103,11 +109,6 @@ Player::Player(SDL_Renderer* renderer)
     inventory->Update();
     EqItems.WeaponId = 0;
     EqItems.equipedMeleeW = inventory->GetRealMelee(0);
-}
-
-Player::~Player()
-{
-
 }
 
 int Player::GetHP(int numOfArr)
@@ -210,6 +211,22 @@ int Player::GetLevelOfPlayer(int numLvl)
     }
 }
 
+int Player::GetCoinsOfPlayer(int numCoins)
+{
+    switch (numCoins)
+    {
+    case 0:
+        return quantityOfCoins[0];
+    case 1:
+        return quantityOfCoins[1];
+    case 2:
+        return quantityOfCoins[2];
+    default:
+        std::cout << "Error in GetPointSpec" << std::endl;
+        break;
+    }
+}
+
 //Изменение значения характеристики (STR, DEX, INT, PHS, LCK) на +1
 void Player::ChangeValueSpecs(int numOfSpec)
 {
@@ -286,6 +303,12 @@ void Player::ChangeMaxManaValue()
 void Player::ChangeMaxExpValue()
 {
     exp[2] += 100;
+}
+
+//Изменение кол-ва монет
+void Player::ChangeCoins(int value)
+{
+    quantityOfCoins[0] += value;
 }
 
 //Проверка изменения HP
@@ -365,6 +388,19 @@ void Player::CheckLevelOfPlayer()
     else
     {
         FlagManager::flagLevelOfPlayer = 0;
+    }
+}
+
+void Player::CheckCoinsOfPlayer()
+{
+    if (Player::quantityOfCoins[0] != Player::quantityOfCoins[1] && FlagManager::flagCoin == 0)
+    {
+        FlagManager::flagCoin = 1;
+        Player::quantityOfCoins[1] = Player::quantityOfCoins[0];
+    }
+    else
+    {
+        FlagManager::flagCoin = 0;
     }
 }
 
@@ -631,6 +667,7 @@ void Player::Update()
     Player::CheckEXP();
     Player::CheckLevelOfPlayer();
     Player::CheckPointOfSpec();
+    Player::CheckCoinsOfPlayer();
     Player::CheckSpecValue(1); //STR
     Player::CheckSpecValue(2); //DEX
     Player::CheckSpecValue(3); //INT
@@ -639,20 +676,11 @@ void Player::Update()
     Player::CheckSpecValue(6); //LCK
 }
 
-//void Player::handleEvents(SDL_Event playerEvent)
-//{
-
-//}
-
-void Player::clean()
-{
-    SDL_DestroyTexture(PlayerTexture);
-}
-
 int Player::damage = 0;
 
 void Player::playerTurn()
 {
+    FlagManager::flagInAreaOfAnemy = 0;
     FlagManager::flagMeleeAttackPlayer = 1;
     FlagManager::flagRangeAttackPlayer = 1;
     FlagManager::flagTurn = 0;

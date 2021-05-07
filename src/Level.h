@@ -10,6 +10,7 @@
 #include "UiEnemy.h"
 #include "rangeenemy.h"
 #include <memory>
+#include "Coins.h"
 
 struct MouseCoords
 {
@@ -52,6 +53,7 @@ private:
     Keyboard* keyH = 0;
     Button* buttonForPlayerAttack;
     Map* LevelMap;
+    std::vector<Coins*> coins;
 
 	void ChangeDark(int i, int j);
 	MouseCoords Mouse;
@@ -67,6 +69,7 @@ public:
 	~Level();
 	void deletePlayer();
 	void deleteEnemy();
+    void deleteCoin();
 	void Update();
 	void Start();
 	void Render();

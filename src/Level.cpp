@@ -2,18 +2,11 @@
 #include "Level.h"
 #include "Managers.h"
 #include <ctime>
-#include "UI.h"
-#include "EntityPosition.h"
 #include <vector>
 #include <iostream>
 #include "EntityPosition.h"
-#include "Buttons.h"
-#include "Enemy.h"
-#include "Player.h"
-#include "Map.h"
 #include <cmath>
-#include "UiEnemy.h"
-#include "rangeenemy.h"
+#include <algorithm>
 
 Level::Level(SDL_Renderer* renderer) : ren (renderer)
 {
@@ -21,12 +14,12 @@ Level::Level(SDL_Renderer* renderer) : ren (renderer)
     TileTextures[0] = textureManager::LoadTexture("data/images/Tiles.png", ren);
     TileTextures[1] = textureManager::LoadTexture("data/images/CaslteTiles.png", ren);
     PlayBackground = textureManager::LoadTexture("data/images/Playback.png", ren);
-    player = new Player(ren);
+    player = new Player("data/images/Hero.png", ren);
     //enemyTurtle = new Enemy();
-    SecondEnemyTurtle = new Enemy("data/images/Turtle.png", 4, ren, 10, 10, 3, 4);
+    SecondEnemyTurtle = new Enemy("data/images/Turtle.png", 4, ren, 10, 10, 3, 4, 5);
     UiEnemy = new UIEnemy(ren, SecondEnemyTurtle);
     //enemies.push_back(enemyTurtle);
-    RangeEnemyTurtle = new RangeEnemy("data/images/Turtle.png", 4, ren, 11, 11, 3, 4);
+    RangeEnemyTurtle = new RangeEnemy("data/images/Turtle.png", 4, ren, 11, 11, 3, 4, 5);
     //enemies.push_back(RangeEnemyTurtle);
     enemies.push_back(SecondEnemyTurtle);
     uiInfo = new UIInfo(ren);
@@ -37,7 +30,6 @@ Level::Level(SDL_Renderer* renderer) : ren (renderer)
     mana = new ManaInfo(ren);
     exp = new ExpInfo(ren);
     uiEquiped = new UIEquipedItem(ren);
-
     auto pressW{
         [=]()
         {
@@ -256,11 +248,32 @@ void Level::deleteEnemy()
     {
         if (enemy->GetHpEnemy(0) <= 0)
         {
+            coins.push_back(enemy->GetCoin());
             enemies.erase(std::remove(enemies.begin(), enemies.end(), enemy));
             std::cout << "Delete enemy" << std::endl;
             FlagManager::flagUiEnemy = 0;
             player->ChangeExpValue(100);
             FlagManager::flagInAreaOfAnemy = 0;
+        }
+    }
+}
+
+void Level::deleteCoin()
+{
+    for (Coins* coin : coins)
+    {
+        if (coin != nullptr)
+        {
+            if (coin->GetRect().x == EntityPosition::Coords[0] &&
+                    coin->GetRect().y == EntityPosition::Coords[1])
+            {
+                coins.erase(std::remove(coins.begin(), coins.end(), coin));
+                coins.shrink_to_fit();
+                std::cout << "Delete coin\n";
+                player->ChangeCoins(coin->GetValueCoins());
+                delete coin;
+                coin = nullptr;
+            }
         }
     }
 }
@@ -323,6 +336,13 @@ void Level::Update()
         player->Update();
         Level::deletePlayer();
     }
+
+    for (Coins* coin : coins)
+    {
+        if (coin != nullptr)
+            deleteCoin();
+    }
+
     buttonW->updateCoords(EntityPosition::Coords[0], EntityPosition::Coords[1] - 32);
     buttonA->updateCoords(EntityPosition::Coords[0] - 32, EntityPosition::Coords[1]);
     buttonS->updateCoords(EntityPosition::Coords[0], EntityPosition::Coords[1] + 32);
@@ -354,6 +374,10 @@ void Level::Update()
     {
         uiInfo->Update();
     }
+    if (FlagManager::flagCoin == 1)
+    {
+        uiInfo->Update();
+    }
 }
 
 void Level::Start()
@@ -380,7 +404,7 @@ void Level::Start()
     for(int i = 0; i<1; i++)
     {
         //delete enemy;
-        Enemy* enemy = new Enemy("data/images/Turtle.png", 4, ren, 8, 8, 3, 4);
+        Enemy* enemy = new Enemy("data/images/Turtle.png", 4, ren, 8, 8, 3, 4, 5);
         enemies.push_back(enemy);
     }
     LevelMap->GenerateMap();
@@ -441,6 +465,12 @@ void Level::Render()
                 enemy->Render();
             }
         }
+    }
+
+    for (Coins* coin : coins)
+    {
+        if (coin != nullptr)
+            coin->Render();
     }
 
     //ALL UI
@@ -558,7 +588,6 @@ void Level::handleEvents(SDL_Event eventInLvl)
         switch (eventInLvl.type)
         {
         case SDL_MOUSEBUTTONDOWN:
-        case SDL_KEYDOWN:
             if (eventInLvl.button.button == SDL_BUTTON_LEFT)
             {
                 //Взаимодействие с Items в Inventory
@@ -600,6 +629,7 @@ void Level::handleEvents(SDL_Event eventInLvl)
         buttonD->handleEvents(eventInLvl);
     }
     CheckButton(eventInLvl);
+    //coin->handleEvents(eventInLvl);
 }
 
 void Level::CheckButton(SDL_Event& eventInLvl) {
@@ -685,7 +715,7 @@ void Level::Attack()
                                     if (player->EqItems.equipedMagic->WeaponEl == magicEl::ice) {
                                         //UNDONE
                                     }
-                                 }
+                                }
                             }
                         }
                     }

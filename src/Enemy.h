@@ -3,6 +3,7 @@
 #include <vector>
 #include "GameObject.h"
 #include "Animation.h"
+#include "Coins.h"
 
 class Enemy : public GameObject
 {
@@ -29,23 +30,20 @@ protected:
 	const int H = 22;         // высота рабочего пол€
 	const int WALL = -2;         // непроходима€ €чейка
 	const int BLANK = -1;         // свободна€ непомеченна€ €чейка
-
 	int px[13 * 13], py[13 * 13];      // координаты €чеек, вход€щих  путь
 	int len;                       // длина пути
-
 	int outputDamageEnemy;
-
 	bool completeEnemyAnimation;
 	Animation* enemyAnimation;
+    Coins* coin;
+    int valueOfCoins;
 public:
 	int generate = 0;
 	Enemy() = default;
-	Enemy(const char* texturesheet, int framesOfAnimationForAttack,SDL_Renderer* ren, int HealthP, int MaxHealthP, int Damage, int EXPR);
-	~Enemy() override;
+    Enemy(const char* texturesheet, int framesOfAnimationForAttack,SDL_Renderer* ren, int HealthP, int MaxHealthP, int Damage, int EXPR, int coins);
 	void Update() override;
+    void Render() override;
 	void GetLoc(int arr[22][32]);
-	void Render() override;
-	void clean() override;
 	void GetWay();
 	bool WAY(int ax, int ay, int bx, int by);
 	void GetEnemyFirstCoords();
@@ -58,5 +56,6 @@ public:
     int GetHpEnemy(int numOfHp);
     void CheckHpEnemy();
 	void ChahgeHpEnemy(int valueOfChangingHp);
+    Coins* GetCoin();
 };
 

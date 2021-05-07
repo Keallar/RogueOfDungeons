@@ -8,9 +8,10 @@
 using namespace std;
 
 Enemy::Enemy(const char* texturesheet, int framesOfAnimationForAttack,
-             SDL_Renderer* renderer, int HealthP, int MaxHealthP, int Damage, int EXPR):
+             SDL_Renderer* renderer, int HealthP, int MaxHealthP, int Damage, int EXPR, int coins):
     GameObject(texturesheet, renderer)
 {
+    ren = renderer;
     HP = HealthP;
     HpMax = MaxHealthP;
     prevHp = MaxHealthP;
@@ -21,7 +22,8 @@ Enemy::Enemy(const char* texturesheet, int framesOfAnimationForAttack,
     HP = HealthP;
     HpMax = MaxHealthP;
     DMG = Damage;
-    ren = renderer;
+    valueOfCoins = coins;
+    coin = new Coins ("data/images/Coin.png", ren, valueOfCoins, 1);
     enemyTexture = textureManager::LoadTexture(texturesheet, ren);
     enemyAnimation = new Animation(ren, enemyTexture);
     framesOfAnimForAttack = framesOfAnimationForAttack;
@@ -46,6 +48,11 @@ int Enemy::GetHpEnemy(int numOfHp)
     default:
         break;
     }
+}
+
+Coins* Enemy::GetCoin()
+{
+    return coin;
 }
 
 void Enemy::CheckHpEnemy()
@@ -214,14 +221,10 @@ void Enemy::Update()
              abs(Rect.y / 32 - EntityPosition::Coords[1] / 32)) > 1)
         {
             WAY(Rect.x / 32, Rect.y / 32, EntityPosition::Coords[0] / 32, EntityPosition::Coords[1] / 32);
+            coin->SetRectCoords(Rect.x, Rect.y);
         }
     }
     CheckHpEnemy();
-}
-
-void Enemy::handleEvents(SDL_Event eventInEnemy)
-{
-
 }
 
 void Enemy::attackOfEnemy()
@@ -291,3 +294,4 @@ int Enemy::enemyDamageCalculation()
         outputDamageEnemy = getDamageEnemy();
     return outputDamageEnemy;
 }
+

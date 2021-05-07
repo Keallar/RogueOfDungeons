@@ -16,10 +16,10 @@ Level::Level(SDL_Renderer* renderer) : ren (renderer)
     PlayBackground = textureManager::LoadTexture("data/images/Playback.png", ren);
     player = new Player("data/images/Hero.png", ren);
     //enemyTurtle = new Enemy();
-    SecondEnemyTurtle = new Enemy("data/images/Turtle.png", 4, ren, 10, 10, 3, 4);
+    SecondEnemyTurtle = new Enemy("data/images/Turtle.png", 4, ren, 10, 10, 3, 4, 5);
     UiEnemy = new UIEnemy(ren, SecondEnemyTurtle);
     //enemies.push_back(enemyTurtle);
-    RangeEnemyTurtle = new RangeEnemy("data/images/Turtle.png", 4, ren, 11, 11, 3, 4);
+    RangeEnemyTurtle = new RangeEnemy("data/images/Turtle.png", 4, ren, 11, 11, 3, 4, 5);
     //enemies.push_back(RangeEnemyTurtle);
     enemies.push_back(SecondEnemyTurtle);
     uiInfo = new UIInfo(ren);
@@ -30,8 +30,6 @@ Level::Level(SDL_Renderer* renderer) : ren (renderer)
     mana = new ManaInfo(ren);
     exp = new ExpInfo(ren);
     uiEquiped = new UIEquipedItem(ren);
-    coin = new Coins ("data/images/Coin.png", ren, 5, 1);
-    coin->SetRectCoords(32 , 32);
     auto pressW{
         [=]()
         {
@@ -220,7 +218,6 @@ Level::~Level()
     delete buttonA;
     delete buttonS;
     delete buttonD;
-    delete coin;
 }
 
 void Level::deletePlayer()
@@ -244,6 +241,7 @@ void Level::deleteEnemy()
     {
         if (enemy->GetHpEnemy(0) <= 0)
         {
+            coins.push_back(enemy->GetCoin());
             enemies.erase(std::remove(enemies.begin(), enemies.end(), enemy));
             std::cout << "Delete enemy" << std::endl;
             FlagManager::flagUiEnemy = 0;
@@ -255,20 +253,26 @@ void Level::deleteEnemy()
 
 void Level::deleteCoin()
 {
-    if (coin->GetRect().x == EntityPosition::Coords[0] &&
-            coin->GetRect().y == EntityPosition::Coords[1])
+    for (Coins* coin : coins)
     {
-        std::cout << "Delete coin\n";
-        player->ChangeCoins(coin->GetValueCoins());
-        delete coin;
-        coin = nullptr;
+        if (coin != nullptr)
+        {
+            if (coin->GetRect().x == EntityPosition::Coords[0] &&
+                    coin->GetRect().y == EntityPosition::Coords[1])
+            {
+                coins.erase(std::remove(coins.begin(), coins.end(), coin));
+                coins.shrink_to_fit();
+                std::cout << "Delete coin\n";
+                player->ChangeCoins(coin->GetValueCoins());
+                delete coin;
+                coin = nullptr;
+            }
+        }
     }
 }
 
 void Level::Update()
 {
-    if (coin != nullptr)
-        deleteCoin();
     int n = Player::VIS;
     for (int i = (EntityPosition::Coords[1] / 32) - n; i <= (EntityPosition::Coords[1] / 32) + n; i++)
     {
@@ -324,6 +328,13 @@ void Level::Update()
         player->Update();
         Level::deletePlayer();
     }
+
+    for (Coins* coin : coins)
+    {
+        if (coin != nullptr)
+            deleteCoin();
+    }
+
     buttonW->updateCoords(EntityPosition::Coords[0], EntityPosition::Coords[1] - 32);
     buttonA->updateCoords(EntityPosition::Coords[0] - 32, EntityPosition::Coords[1]);
     buttonS->updateCoords(EntityPosition::Coords[0], EntityPosition::Coords[1] + 32);
@@ -385,7 +396,7 @@ void Level::Start()
     for(int i = 0; i<1; i++)
     {
         //delete enemy;
-        Enemy* enemy = new Enemy("data/images/Turtle.png", 4, ren, 8, 8, 3, 4);
+        Enemy* enemy = new Enemy("data/images/Turtle.png", 4, ren, 8, 8, 3, 4, 5);
         enemies.push_back(enemy);
     }
     LevelMap->GenerateMap();
@@ -447,8 +458,13 @@ void Level::Render()
             }
         }
     }
-    if (coin != nullptr)
-        coin->Render();
+
+    for (Coins* coin : coins)
+    {
+        if (coin != nullptr)
+            coin->Render();
+    }
+
     //ALL UI
     {
         uiItem->Render();
@@ -690,7 +706,7 @@ void Level::Attack()
                                     if (player->EqItems.equipedMagic->WeaponEl == magicEl::ice) {
                                         //UNDONE
                                     }
-                                 }
+                                }
                             }
                         }
                     }

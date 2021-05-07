@@ -74,14 +74,15 @@ public:
     static void ChangeMaxHpValue();
     static void ChangeMaxManaValue();
     static void ChangeMaxExpValue();
+    static void ChangeCoins(int value);
 
-    static void CheckHP();
-    static void CheckEXP();
-    static void CheckMANA();
-    static void CheckSpecValue(int numSpec);
-    static void CheckPointOfSpec();
-    static void CheckLevelOfPlayer();
-    static void CheckCoinsOfPlayer();
+    void CheckHP();
+    void CheckEXP();
+    void CheckMANA();
+    void CheckSpecValue(int numSpec);
+    void CheckPointOfSpec();
+    void CheckLevelOfPlayer();
+    void CheckCoinsOfPlayer();
 
     static void playerTurn();
 };

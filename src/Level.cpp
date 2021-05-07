@@ -259,6 +259,7 @@ void Level::deleteCoin()
             coin->GetRect().y == EntityPosition::Coords[1])
     {
         std::cout << "Delete coin\n";
+        player->ChangeCoins(coin->GetValueCoins());
         delete coin;
         coin = nullptr;
     }
@@ -348,6 +349,10 @@ void Level::Update()
         uiSpec->Update();
     }
     if (FlagManager::flagLevelOfPlayer == 1)
+    {
+        uiInfo->Update();
+    }
+    if (FlagManager::flagCoin == 1)
     {
         uiInfo->Update();
     }

@@ -20,6 +20,10 @@ void GameObject::Update()
 
 void GameObject::handleEvents(SDL_Event e)
 {
+    switch (e.type)
+    {
+
+    }
 }
 
 void GameObject::Render()

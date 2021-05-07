@@ -13,7 +13,7 @@ public:
 	SDL_Rect Rect;
     GameObject() = default;
     GameObject(const char* texturesheet, SDL_Renderer* renderer);
-    ~GameObject();
+    virtual ~GameObject();
 	virtual void Update();
     virtual void handleEvents(SDL_Event e);
     virtual void Render();

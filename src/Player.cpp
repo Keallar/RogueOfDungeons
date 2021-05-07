@@ -303,6 +303,12 @@ void Player::ChangeMaxExpValue()
     exp[2] += 100;
 }
 
+//Изменение кол-ва монет
+void Player::ChangeCoins(int value)
+{
+    quantityOfCoins[0] += value;
+}
+
 //Проверка изменения HP
 void Player::CheckHP()
 {
@@ -380,6 +386,19 @@ void Player::CheckLevelOfPlayer()
     else
     {
         FlagManager::flagLevelOfPlayer = 0;
+    }
+}
+
+void Player::CheckCoinsOfPlayer()
+{
+    if (Player::quantityOfCoins[0] != Player::quantityOfCoins[1] && FlagManager::flagCoin == 0)
+    {
+        FlagManager::flagCoin = 1;
+        Player::quantityOfCoins[1] = Player::quantityOfCoins[0];
+    }
+    else
+    {
+        FlagManager::flagCoin = 0;
     }
 }
 
@@ -645,6 +664,7 @@ void Player::Update()
     Player::CheckEXP();
     Player::CheckLevelOfPlayer();
     Player::CheckPointOfSpec();
+    Player::CheckCoinsOfPlayer();
     Player::CheckSpecValue(1); //STR
     Player::CheckSpecValue(2); //DEX
     Player::CheckSpecValue(3); //INT

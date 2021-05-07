@@ -127,8 +127,8 @@ void UIInfo::Render()
     RenderManager::CopyToRender(levelOfPlayer, ren, 1187, 212, 21, 32);
 
     //Coins UNDONE
-    RenderManager::CopyToRender(coinText, ren, 0, 0, 0, 0);
-    RenderManager::CopyToRender(coins, ren, 0, 0, 0, 0);
+    RenderManager::CopyToRender(coinText, ren, 1125, 400, 65, 25);
+    RenderManager::CopyToRender(coins, ren, 1187, 400, 21, 32);
 
     //Buttons
     buttonForCallSpecInfo->Render();
@@ -150,9 +150,9 @@ void UIInfo::Update()
 
     SDL_DestroyTexture(coins);
     coins = 0;
-    std::string stringTemp2 = std::to_string(Player::GetLevelOfPlayer(0));
+    std::string stringTemp2 = std::to_string(Player::GetCoinsOfPlayer(0));
     const char* CHAR_VALUE2 = stringTemp2.c_str();
-    levelOfPlayer = FontManager::renderText(CHAR_VALUE2, PATH_IN_FONT, color, 32, ren);
+    coins = FontManager::renderText(CHAR_VALUE2, PATH_IN_FONT, color, 32, ren);
 }
 
 void UIInfo::handleEvents(SDL_Event& eventInUiInfo)

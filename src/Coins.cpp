@@ -14,20 +14,11 @@ Coins::Coins(const char* texturesheet, SDL_Renderer* renderer, int value, int fr
     frameOfCoin = framesOfCoin;
     coinAnimation = new Animation (ren, coinTexture);
     completeCoinAnimation = 0;
-
-    auto pressCoin{
-      [=]()
-        {
-            this->deleteCoin();
-        }
-    };
-    buttonForTakeCoin = new Button("place", NULL, ren, coinRect, pressCoin, NULL);
 }
 
 Coins::~Coins()
 {
     delete coinAnimation;
-    delete  buttonForTakeCoin;
 }
 
 void Coins::Update()
@@ -37,7 +28,6 @@ void Coins::Update()
 
 void Coins::handleEvents(SDL_Event eventInCoins)
 {
-    buttonForTakeCoin->handleEvents(eventInCoins);
 }
 
 void Coins::Render()
@@ -66,7 +56,7 @@ int Coins::GetValueCoins()
 
 SDL_Rect Coins::GetRect()
 {
-        return coinRect;
+    return coinRect;
 }
 
 void Coins::SetRectCoords(int newx, int newy)
@@ -75,11 +65,3 @@ void Coins::SetRectCoords(int newx, int newy)
     coinRect.y = newy;
 }
 
-void Coins::deleteCoin()
-{
-    if (coinRect.x == EntityPosition::Coords[0] && coinRect.y == EntityPosition::Coords[1])
-    {
-        std::cout << "Delete coin\n";
-        //delete this;
-    }
-}

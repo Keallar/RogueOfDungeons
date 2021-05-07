@@ -16,7 +16,6 @@ private:
     int valueOfCoin;
     int frameOfCoin;
     bool completeCoinAnimation;
-    Button* buttonForTakeCoin;
 public:
     Coins(const char* texturesheet, SDL_Renderer* renderer, int value, int framesOfCoin);
     ~Coins();

@@ -20,6 +20,7 @@ void GameObject::Update()
 
 void GameObject::Render()
 {
+    objAnim->Render(0, 0);
 }
 
 void GameObject::clean()

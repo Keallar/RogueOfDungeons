@@ -1,4 +1,4 @@
-﻿#include "Inventory.h"
+#include "Inventory.h"
 #include "Managers.h"
 #include <string>
 #include <iostream>
@@ -182,7 +182,6 @@ rangeWeapon::~rangeWeapon() {
 
 meleeWeapon::meleeWeapon(int Damage, int range, type type, const char* WeapTex, std::string Name)
 {
-
 	DMG = Damage;
 	RNG = range;
 	ItemTexture = WeapTex;

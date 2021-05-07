@@ -3,6 +3,7 @@
 #include <vector>
 #include "GameObject.h"
 #include "Animation.h"
+#include "Coins.h"
 
 class Enemy : public GameObject
 {
@@ -41,11 +42,10 @@ public:
 	int generate = 0;
 	Enemy() = default;
 	Enemy(const char* texturesheet, int framesOfAnimationForAttack,SDL_Renderer* ren, int HealthP, int MaxHealthP, int Damage, int EXPR);
-	~Enemy() override;
 	void Update() override;
+    void handleEvents (SDL_Event eventInEnemy) override;
+    void Render() override;
 	void GetLoc(int arr[22][32]);
-	void Render() override;
-	void clean() override;
 	void GetWay();
 	bool WAY(int ax, int ay, int bx, int by);
 	void GetEnemyFirstCoords();

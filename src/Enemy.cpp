@@ -4,11 +4,12 @@
 #include <iostream>
 #include "EntityPosition.h"
 #include "Inventory.h"
-#include "Animation.h"
 
 using namespace std;
 
-Enemy::Enemy(const char* texturesheet, int framesOfAnimationForAttack, SDL_Renderer* renderer, int HealthP, int MaxHealthP, int Damage, int EXPR)
+Enemy::Enemy(const char* texturesheet, int framesOfAnimationForAttack,
+             SDL_Renderer* renderer, int HealthP, int MaxHealthP, int Damage, int EXPR):
+    GameObject(texturesheet, renderer)
 {
     HP = HealthP;
     HpMax = MaxHealthP;
@@ -26,38 +27,25 @@ Enemy::Enemy(const char* texturesheet, int framesOfAnimationForAttack, SDL_Rende
     framesOfAnimForAttack = framesOfAnimationForAttack;
     completeEnemyAnimation = 0;
 }
-Enemy::~Enemy() 
-{
-    SDL_DestroyTexture(enemyTexture);
-}
 
-void Enemy::Render() 
+void Enemy::Render()
 {
     enemyAnimation->Render(Rect.x, Rect.y);
-}
-void Enemy::clean()
-{
-    SDL_DestroyTexture(enemyTexture);
 }
 
 int Enemy::GetHpEnemy(int numOfHp)
 {
-    int temp = 0;
     switch (numOfHp)
     {
     case 0:
-        temp = HP;
-        break;
+        return HP;
     case 1:
-        temp = prevHp;
-        break;
+        return prevHp;
     case 2:
-        temp = HpMax;
-        break;
+        return HpMax;
     default:
         break;
     }
-    return temp;
 }
 
 void Enemy::CheckHpEnemy()
@@ -231,6 +219,11 @@ void Enemy::Update()
     CheckHpEnemy();
 }
 
+void Enemy::handleEvents(SDL_Event eventInEnemy)
+{
+
+}
+
 void Enemy::attackOfEnemy()
 {
     if (completeEnemyAnimation == 0)
@@ -268,7 +261,7 @@ void Enemy::meleeAttackEnemy()
          ((Rect.y == EntityPosition::Coords[1]) &&
           (Rect.x == EntityPosition::Coords[0] - 32))))
     {
-        //don't work
+
         if (temp == false)
         {
             Enemy::attackOfEnemy();

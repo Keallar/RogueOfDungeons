@@ -3,7 +3,7 @@ This game in the turnd-based rogue-like.
 ***
 BUILD AND RUN
 -----------------------------------
-Now you can just uplaod Rogue of dungeons and try it.
+Now you can just uplaod "Rogue of Dungeons" and try it.
 ***
 INFORMATION ABOUT GAME
 -----------------------------------

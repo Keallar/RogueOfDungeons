@@ -4,7 +4,6 @@
 #include <iostream>
 #include "EntityPosition.h"
 #include "Inventory.h"
-#include "Animation.h"
 
 using namespace std;
 
@@ -40,13 +39,10 @@ int Enemy::GetHpEnemy(int numOfHp)
     {
     case 0:
         return HP;
-        break;
     case 1:
         return prevHp;
-        break;
     case 2:
         return HpMax;
-        break;
     default:
         break;
     }

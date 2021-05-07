@@ -24,6 +24,7 @@ public:
     void handleEvents(SDL_Event eventInCoins) override;
     void Render() override;
     int GetValueCoins();
+    SDL_Rect GetRect();
     void SetRectCoords(int newx, int newy);
     void deleteCoin();
 };

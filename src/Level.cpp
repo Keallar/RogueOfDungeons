@@ -2,19 +2,11 @@
 #include "Level.h"
 #include "Managers.h"
 #include <ctime>
-#include "UI.h"
-#include "EntityPosition.h"
 #include <vector>
 #include <iostream>
 #include "EntityPosition.h"
-#include "Buttons.h"
-#include "Enemy.h"
-#include "Player.h"
-#include "Map.h"
 #include <cmath>
-#include "UiEnemy.h"
-#include "rangeenemy.h"
-#include "Coins.h"
+#include <algorithm>
 
 Level::Level(SDL_Renderer* renderer) : ren (renderer)
 {
@@ -28,7 +20,7 @@ Level::Level(SDL_Renderer* renderer) : ren (renderer)
     UiEnemy = new UIEnemy(ren, SecondEnemyTurtle);
     //enemies.push_back(enemyTurtle);
     RangeEnemyTurtle = new RangeEnemy("data/images/Turtle.png", 4, ren, 11, 11, 3, 4);
-    enemies.push_back(RangeEnemyTurtle);
+   // enemies.push_back(RangeEnemyTurtle);
     enemies.push_back(SecondEnemyTurtle);
     uiInfo = new UIInfo(ren);
     uiItem = new UIItem(ren);
@@ -38,7 +30,8 @@ Level::Level(SDL_Renderer* renderer) : ren (renderer)
     mana = new ManaInfo(ren);
     exp = new ExpInfo(ren);
     uiEquiped = new UIEquipedItem(ren);
-
+    coin = new Coins ("data/images/Coin.png", ren, 5, 1);
+    coin->SetRectCoords(32 , 32);
     auto pressW{
         [=]()
         {
@@ -227,6 +220,7 @@ Level::~Level()
     delete buttonA;
     delete buttonS;
     delete buttonD;
+    delete coin;
 }
 
 void Level::deletePlayer()
@@ -259,8 +253,21 @@ void Level::deleteEnemy()
     }
 }
 
+void Level::deleteCoin()
+{
+    if (coin->GetRect().x == EntityPosition::Coords[0] &&
+            coin->GetRect().y == EntityPosition::Coords[1])
+    {
+        std::cout << "Delete coin\n";
+        delete coin;
+        coin = nullptr;
+    }
+}
+
 void Level::Update()
 {
+    if (coin != nullptr)
+        deleteCoin();
     int n = Player::VIS;
     for (int i = (EntityPosition::Coords[1] / 32) - n; i <= (EntityPosition::Coords[1] / 32) + n; i++)
     {
@@ -432,7 +439,8 @@ void Level::Render()
             }
         }
     }
-
+    if (coin != nullptr)
+        coin->Render();
     //ALL UI
     {
         uiItem->Render();
@@ -548,7 +556,6 @@ void Level::handleEvents(SDL_Event eventInLvl)
         switch (eventInLvl.type)
         {
         case SDL_MOUSEBUTTONDOWN:
-        case SDL_KEYDOWN:
             if (eventInLvl.button.button == SDL_BUTTON_LEFT)
             {
                 //Взаимодействие с Items в Inventory
@@ -589,6 +596,7 @@ void Level::handleEvents(SDL_Event eventInLvl)
         buttonD->handleEvents(eventInLvl);
     }
     CheckButton(eventInLvl);
+    //coin->handleEvents(eventInLvl);
 }
 
 void Level::CheckButton(SDL_Event& eventInLvl) {

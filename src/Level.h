@@ -10,6 +10,7 @@
 #include "UiEnemy.h"
 #include "rangeenemy.h"
 #include <memory>
+#include "Coins.h"
 
 struct MouseCoords
 {
@@ -50,6 +51,7 @@ private:
     Button* buttonD;
     Button* buttonForPlayerAttack;
     Map* LevelMap;
+    Coins* coin;
 
 	void ChangeDark(int i, int j);
 	MouseCoords Mouse;
@@ -65,6 +67,7 @@ public:
 	~Level();
 	void deletePlayer();
 	void deleteEnemy();
+    void deleteCoin();
 	void Update();
 	void Start();
 	void Render();

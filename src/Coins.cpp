@@ -64,6 +64,11 @@ int Coins::GetValueCoins()
     return valueOfCoin;
 }
 
+SDL_Rect Coins::GetRect()
+{
+        return coinRect;
+}
+
 void Coins::SetRectCoords(int newx, int newy)
 {
     coinRect.x = newx;
@@ -74,6 +79,7 @@ void Coins::deleteCoin()
 {
     if (coinRect.x == EntityPosition::Coords[0] && coinRect.y == EntityPosition::Coords[1])
     {
-        this->clean();
+        std::cout << "Delete coin\n";
+        //delete this;
     }
 }

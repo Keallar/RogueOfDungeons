@@ -3,7 +3,7 @@
 #include <vector>
 #include "GameObject.h"
 #include "Animation.h"
-
+#include "Coins.h"
 
 class Enemy : public GameObject
 {

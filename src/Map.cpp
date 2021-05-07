@@ -39,11 +39,18 @@ void Map::GenerateMap()
 {
     srand(time(0));
     if(floorLvl <= 4) {
-        switch(rand()%3) {case 0: generateChoose = 0; break; case 1: generateChoose = 4; break; case 2: generateChoose = 2; break;}    }
+        TileSet = 0;
+        switch(rand()%3) {case 0: generateChoose = 0; break; case 1: generateChoose = 4; break; case 2: generateChoose = 2; break;}
+    }
     if(floorLvl > 4 && floorLvl <= 8) {
+        TileSet = 1;
         switch(rand()%2) {case 0: generateChoose = 1; break; case 1: generateChoose = 5; break;}
     }
-    if(floorLvl > 8) {
+    if(floorLvl > 8 && floorLvl <= 12) {
+        TileSet = 2;
+        switch(rand()%2) {case 0: generateChoose = 1; break; case 1: generateChoose = 5; break;}
+    }
+    if(floorLvl > 12) {
         generateChoose = 0;
     }
     if (generateChoose == 0) {
@@ -158,6 +165,20 @@ void Map::SetWallsForTileSet() {
                 }
             }
         }
+    case 2:
+        for (int i = 0; i < 22; i++) {
+            for (int j = 0; j < 32; j++) {
+                if ((textureLocation[i][j] == 0) || (textureLocation[i][j] == 6) || (textureLocation[i][j] == 3) || (textureLocation[i][j] == 4) || (textureLocation[i][j] == 7) || (textureLocation[i][j] == 8)) {
+                    Location[i][j] = 0;
+                }
+                if ((textureLocation[i][j] == 1) || (textureLocation[i][j] == 5)) {
+                    Location[i][j] = 1;
+                }
+                if (textureLocation[i][j] == 2) {
+                    Location[i][j] = 2;
+                }
+            }
+        }
     }
 }
 
@@ -233,7 +254,6 @@ void Map::ChunkGenerationMethod() {
 
     //заполяем массив, которых хранит инфу, где стены, а где можно ходить
 
-    TileSet = 0;
     SetWallsForTileSet();
 
     //ставим сундуки
@@ -370,7 +390,6 @@ void Map::CaveLabGeneration() {
 
     //заполяем массив, которых хранит инфу, где стены, а где можно ходить
 
-    TileSet = 0;
     SetWallsForTileSet();
 }
 
@@ -407,7 +426,6 @@ void Map::CastleLabGeneration() {
 
     //заполяем массив, которых хранит инфу, где стены, а где можно ходить
 
-    TileSet = 1;
     SetWallsForTileSet();
 }
 
@@ -569,7 +587,6 @@ void Map::RoomGenerationMethod2() {
 
     //загружаем инфу о том, где стены, а где можно ходить, в массив
 
-    TileSet = 1;
     SetWallsForTileSet();
 
     //ставим сундуки
@@ -699,7 +716,6 @@ void Map::ChunkGenerationMethod2() {
 
     //заполяем массив, который хранит инфу, где стены, а где можно ходить
 
-    TileSet = 0;
     SetWallsForTileSet();
 
     //ставим сундуки

@@ -39,6 +39,7 @@ private:
     static int levelOfPlayer[3];
     static int quantityOfCoins[3];
 public:
+    int classPlayer;
     bool playerEscaping;
 	bool InventoryBlock();
 	int generate;
@@ -46,8 +47,11 @@ public:
     static int damage;
     static Equiped EqItems;
     Player(const char* texturesheet, SDL_Renderer* ren);
+
     void Update() override;
     void Render() override;
+
+    void PushItemsToInventory(int kit);
 
 	void GetLevel(int arr[22][32]);
 	void GetPlayerFirstCoords();

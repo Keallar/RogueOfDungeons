@@ -1,3 +1,7 @@
 Hero data/images/Hero.png
 HeroLether data/images/HeroLether.png
 HeroEscape data/images/HeroEscape.png
+ArcherClass data/images/ArcherClass.png
+WarriorClass data/images/WarriorClass.png
+MageClass data/images/MageClass.png
+PlayBack data/images/Playback.png

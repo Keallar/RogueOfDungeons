@@ -55,6 +55,8 @@ private:
     Map* LevelMap;
     std::vector<Coins*> coins;
 
+    int pClass;
+
 	void ChangeDark(int i, int j);
 	MouseCoords Mouse;
     void CheckButton(SDL_Event& eventInLvl);
@@ -65,7 +67,7 @@ public:
 	int GetGeneration();
 	bool flagTB;
 	void Attack();
-	Level(SDL_Renderer* renderer);
+    Level(SDL_Renderer* renderer, int playerClass);
 	~Level();
 	void deletePlayer();
 	void deleteEnemy();

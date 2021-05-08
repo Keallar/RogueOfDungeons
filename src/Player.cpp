@@ -98,17 +98,42 @@ Player::Player(const char* texturesheet, SDL_Renderer* renderer):
 
     playerEscaping = false;
     inventory = new Inventory;
-    inventory->AddItem(1);
-    inventory->AddItem(2);
-    inventory->AddItem(5);
-    inventory->AddItem(3);
-    inventory->AddItem(4);
-    inventory->AddItem(6);
-    inventory->AddItem(6);
-    inventory->AddItem(7);
     inventory->Update();
     EqItems.WeaponId = 0;
     EqItems.equipedMeleeW = inventory->GetRealMelee(0);
+}
+
+void Player::PushItemsToInventory(int kit) {
+    if (kit == 4) {
+        inventory->AddItem(1);
+        inventory->AddItem(2);
+        inventory->AddItem(5);
+        inventory->AddItem(3);
+        inventory->AddItem(4);
+        inventory->AddItem(6);
+        inventory->AddItem(6);
+        inventory->AddItem(7);
+    }
+    if (kit == 1) {
+        inventory->AddItem(1);
+        inventory->AddItem(5);
+        inventory->AddItem(6);
+        inventory->AddItem(6);
+        inventory->AddItem(7);
+    }
+    if (kit == 2) {
+        inventory->AddItem(3);
+        inventory->AddItem(5);
+        inventory->AddItem(6);
+        inventory->AddItem(6);
+        inventory->AddItem(7);
+    }
+    if (kit == 3) {
+        inventory->AddItem(4);
+        inventory->AddItem(6);
+        inventory->AddItem(6);
+        inventory->AddItem(7);
+    }
 }
 
 int Player::GetHP(int numOfArr)

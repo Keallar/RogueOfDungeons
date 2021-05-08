@@ -8,7 +8,7 @@
 #include <cmath>
 #include <algorithm>
 
-Level::Level(SDL_Renderer* renderer) : ren (renderer)
+Level::Level(SDL_Renderer* renderer, int playerClass) : ren (renderer), pClass(playerClass)
 {
     LevelMap = new Map();
     TileTextures[0] = textureManager::LoadTexture("data/images/Tiles.png", ren);
@@ -389,6 +389,9 @@ void Level::Update()
 
 void Level::Start()
 {
+    if (LevelMap->floorLvl == 1) {
+        player->PushItemsToInventory(pClass);
+    }
     for (int i = 0; i < 22; i++)
     {
         for (int j = 0; j < 32; j++)

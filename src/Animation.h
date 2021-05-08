@@ -13,14 +13,15 @@ private:
 	int xanim, yanim;
 	int xpos, ypos;
     TextureBase* GameTexture;
+
 public:
 	Animation(SDL_Renderer* renderer, SDL_Texture* texture);
 	~Animation();
 	void Render(int xposition, int yposition);
     void UpdateTexture(std::string newTexture); //Добавлять этот метод всегда, когда меняете текстуру чего-то
-	bool animationPlusForX(int numOfFrames, bool complete);
-	bool animationPlusForY(int numOfFrames, bool complete);
-	bool animationMinusForX(int numOfFrames, bool complete);
-	bool animationMinusForY(int numOfFrames, bool complete);
+    int animationPlusForX(int numOfFrames);
+    int animationPlusForY(int numOfFrames);
+    int animationMinusForX(int numOfFrames);
+    int animationMinusForY(int numOfFrames);
 };
 

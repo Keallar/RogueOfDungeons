@@ -9,7 +9,9 @@ class Enemy : public GameObject
 {
 protected:
 	Uint32 Timer;
+    Uint32 timer;
 	bool temp;
+    bool temp1;
 	int DMG;
 	int expReward;
 	SDL_Renderer* ren;
@@ -33,7 +35,7 @@ protected:
 	int px[13 * 13], py[13 * 13];      // координаты €чеек, вход€щих  путь
 	int len;                       // длина пути
 	int outputDamageEnemy;
-	bool completeEnemyAnimation;
+    int currentFrameOfEnemyAnim;
 	Animation* enemyAnimation;
     Coins* coin;
     int valueOfCoins;

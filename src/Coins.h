@@ -15,7 +15,7 @@ private:
     SDL_Rect coinRect;
     int valueOfCoin;
     int frameOfCoin;
-    bool completeCoinAnimation;
+    int currentFrameOfCoinAnim;
 public:
     Coins(const char* texturesheet, SDL_Renderer* renderer, int value, int framesOfCoin);
     ~Coins();

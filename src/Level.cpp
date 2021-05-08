@@ -186,7 +186,8 @@ Level::Level(SDL_Renderer* renderer) : ren (renderer)
         [=]()
         {
             player->playerTurn();
-           if(!player->playerEscaping) {
+           if(!player->playerEscaping)
+           {
                 Attack();
            }
         }
@@ -282,8 +283,11 @@ void Level::deleteCoin()
 
 void Level::Update()
 {
-    if(player!= nullptr && player->playerEscaping) FlagManager::flagTurn = 0;
+    if(player!= nullptr && player->playerEscaping)
+        FlagManager::flagTurn = 0;
+
     int n = Player::VIS;
+
     for (int i = (EntityPosition::Coords[1] / 32) - n; i <= (EntityPosition::Coords[1] / 32) + n; i++)
     {
         for (int j = (EntityPosition::Coords[0] / 32) - n; j <= (EntityPosition::Coords[0] / 32) + n; j++)

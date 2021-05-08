@@ -27,7 +27,7 @@ Enemy::Enemy(const char* texturesheet, int framesOfAnimationForAttack,
     enemyTexture = textureManager::LoadTexture(texturesheet, ren);
     enemyAnimation = new Animation(ren, enemyTexture);
     framesOfAnimForAttack = framesOfAnimationForAttack;
-    completeEnemyAnimation = 0;
+    currentFrameOfEnemyAnim = 0;
 }
 
 void Enemy::Render()
@@ -229,18 +229,38 @@ void Enemy::Update()
 
 void Enemy::attackOfEnemy()
 {
-    if (completeEnemyAnimation == 0)
+    if (currentFrameOfEnemyAnim == framesOfAnimForAttack - 1)
     {
-        completeEnemyAnimation = enemyAnimation->animationPlusForX(framesOfAnimForAttack, completeEnemyAnimation);
-        Enemy::enemyTurn();
+        std::cout << "Chance of trick" << std::endl;
+        if (temp1 == false)
+        {
+            timer = SDL_GetTicks();
+            temp1 = true;
+        }
+        Uint32 Timer2 = SDL_GetTicks();
+//        FlagManager::flagMeleeAttackPlayer = 0;
+//        FlagManager::flagRangeAttackPlayer = 0;
+//        FlagManager::flagTurn = 0;
+        if (Timer2 - timer >= 1000 && temp == true)
+        {
+            std::cout << "Here\n";
+            currentFrameOfEnemyAnim = enemyAnimation->animationPlusForX(framesOfAnimForAttack);
+            timer = Timer2;
+        }
     }
-    else if (completeEnemyAnimation == 1)
+    else if (currentFrameOfEnemyAnim == framesOfAnimForAttack)
     {
+        temp1 = false;
         temp = false;
-        completeEnemyAnimation = 0;
+        currentFrameOfEnemyAnim = enemyAnimation->animationPlusForX(framesOfAnimForAttack);
         Player::ChangeHpValue(-Enemy::enemyDamageCalculation());
         std::cout << "Hit" << std::endl;
         Player::playerTurn();
+    }
+    else if (currentFrameOfEnemyAnim < framesOfAnimForAttack)
+    {
+        currentFrameOfEnemyAnim = enemyAnimation->animationPlusForX(framesOfAnimForAttack);
+        Enemy::enemyTurn();
     }
 }
 
@@ -267,13 +287,12 @@ void Enemy::meleeAttackEnemy()
 
         if (temp == false)
         {
-            Enemy::attackOfEnemy();
             Timer = SDL_GetTicks();
             temp = true;
         }
         Uint32 Timer2 = SDL_GetTicks();
         Enemy::enemyTurn();
-        if (Timer2 - Timer >= 200 && temp == true)
+        if (Timer2 - Timer >= 100 && temp == true)
         {
             Enemy::attackOfEnemy();
             Timer = Timer2;

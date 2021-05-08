@@ -113,25 +113,23 @@ void Player::PushItemsToInventory(int kit) {
         inventory->AddItem(6);
         inventory->AddItem(6);
         inventory->AddItem(7);
+        inventory->AddItem(8);
     }
     if (kit == 1) {
         inventory->AddItem(1);
         inventory->AddItem(5);
-        inventory->AddItem(6);
-        inventory->AddItem(6);
+        inventory->AddItem(8);
         inventory->AddItem(7);
     }
     if (kit == 2) {
         inventory->AddItem(3);
         inventory->AddItem(5);
-        inventory->AddItem(6);
-        inventory->AddItem(6);
+        inventory->AddItem(8);
         inventory->AddItem(7);
     }
     if (kit == 3) {
         inventory->AddItem(4);
-        inventory->AddItem(6);
-        inventory->AddItem(6);
+        inventory->AddItem(8);
         inventory->AddItem(7);
     }
 }

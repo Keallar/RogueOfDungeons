@@ -53,6 +53,10 @@ Level::Level(SDL_Renderer* renderer, int playerClass) : ren (renderer), pClass(p
             }
             if (wFlag == true)
             {
+                if (LevelMap->Location[(EntityPosition::Coords[1]) / 32 - 1][(EntityPosition::Coords[0]) / 32] == 4)
+                {
+                    Start();
+                }
                 if (LevelMap->Location[(EntityPosition::Coords[1]) / 32 - 1][(EntityPosition::Coords[0]) / 32] == 0)
                 {
                     EntityPosition::Coords[1] -= 32;
@@ -61,10 +65,6 @@ Level::Level(SDL_Renderer* renderer, int playerClass) : ren (renderer), pClass(p
                 if (LevelMap->Location[(EntityPosition::Coords[1]) / 32 - 1][(EntityPosition::Coords[0]) / 32] == 3)
                 {
                     FlagManager::flagChest = 1;
-                }
-                if (LevelMap->Location[(EntityPosition::Coords[1]) / 32 - 1][(EntityPosition::Coords[0]) / 32] == 4)
-                {
-                    Start();
                 }
             }
         }
@@ -91,6 +91,10 @@ Level::Level(SDL_Renderer* renderer, int playerClass) : ren (renderer), pClass(p
             }
             if (AFlag == true)
             {
+                if (LevelMap->Location[(EntityPosition::Coords[1]) / 32][(EntityPosition::Coords[0]) / 32 - 1] == 4)
+                {
+                    Start();
+                }
                 if (LevelMap->Location[(EntityPosition::Coords[1]) / 32][(EntityPosition::Coords[0]) / 32 - 1] == 0)
                 {
                     EntityPosition::Coords[0] -= 32;
@@ -99,10 +103,6 @@ Level::Level(SDL_Renderer* renderer, int playerClass) : ren (renderer), pClass(p
                 if (LevelMap->Location[(EntityPosition::Coords[1]) / 32][(EntityPosition::Coords[0]) / 32 - 1] == 3)
                 {
                     FlagManager::flagChest = 2;
-                }
-                if (LevelMap->Location[(EntityPosition::Coords[1]) / 32][(EntityPosition::Coords[0]) / 32 - 1] == 4)
-                {
-                    Start();
                 }
             }
         }
@@ -129,6 +129,10 @@ Level::Level(SDL_Renderer* renderer, int playerClass) : ren (renderer), pClass(p
             }
             if(sFlag == true)
             {
+                if (LevelMap->Location[(EntityPosition::Coords[1]) / 32 + 1][(EntityPosition::Coords[0]) / 32] == 4)
+                {
+                    Start();
+                }
                 if (LevelMap->Location[(EntityPosition::Coords[1]) / 32 + 1][(EntityPosition::Coords[0]) / 32] == 0)
                 {
                     EntityPosition::Coords[1] += 32;
@@ -137,10 +141,6 @@ Level::Level(SDL_Renderer* renderer, int playerClass) : ren (renderer), pClass(p
                 if (LevelMap->Location[(EntityPosition::Coords[1]) / 32 + 1][(EntityPosition::Coords[0]) / 32] == 3)
                 {
                     FlagManager::flagChest = 3;
-                }
-                if (LevelMap->Location[(EntityPosition::Coords[1]) / 32 + 1][(EntityPosition::Coords[0]) / 32] == 4)
-                {
-                    Start();
                 }
             }
         }
@@ -167,6 +167,10 @@ Level::Level(SDL_Renderer* renderer, int playerClass) : ren (renderer), pClass(p
             }
             if(dFlag == true)
             {
+                if (LevelMap->Location[(EntityPosition::Coords[1]) / 32][(EntityPosition::Coords[0]) / 32 + 1] == 4)
+                {
+                    Start();
+                }
                 if (LevelMap->Location[(EntityPosition::Coords[1]) / 32][(EntityPosition::Coords[0]) / 32 + 1] == 0)
                 {
                     EntityPosition::Coords[0] += 32;
@@ -175,10 +179,6 @@ Level::Level(SDL_Renderer* renderer, int playerClass) : ren (renderer), pClass(p
                 if (LevelMap->Location[(EntityPosition::Coords[1]) / 32][(EntityPosition::Coords[0]) / 32 + 1] == 3)
                 {
                     FlagManager::flagChest = 4;
-                }
-                if (LevelMap->Location[(EntityPosition::Coords[1]) / 32][(EntityPosition::Coords[0]) / 32 + 1] == 4)
-                {
-                    Start();
                 }
             }
         }

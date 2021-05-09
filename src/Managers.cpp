@@ -74,6 +74,7 @@ SDL_Texture* FontManager::renderText(const char* text, const char* fontFile, SDL
 //Turn
 int FlagManager::flagTurn = 1;
 int FlagManager::flagInAreaOfAnemy = 0;
+bool FlagManager::flagTimerTurn = 0;
 //UI
 bool FlagManager::flagUI = 1;
 bool FlagManager::flagUiSpec = 0;

@@ -14,7 +14,7 @@ struct COORDS
 	int y;
 };
 
-enum GameState
+enum class GameState
 {
 	Menu,
 	Settings,
@@ -36,8 +36,6 @@ private:
 	Level* level;
     ClassChoose* classChoose;
 	UIInfo* uiLevel;
-	//UNDONE (сделать Player static во всей игре)
-	//static Player* player; 
 public:
 	static SDL_Renderer* renderer;
 	Game();

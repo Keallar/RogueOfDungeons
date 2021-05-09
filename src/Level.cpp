@@ -444,7 +444,7 @@ void Level::TimerTurn()
             timeB = true;
         }
         Uint32 timer2 = SDL_GetTicks();
-        if (timer2 - timer >= 700 && timeB == true)
+        if (timer2 - timer >= 200 && timeB == true)
         {
             std::cout << "TimerTurn" << std::endl;
             timer = timer2;

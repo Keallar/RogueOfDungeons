@@ -4,6 +4,7 @@
 
 TextInfo::TextInfo()
 {
+    GameTextures = TextureBase::Instance();
     PATH_IN_FONT = "data/fonts/manaspc.ttf";
     color = { 255, 255, 255, 255 };
 }
@@ -154,10 +155,12 @@ UISpecifications::UISpecifications(SDL_Renderer* renderer) : ren (renderer)
 {
     color = { 255, 255, 255, 255 };
 
+    GameTextures = TextureBase::Instance();
+
     //Specifications
-    specBlock = textureManager::LoadTexture("data/images/InfoBlock.png", ren);
+    specBlock = GameTextures->GetTexture("InfoBlock");
     specifcation = FontManager::renderText("Specifications", PATH_IN_FONT, color, 64, ren);
-    buttonForCallInfoWin = new Button("data/images/Button.png", ren, { 1230, 240, 32, 32 });
+    buttonForCallInfoWin = new Button(GameTextures->GetTexture("Button"), ren, { 1230, 240, 32, 32 });
 
     //STR
     STR = FontManager::renderText("STR", PATH_IN_FONT, color, 64, ren);
@@ -173,7 +176,7 @@ UISpecifications::UISpecifications(SDL_Renderer* renderer) : ren (renderer)
             }
         }
     };
-    buttonForIncPlayerSTR = new Button("left", "data/images/Button.png", ren, { 1230, 50, 16, 20 }, incSTR, NULL);
+    buttonForIncPlayerSTR = new Button("left", GameTextures->GetTexture("Button"), ren, { 1230, 50, 16, 20 }, incSTR, NULL);
     keyForIncSTR = new Keyboard(SDL_SCANCODE_1, incSTR);
     //DEX
     DEX = FontManager::renderText("DEX", PATH_IN_FONT, color, 64, ren);
@@ -189,7 +192,7 @@ UISpecifications::UISpecifications(SDL_Renderer* renderer) : ren (renderer)
             }
         }
     };
-    buttonForIncPlayerDEX = new Button("left", "data/images/Button.png", ren, { 1230, 80, 16, 20 }, incDEX, NULL);
+    buttonForIncPlayerDEX = new Button("left", GameTextures->GetTexture("Button"), ren, { 1230, 80, 16, 20 }, incDEX, NULL);
     keyForIncDEX = new Keyboard(SDL_SCANCODE_2, incDEX);
     //INT
     INT = FontManager::renderText("INT", PATH_IN_FONT, color, 64, ren);
@@ -205,7 +208,7 @@ UISpecifications::UISpecifications(SDL_Renderer* renderer) : ren (renderer)
             }
         }
     };
-    buttonForIncPlayerINT = new Button("left", "data/images/Button.png", ren, { 1230, 110, 16, 20 }, incINT, NULL);
+    buttonForIncPlayerINT = new Button("left", GameTextures->GetTexture("Button"), ren, { 1230, 110, 16, 20 }, incINT, NULL);
     keyForIncINT = new Keyboard(SDL_SCANCODE_3, incINT);
     //WSD
     WSD = FontManager::renderText("WSD", PATH_IN_FONT, color, 64, ren);
@@ -221,7 +224,7 @@ UISpecifications::UISpecifications(SDL_Renderer* renderer) : ren (renderer)
             }
         }
     };
-    buttonForIncPlayerWSD = new Button("left", "data/images/Button.png", ren, { 1230, 140, 16, 20 }, incWSD, NULL);
+    buttonForIncPlayerWSD = new Button("left", GameTextures->GetTexture("Button"), ren, { 1230, 140, 16, 20 }, incWSD, NULL);
     keyForIncWSD = new Keyboard(SDL_SCANCODE_4, incWSD);
     //PHS
     PHS = FontManager::renderText("PHS", PATH_IN_FONT, color, 64, ren);
@@ -237,7 +240,7 @@ UISpecifications::UISpecifications(SDL_Renderer* renderer) : ren (renderer)
             }
         }
     };
-    buttonForIncPlayerPHS = new Button("left","data/images/Button.png", ren, { 1230, 170, 16, 20 }, incPHS, NULL);
+    buttonForIncPlayerPHS = new Button("left",GameTextures->GetTexture("Button"), ren, { 1230, 170, 16, 20 }, incPHS, NULL);
     keyForIncPHS = new Keyboard(SDL_SCANCODE_5, incPHS);
     //LCK
     LCK = FontManager::renderText("LCK", PATH_IN_FONT, color, 64, ren);
@@ -254,7 +257,7 @@ UISpecifications::UISpecifications(SDL_Renderer* renderer) : ren (renderer)
             }
         }
     };
-    buttonForIncPlayerLCK = new Button("left", "data/images/Button.png", ren, { 1230, 200, 16, 20 }, incLCK, NULL);
+    buttonForIncPlayerLCK = new Button("left", GameTextures->GetTexture("Button"), ren, { 1230, 200, 16, 20 }, incLCK, NULL);
     keyForIncLCK = new Keyboard(SDL_SCANCODE_6, incLCK);
 
     //Points

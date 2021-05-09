@@ -9,7 +9,7 @@ using namespace std;
 
 Enemy::Enemy(const char* texturesheet, int framesOfAnimationForAttack,
              SDL_Renderer* renderer, int HealthP, int MaxHealthP, int Damage, int EXPR, int coins):
-    GameObject(texturesheet, renderer)
+    GameObject(renderer)
 {
     ren = renderer;
     HP = HealthP;
@@ -23,7 +23,7 @@ Enemy::Enemy(const char* texturesheet, int framesOfAnimationForAttack,
     HpMax = MaxHealthP;
     DMG = Damage;
     valueOfCoins = coins;
-    coin = new Coins ("data/images/Coin.png", ren, valueOfCoins, 1);
+    coin = new Coins (GameTextures->GetTexture("Coin"), ren, valueOfCoins, 1);
     enemyTexture = textureManager::LoadTexture(texturesheet, ren);
     enemyAnimation = new Animation(ren, enemyTexture);
     framesOfAnimForAttack = framesOfAnimationForAttack;

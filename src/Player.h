@@ -46,7 +46,7 @@ public:
 	static int VIS;
     static int damage;
     static Equiped EqItems;
-    Player(const char* texturesheet, SDL_Renderer* ren);
+    Player(SDL_Renderer* ren);
 
     void Update() override;
     void Render() override;

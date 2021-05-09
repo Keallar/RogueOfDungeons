@@ -80,8 +80,8 @@ int Player::quantityOfCoins[3] = {
 
 int Player::VIS = 16;
 
-Player::Player(const char* texturesheet, SDL_Renderer* renderer):
-    GameObject(texturesheet, renderer)
+Player::Player( SDL_Renderer* renderer):
+    GameObject( renderer)
 {
     GameTextures = TextureBase::Instance();
     ren = renderer;

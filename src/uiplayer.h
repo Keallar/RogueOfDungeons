@@ -5,6 +5,7 @@
 #include <SDL_ttf.h>
 #include <string>
 #include "Buttons.h"
+#include "TextureBase.h"
 
 //Interface
 class TextInfo
@@ -13,6 +14,7 @@ protected:
     const char* PATH_IN_FONT;
     SDL_Color color = { 255, 255, 255, 255 };
 public:
+    TextureBase* GameTextures;
     TextInfo();
     virtual ~TextInfo();
     virtual void Render() = 0;
@@ -65,6 +67,8 @@ public:
 class UISpecifications : public TextInfo
 {
 private:
+    TextureBase* GameTextures;
+
     SDL_Renderer* ren;
     SDL_Color color;
     SDL_Texture* specBlock;

@@ -5,3 +5,10 @@ ArcherClass data/images/ArcherClass.png
 WarriorClass data/images/WarriorClass.png
 MageClass data/images/MageClass.png
 PlayBack data/images/Playback.png
+Button data/images/Button.png
+Coin data/images/Coin.png
+InfoBlock data/images/InfoBlock.png
+Hp data/images/hp.png
+ManaBar data/images/ManaBar.png
+XP data/images/XP.png
+EnemyBar data/images/EnemyBar.png

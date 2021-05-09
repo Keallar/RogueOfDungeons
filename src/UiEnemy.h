@@ -4,11 +4,13 @@
 #include <SDL.h>
 #include "Enemy.h"
 #include "Buttons.h"
+#include "TextureBase.h"
 
 
 class UIEnemy
 {
 private:
+    TextureBase* GameTextures;
     SDL_Renderer* ren;
     const char* PATH_IN_FONT;
     SDL_Color color;

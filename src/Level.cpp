@@ -15,7 +15,7 @@ Level::Level(SDL_Renderer* renderer, int playerClass) : ren (renderer), pClass(p
     TileTextures[1] = textureManager::LoadTexture("data/images/CaslteTiles.png", ren);
     TileTextures[2] = textureManager::LoadTexture("data/images/CaslteTiles2.png", ren);
     PlayBackground = textureManager::LoadTexture("data/images/Playback.png", ren);
-    player = new Player("data/images/Hero.png", ren);
+    player = new Player(ren);
     //enemyTurtle = new Enemy();
     SecondEnemyTurtle = new Enemy("data/images/Turtle.png", 4, ren, 10, 10, 3, 4, 5);
     UiEnemy = new UIEnemy(ren, SecondEnemyTurtle);

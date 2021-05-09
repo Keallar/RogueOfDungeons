@@ -1,8 +1,8 @@
 #include "Coins.h"
 #include "EntityPosition.h"
 
-Coins::Coins(const char* texturesheet, SDL_Renderer* renderer, int value, int framesOfCoin):
-    GameObject(texturesheet, renderer)
+Coins::Coins(SDL_Texture* texture, SDL_Renderer* renderer, int value, int framesOfCoin):
+    GameObject(renderer)
 {
     coinRect.x = 0;
     coinRect.y = 0;
@@ -10,7 +10,7 @@ Coins::Coins(const char* texturesheet, SDL_Renderer* renderer, int value, int fr
     coinRect.h = 32;
     ren = renderer;
     valueOfCoin = value;
-    coinTexture = textureManager::LoadTexture(texturesheet, ren);
+    coinTexture = texture;
     frameOfCoin = framesOfCoin;
     coinAnimation = new Animation (ren, coinTexture);
     currentFrameOfCoinAnim = 1;

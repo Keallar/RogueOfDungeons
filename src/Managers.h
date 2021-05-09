@@ -38,6 +38,7 @@ public:
     //Turn
     static int flagTurn;
     static int flagInAreaOfAnemy;
+    static bool flagTimerTurn;
     //UI
 	static bool flagUI;
 	static bool flagUiSpec;

@@ -52,9 +52,9 @@ public:
 	void GetEnemyFirstCoords();
 	
     virtual void meleeAttackEnemy();
-	void attackOfEnemy();
+    void attackOfEnemy(bool damage);
 	int enemyDamageCalculation();
-	void enemyTurn(); 
+    void enemyTurn();
 	int getDamageEnemy();
     int GetHpEnemy(int numOfHp);
     void CheckHpEnemy();

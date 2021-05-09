@@ -78,13 +78,11 @@ void Enemy::CheckHpEnemy()
     else if (HP != prevHp && FlagManager::flagCheckHpEnemy == 0)
     {
         FlagManager::flagCheckHpEnemy = 1;
-        //std::cout << "CheckHpEnemy = 1\n";
         Enemy::prevHp = HP;
     }
     else if (HP == prevHp && FlagManager::flagCheckHpEnemy == 1)
     {
         FlagManager::flagCheckHpEnemy = 0;
-        //std::cout << "CheckHpEnemy = 0\n";
     }
 }
 
@@ -206,8 +204,11 @@ bool Enemy::WAY(int ax, int ay, int bx, int by)   // ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿
     px[0] = ax;
     py[0] = ay;
     //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ enemy
-    Rect.x = px[1] * 32;
-    Rect.y = py[1] * 32;
+    if (FlagManager::flagMeleeAttackEnemy == 0)
+    {
+        Rect.x = px[1] * 32;
+        Rect.y = py[1] * 32;
+    }
     return true;
 }
 
@@ -225,40 +226,39 @@ void Enemy::Update()
         }
     }
     CheckHpEnemy();
-    if (currentFrameOfEnemyAnim == framesOfAnimForAttack - 1)
+    if (currentFrameOfEnemyAnim == framesOfAnimForAttack - 1 &&
+            FlagManager::flagTimerTurn == 0)
         FlagManager::flagTimerTurn = 1;
 }
 
-void Enemy::attackOfEnemy()
+void Enemy::attackOfEnemy(bool damage)
 {
     if (currentFrameOfEnemyAnim == framesOfAnimForAttack - 1)
     {
         std::cout << "Chance of trick" << std::endl;
-//        if (temp1 == false)
-//        {
-//            timer = SDL_GetTicks();
-//            temp1 = true;
-//        }
-//        timer2 = SDL_GetTicks();
-//        if (timer2 - timer >= 700 && temp1 == true)
-//        {
-//            std::cout << "Here2\n";
-//            currentFrameOfEnemyAnim = enemyAnimation->animationPlusForX(framesOfAnimForAttack);
-//            timer = timer2;
-//        }
         if (FlagManager::flagTimerTurn == 0)
         {
             std::cout << "Delay Melee Attack" << std::endl;
             currentFrameOfEnemyAnim = enemyAnimation->animationPlusForX(framesOfAnimForAttack);
         }
     }
-    else if (currentFrameOfEnemyAnim == framesOfAnimForAttack)
+    else if (currentFrameOfEnemyAnim == framesOfAnimForAttack &&
+             damage == false)
+    {
+        temp1 = false;
+        temp = false;
+        currentFrameOfEnemyAnim = enemyAnimation->animationPlusForX(framesOfAnimForAttack);
+        std::cout << "Hit1" << std::endl;
+        Player::playerTurn();
+    }
+    else if (currentFrameOfEnemyAnim == framesOfAnimForAttack &&
+             damage == true)
     {
         temp1 = false;
         temp = false;
         currentFrameOfEnemyAnim = enemyAnimation->animationPlusForX(framesOfAnimForAttack);
         Player::ChangeHpValue(-Enemy::enemyDamageCalculation());
-        std::cout << "Hit" << std::endl;
+        std::cout << "Hit2" << std::endl;
         Player::playerTurn();
     }
     else if (currentFrameOfEnemyAnim < framesOfAnimForAttack)
@@ -298,7 +298,30 @@ void Enemy::meleeAttackEnemy()
         Enemy::enemyTurn();
         if (Timer2 - Timer >= 100 && temp == true)
         {
-            Enemy::attackOfEnemy();
+            Enemy::attackOfEnemy(true);
+            Timer = Timer2;
+        }
+    }
+    else if ((((Rect.x == EntityPosition::Coords[0]) &&
+               (Rect.y == EntityPosition::Coords[1] + 64)) ||
+              ((Rect.x == EntityPosition::Coords[0]) &&
+               (Rect.y == EntityPosition::Coords[1] - 64)) ||
+              ((Rect.y == EntityPosition::Coords[1]) &&
+               (Rect.x == EntityPosition::Coords[0] + 64)) ||
+              ((Rect.y == EntityPosition::Coords[1]) &&
+               (Rect.x == EntityPosition::Coords[0] - 64))) &&
+             FlagManager::flagMeleeAttackEnemy == 1)
+    {
+        if (temp == false)
+        {
+            Timer = SDL_GetTicks();
+            temp = true;
+        }
+        Uint32 Timer2 = SDL_GetTicks();
+        Enemy::enemyTurn();
+        if (Timer2 - Timer >= 100 && temp == true)
+        {
+            Enemy::attackOfEnemy(false);
             Timer = Timer2;
         }
     }

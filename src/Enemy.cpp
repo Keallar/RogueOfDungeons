@@ -225,6 +225,8 @@ void Enemy::Update()
         }
     }
     CheckHpEnemy();
+    if (currentFrameOfEnemyAnim == framesOfAnimForAttack - 1)
+        FlagManager::flagTimerTurn = 1;
 }
 
 void Enemy::attackOfEnemy()
@@ -232,20 +234,22 @@ void Enemy::attackOfEnemy()
     if (currentFrameOfEnemyAnim == framesOfAnimForAttack - 1)
     {
         std::cout << "Chance of trick" << std::endl;
-        if (temp1 == false)
+//        if (temp1 == false)
+//        {
+//            timer = SDL_GetTicks();
+//            temp1 = true;
+//        }
+//        timer2 = SDL_GetTicks();
+//        if (timer2 - timer >= 700 && temp1 == true)
+//        {
+//            std::cout << "Here2\n";
+//            currentFrameOfEnemyAnim = enemyAnimation->animationPlusForX(framesOfAnimForAttack);
+//            timer = timer2;
+//        }
+        if (FlagManager::flagTimerTurn == 0)
         {
-            timer = SDL_GetTicks();
-            temp1 = true;
-        }
-        Uint32 Timer2 = SDL_GetTicks();
-//        FlagManager::flagMeleeAttackPlayer = 0;
-//        FlagManager::flagRangeAttackPlayer = 0;
-//        FlagManager::flagTurn = 0;
-        if (Timer2 - timer >= 1000 && temp == true)
-        {
-            std::cout << "Here\n";
+            std::cout << "Delay Melee Attack" << std::endl;
             currentFrameOfEnemyAnim = enemyAnimation->animationPlusForX(framesOfAnimForAttack);
-            timer = Timer2;
         }
     }
     else if (currentFrameOfEnemyAnim == framesOfAnimForAttack)

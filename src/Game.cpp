@@ -8,8 +8,6 @@
 #include "UI.h"
 #include "Enemy.h"
 
-//Player Game::player = new Player("data/images/Hero.png", renderer);
-
 Game::Game() 
 {
 	level = 0;

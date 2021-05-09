@@ -10,6 +10,7 @@ class Enemy : public GameObject
 protected:
 	Uint32 Timer;
     Uint32 timer;
+    Uint32 timer2;
 	bool temp;
     bool temp1;
 	int DMG;
@@ -58,6 +59,7 @@ public:
     int GetHpEnemy(int numOfHp);
     void CheckHpEnemy();
 	void ChahgeHpEnemy(int valueOfChangingHp);
+    void CheckTimer();
     Coins* GetCoin();
 };
 

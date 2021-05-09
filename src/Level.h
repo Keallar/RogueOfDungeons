@@ -41,7 +41,6 @@ private:
     std::vector <Enemy*> enemies;
 	UIInventory* uiInv;
 	MouseCoords mouseCoords;
-	const Uint8* keys = SDL_GetKeyboardState(NULL);
     Keyboard* keyW = 0;
     Button* buttonW = 0;
     Keyboard* keyA = 0;
@@ -54,12 +53,12 @@ private:
     Button* buttonForPlayerAttack;
     Map* LevelMap;
     std::vector<Coins*> coins;
-
 	void ChangeDark(int i, int j);
 	MouseCoords Mouse;
     void CheckButton(SDL_Event& eventInLvl);
-
     bool FindWallsOnWay(int x1, int y1, int x2, int y2);
+    Uint32 timer;
+    bool timeB;
 public:
 	bool CheckPositionToMeleeAttack(SDL_Rect rect, int x, int y);
 	int GetGeneration();
@@ -77,6 +76,7 @@ public:
 	int GetLocation(int x, int y);
 	void ChangeLocation(int x, int y);
 	void ChangeLevel(int x, int y, int LocationChange, int TextureChange);
+    void TimerTurn();
 };
 
 

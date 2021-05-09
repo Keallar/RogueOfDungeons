@@ -31,6 +31,8 @@ Level::Level(SDL_Renderer* renderer) : ren (renderer)
     mana = new ManaInfo(ren);
     exp = new ExpInfo(ren);
     uiEquiped = new UIEquipedItem(ren);
+    timer = 0;
+    timeB = false;
     auto pressW{
         [=]()
         {
@@ -187,10 +189,10 @@ Level::Level(SDL_Renderer* renderer) : ren (renderer)
         [=]()
         {
             player->playerTurn();
-           if(!player->playerEscaping)
-           {
+            if(!player->playerEscaping)
+            {
                 Attack();
-           }
+            }
         }
     };
     buttonForPlayerAttack = new Button("left", NULL, ren, {0, 0, 32, 32}, playerAttack, NULL);
@@ -284,6 +286,8 @@ void Level::deleteCoin()
 
 void Level::Update()
 {
+    Level::TimerTurn();
+
     if(player!= nullptr && player->playerEscaping)
         FlagManager::flagTurn = 0;
 
@@ -428,6 +432,31 @@ void Level::Start()
         enemy->GetEnemyFirstCoords();
     }
     player->playerTurn();
+}
+
+void Level::TimerTurn()
+{
+    if (FlagManager::flagTimerTurn == 1)
+    {
+        if (timeB == false)
+        {
+            timer = SDL_GetTicks();
+            timeB = true;
+        }
+        Uint32 timer2 = SDL_GetTicks();
+        if (timer2 - timer >= 700 && timeB == true)
+        {
+            std::cout << "TimerTurn" << std::endl;
+            timer = timer2;
+            FlagManager::flagTimerTurn = 0;
+            FlagManager::flagTurn = 1;
+        }
+        else
+        {
+            FlagManager::flagTimerTurn = 1;
+            FlagManager::flagTurn = 0;
+        }
+    }
 }
 
 void Level::ChangeDark(int i, int j) 
@@ -636,7 +665,6 @@ void Level::handleEvents(SDL_Event eventInLvl)
         buttonD->handleEvents(eventInLvl);
     }
     CheckButton(eventInLvl);
-    //coin->handleEvents(eventInLvl);
 }
 
 void Level::CheckButton(SDL_Event& eventInLvl) {
@@ -677,7 +705,8 @@ void Level::CheckButton(SDL_Event& eventInLvl) {
 
 //функция работает с пикселями
 
-bool Level::FindWallsOnWay(int x1, int y1, int x2, int y2) {
+bool Level::FindWallsOnWay(int x1, int y1, int x2, int y2)
+{
     int temp = 0;
     temp = x1 % 32; x1 = x1 - temp + 16; temp = x2 % 32; x2 = x2 - temp + 16;
     temp = y1 % 32; y1 = y1 - temp + 16; temp = y2 % 32; y2 = y2 - temp + 16;
@@ -686,11 +715,13 @@ bool Level::FindWallsOnWay(int x1, int y1, int x2, int y2) {
     bool foundWalls = false;
     int i = 0; int x = (i+x1)/32;
     int y = ((k*i+16)/32) + (y1/32);
-    while(!((x == x2/32)&&(y == y2/32))) {
+    while(!((x == x2/32)&&(y == y2/32)))
+    {
         x = (i+x1)/32;
         if (x1 == x2) y += (y2-y1)/abs(y2-y1);
         if (x1 != x2) i+=(x2-x1)/abs(x2-x1);
-        if(LevelMap->Location[y][x] != 0) {
+        if(LevelMap->Location[y][x] != 0)
+        {
             foundWalls = true;
         }
         if (x1 != x2) y =((k*i+16)/32)+(y1/32);
@@ -702,24 +733,34 @@ void Level::Attack()
 {
     int mouseX , mouseY;
     SDL_GetMouseState(&mouseX, &mouseY);
-    if (Inventory::ExistingItems[Player::EqItems.WeaponId]->Type == magic) {
-        if (player->EqItems.equipedMagic->WeaponType == magicType::field) {
+    if (Inventory::ExistingItems[Player::EqItems.WeaponId]->Type == magic)
+    {
+        if (player->EqItems.equipedMagic->WeaponType == magicType::field)
+        {
             mouseX/=32; mouseY/=32;
             int splash = Player::EqItems.equipedMagic->SPL;
-            if (pow((mouseX-EntityPosition::Coords[0]/32), 2) + pow((mouseY-EntityPosition::Coords[1]/32), 2) <= pow(player->EqItems.equipedMagic->RNG, 2)) {
-                if(!FindWallsOnWay(EntityPosition::Coords[0], EntityPosition::Coords[1], mouseX*32, mouseY*32) || Player::EqItems.equipedMagic->WeaponEl == magicEl::thunder) {
-                    for(int i = (mouseX - splash); i <= (mouseX + splash); i++) {
-                        for(int j = (mouseY - splash); j <= (mouseY + splash); j++) {
+            if (pow((mouseX-EntityPosition::Coords[0]/32), 2) + pow((mouseY-EntityPosition::Coords[1]/32), 2) <= pow(player->EqItems.equipedMagic->RNG, 2))
+            {
+                if(!FindWallsOnWay(EntityPosition::Coords[0], EntityPosition::Coords[1], mouseX*32, mouseY*32) ||
+                        Player::EqItems.equipedMagic->WeaponEl == magicEl::thunder)
+                {
+                    for(int i = (mouseX - splash); i <= (mouseX + splash); i++)
+                    {
+                        for(int j = (mouseY - splash); j <= (mouseY + splash); j++)
+                        {
                             for(Enemy* enemy : enemies) {
                                 if(enemy->Rect.x/32 == i && enemy->Rect.y/32 == j) {
                                     enemy->ChahgeHpEnemy(-((player->MagicAttack())/2));
-                                    if (enemy->Rect.x/32 == mouseX && enemy->Rect.y/32 == mouseY) {
+                                    if (enemy->Rect.x/32 == mouseX && enemy->Rect.y/32 == mouseY)
+                                    {
                                         enemy->ChahgeHpEnemy(-((player->MagicAttack())/2));
                                     }
-                                    if (player->EqItems.equipedMagic->WeaponEl == magicEl::fire) {
+                                    if (player->EqItems.equipedMagic->WeaponEl == magicEl::fire)
+                                    {
                                         enemy->ChahgeHpEnemy(-(player->GetSpecValue(3)));
                                     }
-                                    if (player->EqItems.equipedMagic->WeaponEl == magicEl::ice) {
+                                    if (player->EqItems.equipedMagic->WeaponEl == magicEl::ice)
+                                    {
                                         //UNDONE
                                     }
                                 }
@@ -732,7 +773,10 @@ void Level::Attack()
         }
     }
 
-    if ((Inventory::ExistingItems[Player::EqItems.WeaponId]->Type != magic)|| (Inventory::ExistingItems[Player::EqItems.WeaponId]->Type == magic && (static_cast<magicWeapon*>(Inventory::ExistingItems[Player::EqItems.WeaponId]))->WeaponType != magicType::field)) {
+    if ((Inventory::ExistingItems[Player::EqItems.WeaponId]->Type != magic)||
+            (Inventory::ExistingItems[Player::EqItems.WeaponId]->Type == magic &&
+             (static_cast<magicWeapon*>(Inventory::ExistingItems[Player::EqItems.WeaponId]))->WeaponType != magicType::field))
+    {
         for (Enemy* enemy : enemies)
         {
             buttonForPlayerAttack->updateCoords(enemy->Rect.x, enemy->Rect.y);
@@ -741,15 +785,20 @@ void Level::Attack()
                     (mouseY<=enemy->Rect.y+32)&&(mouseY>=enemy->Rect.y))
             {
                 //magic
-                if (Inventory::ExistingItems[Player::EqItems.WeaponId]->Type == magic) {
+                if (Inventory::ExistingItems[Player::EqItems.WeaponId]->Type == magic)
+                {
                     mouseX/=32; mouseY/=32;
-                    if (pow((mouseX-EntityPosition::Coords[0]/32), 2) + pow((mouseY-EntityPosition::Coords[1]/32), 2) <= pow(player->EqItems.equipedMagic->RNG, 2)) {
-                        if(!FindWallsOnWay(EntityPosition::Coords[0], EntityPosition::Coords[1], mouseX*32, mouseY*32) || Player::EqItems.equipedMagic->WeaponEl == magicEl::thunder) {
+                    if (pow((mouseX-EntityPosition::Coords[0]/32), 2) + pow((mouseY-EntityPosition::Coords[1]/32), 2) <= pow(player->EqItems.equipedMagic->RNG, 2))
+                    {
+                        if(!FindWallsOnWay(EntityPosition::Coords[0], EntityPosition::Coords[1], mouseX*32, mouseY*32) ||
+                                Player::EqItems.equipedMagic->WeaponEl == magicEl::thunder) {
                             enemy->ChahgeHpEnemy(-(player->MagicAttack()));
-                            if (player->EqItems.equipedMagic->WeaponEl == magicEl::fire) {
+                            if (player->EqItems.equipedMagic->WeaponEl == magicEl::fire)
+                            {
                                 enemy->ChahgeHpEnemy(-(player->GetSpecValue(3)));
                             }
-                            if (player->EqItems.equipedMagic->WeaponEl == magicEl::ice) {
+                            if (player->EqItems.equipedMagic->WeaponEl == magicEl::ice)
+                            {
                                 //UNDONE
                             }
                             enemies[0]->enemyTurn(); // ТОЖЕ ВАЖНО
@@ -761,7 +810,8 @@ void Level::Attack()
                 //Range boy
                 if (Inventory::ExistingItems[Player::EqItems.WeaponId]->Type == rWeapon)
                 {
-                    int PlPosx = EntityPosition::Coords[0] / 32, PlPosy = EntityPosition::Coords[1] / 32, EnPosx = (enemy->Rect.x) / 32, EnPosy = (enemy->Rect.y) / 32;
+                    int PlPosx = EntityPosition::Coords[0] / 32, PlPosy =
+                            EntityPosition::Coords[1] / 32, EnPosx = (enemy->Rect.x) / 32, EnPosy = (enemy->Rect.y) / 32;
                     bool blankflag = true;
                     if ((abs(EntityPosition::Coords[0] - enemy->Rect.x) == 0)) // разделил чтобы потом проверять на наличие стен
                     {

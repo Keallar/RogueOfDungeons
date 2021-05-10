@@ -20,10 +20,9 @@ TextureBase::TextureBase()
 }
 TextureBase::~TextureBase()
 {
-    while(Textures.size() != 0)
+    for (auto& i : Textures)
     {
-        SDL_DestroyTexture(Textures.begin()->second);
-        Textures.erase(Textures.begin());
+        SDL_DestroyTexture(i.second);
     }
 }
 

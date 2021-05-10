@@ -55,7 +55,7 @@ void RangeEnemy::meleeAttackEnemy()
         }
         else
         {
-            for (int i = EnPosy; i > PlPosy; i--)
+            for (int i = EnPosx; i > PlPosx; i--)
             {
                 if (enemyLoc[PlPosy][i] == -2)
                 {

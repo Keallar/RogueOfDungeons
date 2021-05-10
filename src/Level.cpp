@@ -824,6 +824,7 @@ void Level::Attack()
                             {
                                 //UNDONE
                             }
+                            player->ChangeManaValue(-5);
                             enemies[0]->enemyTurn(); // ТОЖЕ ВАЖНО
                             FlagManager::flagInAreaOfAnemy = 0;
                         }

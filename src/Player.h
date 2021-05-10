@@ -75,6 +75,7 @@ public:
     static void ChangeMaxManaValue();
     static void ChangeMaxExpValue();
     static void ChangeCoins(int value);
+    static void ChangePointOfSpec(int valueOfChanging);
 
     void CheckHP();
     void CheckEXP();

@@ -227,6 +227,12 @@ int Player::GetCoinsOfPlayer(int numCoins)
     }
 }
 
+void Player::ChangePointOfSpec(int valueOfChanging)
+{
+    if (pointOfSpec[0] != 0)
+        pointOfSpec[0] += valueOfChanging;
+}
+
 //Изменение значения характеристики (STR, DEX, INT, PHS, LCK) на +1
 void Player::ChangeValueSpecs(int numOfSpec)
 {
@@ -236,27 +242,27 @@ void Player::ChangeValueSpecs(int numOfSpec)
         {
         case 1: //STR
             STR[0] += 1;
-            pointOfSpec[0] -= 1;
+            Player::ChangePointOfSpec(-1);
             break;
         case 2: //DEX
             DEX[0] += 1;
-            pointOfSpec[0] -= 1;
+            Player::ChangePointOfSpec(-1);
             break;
         case 3: //INT
             INT[0] += 1;
-            pointOfSpec[0] -= 1;
+            Player::ChangePointOfSpec(-1);
             break;
         case 4:
             WSD[0] += 1;
-            pointOfSpec[0] -= 1;
+            Player::ChangePointOfSpec(-1);
             break;
         case 5: //PHS
             PHS[0] += 1;
-            pointOfSpec[0] -= 1;
+            Player::ChangePointOfSpec(-1);
             break;
         case 6: //LCK
             LCK[0] += 1;
-            pointOfSpec[0] -= 1;
+            Player::ChangePointOfSpec(-1);
             break;
         default:
             std::cout << "Error in ChangeSpecValue!" << std::endl;
@@ -268,7 +274,7 @@ void Player::ChangeValueSpecs(int numOfSpec)
 //Изменение текущего значения hp
 void Player::ChangeHpValue(int valueOfChangingHp)
 {
-    if (HP[0] != 0 && HP[0] <= HP[2])
+    if (HP[0] != 0 && HP[0] != HP[2])
         HP[0] += valueOfChangingHp;
 }
 

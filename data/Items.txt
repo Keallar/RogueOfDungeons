@@ -7,3 +7,4 @@ armor 1 data/images/LetherArmor.png LetherArmor
 potion 4 0 data/images/SmallHpPotion.png SmallHpPotion
 potion 0 4 data/images/SmallMpPotion.png SmallMpPotion
 potion 7 0 data/images/Pie.png Pie
+artifact 1 2 0 0 0 0 data/images/SpeedBoots.png SpeedBoots

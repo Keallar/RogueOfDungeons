@@ -13,6 +13,8 @@ struct Equiped
     magicWeapon* equipedMagic;
 	int ArmorId;
 	armorItem* equipedArmor;
+    int ArtId;
+    Artifact* equipedArtifact;
 };
 
 class Player : public GameObject
@@ -75,6 +77,7 @@ public:
     static void ChangeManaValue(int valueOfChangingMana);
     static void ChangeExpValue(int valueOfChangingExp);
     static void ChangeValueSpecs(int numOfSpec);
+    static void ChangeValueSpecsNoLvl(int numOfSpec, int Value);
     static void ChangeMaxHpValue();
     static void ChangeMaxManaValue();
     static void ChangeMaxExpValue();

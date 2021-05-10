@@ -13,7 +13,8 @@ enum type
 	rWeapon,
     magic,
 	armor,
-	potion
+    potion,
+    artifact
 };
 
 class InventoryItem 
@@ -74,6 +75,15 @@ public:
     ~magicWeapon();
 };
 
+class Artifact : public InventoryItem
+{
+private:
+
+public:
+    int specs[6];
+    Artifact(int STR, int DEX, int INT, int WSD, int PHS, int LCK, type type, const char* WeapTex, std::string Name);
+};
+
 class armorItem : public InventoryItem
 {
 private:
@@ -108,6 +118,7 @@ public:
 	rangeWeapon* GetRealRange(int id);
 	armorItem* GetRealArmor(int id);
     magicWeapon* GetRealMagic(int id);
+    Artifact* GetRealArtifact(int id);
 	static std::map <int, InventoryItem*> ExistingItems;
 	static std::map <int, InventoryItem*>::iterator it;
 };

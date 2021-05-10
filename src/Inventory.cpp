@@ -27,6 +27,12 @@ Inventory::Inventory()
         magicEl Eltype;
         magicType WpType;
 		int MpHEAL;
+        int STR;
+        int DEX;
+        int INT;
+        int WSD;
+        int PHS;
+        int LCK;
 		file >> Type;
 		if (Type == "weapon") {
 			file >> DMG;
@@ -98,6 +104,22 @@ Inventory::Inventory()
 			type ItemType = potion;
 			ExistingItems[ItemNumber] = new Potion(HEAL, MpHEAL, ItemType, Tex, Name);
 		}
+        if (Type == "artifact") {
+            file >> STR;
+            file >> DEX;
+            file >> INT;
+            file >> WSD;
+            file >> PHS;
+            file >> LCK;
+            file >> WeapTex;
+            char* Tex = new char[WeapTex.length() + 1];
+            for (int i = 0; i <= WeapTex.length(); i++) {
+                Tex[i] = WeapTex[i];
+            }
+            file >> Name;
+            type ItemType = artifact;
+            ExistingItems[ItemNumber] = new Artifact(STR, DEX, INT, WSD, PHS, LCK, ItemType, Tex, Name);
+        }
 		ItemNumber++;
 	}
     for (int i = 0; i < INVENTORY_SIZE; i++)
@@ -165,6 +187,10 @@ magicWeapon* Inventory::GetRealMagic(int id) {
    return static_cast<magicWeapon*>(ExistingItems[id]);
 }
 
+Artifact* Inventory::GetRealArtifact(int id) {
+    return static_cast<Artifact*>(ExistingItems[id]);
+}
+
 
 rangeWeapon::rangeWeapon(int Damage, int Range, int Chance, int deltaChanse, type type, const char* WeapTex, std::string Name)
 {
@@ -199,6 +225,13 @@ magicWeapon::magicWeapon(int Damage, int range, int splash, type type, magicEl w
     WeaponType = weaponType;
     Type = type;
     RNG = range;
+    ItemTexture = WeapTex;
+    name = Name;
+}
+
+Artifact::Artifact(int STR, int DEX, int INT, int WSD, int PHS, int LCK, type type, const char* WeapTex, std::string Name) {
+    specs[0] = STR; specs[1] = DEX; specs[2] = INT; specs[3] = WSD; specs[4] = PHS; specs[5] = LCK;
+    Type = type;
     ItemTexture = WeapTex;
     name = Name;
 }

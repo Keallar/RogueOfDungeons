@@ -17,7 +17,7 @@ private:
     int frameOfCoin;
     int currentFrameOfCoinAnim;
 public:
-    Coins(SDL_Texture* texture, SDL_Renderer* renderer, int value, int framesOfCoin);
+    Coins(const char* texturesheet, SDL_Renderer* renderer, int value, int framesOfCoin);
     ~Coins();
     void Update() override;
     void Render() override;

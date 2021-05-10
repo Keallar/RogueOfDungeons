@@ -7,6 +7,7 @@
 #include "EntityPosition.h"
 #include <cmath>
 #include <algorithm>
+#include <typeinfo>
 
 Level::Level(SDL_Renderer* renderer) : ren (renderer)
 {
@@ -15,13 +16,7 @@ Level::Level(SDL_Renderer* renderer) : ren (renderer)
     TileTextures[1] = textureManager::LoadTexture("data/images/CaslteTiles.png", ren);
     PlayBackground = textureManager::LoadTexture("data/images/Playback.png", ren);
     player = new Player("data/images/Hero.png", ren);
-    //enemyTurtle = new Enemy();
-    SecondEnemyTurtle = new Enemy("data/images/Turtle.png", 4, ren, 10, 10, 3, 4, 5);
-    UiEnemy = new UIEnemy(ren, SecondEnemyTurtle);
-    //enemies.push_back(enemyTurtle);
-    RangeEnemyTurtle = new RangeEnemy("data/images/Turtle.png", 4, ren, 11, 11, 3, 4, 5);
-    //enemies.push_back(RangeEnemyTurtle);
-    enemies.push_back(SecondEnemyTurtle);
+    UiEnemy = new UIEnemy(ren, StandartEnemyTurtle);
     uiInfo = new UIInfo(ren);
     uiItem = new UIItem(ren);
     uiSpec = new UISpecifications(ren);
@@ -403,17 +398,30 @@ void Level::Start()
             }
         }
     }
-    for(int i = 0; i<1; i++)
-    {
-        //delete enemy;
-        Enemy* enemy = new Enemy("data/images/Turtle.png", 4, ren, 8, 8, 3, 4, 5);
-        enemies.push_back(enemy);
-    }
     LevelMap->GenerateMap();
+    for(int i = 0; i<(LevelMap->floorLvl)%4+(LevelMap->floorLvl/4)+1; i++)
+    {
+
+        int MobTypeChoose = (LevelMap->floorLvl/4)*2+(rand()%2);
+        std::cout<< (LevelMap->floorLvl/4)*2 << "?" << LevelMap->floorLvl << std::endl;
+        std::cout << "( "<<(typeid(StandartEnemies[3]) == typeid(Enemy*)) << " )";
+        if(StandartEnemies[MobTypeChoose]->GetTypeName() == 1)
+        {
+            Enemy* enemy = new Enemy(StandartEnemies[MobTypeChoose]);
+            enemies.push_back(enemy);
+        }
+        else if(StandartEnemies[MobTypeChoose]->GetTypeName() == 2)
+        {
+            RangeEnemy* enemy1 = new RangeEnemy(StandartEnemies[MobTypeChoose]);
+            std::cout << "qq" << (typeid(enemy1) == typeid(RangeEnemy*)) << std::endl;
+            enemies.push_back(enemy1);
+        }
+    }
     player->generate = LevelMap->generateChoose;
     for(Enemy* enemy : enemies)
     {
         enemy->generate = LevelMap->generateChoose;
+        std::cout << LevelMap->generateChoose;
     }
     player->GetLevel(LevelMap->Location);
     player->GetPlayerFirstCoords();

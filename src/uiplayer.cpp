@@ -15,9 +15,13 @@ TextInfo::~TextInfo()
 
 HpInfo::HpInfo(SDL_Renderer* renderer) : ren (renderer)
 {
+    //HP Bar
+    hpBar = GameTextures->GetTexture("Hp");
+    hpText = FontManager::renderText("HP", PATH_IN_FONT, color, 64, ren);
+
     std::string stringTemp1 = std::to_string(Player::GetHP(0));
     const char* TEXT_VALUE_CURRENT_HP = stringTemp1.c_str();
-    hpText = FontManager::renderText(TEXT_VALUE_CURRENT_HP, PATH_IN_FONT, color, 32, ren);
+    hpCurrent = FontManager::renderText(TEXT_VALUE_CURRENT_HP, PATH_IN_FONT, color, 32, ren);
 
     std::string stringTemp2 = std::to_string(Player::GetHP(2));
     const char* TEXT_VALUE_MAX = stringTemp2.c_str();
@@ -31,14 +35,14 @@ HpInfo::~HpInfo()
 void HpInfo::Update()
 {
     std::string stringTemp;
-    SDL_DestroyTexture(hpText);
-    hpText = 0;
-    if (Player::GetHP(0) == 0)
+    SDL_DestroyTexture(hpCurrent);
+    hpCurrent = 0;
+    if (Player::GetHP(0) <= 0)
          stringTemp = std::to_string(0);
     else
          stringTemp = std::to_string(Player::GetHP(0));
     const char* CHAR_VALUE = stringTemp.c_str();
-    hpText = FontManager::renderText(CHAR_VALUE, PATH_IN_FONT, color, 32, ren);
+    hpCurrent = FontManager::renderText(CHAR_VALUE, PATH_IN_FONT, color, 32, ren);
 }
 
 void HpInfo::UpdateMax()
@@ -46,7 +50,7 @@ void HpInfo::UpdateMax()
     Player::ChangeMaxHpValue();
     SDL_DestroyTexture(hpMax);
     hpMax = 0;
-    SDL_DestroyTexture(hpText);
+    SDL_DestroyTexture(hpCurrent);
 
     std::string stringTemp1 = std::to_string(Player::GetHP(2));
     const char* CHAR_VALUE1 = stringTemp1.c_str();
@@ -54,12 +58,36 @@ void HpInfo::UpdateMax()
 
     std::string stringTemp2 = std::to_string(Player::GetHP(0));
     const char* CHAR_VALUE2 = stringTemp2.c_str();
-    hpText = FontManager::renderText(CHAR_VALUE2, PATH_IN_FONT, color, 32, ren);
+    hpCurrent = FontManager::renderText(CHAR_VALUE2, PATH_IN_FONT, color, 32, ren);
 }
 
 void HpInfo::Render()
 {
-    RenderManager::CopyToRender(hpText, ren, 1120, 72, 32, 20);
+    if (Player::GetHP(0) == Player::GetHP(2))
+    {
+        RenderManager::CopyToRender(hpBar, ren, 1080, 40, 160, 32, 0, 0, 128, 16);
+    }
+    else if ((Player::GetHP(0) >= (Player::GetHP(2) / 4) * 3) &&
+             Player::GetHP(0) <= Player::GetHP(2))
+    {
+        RenderManager::CopyToRender(hpBar, ren, 1080, 40, 160, 32, 0, 16, 128, 16);
+    }
+    else if ((Player::GetHP(0) <= (Player::GetHP(2) / 4) * 3) &&
+             (Player::GetHP(0) >= (Player::GetHP(2) / 4 )* 2))
+    {
+        RenderManager::CopyToRender(hpBar, ren, 1080, 40, 160, 32, 0, 32, 128, 16);
+    }
+    else if ((Player::GetHP(0) <= (Player::GetHP(2) / 4) * 2) &&
+             (Player::GetHP(0) >= (Player::GetHP(2) / 4 )* 1))
+    {
+        RenderManager::CopyToRender(hpBar, ren, 1080, 40, 160, 32, 0, 48, 128, 16);
+    }
+    else if (Player::GetHP(0) == 0)
+    {
+        RenderManager::CopyToRender(hpBar, ren, 1080, 40, 160, 32, 0, 64, 128, 16);
+    }
+    RenderManager::CopyToRender(hpText, ren, 1050, 47, 25, 22);
+    RenderManager::CopyToRender(hpCurrent, ren, 1120, 72, 32, 20);
     RenderManager::CopyToRender(hpMax, ren, 1180, 72, 32, 20);
 }
 
@@ -67,7 +95,7 @@ ManaInfo::ManaInfo(SDL_Renderer* renderer) : ren(renderer)
 {
     std::string stringTemp1 = std::to_string(Player::GetMana(0));
     const char* TEXT_VALUE_CURRENT_VALUE = stringTemp1.c_str();
-    manaText = FontManager::renderText(TEXT_VALUE_CURRENT_VALUE, PATH_IN_FONT, color, 32, ren);
+    manaCurrent = FontManager::renderText(TEXT_VALUE_CURRENT_VALUE, PATH_IN_FONT, color, 32, ren);
 
     std::string stringTemp2 = std::to_string(Player::GetMana(2));
     const char* TEXT_VALUE_MAX = stringTemp2.c_str();
@@ -80,11 +108,11 @@ ManaInfo::~ManaInfo()
 
 void ManaInfo::Update()
 {
-    SDL_DestroyTexture(manaText);
-    manaText = 0;
+    SDL_DestroyTexture(manaCurrent);
+    manaCurrent = 0;
     std::string stringTemp = std::to_string(Player::GetMana(0));
     const char* CHAR_VALUE = stringTemp.c_str();
-    manaText = FontManager::renderText(CHAR_VALUE, PATH_IN_FONT, color, 32, ren);
+    manaCurrent = FontManager::renderText(CHAR_VALUE, PATH_IN_FONT, color, 32, ren);
 }
 
 void ManaInfo::UpdateMax()
@@ -92,8 +120,8 @@ void ManaInfo::UpdateMax()
     Player::ChangeMaxManaValue();
     SDL_DestroyTexture(manaMax);
     manaMax = 0;
-    SDL_DestroyTexture(manaText);
-    manaText = 0;
+    SDL_DestroyTexture(manaCurrent);
+    manaCurrent = 0;
 
     std::string stringTemp1 = std::to_string(Player::GetMana(2));
     const char* CHAR_VALUE1 = stringTemp1.c_str();
@@ -101,14 +129,14 @@ void ManaInfo::UpdateMax()
 
     std::string stringTemp2 = std::to_string(Player::GetMana(0));
     const char* CHAR_VALUE2 = stringTemp2.c_str();
-    manaText = FontManager::renderText(CHAR_VALUE2, PATH_IN_FONT, color, 32, ren);
+    manaCurrent = FontManager::renderText(CHAR_VALUE2, PATH_IN_FONT, color, 32, ren);
 
 
 }
 
 void ManaInfo::Render()
 {
-    RenderManager::CopyToRender(manaText, ren, 1120, 122, 32, 20);
+    RenderManager::CopyToRender(manaCurrent, ren, 1120, 122, 32, 20);
     RenderManager::CopyToRender(manaMax, ren, 1180, 122, 32, 20);
 }
 
@@ -116,7 +144,7 @@ ExpInfo::ExpInfo(SDL_Renderer* renderer) : ren (renderer)
 {
     std::string stringTemp1 = std::to_string(Player::GetEXP(0));
     const char* TEXT_VALUE_CURRENT_VALUE = stringTemp1.c_str();
-    expText = FontManager::renderText(TEXT_VALUE_CURRENT_VALUE, PATH_IN_FONT, color, 32, ren);
+    expCurrent = FontManager::renderText(TEXT_VALUE_CURRENT_VALUE, PATH_IN_FONT, color, 32, ren);
 
     std::string stringTemp2 = std::to_string(Player::GetEXP(2));
     const char* TEXT_VALUE_MAX = stringTemp2.c_str();
@@ -129,11 +157,11 @@ ExpInfo::~ExpInfo()
 
 void ExpInfo::Update()
 {
-    SDL_DestroyTexture(expText);
-    expText = 0;
+    SDL_DestroyTexture(expCurrent);
+    expCurrent = 0;
     std::string stringTemp = std::to_string(Player::GetEXP(0));
     const char* CHAR_VALUE = stringTemp.c_str();
-    expText = FontManager::renderText(CHAR_VALUE, PATH_IN_FONT, color, 32, ren);
+    expCurrent = FontManager::renderText(CHAR_VALUE, PATH_IN_FONT, color, 32, ren);
 }
 
 void ExpInfo::UpdateMax()
@@ -147,7 +175,7 @@ void ExpInfo::UpdateMax()
 
 void ExpInfo::Render()
 {
-    RenderManager::CopyToRender(expText, ren, 1120, 175, 32, 20);
+    RenderManager::CopyToRender(expCurrent, ren, 1120, 175, 32, 20);
     RenderManager::CopyToRender(expMax, ren, 1180, 175, 32, 20);
 }
 

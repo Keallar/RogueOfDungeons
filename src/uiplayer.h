@@ -1,5 +1,4 @@
-#ifndef UIPLAYER_H
-#define UIPLAYER_H
+#pragma once
 #include <SDL.h>
 #include <SDL_image.h>
 #include <SDL_ttf.h>
@@ -13,8 +12,8 @@ class TextInfo
 protected:
     const char* PATH_IN_FONT;
     SDL_Color color = { 255, 255, 255, 255 };
-public:
     TextureBase* GameTextures;
+public:
     TextInfo();
     virtual ~TextInfo();
     virtual void Render() = 0;
@@ -26,7 +25,10 @@ class HpInfo : public TextInfo
 {
 private:
     SDL_Renderer* ren;
-    SDL_Texture*  hpText;
+    //HP
+    SDL_Texture* hpBar;
+    SDL_Texture* hpText;
+    SDL_Texture*  hpCurrent;
     SDL_Texture* hpMax;
 public:
     HpInfo(SDL_Renderer* renderer);
@@ -40,7 +42,7 @@ class ManaInfo :public TextInfo
 {
 private:
     SDL_Renderer* ren;
-    SDL_Texture* manaText;
+    SDL_Texture* manaCurrent;
     SDL_Texture* manaMax;
 public:
     ManaInfo(SDL_Renderer* renderer);
@@ -54,7 +56,7 @@ class ExpInfo : public TextInfo
 {
 private:
     SDL_Renderer* ren;
-    SDL_Texture* expText;
+    SDL_Texture* expCurrent;
     SDL_Texture* expMax;
 public:
     ExpInfo(SDL_Renderer* renderer);
@@ -129,4 +131,3 @@ public:
 };
 
 
-#endif // UIPLAYER_H

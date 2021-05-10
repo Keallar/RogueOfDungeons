@@ -40,8 +40,20 @@ void Map::GenerateMap()
     srand(time(0));
     floorLvl++;
     if(floorLvl <= 3) {
-        switch(rand()%3) {case 0: generateChoose = 0; break; case 1: generateChoose = 4; break; case 2: generateChoose = 2; break;}    }
+        TileSet = 0;
+        switch(rand()%3) {
+        case 0: generateChoose = 0;
+            break;
+        case 1: generateChoose = 4;
+            break;
+        case 2: generateChoose = 2;
+            break;
+        }
+
+    }
+
     if(floorLvl > 3 && floorLvl <= 7) {
+        TileSet = 1;
         switch(rand()%2) {case 0: generateChoose = 1; break; case 1: generateChoose = 5; break;}
     }
     if(floorLvl > 8 && floorLvl <= 12) {

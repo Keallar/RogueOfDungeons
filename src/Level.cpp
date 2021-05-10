@@ -1,4 +1,4 @@
-#include "Game.h"
+    #include "Game.h"
 #include "Level.h"
 #include "Managers.h"
 #include <ctime>
@@ -388,6 +388,18 @@ void Level::Update()
 
 void Level::Start()
 {
+    for (Coins* coin : coins)
+    {
+        if (coin != nullptr)
+        {
+            coins.erase(std::remove(coins.begin(), coins.end(), coin));
+            coins.shrink_to_fit();
+            delete coin;
+            coin = nullptr;
+            std::cout << "Start coin delete" << std::endl;
+        }
+    }
+
     if (LevelMap->floorLvl == 1) {
         player->PushItemsToInventory(pClass);
     }
@@ -810,6 +822,7 @@ void Level::Attack()
                             {
                                 //UNDONE
                             }
+                            player->ChangeManaValue(-5);
                             enemies[0]->enemyTurn(); // ТОЖЕ ВАЖНО
                             FlagManager::flagInAreaOfAnemy = 0;
                         }

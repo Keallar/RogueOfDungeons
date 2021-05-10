@@ -24,10 +24,6 @@ UIInfo::UIInfo(SDL_Renderer* renderer) : ren (renderer)
 
     SPEC = FontManager::renderText("SPEC", PATH_IN_FONT, color, 32, ren);
 
-    //HP
-    hpBar = GameTextures->GetTexture("Hp");
-    hpText = FontManager::renderText("HP", PATH_IN_FONT, color, 64, ren);
-
     //Mana
     mnBar = GameTextures->GetTexture("ManaBar");
     mnText = FontManager::renderText("MN", PATH_IN_FONT, color, 64, ren);
@@ -111,10 +107,6 @@ void UIInfo::Render()
 
     if (flagHoverSpec == 1)
         RenderManager::CopyToRender(SPEC, ren, 1230, 220, 30, 25);
-
-    //HP
-    RenderManager::CopyToRender(hpBar, ren, 1080, 40, 160, 32, 0, 0, 128, 16);
-    RenderManager::CopyToRender(hpText, ren, 1050, 47, 25, 22);
 
     //Mana
     RenderManager::CopyToRender(mnBar, ren, 1080, 95, 230, 32, 21, 10, 128, 16);

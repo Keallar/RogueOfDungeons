@@ -335,7 +335,7 @@ void Player::ChangeHpValue(int valueOfChangingHp)
 //Изменение текущего значения mana
 void Player::ChangeManaValue(int valueOfChangingMana)
 {
-    if (mana[0] != 0)
+    if (mana[0] >= 0)
         mana[0] += valueOfChangingMana;
 }
 

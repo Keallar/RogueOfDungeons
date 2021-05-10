@@ -27,9 +27,7 @@ private:
     //flags
     bool flagHoverSpec;
 	
-	//HP
-	SDL_Texture* hpBar;
-	SDL_Texture* hpText;
+
 
 	//XP
 	SDL_Texture* xpBar;

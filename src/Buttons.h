@@ -4,6 +4,8 @@
 #include <string>
 #include <functional>
 #include <iostream>
+#include "TextureBase.h"
+#include "string"
 
 struct Mouse
 {
@@ -14,9 +16,9 @@ struct Mouse
 class Button
 {
 private:
-    std::string buttonText ;
-	const char* nameOftexture;
-	SDL_Renderer* ren;
+    TextureBase* GameTextures;
+    std::string buttonText;
+    SDL_Renderer* ren;
 	SDL_Texture* buttonTexture;
 	Mouse mouse;
 	SDL_Rect button;
@@ -24,8 +26,8 @@ private:
     std::function <void()> hover;
 	bool mouseInArea(int x, int y, int w, int h);
 public:
-    Button(const char* textureName, SDL_Renderer* renderer, SDL_Rect rect);
-    Button(std::string textButton, const char* textureName, SDL_Renderer* renderer, SDL_Rect rect, std::function <void()> callbackFunction, std::function <void()>hoverFunction);
+    Button(SDL_Texture* texture, SDL_Renderer* renderer, SDL_Rect rect);
+    Button(std::string textButton, SDL_Texture* texture, SDL_Renderer* renderer, SDL_Rect rect, std::function <void()> callbackFunction, std::function <void()>hoverFunction);
 	void handleEvents(SDL_Event& buttonEvent);
 	void Render();
     void updateCoords(int newx, int newy);

@@ -6,13 +6,12 @@
 class GameObject
 {
 protected:
-	SDL_Texture* objTexture;
+    TextureBase* GameTextures;
 	SDL_Renderer* ren;
-    Animation* objAnim;
 public:
 	SDL_Rect Rect;
     GameObject() = default;
-    GameObject(const char* texturesheet, SDL_Renderer* renderer);
+    GameObject(SDL_Renderer* renderer);
     virtual ~GameObject();
 	virtual void Update();
     virtual void Render();

@@ -4,12 +4,16 @@
 #include "GameObject.h"
 #include "Animation.h"
 #include "Coins.h"
+#include <string.h>
 
 class Enemy : public GameObject
 {
 protected:
 	Uint32 Timer;
+    Uint32 timer;
+    Uint32 timer2;
 	bool temp;
+    bool temp1;
 	int DMG;
 	int expReward;
 	SDL_Renderer* ren;
@@ -33,29 +37,32 @@ protected:
 	int px[13 * 13], py[13 * 13];      // координаты €чеек, вход€щих  путь
 	int len;                       // длина пути
 	int outputDamageEnemy;
-	bool completeEnemyAnimation;
+    int currentFrameOfEnemyAnim;
 	Animation* enemyAnimation;
     Coins* coin;
     int valueOfCoins;
+    int Type;
 public:
 	int generate = 0;
 	Enemy() = default;
-    Enemy(const char* texturesheet, int framesOfAnimationForAttack,SDL_Renderer* ren, int HealthP, int MaxHealthP, int Damage, int EXPR, int coins);
+    Enemy(Enemy *enemy);
+    Enemy(const char* texturesheet, int framesOfAnimationForAttack, SDL_Renderer* ren, int HealthP, int MaxHealthP, int Damage, int EXPR, int coins, int type);
 	void Update() override;
     void Render() override;
 	void GetLoc(int arr[22][32]);
 	void GetWay();
 	bool WAY(int ax, int ay, int bx, int by);
 	void GetEnemyFirstCoords();
-	
+    int GetTypeName();
     virtual void meleeAttackEnemy();
-	void attackOfEnemy();
+    void attackOfEnemy(bool damage);
 	int enemyDamageCalculation();
-	void enemyTurn(); 
+    void enemyTurn();
 	int getDamageEnemy();
     int GetHpEnemy(int numOfHp);
     void CheckHpEnemy();
 	void ChahgeHpEnemy(int valueOfChangingHp);
+    void CheckTimer();
     Coins* GetCoin();
 };
 

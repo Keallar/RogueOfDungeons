@@ -5,10 +5,12 @@
 #include "string"
 #include "Buttons.h"
 #include "Enemy.h"
+#include "TextureBase.h"
 
 class UIInfo
 {
 private:
+    TextureBase* GameTextures;
 	const char* PATH_IN_FONT;
 	SDL_Color color = { 255, 255, 255, 255 };
 	SDL_Renderer* ren;
@@ -60,6 +62,7 @@ public:
 class UIItem
 {
 private:
+    TextureBase* GameTextures;
 	const char* PATH_IN_FONT;
 	SDL_Color color;
 	SDL_Renderer* ren;
@@ -74,6 +77,7 @@ public:
 class UIInventory
 {
 private:
+    TextureBase* GameTextures;
 	SDL_Renderer* ren;
 	SDL_Texture* inventoryBlock;
 	SDL_Texture* inventoryText;

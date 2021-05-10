@@ -6,7 +6,11 @@
 #include "Inventory.h"
 #include "Animation.h"
 #include "Level.h"
-RangeEnemy::RangeEnemy(const char* texturesheet, int framesOfAnimationForAttack,SDL_Renderer* ren, int HealthP, int MaxHealthP, int Damage, int EXPR, int coins):Enemy(texturesheet, framesOfAnimationForAttack, ren, HealthP, MaxHealthP, Damage, EXPR, coins)
+RangeEnemy::RangeEnemy(const char* texturesheet, int framesOfAnimationForAttack, SDL_Renderer* ren, int HealthP, int MaxHealthP, int Damage, int EXPR, int coins, int type):Enemy(texturesheet, framesOfAnimationForAttack, ren, HealthP, MaxHealthP, Damage, EXPR, coins, type)
+{
+
+}
+RangeEnemy::RangeEnemy(Enemy* enemy):Enemy(enemy)
 {
 
 }
@@ -51,7 +55,7 @@ void RangeEnemy::meleeAttackEnemy()
         }
         else
         {
-            for (int i = EnPosy; i > PlPosy; i--)
+            for (int i = EnPosx; i > PlPosx; i--)
             {
                 if (enemyLoc[PlPosy][i] == -2)
                 {

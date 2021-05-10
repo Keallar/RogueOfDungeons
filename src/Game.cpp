@@ -8,8 +8,6 @@
 #include "UI.h"
 #include "Enemy.h"
 
-//Player Game::player = new Player("data/images/Hero.png", renderer);
-
 Game::Game() 
 {
 	level = 0;
@@ -61,6 +59,7 @@ void Game::init(const char* title, int xpos, int ypos, int width, int height, bo
 	}
 	
 	Menu = new MainMenu("data/images/BackgroundMenu.png", "data/images/Play.png", "data/images/Settings.png","data/images/Exit.png", renderer);
+    classChoose = new ClassChoose(renderer);
 }
 
 void Game::handleEvents()
@@ -68,6 +67,13 @@ void Game::handleEvents()
 	SDL_Event event;
 	while (SDL_PollEvent(&event))
 	{
+        if (classChoose->flag == 1)
+        {
+            classChoose->handleEvents(event);
+        }
+        if (level) {
+            level->handleEvents(event);
+        }
 		switch (event.type)
 		{
 		case SDL_QUIT:
@@ -80,8 +86,7 @@ void Game::handleEvents()
 				if (InputManager::MouseInArea(640, 361, 250, 100, mouseCoord.x, mouseCoord.y))
 				{
                     Menu->flag = 0;
-                    level = new Level(renderer);
-                    level->Start();
+                    classChoose->flag = 1;
                     break;
 				}
 				if (InputManager::MouseInArea(640, 471, 420, 100, mouseCoord.x, mouseCoord.y))
@@ -97,10 +102,6 @@ void Game::handleEvents()
 		default:
 			break;
 		}
-		if (level)
-		{
-            level->handleEvents(event);
-		}
 	}
 }
 
@@ -110,9 +111,16 @@ void Game::update()
 	{
 		//Menu->Update();
 	}
-	else if (Menu->flag == 0)
+    else
 	{
-		level->Update();
+        if (classChoose->flag == 1 && classChoose->haveClass) {
+            classChoose->flag = 0;
+            level = new Level(renderer, classChoose->choosedClass);
+            level->Start();
+        }
+        if (level) {
+            level->Update();
+        }
 	}	
 }
 	
@@ -123,10 +131,14 @@ void Game::render()
 		Menu->Render();
 	}
 	else if (Menu->flag == 0)
-	{
-		level->Render();
+    {
+        if (classChoose->flag == 1) {
+            classChoose->Render();
+        }
+        else if (level) {
+            level->Render();
+        }
 	}
-
 	SDL_RenderPresent(renderer);
 }
 void Game::clean()

@@ -26,67 +26,71 @@ void Animation::UpdateTexture(std::string newTexture)
     animTexture = GameTexture->GetTexture(newTexture);
 }
 
-bool Animation::animationPlusForX(int numOfFrames, bool complete)
+int Animation::animationPlusForX(int numOfFrames)
 {
+    static int num = 1;
 	if (xanim != 32 * (numOfFrames - 1))
 	{
 		xanim += 32;
-		complete = 0;
+        num++;
 	}
 	else
 	{
 		xanim = 0;
-		complete = 1;
+        num = 1;
 	}
 
-	return complete;
+    return num;
 }
 
-bool Animation::animationPlusForY(int numOfFrames, bool complete)
+int Animation::animationPlusForY(int numOfFrames)
 {
+    static int num = 1;
 	if (yanim != 32 * (numOfFrames - 1))
 	{
 		yanim += 32;
-		complete = 0;
+        num++;
 	}
 	else
 	{
 		yanim = 0;
-		complete = 1;
+        num = 1;
 	}
 
-	return complete;
+    return num;
 }
 
-bool Animation::animationMinusForX(int numOfFrames, bool complete)
+int Animation::animationMinusForX(int numOfFrames)
 {
-	if (xanim != -32 * (numOfFrames - 1))
+    static int num = 1;
+    if (xanim != -32 * (numOfFrames - 1))
 	{
 		xanim -= 32;
-		complete = 0;
+        num++;
 	}
 	else
 	{
 		xanim = 0;
-		complete = 1;
+        num = 1;
 	}
 
-	return complete;
+    return num;
 }
 
-bool Animation::animationMinusForY(int numOfFrames, bool complete)
+int Animation::animationMinusForY(int numOfFrames)
 {
+    static int num = 1;
 	if (yanim != -32 * (numOfFrames - 1))
 	{
 		yanim -= 32;
-		complete = 0;
+        num++;
 	}
 	else
 	{
 		yanim = 0;
-		complete = 1;
+        num = 1;
 	}
 
-	return complete;
+    return num;
 }
 

@@ -4,12 +4,13 @@
 UIEnemy::UIEnemy(SDL_Renderer* renderer, Enemy* enemy):
     ren (renderer), tempEnemy(enemy)
 {
+    GameTextures = TextureBase::Instance();
     PATH_IN_FONT = "data/fonts/manaspc.ttf";
     color = { 255, 255, 255, 255 };
     std::string stringValue1 = std::to_string(enemy->GetHpEnemy(0));
     const char* TEXT_VALUE_CURRENT = stringValue1.c_str();
     enemyTex = FontManager::renderText("Enemy", PATH_IN_FONT, color, 32, ren);
-    hpEnemyBar = textureManager::LoadTexture("data/images/EnemyBar.png", ren);
+    hpEnemyBar = GameTextures->GetTexture("EnemyBar");
     hpTextEnemy = FontManager::renderText("HP", PATH_IN_FONT, color, 64, ren);
     hpCurrentTextEnemy = FontManager::renderText(TEXT_VALUE_CURRENT, PATH_IN_FONT, color, 32, ren);
     slashhhhhhhhh = FontManager::renderText("/", PATH_IN_FONT, color, 32, ren);

@@ -7,24 +7,22 @@
 #include "Level.h"
 #include "Game.h"
 
-Button::Button(const char* textureName, SDL_Renderer* renderer, SDL_Rect rect)
-    :nameOftexture(textureName), ren(renderer)
+Button::Button(SDL_Texture* texture, SDL_Renderer* renderer, SDL_Rect rect)
+    : ren(renderer)
 {
+
     button.x = rect.x;
     button.y = rect.y;
     button.w = rect.w;
     button.h = rect.h;
-
-    if (nameOftexture != NULL)
-        buttonTexture = textureManager::LoadTexture(nameOftexture, ren);
-    else
-        buttonTexture = NULL;
+    buttonTexture = texture;
 }
 
-Button::Button(std::string textButton, const char* textureName, SDL_Renderer* renderer, const SDL_Rect rect,
+Button::Button(std::string textButton, SDL_Texture* texture, SDL_Renderer* renderer, const SDL_Rect rect,
                std::function <void()> callbackFunction, std::function <void()> hoverFunction):
-    buttonText (textButton),nameOftexture(textureName), ren(renderer), callback(callbackFunction), hover(hoverFunction)
+    buttonText (textButton), ren(renderer), callback(callbackFunction), hover(hoverFunction)
 {
+
     button.x = rect.x;
     button.y = rect.y;
     button.w = rect.w;
@@ -37,10 +35,7 @@ Button::Button(std::string textButton, const char* textureName, SDL_Renderer* re
     if (hover == NULL)
         std::cout << "hover isn't ready" << std::endl;
 
-    if (nameOftexture != NULL)
-        buttonTexture = textureManager::LoadTexture(nameOftexture, ren);
-    else
-        buttonTexture = NULL;
+    buttonTexture = texture;
 }
 
 void Button::handleEvents(SDL_Event& buttonEvent)

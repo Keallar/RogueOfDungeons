@@ -6,3 +6,4 @@ magic 2 10 1 fire point data/images/FireBall.png FireBall
 armor 1 data/images/LetherArmor.png LetherArmor
 potion 4 0 data/images/SmallHpPotion.png SmallHpPotion
 potion 0 4 data/images/SmallMpPotion.png SmallMpPotion
+potion 7 0 data/images/Pie.png Pie

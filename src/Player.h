@@ -39,14 +39,19 @@ private:
     static int levelOfPlayer[3];
     static int quantityOfCoins[3];
 public:
+    int classPlayer;
+    bool playerEscaping;
 	bool InventoryBlock();
 	int generate;
 	static int VIS;
     static int damage;
     static Equiped EqItems;
-    Player(const char* texturesheet, SDL_Renderer* ren);
+    Player(SDL_Renderer* ren);
+
     void Update() override;
     void Render() override;
+
+    void PushItemsToInventory(int kit);
 
 	void GetLevel(int arr[22][32]);
 	void GetPlayerFirstCoords();
@@ -74,6 +79,7 @@ public:
     static void ChangeMaxManaValue();
     static void ChangeMaxExpValue();
     static void ChangeCoins(int value);
+    static void ChangePointOfSpec(int valueOfChanging);
 
     void CheckHP();
     void CheckEXP();

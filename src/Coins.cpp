@@ -2,7 +2,7 @@
 #include "EntityPosition.h"
 
 Coins::Coins(const char* texturesheet, SDL_Renderer* renderer, int value, int framesOfCoin):
-    GameObject(texturesheet, renderer)
+    GameObject(renderer)
 {
     coinRect.x = 0;
     coinRect.y = 0;
@@ -13,7 +13,7 @@ Coins::Coins(const char* texturesheet, SDL_Renderer* renderer, int value, int fr
     coinTexture = textureManager::LoadTexture(texturesheet, ren);
     frameOfCoin = framesOfCoin;
     coinAnimation = new Animation (ren, coinTexture);
-    completeCoinAnimation = 0;
+    currentFrameOfCoinAnim = 1;
 }
 
 Coins::~Coins()
@@ -32,15 +32,15 @@ void Coins::Render()
     coinAnimation->Render(coinRect.x, coinRect.y);
     if (temp == false)
     {
-        completeCoinAnimation = coinAnimation->animationMinusForX(frameOfCoin, completeCoinAnimation);
+        currentFrameOfCoinAnim = coinAnimation->animationMinusForX(frameOfCoin);
         Timer = SDL_GetTicks();
         temp = true;
     }
     Uint32 Timer2 = SDL_GetTicks();
-    completeCoinAnimation = coinAnimation->animationMinusForX(frameOfCoin, completeCoinAnimation);
+    currentFrameOfCoinAnim = coinAnimation->animationMinusForX(frameOfCoin);
     if (Timer2 - Timer >= 200 && temp == true)
     {
-        completeCoinAnimation = coinAnimation->animationMinusForX(frameOfCoin, completeCoinAnimation);
+        currentFrameOfCoinAnim = coinAnimation->animationMinusForX(frameOfCoin);
         Timer = Timer2;
     }
 }

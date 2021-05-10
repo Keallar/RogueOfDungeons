@@ -17,7 +17,7 @@ public:
 	static void CopyToRender(SDL_Texture* texture, SDL_Renderer* ren, int x, int y, int w, int h, int dx, int dy, int dw, int dh);
 	static void CopyToRender(SDL_Texture* texture, SDL_Renderer* ren, int x, int y, int w, int h);
 	static void CopyToRender(SDL_Texture* texture, SDL_Renderer* ren);
-	static void SetTile(int x, int y, int tile, SDL_Renderer* renderer, SDL_Texture* tiles);
+    static void SetTile(int x, int y, int tile, SDL_Renderer* renderer, SDL_Texture* tiles);
 };
 
 class InputManager
@@ -38,6 +38,7 @@ public:
     //Turn
     static int flagTurn;
     static int flagInAreaOfAnemy;
+    static bool flagTimerTurn;
     //UI
 	static bool flagUI;
 	static bool flagUiSpec;

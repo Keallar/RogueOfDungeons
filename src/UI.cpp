@@ -9,13 +9,15 @@
 
 UIInfo::UIInfo(SDL_Renderer* renderer) : ren (renderer)
 {
+    GameTextures = TextureBase::Instance();
+
     PATH_IN_FONT = "data/fonts/manaspc.ttf";
     flagHoverSpec = false;
 
     //Version
     versionBLock = FontManager::renderText("ROGUE OF DUNGEONS V-0.1 ALPHA", PATH_IN_FONT, color, 32, ren);
 
-    infoBlock = textureManager::LoadTexture("data/images/InfoBlock.png", ren);
+    infoBlock = GameTextures->GetTexture("InfoBlock");
     info = FontManager::renderText("Info", PATH_IN_FONT, color, 32, ren);
 
     slashhhhhhhhh = FontManager::renderText("/", PATH_IN_FONT, color, 32, ren);
@@ -23,15 +25,15 @@ UIInfo::UIInfo(SDL_Renderer* renderer) : ren (renderer)
     SPEC = FontManager::renderText("SPEC", PATH_IN_FONT, color, 32, ren);
 
     //HP
-    hpBar = textureManager::LoadTexture("data/images/hp.png", ren);
+    hpBar = GameTextures->GetTexture("Hp");
     hpText = FontManager::renderText("HP", PATH_IN_FONT, color, 64, ren);
 
     //Mana
-    mnBar = textureManager::LoadTexture("data/images/ManaBar.png", ren);
+    mnBar = GameTextures->GetTexture("ManaBar");
     mnText = FontManager::renderText("MN", PATH_IN_FONT, color, 64, ren);
 
     //XP
-    xpBar = textureManager::LoadTexture("data/images/XP.png", ren);
+    xpBar = GameTextures->GetTexture("XP");
     xpText = FontManager::renderText("XP", PATH_IN_FONT, color, 64, ren);
 
     //Level Of Player
@@ -70,7 +72,7 @@ UIInfo::UIInfo(SDL_Renderer* renderer) : ren (renderer)
                 flagHoverSpec = 0;
         }
     };
-    buttonForCallSpecInfo = new Button("left", "data/images/Button.png", ren , { 1230, 240, 32, 32 },
+    buttonForCallSpecInfo = new Button("left", GameTextures->GetTexture("Button"), ren , { 1230, 240, 32, 32 },
                                        callSpecOrInfoWin, hoverSpec);
     keyForCallSpecInfo = new Keyboard(SDL_SCANCODE_Q, callSpecOrInfoWin);
     auto callInvWin{
@@ -86,7 +88,7 @@ UIInfo::UIInfo(SDL_Renderer* renderer) : ren (renderer)
             }
         }
     };
-    buttonForCallInvWin = new Button("left", "data/images/Button.png", ren, { 1050, 665, 25, 22 },
+    buttonForCallInvWin = new Button("left", GameTextures->GetTexture("Button"), ren, { 1050, 665, 25, 22 },
                                      callInvWin, NULL);
     keyForcCallInvWin = new Keyboard(SDL_SCANCODE_I, callInvWin);
 }
@@ -212,10 +214,11 @@ void UIEquipedItem::clickForItemsInInv()
 
 UIItem::UIItem(SDL_Renderer* renderer) : ren(renderer)
 {
+    GameTextures = TextureBase::Instance();
     PATH_IN_FONT = "data/fonts/manaspc.ttf";
     color = { 255, 255, 255, 255 };
 
-    itemBlock = textureManager::LoadTexture("data/images/InfoBlock.png", ren);
+    itemBlock = GameTextures->GetTexture("InfoBlock");
     item = FontManager::renderText("Items", PATH_IN_FONT, color, 32, ren);
     INV = FontManager::renderText("INV", PATH_IN_FONT, color, 32, ren);
 }
@@ -229,10 +232,12 @@ void UIItem::Render()
 
 UIInventory::UIInventory(SDL_Renderer* renderer) : ren(renderer)
 {
+    GameTextures = TextureBase::Instance();
+
     SDL_Color color = { 255, 255, 255, 255 };
     const char* PATH_IN_FONT = "data/fonts/manaspc.ttf";
 
-    inventoryBlock = textureManager::LoadTexture("data/images/InfoBlock.png", ren);
+    inventoryBlock = GameTextures->GetTexture("InfoBlock");
     inventoryText = FontManager::renderText("Inventory", PATH_IN_FONT, color, 64, ren);
     auto callDrop{
         []()
@@ -247,7 +252,7 @@ UIInventory::UIInventory(SDL_Renderer* renderer) : ren(renderer)
             }
         }
     };
-    buttonForCallDpor = new Button("left","data/images/Button.png", ren, { 790, 665, 25, 22 }, callDrop , NULL);
+    buttonForCallDpor = new Button("left", GameTextures->GetTexture("Button"), ren, { 790, 665, 25, 22 }, callDrop , NULL);
 }
 
 void UIInventory::Render()

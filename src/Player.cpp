@@ -80,8 +80,8 @@ int Player::quantityOfCoins[3] = {
 
 int Player::VIS = 16;
 
-Player::Player(const char* texturesheet, SDL_Renderer* renderer):
-    GameObject(texturesheet, renderer)
+Player::Player( SDL_Renderer* renderer):
+    GameObject( renderer)
 {
     GameTextures = TextureBase::Instance();
     ren = renderer;
@@ -96,18 +96,42 @@ Player::Player(const char* texturesheet, SDL_Renderer* renderer):
         }
     }
 
+    playerEscaping = false;
     inventory = new Inventory;
-    inventory->AddItem(1);
-    inventory->AddItem(2);
-    inventory->AddItem(5);
-    inventory->AddItem(3);
-    inventory->AddItem(4);
-    inventory->AddItem(6);
-    inventory->AddItem(6);
-    inventory->AddItem(7);
     inventory->Update();
     EqItems.WeaponId = 0;
     EqItems.equipedMeleeW = inventory->GetRealMelee(0);
+}
+
+void Player::PushItemsToInventory(int kit) {
+    if (kit == 4) {
+        inventory->AddItem(1);
+        inventory->AddItem(2);
+        inventory->AddItem(5);
+        inventory->AddItem(3);
+        inventory->AddItem(4);
+        inventory->AddItem(6);
+        inventory->AddItem(6);
+        inventory->AddItem(7);
+        inventory->AddItem(8);
+    }
+    if (kit == 1) {
+        inventory->AddItem(1);
+        inventory->AddItem(5);
+        inventory->AddItem(8);
+        inventory->AddItem(7);
+    }
+    if (kit == 2) {
+        inventory->AddItem(3);
+        inventory->AddItem(5);
+        inventory->AddItem(8);
+        inventory->AddItem(7);
+    }
+    if (kit == 3) {
+        inventory->AddItem(4);
+        inventory->AddItem(8);
+        inventory->AddItem(7);
+    }
 }
 
 int Player::GetHP(int numOfArr)
@@ -226,6 +250,12 @@ int Player::GetCoinsOfPlayer(int numCoins)
     }
 }
 
+void Player::ChangePointOfSpec(int valueOfChanging)
+{
+    if (pointOfSpec[0] != 0)
+        pointOfSpec[0] += valueOfChanging;
+}
+
 //Изменение значения характеристики (STR, DEX, INT, PHS, LCK) на +1
 void Player::ChangeValueSpecs(int numOfSpec)
 {
@@ -235,27 +265,27 @@ void Player::ChangeValueSpecs(int numOfSpec)
         {
         case 1: //STR
             STR[0] += 1;
-            pointOfSpec[0] -= 1;
+            Player::ChangePointOfSpec(-1);
             break;
         case 2: //DEX
             DEX[0] += 1;
-            pointOfSpec[0] -= 1;
+            Player::ChangePointOfSpec(-1);
             break;
         case 3: //INT
             INT[0] += 1;
-            pointOfSpec[0] -= 1;
+            Player::ChangePointOfSpec(-1);
             break;
         case 4:
             WSD[0] += 1;
-            pointOfSpec[0] -= 1;
+            Player::ChangePointOfSpec(-1);
             break;
         case 5: //PHS
             PHS[0] += 1;
-            pointOfSpec[0] -= 1;
+            Player::ChangePointOfSpec(-1);
             break;
         case 6: //LCK
             LCK[0] += 1;
-            pointOfSpec[0] -= 1;
+            Player::ChangePointOfSpec(-1);
             break;
         default:
             std::cout << "Error in ChangeSpecValue!" << std::endl;
@@ -267,7 +297,7 @@ void Player::ChangeValueSpecs(int numOfSpec)
 //Изменение текущего значения hp
 void Player::ChangeHpValue(int valueOfChangingHp)
 {
-    if (HP[0] != 0 && HP[0] <= HP[2])
+    if (HP[0] != 0)
         HP[0] += valueOfChangingHp;
 }
 
@@ -651,7 +681,8 @@ void Player::GetItemOnLvl(int id)
 
 void Player::Render()
 {
-    playerAnimation->Render(EntityPosition::Coords[0], EntityPosition::Coords[1]);
+    if (playerEscaping) RenderManager::CopyToRender(GameTextures->GetTexture("HeroEscape"), ren, EntityPosition::Coords[0], EntityPosition::Coords[1], 32, 32, 0, 0, 32, 32);
+    if (!playerEscaping) playerAnimation->Render(EntityPosition::Coords[0], EntityPosition::Coords[1]);
 }
 
 void Player::Update()

@@ -7,7 +7,8 @@ class RangeEnemy : public Enemy
 {
 public:
     RangeEnemy() = default;
-    RangeEnemy(const char* texturesheet, int framesOfAnimationForAttack,SDL_Renderer* ren, int HealthP, int MaxHealthP, int Damage, int EXPR, int coins);
+    RangeEnemy(Enemy* enemy);
+    RangeEnemy(const char* texturesheet, int framesOfAnimationForAttack,SDL_Renderer* ren, int HealthP, int MaxHealthP, int Damage, int EXPR, int coins, int type);
     virtual void meleeAttackEnemy();
 };
 

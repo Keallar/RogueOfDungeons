@@ -4,6 +4,7 @@
 #include "GameObject.h"
 #include "Animation.h"
 #include "Coins.h"
+#include <string.h>
 
 class Enemy : public GameObject
 {
@@ -40,17 +41,19 @@ protected:
 	Animation* enemyAnimation;
     Coins* coin;
     int valueOfCoins;
+    int Type;
 public:
 	int generate = 0;
 	Enemy() = default;
-    Enemy(const char* texturesheet, int framesOfAnimationForAttack,SDL_Renderer* ren, int HealthP, int MaxHealthP, int Damage, int EXPR, int coins);
+    Enemy(Enemy *enemy);
+    Enemy(const char* texturesheet, int framesOfAnimationForAttack, SDL_Renderer* ren, int HealthP, int MaxHealthP, int Damage, int EXPR, int coins, int type);
 	void Update() override;
     void Render() override;
 	void GetLoc(int arr[22][32]);
 	void GetWay();
 	bool WAY(int ax, int ay, int bx, int by);
 	void GetEnemyFirstCoords();
-	
+    int GetTypeName();
     virtual void meleeAttackEnemy();
     void attackOfEnemy(bool damage);
 	int enemyDamageCalculation();

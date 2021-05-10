@@ -8,8 +8,8 @@
 using namespace std;
 
 Enemy::Enemy(const char* texturesheet, int framesOfAnimationForAttack,
-             SDL_Renderer* renderer, int HealthP, int MaxHealthP, int Damage, int EXPR, int coins):
-    GameObject(renderer)
+             SDL_Renderer* renderer, int HealthP, int MaxHealthP, int Damage, int EXPR, int coins, int type):
+    GameObject(texturesheet, renderer)
 {
     ren = renderer;
     HP = HealthP;
@@ -27,9 +27,29 @@ Enemy::Enemy(const char* texturesheet, int framesOfAnimationForAttack,
     enemyTexture = textureManager::LoadTexture(texturesheet, ren);
     enemyAnimation = new Animation(ren, enemyTexture);
     framesOfAnimForAttack = framesOfAnimationForAttack;
-    currentFrameOfEnemyAnim = 0;
+    completeEnemyAnimation = 0;
+    Type = type;
 }
+Enemy::Enemy(Enemy* enemy)
+{
+    ren = enemy->ren;
 
+    HpMax = enemy->HpMax;
+    HP = HpMax;
+    prevHp = HpMax;
+    temp = false;
+    Timer = 0;
+    generate = -1;
+    expReward = enemy->expReward;
+    DMG = enemy->DMG;
+    valueOfCoins = enemy->valueOfCoins;
+    coin = new Coins ("data/images/Coin->png", ren, valueOfCoins, 1);
+    enemyTexture = enemy->enemyTexture;
+    enemyAnimation = new Animation(ren, enemyTexture);
+    framesOfAnimForAttack = enemy->framesOfAnimForAttack;
+    completeEnemyAnimation = 0;
+    Type = enemy->Type;
+}
 void Enemy::Render()
 {
     enemyAnimation->Render(Rect.x, Rect.y);
@@ -215,7 +235,7 @@ bool Enemy::WAY(int ax, int ay, int bx, int by)   // ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿
 void Enemy::Update()
 {
     if ((abs(EntityPosition::Coords[0] - this->Rect.x)/32 +
-         abs(EntityPosition::Coords[1] - this->Rect.y)/32) < 3)
+         abs(EntityPosition::Coords[1] - this->Rect.y)/32) < 9)
     {
         meleeAttackEnemy();
         if ((abs(Rect.x / 32 - EntityPosition::Coords[0] / 32) +
@@ -348,4 +368,7 @@ int Enemy::enemyDamageCalculation()
         outputDamageEnemy = getDamageEnemy();
     return outputDamageEnemy;
 }
-
+int Enemy::GetTypeName()
+{
+    return Type;
+}

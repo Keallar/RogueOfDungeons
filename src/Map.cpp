@@ -10,7 +10,7 @@
 Map::Map()
 {
     TileSet = 0;
-    floorLvl = 1;
+    floorLvl = 4;
     for (int i = 0; i < 22; i++)
     {
         for (int j = 0; j < 32; j++)
@@ -38,12 +38,10 @@ Map::~Map() {
 void Map::GenerateMap()
 {
     srand(time(0));
-    if(floorLvl <= 4) {
-        TileSet = 0;
-        switch(rand()%3) {case 0: generateChoose = 0; break; case 1: generateChoose = 4; break; case 2: generateChoose = 2; break;}
-    }
-    if(floorLvl > 4 && floorLvl <= 8) {
-        TileSet = 1;
+    floorLvl++;
+    if(floorLvl <= 3) {
+        switch(rand()%3) {case 0: generateChoose = 0; break; case 1: generateChoose = 4; break; case 2: generateChoose = 2; break;}    }
+    if(floorLvl > 3 && floorLvl <= 7) {
         switch(rand()%2) {case 0: generateChoose = 1; break; case 1: generateChoose = 5; break;}
     }
     if(floorLvl > 8 && floorLvl <= 12) {
@@ -72,7 +70,6 @@ void Map::GenerateMap()
         itemsOnLvl[i] = rand() % 4 + 1;
     }
     itemsHave = 2;
-    floorLvl++;
 }
 
 void Map::CreateChunk(int x, int y) {

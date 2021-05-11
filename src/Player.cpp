@@ -10,7 +10,7 @@
 #include "TextureBase.h"
 #include <iostream>
 
-Equiped Player::EqItems = { -1, nullptr, nullptr, nullptr, -1, nullptr};
+Equiped Player::EqItems = { -1, nullptr, nullptr, nullptr, -1, nullptr, -1, nullptr};
 
 int Player::HP[3] = {
     10, /*hp  now*/
@@ -114,18 +114,21 @@ void Player::PushItemsToInventory(int kit) {
         inventory->AddItem(6);
         inventory->AddItem(7);
         inventory->AddItem(8);
+        inventory->AddItem(9);
     }
     if (kit == 1) {
         inventory->AddItem(1);
         inventory->AddItem(5);
         inventory->AddItem(8);
         inventory->AddItem(7);
+        inventory->AddItem(9);
     }
     if (kit == 2) {
         inventory->AddItem(3);
         inventory->AddItem(5);
         inventory->AddItem(8);
         inventory->AddItem(7);
+        inventory->AddItem(9);
     }
     if (kit == 3) {
         inventory->AddItem(4);
@@ -291,6 +294,34 @@ void Player::ChangeValueSpecs(int numOfSpec)
             std::cout << "Error in ChangeSpecValue!" << std::endl;
             break;
         }
+    }
+}
+
+void Player::ChangeValueSpecsNoLvl(int numOfSpec, int Value)
+{
+    switch (numOfSpec)
+    {
+    case 1: //STR
+        STR[0] += Value;
+        break;
+    case 2: //DEX
+        DEX[0] += Value;
+        break;
+    case 3: //INT
+        INT[0] += Value;
+        break;
+    case 4:
+        WSD[0] += Value;
+        break;
+    case 5: //PHS
+        PHS[0] += Value;
+        break;
+    case 6: //LCK
+        LCK[0] += Value;
+        break;
+    default:
+        std::cout << "Error in ChangeSpecValueNoLvl!" << std::endl;
+        break;
     }
 }
 
@@ -633,6 +664,23 @@ void Player::GetItemEquip(int id)
             ChangeManaValue(static_cast<Potion*>(Inventory::ExistingItems[ItemId])->MpHEAL);
             inventory->inventory[id] = -1;
         }
+        if (Inventory::ExistingItems[ItemId]->Type == artifact)
+        {
+            if (EqItems.ArtId > 0) {
+                inventory->inventory[id] = EqItems.ArtId;
+            }
+            else
+            {
+                inventory->inventory[id] = -1;
+            }
+            EqItems.ArtId = ItemId;
+
+            EqItems.equipedArtifact = inventory->GetRealArtifact(ItemId);
+
+            for(int i = 1; i <= 6; i++) {
+                ChangeValueSpecsNoLvl(i, EqItems.equipedArtifact->specs[i-1]);
+            }
+        }
     }
     FlagManager::flagEquip = -1;
 }
@@ -657,6 +705,16 @@ void Player::GetItemUnEquip(int id)
             PlayerTexture = GameTextures->GetTexture("Hero");
             playerAnimation->UpdateTexture("Hero");
         }
+        if (id == 2)
+        {
+            for(int i = 1; i <= 6; i++) {
+                ChangeValueSpecsNoLvl(i, -(EqItems.equipedArtifact->specs[i-1]));
+            }
+            inventory->AddItem(EqItems.ArtId);
+            EqItems.ArtId = -1;
+            EqItems.equipedArtifact = nullptr;
+        }
+
     }
     FlagManager::flagUnEquip = -1;
 }

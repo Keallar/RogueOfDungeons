@@ -163,6 +163,7 @@ void UIInfo::handleEvents(SDL_Event& eventInUiInfo)
 
 UIEquipedItem::UIEquipedItem(SDL_Renderer* renderer) : ren (renderer)
 {
+
 }
 
 void UIEquipedItem::Render()
@@ -185,6 +186,15 @@ void UIEquipedItem::Render()
         SDL_DestroyTexture(EquipedItem);
         EquipedItem = 0;
     }
+    Inventory::it = Inventory::ExistingItems.find(Player::EqItems.ArtId);
+    if (Player::EqItems.ArtId != -1)
+    {
+        EquipedItem = textureManager::LoadTexture((Inventory::it->second)->ItemTexture, ren);
+
+        RenderManager::CopyToRender(EquipedItem, ren, 1107, 550, 32, 32);
+        SDL_DestroyTexture(EquipedItem);
+        EquipedItem = 0;
+    }
 }
 
 void UIEquipedItem::clickForItemsInInv()
@@ -201,6 +211,11 @@ void UIEquipedItem::clickForItemsInInv()
             Player::EqItems.ArmorId != -1)
     {
         FlagManager::flagUnEquip = 1;
+    }
+    if (InputManager::MouseInArea(1107, 550, 32, 32, xMouseCoord, yMouseCoord) &&
+            Player::EqItems.ArtId != -1)
+    {
+        FlagManager::flagUnEquip = 2;
     }
 }
 
@@ -277,7 +292,7 @@ void UIInventory::clickForItemsInInv()
 
     for (int i = 0; i < INVENTORY_SIZE; i++)
     {
-        if (InputManager::MouseInArea((780 + 36 * (i % 6)), (100 + ((i / 6) * 50)), 32, 32, xMouseCoord, yMouseCoord) &&
+        if (InputManager::MouseInArea((770 + 36 * (i % 6)), (100 + ((i / 6) * 50)), 32, 32, xMouseCoord, yMouseCoord) &&
                 Inventory::inventoryFace[i] != -1 && FlagManager::flagInv == 1)
         {
             if (FlagManager::flagHaveDrop == false)

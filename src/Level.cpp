@@ -546,35 +546,33 @@ void Level::Render()
         if (FlagManager::flagUiSpec == 1)
         {
             uiSpec->Render();
-
-            if (FlagManager::flagSTR == 1)
-            {
-                uiSpec->Update(Player::GetSpecValue(1), 1);
-            }
-            if (FlagManager::flagDEX == 1)
-            {
-                uiSpec->Update(Player::GetSpecValue(2), 2);
-            }
-            if (FlagManager::flagINT == 1)
-            {
-                uiSpec->Update(Player::GetSpecValue(3), 3);
-                mana->UpdateMax();
-            }
-            if (FlagManager::flagWSD == 1)
-            {
-                uiSpec->Update(Player::GetSpecValue(4), 4);
-            }
-            if (FlagManager::flagPHS == 1)
-            {
-                uiSpec->Update(Player::GetSpecValue(5), 5);
-                hp->UpdateMax();
-            }
-            if (FlagManager::flagLCK == 1)
-            {
-                uiSpec->Update(Player::GetSpecValue(6), 6);
-            }
         }
-
+        if (FlagManager::flagSTR == 1)
+        {
+            uiSpec->Update(Player::GetSpecValue(1), 1);
+        }
+        if (FlagManager::flagDEX == 1)
+        {
+            uiSpec->Update(Player::GetSpecValue(2), 2);
+        }
+        if (FlagManager::flagINT == 1)
+        {
+            uiSpec->Update(Player::GetSpecValue(3), 3);
+            mana->UpdateMax();
+        }
+        if (FlagManager::flagWSD == 1)
+        {
+            uiSpec->Update(Player::GetSpecValue(4), 4);
+        }
+        if (FlagManager::flagPHS == 1)
+        {
+            uiSpec->Update(Player::GetSpecValue(5), 5);
+            hp->UpdateMax();
+        }
+        if (FlagManager::flagLCK == 1)
+        {
+            uiSpec->Update(Player::GetSpecValue(6), 6);
+        }
         if (FlagManager::flagUI == 1)
         {
             uiInfo->Render();

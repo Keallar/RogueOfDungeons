@@ -801,7 +801,7 @@ int Player::MagicAttack()
     if ((Inventory::ExistingItems[Player::EqItems.WeaponId]->Type == magic) &&
         Player::mana[0] != 0)
     {
-        damage = Player::EqItems.equipedMagic->DMG + Player::INT[0];
+        damage = Player::EqItems.equipedMagic->DMG + Player::WSD[0];
         std::cout << damage << "!" << std::endl;
     }
     return damage;

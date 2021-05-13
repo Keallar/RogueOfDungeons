@@ -18,6 +18,7 @@ protected:
 	int expReward;
 	SDL_Renderer* ren;
 	SDL_Texture* enemyTexture;
+    SDL_Texture* redSquare;
 	int xanim= 0, yanim = 0;
 	//Кол-во кадров для анимации
 	int framesOfAnimForAttack;

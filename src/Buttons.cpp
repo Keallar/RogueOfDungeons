@@ -143,6 +143,13 @@ void Button::updateScaleButton(int newx, int newy, int newh, int neww)
     button.h = newh;
 }
 
+void Button::updateTexture(std::string texturesheet)
+{
+    SDL_DestroyTexture(buttonTexture);
+    buttonTexture = 0;
+    buttonTexture = GameTextures->GetTexture(texturesheet);
+}
+
 Keyboard::Keyboard(SDL_Scancode scancode, std::function <void()> callbackFunction):
     code (scancode), callback(callbackFunction)
 {

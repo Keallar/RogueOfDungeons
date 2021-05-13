@@ -10,7 +10,7 @@
 Map::Map()
 {
     TileSet = 0;
-    floorLvl = 1;
+    floorLvl = 0;
     for (int i = 0; i < 22; i++)
     {
         for (int j = 0; j < 32; j++)

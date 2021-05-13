@@ -1,10 +1,10 @@
-weapon 0 1 data/images/Punch.png Punch
-weapon 1 1 data/images/ShortSword.png ShortSword
-weapon 2 2 data/images/Spear.png Spear
-rWeapon 1 4 60 15 data/images/ShortBow.png ShortBow
-magic 2 10 1 fire point data/images/FireBall.png FireBall
+weapon 0 1 0 data/images/Punch.png Punch
+weapon 1 1 10 data/images/ShortSword.png ShortSword
+weapon 2 2 50 data/images/Spear.png Spear
+rWeapon 1 4 60 15 20 data/images/ShortBow.png ShortBow
+magic 2 10 1 fire point 100 data/images/FireBall.png FireBall
 armor 1 data/images/LetherArmor.png LetherArmor
-potion 4 0 data/images/SmallHpPotion.png SmallHpPotion
-potion 0 4 data/images/SmallMpPotion.png SmallMpPotion
-potion 7 0 data/images/Pie.png Pie
+potion 4 0 20 data/images/SmallHpPotion.png SmallHpPotion
+potion 0 4 20 data/images/SmallMpPotion.png SmallMpPotion
+potion 7 0 50 data/images/Pie.png Pie
 artifact 1 2 0 0 0 0 data/images/SpeedBoots.png SpeedBoots

@@ -26,6 +26,7 @@ Level::Level(SDL_Renderer* renderer, int playerClass) : ren (renderer), pClass(p
     mana = new ManaInfo(ren);
     exp = new ExpInfo(ren);
     uiEquiped = new UIEquipedItem(ren);
+    uiTrader = new UiTrader(ren);
     timer = 0;
     timeB = false;
     auto pressW{
@@ -212,6 +213,7 @@ Level::~Level()
     delete uiItem;
     delete UiEnemy;
     delete uiSpec;
+    delete uiTrader;
     delete hp;
     delete mana;
     delete exp;
@@ -384,6 +386,8 @@ void Level::Update()
     {
         uiInfo->Update();
     }
+
+    uiTrader->Update();
 }
 
 void Level::Start()
@@ -467,7 +471,7 @@ void Level::TimerTurn()
             timeB = true;
         }
         Uint32 timer2 = SDL_GetTicks();
-        if (timer2 - timer >= 200 && timeB == true)
+        if (timer2 - timer >= 300 && timeB == true)
         {
             std::cout << "TimerTurn" << std::endl;
             timer = timer2;
@@ -558,11 +562,11 @@ void Level::Render()
         if (FlagManager::flagINT == 1)
         {
             uiSpec->Update(Player::GetSpecValue(3), 3);
-            mana->UpdateMax();
         }
         if (FlagManager::flagWSD == 1)
         {
             uiSpec->Update(Player::GetSpecValue(4), 4);
+            mana->UpdateMax();
         }
         if (FlagManager::flagPHS == 1)
         {
@@ -628,6 +632,8 @@ void Level::Render()
             }
         }
     }
+
+    uiTrader->Render();
 }
 
 //возможность изменять уровень из вне
@@ -812,7 +818,8 @@ void Level::Attack()
                     if (pow((mouseX-EntityPosition::Coords[0]/32), 2) + pow((mouseY-EntityPosition::Coords[1]/32), 2) <= pow(player->EqItems.equipedMagic->RNG, 2))
                     {
                         if(!FindWallsOnWay(EntityPosition::Coords[0], EntityPosition::Coords[1], mouseX*32, mouseY*32) ||
-                                Player::EqItems.equipedMagic->WeaponEl == magicEl::thunder) {
+                                Player::EqItems.equipedMagic->WeaponEl == magicEl::thunder)
+                        {
                             enemy->ChahgeHpEnemy(-(player->MagicAttack()));
                             if (player->EqItems.equipedMagic->WeaponEl == magicEl::fire)
                             {

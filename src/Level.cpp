@@ -633,7 +633,7 @@ void Level::Render()
         }
     }
 
-    uiTrader->Render();
+    //uiTrader->Render();
 }
 
 //возможность изменять уровень из вне

@@ -8,28 +8,26 @@
 class textureManager
 {
 public:
-	static SDL_Texture* LoadTexture(const char* fileName, SDL_Renderer* ren);
+    static SDL_Texture* LoadTexture(const char* fileName, SDL_Renderer* ren = nullptr);
 };
 
-class RenderManager 
+namespace RenderManager
 {
-public:
-	static void CopyToRender(SDL_Texture* texture, SDL_Renderer* ren, int x, int y, int w, int h, int dx, int dy, int dw, int dh);
-	static void CopyToRender(SDL_Texture* texture, SDL_Renderer* ren, int x, int y, int w, int h);
-	static void CopyToRender(SDL_Texture* texture, SDL_Renderer* ren);
-    static void SetTile(int x, int y, int tile, SDL_Renderer* renderer, SDL_Texture* tiles);
+    void CopyToRender(SDL_Texture* texture, SDL_Renderer* ren, int x, int y, int w, int h, int dx, int dy, int dw, int dh);
+    void CopyToRender(SDL_Texture* texture, SDL_Renderer* ren, SDL_Rect rect);
+    void CopyToRender(SDL_Texture* texture, SDL_Renderer* ren);
+    void SetTile(int x, int y, int tile, SDL_Renderer* renderer, SDL_Texture* tiles);
+    void CopyToRender(SDL_Texture *texture, SDL_Renderer *ren, int x, int y, int w, int h);
 };
 
-class InputManager
+namespace InputManager
 {
-public:
-	static bool MouseInArea(int x, int y, int w, int h, int MouseX, int MouseY);	
+    bool MouseInArea(int x, int y, int w, int h, int MouseX, int MouseY);
 };
 
-class FontManager 
+namespace FontManager
 {
-public:
-	static SDL_Texture* renderText(const char* text, const char * fontFile, SDL_Color textColor, int fontSize, SDL_Renderer* renderer);
+    SDL_Texture* renderText(const char* text, const char * fontFile, SDL_Color textColor, int fontSize, SDL_Renderer* renderer);
 };
 
 class FlagManager
@@ -40,36 +38,36 @@ public:
     static int flagInAreaOfAnemy;
     static bool flagTimerTurn;
     //UI
-	static bool flagUI;
-	static bool flagUiSpec;
-	static bool flagCheckHP;
-	static bool flagCheckMana;
-	static bool flagCheckExp;
-	static bool flagInv;
-	static int flagChest;
-	static bool flagUiEnemy;
+    static bool flagUI;
+    static bool flagUiSpec;
+    static bool flagCheckHP;
+    static bool flagCheckMana;
+    static bool flagCheckExp;
+    static bool flagInv;
+    static int flagChest;
+    static bool flagUiEnemy;
     static bool flagPointOfSpec;
     static bool flagLevelOfPlayer;
     static bool flagCoin;
     //Specs
-	static bool flagSTR;
-	static bool flagDEX;
-	static bool flagINT;
-	static bool flagWSD;
-	static bool flagPHS;
-	static bool flagLCK;
+    static bool flagSTR;
+    static bool flagDEX;
+    static bool flagINT;
+    static bool flagWSD;
+    static bool flagPHS;
+    static bool flagLCK;
     //Equip Inv
-	static int flagEquip;
-	static int flagUnEquip;
+    static int flagEquip;
+    static int flagUnEquip;
     static int flagDrop;
     static bool flagHaveDrop;
     //Attack
-	static int flagMeleeAttackPlayer;
-	static int flagMeleeAttackEnemy;
-	static bool flagCheckHpEnemy;
-	static bool flagRangeAttackPlayer;
+    static int flagMeleeAttackPlayer;
+    static int flagMeleeAttackEnemy;
+    static bool flagCheckHpEnemy;
+    static bool flagRangeAttackPlayer;
     //Button
-	static bool flagHover;
+    static bool flagHover;
 };
 
 

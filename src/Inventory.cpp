@@ -58,7 +58,7 @@ Inventory::Inventory()
 			}
 			file >> Name;
 			type ItemType = rWeapon;
-			ExistingItems[ItemNumber] = new rangeWeapon(DMG, RNG, CHS, dCHS, ItemType, Tex, Name);
+            ExistingItems[ItemNumber] = new rangeWeapon(DMG, RNG, CHS, dCHS, ItemType, Tex, Name);
 		}
         if (Type == "magic") {
             file >> DMG;

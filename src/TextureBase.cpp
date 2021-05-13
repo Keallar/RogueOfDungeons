@@ -1,7 +1,6 @@
 #include "TextureBase.h"
 #include <fstream>
 #include "Managers.h"
-#include "Game.h"
 
 TextureBase* TextureBase::res = nullptr;
 
@@ -13,9 +12,9 @@ TextureBase::TextureBase()
    {
        std::string Name;
        file >> Name;
-       char* Path;
+       std::string Path;
        file >> Path;
-       Textures[Name] = textureManager::LoadTexture(Path, Game::renderer);
+       Textures[Name] = textureManager::LoadTexture(Path.c_str());
    }
 }
 TextureBase::~TextureBase()
@@ -23,6 +22,22 @@ TextureBase::~TextureBase()
     for (auto& i : Textures)
     {
         SDL_DestroyTexture(i.second);
+    }
+}
+
+TextureBase *TextureBase::Instance()
+{
+    if(!res)
+        res = new TextureBase();
+    return res;
+}
+
+void TextureBase::Destroy()
+{
+    if(res)
+    {
+        delete res;
+        res = 0;
     }
 }
 

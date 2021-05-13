@@ -21,6 +21,7 @@ Game::~Game()
 	{
 		delete level;
 	}
+    TextureBase::Destroy();
 }
 
 SDL_Renderer* Game::renderer;
@@ -113,8 +114,8 @@ void Game::update()
 	}
     else
 	{
-        if (classChoose->flag == 1 && classChoose->haveClass) {
-            classChoose->flag = 0;
+        if (classChoose->flag == 0) {
+            classChoose->flag = 3;
             level = new Level(renderer, classChoose->choosedClass);
             level->Start();
         }

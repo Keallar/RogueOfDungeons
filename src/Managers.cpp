@@ -5,10 +5,14 @@
 #include <iostream>
 #include <string>
 #include <thread>
+#include "Game.h"
+
 SDL_Texture* textureManager::LoadTexture(const char* texName, SDL_Renderer* ren) 
 {
-    SDL_Texture* tex = IMG_LoadTexture(ren, texName);
-    return tex;
+    if(!ren)
+        return IMG_LoadTexture(Game::renderer, texName);
+    else
+        return IMG_LoadTexture(ren, texName);
 }
 
 bool InputManager::MouseInArea(int x, int y, int w, int h, int MouseX, int MouseY) 
@@ -32,12 +36,16 @@ void RenderManager::CopyToRender(SDL_Texture* texture, SDL_Renderer* ren, int x,
     dCOORD.x = dx; dCOORD.y = dy; dCOORD.w = dw; dCOORD.h = dh;
     SDL_RenderCopy(ren, texture, &dCOORD, &COORD);
 }
-void RenderManager::CopyToRender(SDL_Texture* texture, SDL_Renderer* ren, int x, int y, int w, int h) 
-{	
-    SDL_Rect COORD; //SDL_Rect dCOORD;
-    COORD.x = x; COORD.y = y; COORD.w = w; COORD.h = h;
-    SDL_RenderCopy(ren, texture, NULL, &COORD);
-}	
+void RenderManager::CopyToRender(SDL_Texture* texture, SDL_Renderer* ren, int x, int y, int w, int h)
+{
+    CopyToRender(texture, ren, {x, y, w, h});
+}
+
+void RenderManager::CopyToRender(SDL_Texture* texture, SDL_Renderer* ren, SDL_Rect rect)
+{
+    SDL_RenderCopy(ren, texture, NULL, &rect);
+}
+
 void RenderManager::CopyToRender(SDL_Texture* texture, SDL_Renderer* ren) 
 {
     SDL_RenderCopy(ren, texture, NULL, NULL);

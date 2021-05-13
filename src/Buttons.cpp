@@ -124,7 +124,7 @@ bool Button::mouseInArea(int x, int y, int w, int h)
 void Button::Render()
 {
     if (buttonTexture != NULL)
-        RenderManager::CopyToRender(buttonTexture, ren, button.x, button.y, button.w, button.h);
+        RenderManager::CopyToRender(buttonTexture, ren, {button.x, button.y, button.w, button.h});
     else
         std::cout << "Error in Button::Render" << std::endl;
 }

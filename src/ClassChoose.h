@@ -14,10 +14,10 @@ private:
     Button* mageB;
     int textW;
     int textH;
+    void SetClass(int chooseClass);
 public:
     int flag;
     int choosedClass;
-    bool haveClass;
     ClassChoose(SDL_Renderer* ren);
     void handleEvents(SDL_Event event);
     void Render();

@@ -12,10 +12,10 @@ MainMenu::MainMenu(const char* texturesheetMenu, const char* texturesheetPlay,
 }
 void MainMenu::Render() 
 {
-	RenderManager::CopyToRender(MainMenuTexture, renderer, 0, 0, 1280, 720);
-	RenderManager::CopyToRender(PlayButton, renderer, 640, 361, 250, 100);
-	RenderManager::CopyToRender(SettingsButton, renderer, 640, 471, 420, 100);
-	RenderManager::CopyToRender(ExitButton, renderer, 640, 581, 250, 100);
+    RenderManager::CopyToRender(MainMenuTexture, renderer, {0, 0, 1280, 720});
+    RenderManager::CopyToRender(PlayButton, renderer, {640, 361, 250, 100});
+    RenderManager::CopyToRender(SettingsButton, renderer, {640, 471, 420, 100});
+    RenderManager::CopyToRender(ExitButton, renderer, {640, 581, 250, 100});
 }
 MainMenu::~MainMenu()
 {

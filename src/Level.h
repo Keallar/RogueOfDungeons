@@ -11,6 +11,7 @@
 #include "UiEnemy.h"
 #include "rangeenemy.h"
 #include "Coins.h"
+#include "TextureBase.h"
 #include "UiTrader.h"
 
 struct MouseCoords
@@ -22,11 +23,12 @@ struct MouseCoords
 class Level 
 {
 private:
+    TextureBase* GameTextures;
 	TextInfo* changeState[3];
 	HpInfo* hp;
 	ManaInfo* mana;
 	ExpInfo* exp;
-	SDL_Texture* TileTextures[5];
+    SDL_Texture* TileTextures[6];
 	SDL_Texture* PlayBackground;
 	SDL_Renderer* ren;
 	Player* player;
@@ -59,11 +61,20 @@ private:
     Keyboard* keyH = 0;
     Button* buttonForPlayerAttack;
     Map* LevelMap;
+    Map* Gulag;
     std::vector<Coins*> coins;
     UiTrader* uiTrader;
 
+    bool PlayerDead;
+    bool PlayerDeath;
     int pClass;
+    int pLCK;
+    struct pCOORDS {
+        int x;
+        int y;
+    } pCOORDS;
 
+    void PlayerInGulagHole();
 	void ChangeDark(int i, int j);
 	MouseCoords Mouse;
     void CheckButton(SDL_Event& eventInLvl);

@@ -730,6 +730,7 @@ void Map::ChunkGenerationMethod2() {
     //ставим сундуки
 
     for (int i = 0; i < 3; i++) {
+        srand(time(0));
         chests[i][0] = rand() % 20 + 1; chests[i][1] = rand() % 30 + 1;
         while (Location[chests[i][0]][chests[i][1]] != 0 || Location[chests[i][0] + 1][chests[i][1]] != 0 || Location[chests[i][0]][chests[i][1] + 1] != 0 || Location[chests[i][0] - 1][chests[i][1]] != 0 || Location[chests[i][0]][chests[i][1] - 1] != 0 || Location[chests[i][0] - 1][chests[i][1] - 1] != 0 || Location[chests[i][0] - 1][chests[i][1] + 1] != 0 || Location[chests[i][0] + 1][chests[i][1] - 1] != 0 || Location[chests[i][0] + 1][chests[i][1] + 1] != 0) {
             chests[i][0] = rand() % 20 + 1; chests[i][1] = rand() % 30 + 1;
@@ -737,4 +738,50 @@ void Map::ChunkGenerationMethod2() {
         textureLocation[chests[i][0]][chests[i][1]] = 14;
         Location[chests[i][0]][chests[i][1]] = 3;
     }
+}
+
+void Map::GulagChoose(int LCK) {
+
+    for(int i = 0; i < 32; i++) {
+        for(int j = 0; j < 22; j++) {
+            textureLocation[j][i] = 1;
+            Location[j][i] = 1;
+            Dark[j][i] = 1;
+        }
+    }
+    for(int i = 0; i < 32; i++) {
+        for(int j = 0; j < 22; j++) {
+            if(i == 0 || i == 31 || j == 0 || j == 21) {
+                textureLocation[j][i] = 2;
+                Location[j][i] = 1;
+            }
+            if((i >= 10 && i < 17)&&(j >= 10 && j < 17)) {
+                textureLocation[j][i] = 0;
+                Location[j][i] = 0;
+            }
+        }
+    }
+    int count = 0;
+    while (count <= 12) {
+        if(count < 3) {
+            textureLocation[11+count*2][10] = 3;
+            Location[11+count*2][10] = 8;
+        }
+        if(count >= 3 && count < 6) {
+            textureLocation[10][11+(count-3)*2] = 3;
+            Location[10][11+(count-3)*2] = 8;
+        }
+        if (count >= 6 && count < 9) {
+            textureLocation[16][11+(count-6)*2] = 3;
+            Location[16][11+(count-6)*2] = 8;
+        }
+        if (count >= 9 && count < 12) {
+            textureLocation[11+(count-9)*2][16] = 3;
+            Location[11+(count-9)*2][16] = 8;
+        }
+        count++;
+        if (count >= (13 - LCK)) break;
+    }
+    /*textureLocation[x][y] = 3;
+    Location[x][y] = 8;*/
 }

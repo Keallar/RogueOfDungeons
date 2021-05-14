@@ -1,4 +1,4 @@
-    #include "Game.h"
+#include "Game.h"
 #include "Level.h"
 #include "Managers.h"
 #include <ctime>
@@ -11,10 +11,16 @@
 
 Level::Level(SDL_Renderer* renderer, int playerClass) : ren (renderer), pClass(playerClass)
 {
+    GameTextures = TextureBase::Instance();
     LevelMap = new Map();
-    TileTextures[0] = textureManager::LoadTexture("data/images/Tiles.png", ren);
-    TileTextures[1] = textureManager::LoadTexture("data/images/CaslteTiles.png", ren);
-    TileTextures[2] = textureManager::LoadTexture("data/images/CaslteTiles2.png", ren);
+    Gulag = new Map();
+    Gulag->TileSet = 5;
+    Gulag->GulagChoose(1);
+    pLCK = 1;
+    TileTextures[0] = GameTextures->GetTexture("CaveTiles");
+    TileTextures[1] = GameTextures->GetTexture("CastleTiles");
+    TileTextures[2] = GameTextures->GetTexture("CastleTiles2");
+    TileTextures[5] = GameTextures->GetTexture("Gulag");
     PlayBackground = textureManager::LoadTexture("data/images/Playback.png", ren);
     player = new Player(ren);
     UiEnemy = new UIEnemy(ren, StandartEnemyTurtle);
@@ -29,9 +35,14 @@ Level::Level(SDL_Renderer* renderer, int playerClass) : ren (renderer), pClass(p
     uiTrader = new UiTrader(ren);
     timer = 0;
     timeB = false;
+    PlayerDeath = false;
+    PlayerDead = false;
     auto pressW{
         [=]()
         {
+            Map* CurrentMap;
+            if (!PlayerDeath) CurrentMap = LevelMap;
+            else CurrentMap = Gulag;
             bool wFlag = true;
             for (Enemy* enemy : enemies)
             {
@@ -49,20 +60,24 @@ Level::Level(SDL_Renderer* renderer, int playerClass) : ren (renderer), pClass(p
             }
             if (wFlag == true)
             {
-                if (LevelMap->Location[(EntityPosition::Coords[1]) / 32 - 1][(EntityPosition::Coords[0]) / 32] == 4)
+                if (CurrentMap->Location[(EntityPosition::Coords[1]) / 32 - 1][(EntityPosition::Coords[0]) / 32] == 8)
+                {
+                    PlayerInGulagHole();
+                }
+                if (CurrentMap->Location[(EntityPosition::Coords[1]) / 32 - 1][(EntityPosition::Coords[0]) / 32] == 4)
                 {
                     Start();
                 }
-                if (LevelMap->Location[(EntityPosition::Coords[1]) / 32 - 1][(EntityPosition::Coords[0]) / 32] == 0)
+                if (CurrentMap->Location[(EntityPosition::Coords[1]) / 32 - 1][(EntityPosition::Coords[0]) / 32] == 0)
                 {
                     EntityPosition::Coords[1] -= 32;
                     FlagManager::flagTurn = 1;
                 }
-                if (LevelMap->Location[(EntityPosition::Coords[1]) / 32 - 1][(EntityPosition::Coords[0]) / 32] == 3)
+                if (CurrentMap->Location[(EntityPosition::Coords[1]) / 32 - 1][(EntityPosition::Coords[0]) / 32] == 3)
                 {
                     FlagManager::flagChest = 1;
                 }
-            }
+            } 
         }
     };
     keyW = new Keyboard(SDL_SCANCODE_W, pressW);
@@ -70,6 +85,9 @@ Level::Level(SDL_Renderer* renderer, int playerClass) : ren (renderer), pClass(p
     auto pressA{
         [=]()
         {
+            Map* CurrentMap;
+            if (!PlayerDeath) CurrentMap = LevelMap;
+            else CurrentMap = Gulag;
             bool AFlag = true;
             for (Enemy* enemy : enemies)
             {
@@ -87,16 +105,20 @@ Level::Level(SDL_Renderer* renderer, int playerClass) : ren (renderer), pClass(p
             }
             if (AFlag == true)
             {
-                if (LevelMap->Location[(EntityPosition::Coords[1]) / 32][(EntityPosition::Coords[0]) / 32 - 1] == 4)
+                if (CurrentMap->Location[(EntityPosition::Coords[1]) / 32][(EntityPosition::Coords[0]) / 32 - 1] == 8)
+                {
+                   PlayerInGulagHole();
+                }
+                if (CurrentMap->Location[(EntityPosition::Coords[1]) / 32][(EntityPosition::Coords[0]) / 32 - 1] == 4)
                 {
                     Start();
                 }
-                if (LevelMap->Location[(EntityPosition::Coords[1]) / 32][(EntityPosition::Coords[0]) / 32 - 1] == 0)
+                if (CurrentMap->Location[(EntityPosition::Coords[1]) / 32][(EntityPosition::Coords[0]) / 32 - 1] == 0)
                 {
                     EntityPosition::Coords[0] -= 32;
                     FlagManager::flagTurn = 1;
                 }
-                if (LevelMap->Location[(EntityPosition::Coords[1]) / 32][(EntityPosition::Coords[0]) / 32 - 1] == 3)
+                if (CurrentMap->Location[(EntityPosition::Coords[1]) / 32][(EntityPosition::Coords[0]) / 32 - 1] == 3)
                 {
                     FlagManager::flagChest = 2;
                 }
@@ -108,6 +130,9 @@ Level::Level(SDL_Renderer* renderer, int playerClass) : ren (renderer), pClass(p
     auto pressS{
         [=]()
         {
+            Map* CurrentMap;
+            if (!PlayerDeath) CurrentMap = LevelMap;
+            else CurrentMap = Gulag;
             bool sFlag = true;
             for (Enemy* enemy : enemies)
             {
@@ -125,20 +150,24 @@ Level::Level(SDL_Renderer* renderer, int playerClass) : ren (renderer), pClass(p
             }
             if(sFlag == true)
             {
-                if (LevelMap->Location[(EntityPosition::Coords[1]) / 32 + 1][(EntityPosition::Coords[0]) / 32] == 4)
+                if (CurrentMap->Location[(EntityPosition::Coords[1]) / 32 + 1][(EntityPosition::Coords[0]) / 32] == 8)
+                {
+                    PlayerInGulagHole();
+                }
+                if (CurrentMap->Location[(EntityPosition::Coords[1]) / 32 + 1][(EntityPosition::Coords[0]) / 32] == 4)
                 {
                     Start();
                 }
-                if (LevelMap->Location[(EntityPosition::Coords[1]) / 32 + 1][(EntityPosition::Coords[0]) / 32] == 0)
+                if (CurrentMap->Location[(EntityPosition::Coords[1]) / 32 + 1][(EntityPosition::Coords[0]) / 32] == 0)
                 {
                     EntityPosition::Coords[1] += 32;
                     FlagManager::flagTurn = 1;
                 }
-                if (LevelMap->Location[(EntityPosition::Coords[1]) / 32 + 1][(EntityPosition::Coords[0]) / 32] == 3)
+                if (CurrentMap->Location[(EntityPosition::Coords[1]) / 32 + 1][(EntityPosition::Coords[0]) / 32] == 3)
                 {
                     FlagManager::flagChest = 3;
                 }
-            }
+            } 
         }
     };
     keyS = new Keyboard(SDL_SCANCODE_S, pressS);
@@ -146,6 +175,9 @@ Level::Level(SDL_Renderer* renderer, int playerClass) : ren (renderer), pClass(p
     auto pressD{
         [=]()
         {
+            Map* CurrentMap;
+            if (!PlayerDeath) CurrentMap = LevelMap;
+            else CurrentMap = Gulag;
             bool dFlag = true;
             for(Enemy* enemy : enemies)
             {
@@ -163,16 +195,20 @@ Level::Level(SDL_Renderer* renderer, int playerClass) : ren (renderer), pClass(p
             }
             if(dFlag == true)
             {
-                if (LevelMap->Location[(EntityPosition::Coords[1]) / 32][(EntityPosition::Coords[0]) / 32 + 1] == 4)
+                if (CurrentMap->Location[(EntityPosition::Coords[1]) / 32][(EntityPosition::Coords[0]) / 32 + 1] == 8)
+                {
+                    PlayerInGulagHole();
+                }
+                if (CurrentMap->Location[(EntityPosition::Coords[1]) / 32][(EntityPosition::Coords[0]) / 32 + 1] == 4)
                 {
                     Start();
                 }
-                if (LevelMap->Location[(EntityPosition::Coords[1]) / 32][(EntityPosition::Coords[0]) / 32 + 1] == 0)
+                if (CurrentMap->Location[(EntityPosition::Coords[1]) / 32][(EntityPosition::Coords[0]) / 32 + 1] == 0)
                 {
                     EntityPosition::Coords[0] += 32;
                     FlagManager::flagTurn = 1;
                 }
-                if (LevelMap->Location[(EntityPosition::Coords[1]) / 32][(EntityPosition::Coords[0]) / 32 + 1] == 3)
+                if (CurrentMap->Location[(EntityPosition::Coords[1]) / 32][(EntityPosition::Coords[0]) / 32 + 1] == 3)
                 {
                     FlagManager::flagChest = 4;
                 }
@@ -199,6 +235,19 @@ Level::Level(SDL_Renderer* renderer, int playerClass) : ren (renderer), pClass(p
         }
     };
     keyH = new Keyboard(SDL_SCANCODE_H, Escape);
+}
+
+void Level::PlayerInGulagHole() {
+    if(!(rand()%(12-pLCK))) {
+        PlayerDeath = false;
+        player->ChangeHpValue(player->GetHP(2)-1);
+        EntityPosition::Coords[0] = pCOORDS.x;
+        EntityPosition::Coords[1] = pCOORDS.y;
+    }
+    else {
+        PlayerDead = true;
+        player->ChangeHpValue(-10);
+    }
 }
 
 Level::~Level()
@@ -283,58 +332,87 @@ void Level::deleteCoin()
 
 void Level::Update()
 {
+    if(PlayerDead) {
+        delete player;
+        player = nullptr;
+    }
+    if (player != nullptr && player->GetSpecValue(6) != pLCK) {
+        pLCK = player->GetSpecValue(6);
+        Gulag->GulagChoose(pLCK);
+    }
+    if(player != nullptr && player->GetHP(0) <= 0) {
+        PlayerDeath = true;
+        pCOORDS.x = EntityPosition::Coords[0];
+        pCOORDS.y = EntityPosition::Coords[1];
+        EntityPosition::Coords[0] = 32*13; EntityPosition::Coords[1] = 32*13;
+        while (Gulag->Location[EntityPosition::Coords[1]/32][EntityPosition::Coords[0]/32] == 4) {
+            EntityPosition::Coords[0] = rand()%30+1; EntityPosition::Coords[1] = rand()%20 + 1;
+        }
+        player->ChangeHpValue((1-(player->GetHP(0))));
+    }
+
     Level::TimerTurn();
 
-    if(player!= nullptr && player->playerEscaping)
+    if(player!= nullptr && (player->playerEscaping || PlayerDeath))
         FlagManager::flagTurn = 0;
 
     int n = Player::VIS;
 
-    for (int i = (EntityPosition::Coords[1] / 32) - n; i <= (EntityPosition::Coords[1] / 32) + n; i++)
-    {
-        for (int j = (EntityPosition::Coords[0] / 32) - n; j <= (EntityPosition::Coords[0] / 32) + n; j++)
+    if (!PlayerDeath) {
+        for (int i = (EntityPosition::Coords[1] / 32) - n; i <= (EntityPosition::Coords[1] / 32) + n; i++)
         {
-            ChangeDark(i, j);
+            for (int j = (EntityPosition::Coords[0] / 32) - n; j <= (EntityPosition::Coords[0] / 32) + n; j++)
+            {
+                ChangeDark(i, j);
+            }
         }
     }
+
     if (enemies.size() == 0)
     {
         FlagManager::flagTurn = 0;
     }
+
+    if (player != nullptr) {
+        if (!PlayerDeath) player->GetLevel(LevelMap->Location);
+        if (PlayerDeath) player->GetLevel(Gulag->Location);
+    }
+
     if (player != nullptr &&
             FlagManager::flagTurn == 0)
     {
         player->Update();
     }
-    if (player != nullptr)
-        player->GetLevel(LevelMap->Location);
 
-    for(Enemy* enemy : enemies)
-    {
-        if (enemy != nullptr &&
-                FlagManager::flagTurn != 0)
+    if (!PlayerDeath) {
+        for(Enemy* enemy : enemies)
         {
-            enemy->Update();
-            enemy->GetLoc(LevelMap->Location);
-        }
-        //удаление player (enemy) при hp <= 0
-        if (enemy->GetHpEnemy(0) <= 0 && enemy != nullptr)
-        {
-            Level::deleteEnemy();
-            std::cout << enemies.size() << std::endl;
-            if (enemies.size() == 0)
+            if (enemy != nullptr &&
+                    FlagManager::flagTurn != 0)
             {
-                LevelMap->Location[LevelMap->portal.x][LevelMap->portal.y] = 4;
-                LevelMap->textureLocation[LevelMap->portal.x][LevelMap->portal.y] = 15;
+                enemy->Update();
+                enemy->GetLoc(LevelMap->Location);
             }
-            if(!(rand()%3)) {
-                player->GetItemOnLvl((6 + rand()%2));
+            //удаление player (enemy) при hp <= 0
+            if (enemy->GetHpEnemy(0) <= 0 && enemy != nullptr)
+            {
+                Level::deleteEnemy();
+                std::cout << enemies.size() << std::endl;
+                if (enemies.size() == 0)
+                {
+                    LevelMap->Location[LevelMap->portal.x][LevelMap->portal.y] = 4;
+                    LevelMap->textureLocation[LevelMap->portal.x][LevelMap->portal.y] = 15;
+                }
+                if(!(rand()%3)) {
+                    player->GetItemOnLvl((6 + rand()%2));
+                }
             }
-        }
 
-        if (enemy != nullptr)
-            enemy->GetLoc(LevelMap->Location);
+            if (enemy != nullptr)
+                enemy->GetLoc(LevelMap->Location);
+        }
     }
+
     if (FlagManager::flagInAreaOfAnemy == 0)
         player->playerTurn();
 
@@ -342,7 +420,7 @@ void Level::Update()
     if (Player::GetHP(0) <= 0 && player != nullptr)
     {
         player->Update();
-        Level::deletePlayer();
+        //Level::deletePlayer();
     }
 
     for (Coins* coin : coins)
@@ -501,13 +579,18 @@ void Level::Render()
     {
         for (int j = 0; j < 32; j++)
         {
-            if (LevelMap->Dark[i][j] == 1)
-            {
-                RenderManager::SetTile(j * 32, i * 32, LevelMap->textureLocation[i][j], ren, TileTextures[LevelMap->TileSet]);
+            if (PlayerDeath) {
+                 RenderManager::SetTile(j * 32, i * 32, Gulag->textureLocation[i][j], ren, TileTextures[Gulag->TileSet]);
             }
-            else
-            {
-                RenderManager::SetTile(j * 32, i * 32, 12, ren, TileTextures[0]);
+            if (!PlayerDeath) {
+                if (LevelMap->Dark[i][j] == 1)
+                {
+                    RenderManager::SetTile(j * 32, i * 32, LevelMap->textureLocation[i][j], ren, TileTextures[LevelMap->TileSet]);
+                }
+                else
+                {
+                    RenderManager::SetTile(j * 32, i * 32, 12, ren, TileTextures[0]);
+                }
             }
         }
     }
@@ -515,17 +598,19 @@ void Level::Render()
     {
         player->Render();
     }
-    for(Enemy* enemy : enemies)
-    {
-        if (enemy != nullptr)
+    if (!PlayerDeath) {
+        for(Enemy* enemy : enemies)
         {
-            if (LevelMap->Dark[enemy->Rect.y/32][enemy->Rect.x/32] == 0)
+            if (enemy != nullptr)
             {
-                RenderManager::SetTile(enemy->Rect.x, enemy->Rect.y, 12, ren, TileTextures[0]);
-            }
-            else
-            {
-                enemy->Render();
+                if (LevelMap->Dark[enemy->Rect.y/32][enemy->Rect.x/32] == 0)
+                {
+                    RenderManager::SetTile(enemy->Rect.x, enemy->Rect.y, 12, ren, TileTextures[0]);
+                }
+                else
+                {
+                    enemy->Render();
+                }
             }
         }
     }

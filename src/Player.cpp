@@ -78,7 +78,7 @@ int Player::quantityOfCoins[3] = {
     100	 /*coins max*/
 };
 
-int Player::VIS = 16;
+int Player::VIS = 32;
 
 Player::Player( SDL_Renderer* renderer):
     GameObject( renderer)
@@ -555,7 +555,7 @@ void Player::GetLevel(int arr[22][32])
 
 void Player::GetPlayerFirstCoords()
 {
-    EntityPosition::Coords[0] = (rand() % 2 + 1) * 32;
+    EntityPosition::Coords[0] = (rand() % 3 + 1) * 32;
     EntityPosition::Coords[1] = (rand() % 20 + 1) * 32;
     if (generate != 4 && generate != 5)
     {
@@ -565,7 +565,7 @@ void Player::GetPlayerFirstCoords()
                 (Location[EntityPosition::Coords[1] / 32 - 1][EntityPosition::Coords[0] / 32] != 0) &&
                 (Location[EntityPosition::Coords[1] / 32 + 1][EntityPosition::Coords[0] / 32] != 0)))
         {
-            EntityPosition::Coords[0] = (rand() % 2 + 1) * 32;
+            EntityPosition::Coords[0] = (rand() % 3 + 1) * 32;
             EntityPosition::Coords[1] = (rand() % 20 + 1) * 32;
         }
     }
@@ -573,7 +573,7 @@ void Player::GetPlayerFirstCoords()
     {
         while (Location[EntityPosition::Coords[1] / 32][EntityPosition::Coords[0] / 32] == 1)
         {
-            EntityPosition::Coords[0] = (rand() % 2 + 1) * 32;
+            EntityPosition::Coords[0] = (rand() % 3 + 1) * 32;
             EntityPosition::Coords[1] = (rand() % 20 + 1) * 32;
         }
     }

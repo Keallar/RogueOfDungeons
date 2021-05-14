@@ -16,6 +16,9 @@ class Map
     void SetWallsForTileSet();
     void SetWalls1();
     void SetWalls2();
+    void CreateSquare(int x, int y, int texture);
+    void BigLabGenerationMethod();
+    void BossGenerationNethod();
 public:
     Map();
     ~Map();
@@ -23,7 +26,6 @@ public:
         int x;
         int y;
     } portal;
-
     int generateChoose;
     int itemsOnLvl[3];
     int itemsHave;

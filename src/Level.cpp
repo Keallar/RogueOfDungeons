@@ -507,6 +507,11 @@ void Level::Start()
     {
 
         int MobTypeChoose = (LevelMap->floorLvl/4)*2+(rand()%2);
+        if (MobTypeChoose > 4) MobTypeChoose = 4;
+         //ВАЖНО
+         //ВАЖНО
+         //ВАЖНО я здесь добавил условие потому что нет мобов на 4 и 5 локу. Текстурки я добавил их осталось настроить, я
+         //не совсем понял как. Текстурки на них есть, кста джунгли теперь 2 лока, не замок, придется подвигать. Сумимасе.
         std::cout<< (LevelMap->floorLvl/4)*2 << "?" << LevelMap->floorLvl << std::endl;
         std::cout << "( "<<(typeid(StandartEnemies[3]) == typeid(Enemy*)) << " )";
         if(StandartEnemies[MobTypeChoose]->GetTypeName() == 1)

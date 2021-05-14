@@ -1,4 +1,4 @@
-#include "Map.h"
+﻿#include "Map.h"
 #include "Game.h"
 #include "Level.h"
 #include "Managers.h"
@@ -10,7 +10,7 @@
 Map::Map()
 {
     TileSet = 0;
-    floorLvl = 1;
+    floorLvl = 19;
     for (int i = 0; i < 22; i++)
     {
         for (int j = 0; j < 32; j++)
@@ -44,7 +44,7 @@ void Map::GenerateMap()
         switch(rand()%3) {
         case 0: generateChoose = 0;
             break;
-        case 1: generateChoose = 4;
+        case 1: generateChoose = 3;
             break;
         case 2: generateChoose = 2;
             break;
@@ -66,6 +66,10 @@ void Map::GenerateMap()
         TileSet = 4;
         switch(rand()%2) {case 0: generateChoose = 1; break; case 1: generateChoose = 5; break;}
     }
+    if (floorLvl == 20) {
+        TileSet = 4;
+        generateChoose = 6;
+    }
     if (generateChoose == 0) {
         ChunkGenerationMethod();
     }
@@ -80,6 +84,12 @@ void Map::GenerateMap()
     }
     if (generateChoose == 2) {
         ChunkGenerationMethod2();
+    }
+    if (generateChoose == 3) {
+        BigLabGenerationMethod();
+    }
+    if (generateChoose == 6 ) {
+        BossGenerationNethod();
     }
     for (int i = 0; i < 3; i++) {
         itemsOnLvl[i] = rand() % 4 + 1;
@@ -789,4 +799,214 @@ void Map::GulagChoose(int LCK) {
         count++;
         if (count >= (13 - LCK)) break;
     }
+}
+
+void Map::CreateSquare(int x, int y, int texture) {
+    for(int i = x; i < x+3; i++) {
+        for(int j = y; j < y+3; j++) {
+            textureLocation[j][i] = texture;
+        }
+    }
+}
+
+void Map::BigLabGenerationMethod() {
+    srand(time(0));
+    for (int j = 0; j < 32; j++) {
+        for (int i = 0; i < 22; i++) {
+            //стены вокруг уровня
+            if ((j == 31) || (i == 21) || (j == 0) || (i == 0)) {
+                textureLocation[i][j] = 2;
+            }
+        }
+    }
+    for (int i = 3; i < 21; i+=6) {
+        for (int j = 3; j < 31; j+=6) {
+            if ((i % 2 == 1) && (j % 2 == 1)) {
+                CreateSquare(j, i, 0);
+                int Way = rand() % 2;
+                bool Choosed = false;
+                while (Choosed == false) {
+                    Choosed = true;
+                    switch (Way) {
+                    case 0:
+                        if (textureLocation[i][j + 3] != 1) {
+                            Way = rand() % 4;
+                            Choosed = false;
+                        }
+                        else {
+                            CreateSquare(j + 3, i, 0);
+                        }
+                        break;
+                    case 1:
+                        if (textureLocation[i+3][j] != 1) {
+                            Way = rand() % 4;
+                            Choosed = false;
+                        }
+                        else {
+                            CreateSquare(j, i+3, 0);
+                        }
+                        break;
+                    default:
+                        break;
+                    }
+                }
+            }
+        }
+    }
+    for (int i = 1; i < 21; i++) {
+        textureLocation[i][27] = 0;
+        textureLocation[i][28] = 0;
+        textureLocation[i][29] = 0;
+        textureLocation[i][30] = 1;
+        textureLocation[i][0] = 1;
+        textureLocation[i][1] = 1;
+    }
+    for (int i = 1; i < 31; i++) {
+//        textureLocation[16][i] = 0;
+//        textureLocation[17][i] = 0;
+//        textureLocation[18][i] = 0;
+        textureLocation[18][i] = 0;
+        textureLocation[19][i] = 0;
+        textureLocation[20][i] = 1;
+    }
+    for (int j = 1; j < 31; j++) {
+        for (int i = 1; i < 21; i++) {
+            if (CountingNeighbours(i, j, 0) > 3) {
+                if(!(rand()%5)) {
+                    textureLocation[i][j] = 0;
+                }
+            }
+        }
+    }
+
+    for (int j = 1; j < 31; j++) {
+        for (int i = 1; i < 21; i++) {
+            if ((!(rand() % 16))) {
+                if(CountingNeighbours(i, j, 3) == 0) {
+                    textureLocation[i][j] = 3;
+                }
+            }
+            if (textureLocation[i][j] == 1) {
+                if (rand() % 2) {
+                    textureLocation[i][j] = 5;
+                }
+            }
+            if (textureLocation[i][j] == 0) {
+                switch (rand() % 3) {
+                case 0:
+                    break;
+                case 1:
+                    textureLocation[i][j] = 4;
+                    break;
+                case 2:
+                    textureLocation[i][j] = 6;
+                    break;
+                }
+            }
+        }
+    }
+    for (int j = 0; j < 32; j++) {
+        for (int i = 0; i < 22; i++) {
+            //стены вокруг уровня
+            if ((j == 31) || (i == 21) || (j == 0) || (i == 0)) {
+                textureLocation[i][j] = 2;
+            }
+        }
+    }
+    //генерим стены
+
+    SetWallsForTileSet();
+
+    //ставим сундуки
+
+    for (int i = 0; i < 3; i++) {
+        srand(time(0));
+        chests[i][0] = rand() % 20 + 1; chests[i][1] = rand() % 30 + 1;
+        while (Location[chests[i][0]][chests[i][1]] != 0 || Location[chests[i][0] + 1][chests[i][1]] != 0 || Location[chests[i][0]][chests[i][1] + 1] != 0 || Location[chests[i][0] - 1][chests[i][1]] != 0 || Location[chests[i][0]][chests[i][1] - 1] != 0) {
+            chests[i][0] = rand() % 20 + 1; chests[i][1] = rand() % 30 + 1;
+        }
+        textureLocation[chests[i][0]][chests[i][1]] = 14;
+        Location[chests[i][0]][chests[i][1]] = 3;
+    }
+
+    //ставим портал
+
+    PuttingPortal();
+}
+
+void Map::BossGenerationNethod() {
+    for (int i = 1; i < 21; i++) {
+        int p;
+        for(int j = 0; j < 4; j++) {
+            textureLocation[i][2+j] = 0;
+        }
+        for(int j = 0; j < 4; j++) {
+            textureLocation[i][8+j] = 0;
+        }
+        for(int j = 0; j < 5; j++) {
+            textureLocation[i][14+j] = 0;
+        }
+        for(int j = 0; j < 4; j++) {
+            textureLocation[i][21+j] = 0;
+        }
+        for(int j = 0; j < 4; j++) {
+            textureLocation[i][27+j] = 0;
+        }
+    }
+    int p = rand()%20+1;
+    int count = 0;
+    while (count < 4) {
+        switch(count) {
+        case 0:
+            textureLocation[p][6] = 0;
+            textureLocation[p][7] = 0;
+            break;
+        case 1:
+            textureLocation[p][12] = 0;
+            textureLocation[p][13] = 0;
+            break;
+        case 2:
+            textureLocation[p][19] = 0;
+            textureLocation[p][20] = 0;
+            break;
+        case 3:
+            textureLocation[p][25] = 0;
+            textureLocation[p][26] = 0;
+            break;
+        }
+        count++;
+        p = rand()%20+1;
+    }
+    for (int i = 0; i < 22; i++) {
+        for (int j = 0; j < 32; j++) {
+            if ((textureLocation[i][j] == 1) && (!(rand() % 11))) {
+                textureLocation[i][j] = 5;
+            }
+            if ((textureLocation[i][j] == 0) && (!(rand() % 16))) {
+                if (rand() % 2) {
+                    textureLocation[i][j] = 3;
+                }
+                else {
+                    textureLocation[i][j] = 4;
+                }
+            }
+            if ((textureLocation[i][j] == 0) && (!(rand() % 4))) {
+                if (rand() % 2) {
+                    textureLocation[i][j] = 7;
+                }
+                else {
+                    textureLocation[i][j] = 8;
+                }
+            }
+        }
+    }
+    for (int j = 0; j < 32; j++) {
+        for (int i = 0; i < 22; i++) {
+            //стены вокруг уровня
+            if ((j == 31) || (i == 21) || (j == 0) || (i == 0)) {
+                textureLocation[i][j] = 2;
+            }
+        }
+    }
+    SetWallsForTileSet();
 }

@@ -72,7 +72,8 @@ void Game::handleEvents()
         {
             classChoose->handleEvents(event);
         }
-        if (level) {
+        if (level)
+        {
             level->handleEvents(event);
         }
 		switch (event.type)
@@ -119,7 +120,8 @@ void Game::update()
             level = new Level(renderer, classChoose->choosedClass);
             level->Start();
         }
-        if (level) {
+        if (level)
+        {
             level->Update();
         }
 	}	

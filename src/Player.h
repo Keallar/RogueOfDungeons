@@ -54,6 +54,7 @@ public:
     void Render() override;
 
     void PushItemsToInventory(int kit);
+    void itemInInv(int num);
 
 	void GetLevel(int arr[22][32]);
 	void GetPlayerFirstCoords();

@@ -49,6 +49,7 @@ public:
     static bool flagPointOfSpec;
     static bool flagLevelOfPlayer;
     static bool flagCoin;
+    static bool flagUiTrader;
     //Specs
     static bool flagSTR;
     static bool flagDEX;

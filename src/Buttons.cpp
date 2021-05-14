@@ -10,7 +10,6 @@
 Button::Button(SDL_Texture* texture, SDL_Renderer* renderer, SDL_Rect rect)
     : ren(renderer)
 {
-
     button.x = rect.x;
     button.y = rect.y;
     button.w = rect.w;
@@ -125,8 +124,8 @@ void Button::Render()
 {
     if (buttonTexture != NULL)
         RenderManager::CopyToRender(buttonTexture, ren, {button.x, button.y, button.w, button.h});
-    else
-        std::cout << "Error in Button::Render" << std::endl;
+//    else
+//        std::cout << "Error in Button::Render" << std::endl;
 }
 
 void Button::updateCoords(int newx, int newy)
@@ -141,6 +140,19 @@ void Button::updateScaleButton(int newx, int newy, int newh, int neww)
     button.y = newy;
     button.w = neww;
     button.h = newh;
+}
+
+void Button::updateTexture(std::string texturesheet)
+{
+    SDL_DestroyTexture(buttonTexture);
+    buttonTexture = 0;
+    buttonTexture = GameTextures->GetTexture(texturesheet);
+}
+
+void Button::deleteTexture()
+{
+    SDL_DestroyTexture(buttonTexture);
+    buttonTexture = 0;
 }
 
 Keyboard::Keyboard(SDL_Scancode scancode, std::function <void()> callbackFunction):

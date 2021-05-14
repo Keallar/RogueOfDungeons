@@ -19,6 +19,7 @@ public:
     int flag;
     int choosedClass;
     ClassChoose(SDL_Renderer* ren);
-    void handleEvents(SDL_Event event);
+    ~ClassChoose();
+    void handleEvents(SDL_Event& event);
     void Render();
 };

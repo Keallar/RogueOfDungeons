@@ -20,11 +20,13 @@ enum type
 class InventoryItem 
 {	
 public:
+    int COST;
 	std::string name;
 	const char* ItemTexture;
 	SDL_Renderer* ren;
 	type Type;
 	std::string Description;
+    int GetCost();
 };
 
 class meleeWeapon : public InventoryItem 
@@ -34,7 +36,7 @@ private:
 public:
 	int DMG;
 	int RNG;
-	meleeWeapon(int Damage, int range, type type, const char* WeapTex, std::string Name);
+    meleeWeapon(int Damage, int range, int Cost, type type, const char* WeapTex, std::string Name);
 	~meleeWeapon();
 };
 class rangeWeapon : public InventoryItem 
@@ -46,7 +48,7 @@ public:
 	int RNG;
 	int CHNS;
 	int DCHNS;
-	rangeWeapon(int Damage, int Range, int Chanse, int deltaChanse, type type, const char* WeapTex, std::string Name);
+    rangeWeapon(int Damage, int Range, int Chanse, int deltaChanse, int Cost, type type, const char* WeapTex, std::string Name);
 	~rangeWeapon();
 };
 
@@ -71,7 +73,7 @@ public:
     int SPL;
     magicEl WeaponEl;
     magicType WeaponType;
-    magicWeapon(int Damage, int range, int splash, type type, magicEl ElType, magicType WeaponType, const char* WeapTex, std::string Name);
+    magicWeapon(int Damage, int range, int splash, int Cost, type type, magicEl ElType, magicType WeaponType, const char* WeapTex, std::string Name);
     ~magicWeapon();
 };
 
@@ -94,10 +96,12 @@ public:
 	int DEF;
 };
 
-class Potion : public InventoryItem {
+class Potion : public InventoryItem
+{
 public:
 	int HEAL;
 	int MpHEAL;
+    int Cost;
 	Potion(int Heal, int MpHeal, type type, const char* WeapTex, std::string Name);
 };
 

@@ -35,20 +35,23 @@ Inventory::Inventory()
         int PHS;
         int LCK;
         file >> Type;
-        if (Type == "weapon") {
+        if (Type == "weapon")
+        {
             file >> DMG;
             file >> RNG;
             file >> COST;
             file >> WeapTex;
             char* Tex = new char[WeapTex.length()+1];
-            for (int i = 0; i <= WeapTex.length(); i++) {
+            for (int i = 0; i <= WeapTex.length(); i++)
+            {
                 Tex[i] = WeapTex[i];
             }
             file >> Name;
             type ItemType = weapon;
             ExistingItems[ItemNumber] = new meleeWeapon(DMG, RNG, COST, ItemType, Tex, Name);
         }
-        if (Type == "rWeapon") {
+        if (Type == "rWeapon")
+        {
             file >> DMG;
             file >> RNG;
             file >> CHS;
@@ -56,14 +59,16 @@ Inventory::Inventory()
             file >> COST;
             file >> WeapTex;
             char* Tex = new char[WeapTex.length() + 1];
-            for (int i = 0; i <= WeapTex.length(); i++) {
+            for (int i = 0; i <= WeapTex.length(); i++)
+            {
                 Tex[i] = WeapTex[i];
             }
             file >> Name;
             type ItemType = rWeapon;
             ExistingItems[ItemNumber] = new rangeWeapon(DMG, RNG, CHS, dCHS, COST, ItemType, Tex, Name);
         }
-        if (Type == "magic") {
+        if (Type == "magic")
+        {
             file >> DMG;
             file >> RNG;
             file >> SPL;
@@ -78,7 +83,8 @@ Inventory::Inventory()
             file >> COST;
             file >> WeapTex;
             char* Tex = new char[WeapTex.length() + 1];
-            for (int i = 0; i <= WeapTex.length(); i++) {
+            for (int i = 0; i <= WeapTex.length(); i++)
+            {
                 Tex[i] = WeapTex[i];
             }
             file >> Name;
@@ -89,27 +95,31 @@ Inventory::Inventory()
             file >> DEF;
             file >> WeapTex;
             char* Tex = new char[WeapTex.length() + 1];
-            for (int i = 0; i <= WeapTex.length(); i++) {
+            for (int i = 0; i <= WeapTex.length(); i++)
+            {
                 Tex[i] = WeapTex[i];
             }
             file >> Name;
             type ItemType = armor;
             ExistingItems[ItemNumber] = new armorItem(DEF, ItemType, Tex, Name);
         }
-        if (Type == "potion") {
+        if (Type == "potion")
+        {
             file >> HEAL;
             file >> MpHEAL;
             file >> COST;
             file >> WeapTex;
             char* Tex = new char[WeapTex.length() + 1];
-            for (int i = 0; i <= WeapTex.length(); i++) {
+            for (int i = 0; i <= WeapTex.length(); i++)
+            {
                 Tex[i] = WeapTex[i];
             }
             file >> Name;
             type ItemType = potion;
             ExistingItems[ItemNumber] = new Potion(HEAL, MpHEAL, ItemType, Tex, Name);
         }
-        if (Type == "artifact") {
+        if (Type == "artifact")
+        {
             file >> STR;
             file >> DEX;
             file >> INT;
@@ -118,7 +128,8 @@ Inventory::Inventory()
             file >> LCK;
             file >> WeapTex;
             char* Tex = new char[WeapTex.length() + 1];
-            for (int i = 0; i <= WeapTex.length(); i++) {
+            for (int i = 0; i <= WeapTex.length(); i++)
+            {
                 Tex[i] = WeapTex[i];
             }
             file >> Name;
@@ -133,7 +144,8 @@ Inventory::Inventory()
     }
 }
 
-Inventory::~Inventory() {
+Inventory::~Inventory()
+{
 
 }
 
@@ -196,6 +208,10 @@ Artifact* Inventory::GetRealArtifact(int id) {
     return static_cast<Artifact*>(ExistingItems[id]);
 }
 
+int InventoryItem::GetCost()
+{
+    return COST;
+}
 
 rangeWeapon::rangeWeapon(int Damage, int Range, int Chance, int deltaChanse, int Cost, type type, const char* WeapTex, std::string Name)
 {
@@ -208,7 +224,8 @@ rangeWeapon::rangeWeapon(int Damage, int Range, int Chance, int deltaChanse, int
     Type = type;
     name = Name;
 }
-rangeWeapon::~rangeWeapon() {
+rangeWeapon::~rangeWeapon()
+{
 
 }
 
@@ -221,11 +238,13 @@ meleeWeapon::meleeWeapon(int Damage, int range, int Cost, type type, const char*
     Type = type;
     name = Name;
 }
-meleeWeapon::~meleeWeapon() {
+meleeWeapon::~meleeWeapon()
+{
 
 }
 
-magicWeapon::magicWeapon(int Damage, int range, int splash, int Cost, type type, magicEl weaponEl, magicType weaponType, const char* WeapTex, std::string Name) {
+magicWeapon::magicWeapon(int Damage, int range, int splash, int Cost, type type, magicEl weaponEl, magicType weaponType, const char* WeapTex, std::string Name)
+{
     DMG = Damage;
     RNG = range;
     SPL = splash;
@@ -237,7 +256,8 @@ magicWeapon::magicWeapon(int Damage, int range, int splash, int Cost, type type,
     name = Name;
 }
 
-Artifact::Artifact(int STR, int DEX, int INT, int WSD, int PHS, int LCK, type type, const char* WeapTex, std::string Name) {
+Artifact::Artifact(int STR, int DEX, int INT, int WSD, int PHS, int LCK, type type, const char* WeapTex, std::string Name)
+{
     specs[0] = STR; specs[1] = DEX; specs[2] = INT; specs[3] = WSD; specs[4] = PHS; specs[5] = LCK;
     Type = type;
     ItemTexture = WeapTex;
@@ -251,11 +271,13 @@ armorItem::armorItem(int Defence, type type, const char* WeapTex, std::string Na
     Type = type;
     name = Name;
 }
-armorItem::~armorItem() {
+armorItem::~armorItem()
+{
 
 }
 
-Potion::Potion(int Heal, int MpHeal, type type, const char* WeapTex, std::string Name) {
+Potion::Potion(int Heal, int MpHeal, type type, const char* WeapTex, std::string Name)
+{
     Type = type;
     ItemTexture = WeapTex;
     HEAL = Heal;

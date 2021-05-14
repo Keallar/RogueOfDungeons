@@ -25,6 +25,7 @@ private:
     std::function <void()> callback;
     std::function <void()> hover;
 	bool mouseInArea(int x, int y, int w, int h);
+    void SetTexture(SDL_Texture* tex) {buttonTexture = tex;}
 public:
     Button(SDL_Texture* texture, SDL_Renderer* renderer, SDL_Rect rect);
     Button(std::string textButton, SDL_Texture* texture, SDL_Renderer* renderer, SDL_Rect rect, std::function <void()> callbackFunction, std::function <void()>hoverFunction);
@@ -34,6 +35,7 @@ public:
     void updateScaleButton(int newx, int newy, int neww, int newh);
     void updateTexture(std::string texturesheet);
     SDL_Rect GetCoords();
+    SDL_Texture* GetTexture();
 };
 
 class Keyboard

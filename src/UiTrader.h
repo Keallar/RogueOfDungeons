@@ -33,7 +33,7 @@ private:
     SDL_Texture* coinsText;
     SDL_Texture* sell;
 
-    std::array<Inventory*, 3> items;
+    std::array<InventoryItem*, 3> items;
 
     Button* buttonForFirstItem;
     Button* buttonForSecondItem;
@@ -43,13 +43,18 @@ private:
     Button* buttonForSkip;
     Button* buttonForSell;
 
+    bool bFirstItem = 0;
+    bool bSecondItem = 0;
+    bool bThirdItem = 0;
     bool bHpPotion = 0;
     bool bManaPotion = 0;
+    bool bSell = 0;
 public:
     UiTrader(SDL_Renderer* renderer);
     ~UiTrader();
     void Render();
-    void Update();
+    void Update(Player* player);
+    void Check();
     void handleEvents(SDL_Event& eventInUiTrader);
     void clear();
 };

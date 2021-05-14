@@ -141,6 +141,26 @@ void Player::PushItemsToInventory(int kit)
     }
 }
 
+//UNODNE
+void Player::itemInInv(int num)
+{
+    if (num >= 1 && num <= 10)
+    {
+        inventory->AddItem(num);
+    }
+    else
+    {
+        try
+        {
+            if (num < 1 || num > 10)
+                throw "Num in itemInInv is wrong\n";
+        }  catch (const char* ex)
+        {
+            std::cerr << ex;
+        }
+    }
+}
+
 int Player::GetHP(int numOfArr)
 {
     switch (numOfArr)

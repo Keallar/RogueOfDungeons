@@ -332,20 +332,24 @@ void Level::deleteCoin()
 
 void Level::Update()
 {
-    if(PlayerDead) {
+    if(PlayerDead)
+    {
         delete player;
         player = nullptr;
     }
-    if (player != nullptr && player->GetSpecValue(6) != pLCK) {
+    if (player != nullptr && player->GetSpecValue(6) != pLCK)
+    {
         pLCK = player->GetSpecValue(6);
         Gulag->GulagChoose(pLCK);
     }
-    if(player != nullptr && player->GetHP(0) <= 0) {
+    if(player != nullptr && player->GetHP(0) <= 0)
+    {
         PlayerDeath = true;
         pCOORDS.x = EntityPosition::Coords[0];
         pCOORDS.y = EntityPosition::Coords[1];
         EntityPosition::Coords[0] = 32*13; EntityPosition::Coords[1] = 32*13;
-        while (Gulag->Location[EntityPosition::Coords[1]/32][EntityPosition::Coords[0]/32] == 4) {
+        while (Gulag->Location[EntityPosition::Coords[1]/32][EntityPosition::Coords[0]/32] == 4)
+        {
             EntityPosition::Coords[0] = rand()%30+1; EntityPosition::Coords[1] = rand()%20 + 1;
         }
         player->ChangeHpValue((1-(player->GetHP(0))));
@@ -358,7 +362,8 @@ void Level::Update()
 
     int n = Player::VIS;
 
-    if (!PlayerDeath) {
+    if (!PlayerDeath)
+    {
         for (int i = (EntityPosition::Coords[1] / 32) - n; i <= (EntityPosition::Coords[1] / 32) + n; i++)
         {
             for (int j = (EntityPosition::Coords[0] / 32) - n; j <= (EntityPosition::Coords[0] / 32) + n; j++)
@@ -373,7 +378,8 @@ void Level::Update()
         FlagManager::flagTurn = 0;
     }
 
-    if (player != nullptr) {
+    if (player != nullptr)
+    {
         if (!PlayerDeath) player->GetLevel(LevelMap->Location);
         if (PlayerDeath) player->GetLevel(Gulag->Location);
     }
@@ -384,7 +390,8 @@ void Level::Update()
         player->Update();
     }
 
-    if (!PlayerDeath) {
+    if (!PlayerDeath)
+    {
         for(Enemy* enemy : enemies)
         {
             if (enemy != nullptr &&
@@ -403,7 +410,8 @@ void Level::Update()
                     LevelMap->Location[LevelMap->portal.x][LevelMap->portal.y] = 4;
                     LevelMap->textureLocation[LevelMap->portal.x][LevelMap->portal.y] = 15;
                 }
-                if(!(rand()%3)) {
+                if(!(rand()%3))
+                {
                     player->GetItemOnLvl((6 + rand()%2));
                 }
             }
@@ -464,9 +472,9 @@ void Level::Update()
         uiInfo->Update();
     }
 
-    if (FlagManager::flagUiTrader == 1)
+    if (FlagManager::flagUiTrader == 1 && player != nullptr)
     {
-        uiTrader->Update();
+        uiTrader->Update(player);
     }
 }
 
@@ -768,7 +776,6 @@ void Level::handleEvents(SDL_Event eventInLvl)
 
         //Work with UiTrader
         uiTrader->handleEvents(eventInLvl);
-
     }
 
     //Передача event в Player

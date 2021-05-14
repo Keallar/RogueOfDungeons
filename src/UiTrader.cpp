@@ -23,7 +23,7 @@ UiTrader::UiTrader(SDL_Renderer* renderer) : ren (renderer)
 
     //Potions
     hpBottle = GameTextures->GetTexture("SmallHpPotion");
-    hpBtText = FontManager::renderText("0", PATH_IN_FONT, color, 32, ren);
+    hpBtText = FontManager::renderText("20", PATH_IN_FONT, color, 32, ren);
     manaBottle = GameTextures->GetTexture("SmallMpPotion");
     manaBtText = FontManager::renderText("0", PATH_IN_FONT, color, 32, ren);
 
@@ -35,56 +35,18 @@ UiTrader::UiTrader(SDL_Renderer* renderer) : ren (renderer)
 
     sell = FontManager::renderText("Sell", PATH_IN_FONT, color, 32, ren);
 
+    for (auto item : items)
+    {
+        item = nullptr;
+    }
+
     //Buttons
-    auto chooseFirstItem{
-        []()
-        {
-
-        }
-    };
-    buttonForFirstItem = new Button("left", GameTextures->GetTexture("ShortSword"), ren, {413, 296, 128, 128}, chooseFirstItem, NULL);
-    auto chooseSecondItem{
-        []()
-        {
-
-        }
-    };
-    buttonForSecondItem = new Button("left", GameTextures->GetTexture("ShortBow"), ren, {575, 296, 128, 128}, chooseSecondItem, NULL);
-    auto chooseThirdItem{
-        []()
-        {
-
-        }
-    };
-    buttonForThirdItem = new Button("left", GameTextures->GetTexture("Spear"), ren, {739, 296, 128, 128}, chooseThirdItem, NULL);
-
-    auto chooseHpPotion{
-        []()
-        {
-
-        }
-    };
-    buttonForHpPotion = new Button("left", GameTextures->GetTexture("SmallHpPotion"), ren, {1280 / 16 * 2, 720 / 12 * 9, 64, 64}, chooseHpPotion, NULL);
-
-    auto chooseManaPotion{
-        []()
-        {
-
-        }
-    };
-    buttonForManaPotion = new Button("left", GameTextures->GetTexture("SmallMpPotion"), ren, {1280 / 16 * 3, 720 / 12 * 9, 64, 64}, chooseManaPotion, NULL);
-
-    auto chooseSkip{
-        []()
-        {
-            if (FlagManager::flagUiTrader == 1)
-            {
-                FlagManager::flagUiTrader = 0;
-                //::cout << "flagUiTrader = 0\n";
-            }
-        }
-    };
-    buttonForSkip = new Button("left", GameTextures->GetTexture("Button"), ren, {1280 / 16 * 14, 720 / 12 * 11, 32, 32}, chooseSkip, NULL);
+    buttonForFirstItem = new Button("left", GameTextures->GetTexture("ShortSword"), ren, {413, 296, 128, 128}, [this](){bFirstItem = 1;}, NULL);
+    buttonForSecondItem = new Button("left", GameTextures->GetTexture("ShortBow"), ren, {575, 296, 128, 128}, [this](){bSecondItem = 1;}, NULL);
+    buttonForThirdItem = new Button("left", GameTextures->GetTexture("Spear"), ren, {739, 296, 128, 128}, [this](){bThirdItem = 1;}, NULL);
+    buttonForHpPotion = new Button("left", GameTextures->GetTexture("SmallHpPotion"), ren, {1280 / 16 * 2, 720 / 12 * 9, 64, 64}, [this](){bHpPotion = 1;}, NULL);
+    buttonForManaPotion = new Button("left", GameTextures->GetTexture("SmallMpPotion"), ren, {1280 / 16 * 3, 720 / 12 * 9, 64, 64}, [this](){bManaPotion = 1;}, NULL);
+    buttonForSkip = new Button("left", GameTextures->GetTexture("Button"), ren, {1280 / 16 * 14, 720 / 12 * 11, 32, 32}, [](){FlagManager::flagUiTrader = 0;}, NULL);
 
     auto chooseSell{
         []()
@@ -135,13 +97,51 @@ void UiTrader::Render()
     RenderManager::CopyToRender(sell, ren, 1280 / 16 * 1, 720 / 12 * 6, textW, textH);
 }
 
-void UiTrader::Update()
-{
+void UiTrader::Update(Player* player)
+{   
+    if (bHpPotion == 1)
+    {
+        if (buttonForHpPotion->GetTexture() != nullptr)
+        {
+            if (Player::GetCoinsOfPlayer(0) >= 20)
+            {
+                Player::ChangeCoins(-20);
+                player->itemInInv(6);
+                SDL_DestroyTexture(hpBtText);
+                hpBtText = 0;
+            }
+        }
+    }
+
+    if (bManaPotion == 1)
+    {
+        if (buttonForManaPotion->GetTexture() != nullptr)
+        {
+            if (Player::GetCoinsOfPlayer(0) >= 20)
+            {
+                Player::ChangeCoins(-20);
+                player->itemInInv(7);
+                SDL_DestroyTexture(manaBtText);
+                manaBtText = 0;
+            }
+        }
+    }
+//    SDL_DestroyTexture(hpBtText);
+//    hpBtText = 0;
+//    std::string stringTemp1 = std::to_string();
+//    const char* CHAR_VALUE1 = stringTemp1.c_str();
+//    hpBtText = FontManager::renderText(CHAR_VALUE1, PATH_IN_FONT, color, 32, ren);
+
     SDL_DestroyTexture(coins);
     coins = 0;
-    std::string stringTemp1 = std::to_string(Player::GetCoinsOfPlayer(0));
-    const char* CHAR_VALUE1 = stringTemp1.c_str();
-    coins = FontManager::renderText(CHAR_VALUE1, PATH_IN_FONT, color, 32, ren);
+    std::string stringTemp2 = std::to_string(Player::GetCoinsOfPlayer(0));
+    const char* CHAR_VALUE2 = stringTemp2.c_str();
+    coins = FontManager::renderText(CHAR_VALUE2, PATH_IN_FONT, color, 32, ren);
+}
+
+void UiTrader::Check()
+{
+
 }
 
 void UiTrader::handleEvents(SDL_Event &eventInUiTrader)

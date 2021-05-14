@@ -26,6 +26,7 @@ public:
 	SDL_Renderer* ren;
 	type Type;
 	std::string Description;
+    int GetCost();
 };
 
 class meleeWeapon : public InventoryItem 
@@ -95,7 +96,8 @@ public:
 	int DEF;
 };
 
-class Potion : public InventoryItem {
+class Potion : public InventoryItem
+{
 public:
 	int HEAL;
 	int MpHEAL;

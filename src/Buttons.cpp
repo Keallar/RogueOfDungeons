@@ -10,7 +10,6 @@
 Button::Button(SDL_Texture* texture, SDL_Renderer* renderer, SDL_Rect rect)
     : ren(renderer)
 {
-
     button.x = rect.x;
     button.y = rect.y;
     button.w = rect.w;
@@ -148,6 +147,11 @@ void Button::updateTexture(std::string texturesheet)
     SDL_DestroyTexture(buttonTexture);
     buttonTexture = 0;
     buttonTexture = GameTextures->GetTexture(texturesheet);
+}
+
+SDL_Texture* Button::GetTexture()
+{
+    return buttonTexture;
 }
 
 Keyboard::Keyboard(SDL_Scancode scancode, std::function <void()> callbackFunction):

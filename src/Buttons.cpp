@@ -124,8 +124,8 @@ void Button::Render()
 {
     if (buttonTexture != NULL)
         RenderManager::CopyToRender(buttonTexture, ren, {button.x, button.y, button.w, button.h});
-    else
-        std::cout << "Error in Button::Render" << std::endl;
+//    else
+//        std::cout << "Error in Button::Render" << std::endl;
 }
 
 void Button::updateCoords(int newx, int newy)
@@ -149,9 +149,10 @@ void Button::updateTexture(std::string texturesheet)
     buttonTexture = GameTextures->GetTexture(texturesheet);
 }
 
-SDL_Texture* Button::GetTexture()
+void Button::deleteTexture()
 {
-    return buttonTexture;
+    SDL_DestroyTexture(buttonTexture);
+    buttonTexture = 0;
 }
 
 Keyboard::Keyboard(SDL_Scancode scancode, std::function <void()> callbackFunction):

@@ -9,8 +9,8 @@
 
 struct Mouse
 {
-	int x;
-	int y;
+    int x;
+    int y;
 };
 
 class Button
@@ -19,35 +19,36 @@ private:
     TextureBase* GameTextures;
     std::string buttonText;
     SDL_Renderer* ren;
-	SDL_Texture* buttonTexture;
-	Mouse mouse;
-	SDL_Rect button;
+    SDL_Texture* buttonTexture;
+    Mouse mouse;
+    SDL_Rect button;
     std::function <void()> callback;
     std::function <void()> hover;
-	bool mouseInArea(int x, int y, int w, int h);
-    void SetTexture(SDL_Texture* tex) {buttonTexture = tex;}
+    bool mouseInArea(int x, int y, int w, int h);
 public:
     Button(SDL_Texture* texture, SDL_Renderer* renderer, SDL_Rect rect);
     Button(std::string textButton, SDL_Texture* texture, SDL_Renderer* renderer, SDL_Rect rect, std::function <void()> callbackFunction, std::function <void()>hoverFunction);
-	void handleEvents(SDL_Event& buttonEvent);
-	void Render();
+    void handleEvents(SDL_Event& buttonEvent);
+    void Render();
     void updateCoords(int newx, int newy);
     void updateScaleButton(int newx, int newy, int neww, int newh);
     void updateTexture(std::string texturesheet);
+    void deleteTexture();
     SDL_Rect GetCoords();
-    SDL_Texture* GetTexture();
+    SDL_Texture* GetTexture() {return buttonTexture;}
+    void SetTexture(SDL_Texture* tex) {buttonTexture = tex;}
 };
 
 class Keyboard
 {
 private:
-	SDL_Scancode code;
+    SDL_Scancode code;
     std::function <void()> callback;
-	bool buttonIsPressed(SDL_Event& keyboardEvent);
+    bool buttonIsPressed(SDL_Event& keyboardEvent);
 public:
-	Keyboard(SDL_Scancode scancode, std::function <void()> callbackFunction);
-	~Keyboard();
-	void handleEvents(SDL_Event &keyboardEvent);
+    Keyboard(SDL_Scancode scancode, std::function <void()> callbackFunction);
+    ~Keyboard();
+    void handleEvents(SDL_Event &keyboardEvent);
 };
 
 class MouseButtonsPlayer

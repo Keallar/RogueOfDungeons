@@ -25,7 +25,7 @@ UiTrader::UiTrader(SDL_Renderer* renderer) : ren (renderer)
     hpBottle = GameTextures->GetTexture("SmallHpPotion");
     hpBtText = FontManager::renderText("20", PATH_IN_FONT, color, 32, ren);
     manaBottle = GameTextures->GetTexture("SmallMpPotion");
-    manaBtText = FontManager::renderText("0", PATH_IN_FONT, color, 32, ren);
+    manaBtText = FontManager::renderText("20", PATH_IN_FONT, color, 32, ren);
 
     //Coins
     coins = FontManager::renderText("0", PATH_IN_FONT, color, 32, ren);
@@ -101,24 +101,27 @@ void UiTrader::Update(Player* player)
 {   
     if (bHpPotion == 1)
     {
-        if (buttonForHpPotion->GetTexture() != nullptr)
+        if (buttonForHpPotion->GetTexture() != 0)
         {
             if (Player::GetCoinsOfPlayer(0) >= 20)
             {
+                bHpPotion = 0;
                 Player::ChangeCoins(-20);
                 player->itemInInv(6);
                 SDL_DestroyTexture(hpBtText);
                 hpBtText = 0;
+                buttonForHpPotion->deleteTexture();
             }
         }
     }
 
     if (bManaPotion == 1)
     {
-        if (buttonForManaPotion->GetTexture() != nullptr)
+        if (buttonForManaPotion->GetTexture() != 0)
         {
             if (Player::GetCoinsOfPlayer(0) >= 20)
             {
+                bManaPotion = 0;
                 Player::ChangeCoins(-20);
                 player->itemInInv(7);
                 SDL_DestroyTexture(manaBtText);
@@ -126,11 +129,6 @@ void UiTrader::Update(Player* player)
             }
         }
     }
-//    SDL_DestroyTexture(hpBtText);
-//    hpBtText = 0;
-//    std::string stringTemp1 = std::to_string();
-//    const char* CHAR_VALUE1 = stringTemp1.c_str();
-//    hpBtText = FontManager::renderText(CHAR_VALUE1, PATH_IN_FONT, color, 32, ren);
 
     SDL_DestroyTexture(coins);
     coins = 0;
@@ -141,7 +139,28 @@ void UiTrader::Update(Player* player)
 
 void UiTrader::Check()
 {
-
+    if (bHpPotion == 0)
+    {
+        if (buttonForHpPotion->GetTexture() == 0 &&
+                hpBtText == 0)
+        {
+            bHpPotion = 0;
+            buttonForHpPotion->SetTexture(GameTextures->GetTexture("SmallHpPotion"));
+            hpBtText = FontManager::renderText("20", PATH_IN_FONT, color, 32, ren);
+            //std::cout <<"Check in UiTrader\n";
+        }
+    }
+    if (bManaPotion == 0)
+    {
+        if (buttonForManaPotion->GetTexture() == 0 &&
+                manaBtText == 0)
+        {
+            bManaPotion = 0;
+            buttonForManaPotion->SetTexture(GameTextures->GetTexture("SmallMpPotion"));
+            manaBtText = FontManager::renderText("20", PATH_IN_FONT, color, 32, ren);
+            //std::cout <<"Check in UiTrader\n";
+        }
+    }
 }
 
 void UiTrader::handleEvents(SDL_Event &eventInUiTrader)

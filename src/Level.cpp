@@ -476,6 +476,11 @@ void Level::Update()
     {
         uiTrader->Update(player);
     }
+
+    if (FlagManager::flagUiTrader == 0)
+    {
+        uiTrader->Check();
+    }
 }
 
 void Level::Start()

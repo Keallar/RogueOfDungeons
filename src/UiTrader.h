@@ -42,6 +42,9 @@ private:
     Button* buttonForManaPotion;
     Button* buttonForSkip;
     Button* buttonForSell;
+
+    bool bHpPotion = 0;
+    bool bManaPotion = 0;
 public:
     UiTrader(SDL_Renderer* renderer);
     ~UiTrader();

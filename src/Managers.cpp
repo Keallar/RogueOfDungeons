@@ -90,6 +90,7 @@ bool FlagManager::flagUiEnemy = 0;
 bool FlagManager::flagInv = 0;
 bool FlagManager::flagHover = 0;
 bool FlagManager::flagCoin = 0;
+bool FlagManager::flagUiTrader = 0;
 //Checks of main characters
 bool FlagManager::flagCheckHP = 0;
 bool FlagManager::flagCheckMana = 0;

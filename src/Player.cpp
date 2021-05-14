@@ -103,8 +103,10 @@ Player::Player( SDL_Renderer* renderer):
     EqItems.equipedMeleeW = inventory->GetRealMelee(0);
 }
 
-void Player::PushItemsToInventory(int kit) {
-    if (kit == 4) {
+void Player::PushItemsToInventory(int kit)
+{
+    if (kit == 4)
+    {
         inventory->AddItem(1);
         inventory->AddItem(2);
         inventory->AddItem(5);
@@ -116,14 +118,16 @@ void Player::PushItemsToInventory(int kit) {
         inventory->AddItem(8);
         inventory->AddItem(9);
     }
-    if (kit == 1) {
+    if (kit == 1)
+    {
         inventory->AddItem(1);
         inventory->AddItem(5);
         inventory->AddItem(8);
         inventory->AddItem(7);
         inventory->AddItem(9);
     }
-    if (kit == 2) {
+    if (kit == 2)
+    {
         inventory->AddItem(3);
         inventory->AddItem(5);
         inventory->AddItem(8);

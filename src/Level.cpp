@@ -77,7 +77,7 @@ Level::Level(SDL_Renderer* renderer, int playerClass) : ren (renderer), pClass(p
                 {
                     FlagManager::flagChest = 1;
                 }
-            } 
+            }
         }
     };
     keyW = new Keyboard(SDL_SCANCODE_W, pressW);
@@ -107,7 +107,7 @@ Level::Level(SDL_Renderer* renderer, int playerClass) : ren (renderer), pClass(p
             {
                 if (CurrentMap->Location[(EntityPosition::Coords[1]) / 32][(EntityPosition::Coords[0]) / 32 - 1] == 8)
                 {
-                   PlayerInGulagHole();
+                    PlayerInGulagHole();
                 }
                 if (CurrentMap->Location[(EntityPosition::Coords[1]) / 32][(EntityPosition::Coords[0]) / 32 - 1] == 4)
                 {
@@ -167,7 +167,7 @@ Level::Level(SDL_Renderer* renderer, int playerClass) : ren (renderer), pClass(p
                 {
                     FlagManager::flagChest = 3;
                 }
-            } 
+            }
         }
     };
     keyS = new Keyboard(SDL_SCANCODE_S, pressS);
@@ -420,7 +420,6 @@ void Level::Update()
     if (Player::GetHP(0) <= 0 && player != nullptr)
     {
         player->Update();
-        //Level::deletePlayer();
     }
 
     for (Coins* coin : coins)
@@ -465,7 +464,10 @@ void Level::Update()
         uiInfo->Update();
     }
 
-    uiTrader->Update();
+    if (FlagManager::flagUiTrader == 1)
+    {
+        uiTrader->Update();
+    }
 }
 
 void Level::Start()
@@ -482,7 +484,11 @@ void Level::Start()
         }
     }
 
-    if (LevelMap->floorLvl == 1) {
+    if (FlagManager::flagUiTrader == 0 && LevelMap->floorLvl != 1)
+        FlagManager::flagUiTrader = 1;
+
+    if (LevelMap->floorLvl == 1)
+    {
         player->PushItemsToInventory(pClass);
     }
     for (int i = 0; i < 22; i++)
@@ -549,7 +555,7 @@ void Level::TimerTurn()
             timeB = true;
         }
         Uint32 timer2 = SDL_GetTicks();
-        if (timer2 - timer >= 300 && timeB == true)
+        if (timer2 - timer >= 200 && timeB == true)
         {
             std::cout << "TimerTurn" << std::endl;
             timer = timer2;
@@ -580,7 +586,7 @@ void Level::Render()
         for (int j = 0; j < 32; j++)
         {
             if (PlayerDeath) {
-                 RenderManager::SetTile(j * 32, i * 32, Gulag->textureLocation[i][j], ren, TileTextures[Gulag->TileSet]);
+                RenderManager::SetTile(j * 32, i * 32, Gulag->textureLocation[i][j], ren, TileTextures[Gulag->TileSet]);
             }
             if (!PlayerDeath) {
                 if (LevelMap->Dark[i][j] == 1)
@@ -718,7 +724,8 @@ void Level::Render()
         }
     }
 
-    //uiTrader->Render();
+    if (FlagManager::flagUiTrader == 1 && LevelMap->floorLvl != 1)
+        uiTrader->Render();
 }
 
 //возможность изменять уровень из вне
@@ -758,6 +765,9 @@ void Level::handleEvents(SDL_Event eventInLvl)
 
         //Вызов InfoEnemy
         UiEnemy->handleEvents(eventInLvl);
+
+        //Work with UiTrader
+        uiTrader->handleEvents(eventInLvl);
 
     }
 

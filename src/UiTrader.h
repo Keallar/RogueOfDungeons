@@ -31,7 +31,7 @@ private:
     SDL_Texture* skip;
     SDL_Texture* coins;
     SDL_Texture* coinsText;
-    SDL_Texture* text;
+    SDL_Texture* sell;
 
     std::array<Inventory*, 3> items;
 
@@ -41,6 +41,7 @@ private:
     Button* buttonForHpPotion;
     Button* buttonForManaPotion;
     Button* buttonForSkip;
+    Button* buttonForSell;
 public:
     UiTrader(SDL_Renderer* renderer);
     ~UiTrader();

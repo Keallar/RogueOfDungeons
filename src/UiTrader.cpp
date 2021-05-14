@@ -33,6 +33,8 @@ UiTrader::UiTrader(SDL_Renderer* renderer) : ren (renderer)
 
     skip = FontManager::renderText("Skip", PATH_IN_FONT, color, 32, ren);
 
+    sell = FontManager::renderText("Sell", PATH_IN_FONT, color, 32, ren);
+
     //Buttons
     auto chooseFirstItem{
         []()
@@ -75,10 +77,22 @@ UiTrader::UiTrader(SDL_Renderer* renderer) : ren (renderer)
     auto chooseSkip{
         []()
         {
+            if (FlagManager::flagUiTrader == 1)
+            {
+                FlagManager::flagUiTrader = 0;
+                //::cout << "flagUiTrader = 0\n";
+            }
+        }
+    };
+    buttonForSkip = new Button("left", GameTextures->GetTexture("Button"), ren, {1280 / 16 * 14, 720 / 12 * 11, 32, 32}, chooseSkip, NULL);
+
+    auto chooseSell{
+        []()
+        {
 
         }
     };
-    buttonForSkip = new Button("left", GameTextures->GetTexture("Button"), ren, {1, 1, 32, 32}, chooseSkip, NULL);
+    buttonForSell = new Button("left", GameTextures->GetTexture("Button"), ren, {1280 / 16 * 1, 720 / 12 * 7, 32, 32}, chooseSell, NULL);
 
     for (auto item : items)
     {
@@ -94,6 +108,7 @@ UiTrader::~UiTrader()
     delete buttonForHpPotion;
     delete buttonForManaPotion;
     delete buttonForSkip;
+    delete buttonForSell;
 }
 
 void UiTrader::Render()
@@ -116,6 +131,8 @@ void UiTrader::Render()
     RenderManager::CopyToRender(coinsText, ren, 1280 / 16 * 13, 720 / 12 * 3, textW, textH);
     buttonForSkip->Render();
     RenderManager::CopyToRender(skip, ren, 1280 / 16 * 14, 720 / 12 * 10, textW, textH);
+    buttonForSell->Render();
+    RenderManager::CopyToRender(sell, ren, 1280 / 16 * 1, 720 / 12 * 6, textW, textH);
 }
 
 void UiTrader::Update()
@@ -125,7 +142,6 @@ void UiTrader::Update()
     std::string stringTemp1 = std::to_string(Player::GetCoinsOfPlayer(0));
     const char* CHAR_VALUE1 = stringTemp1.c_str();
     coins = FontManager::renderText(CHAR_VALUE1, PATH_IN_FONT, color, 32, ren);
-
 }
 
 void UiTrader::handleEvents(SDL_Event &eventInUiTrader)
@@ -136,6 +152,7 @@ void UiTrader::handleEvents(SDL_Event &eventInUiTrader)
     buttonForHpPotion->handleEvents(eventInUiTrader);
     buttonForManaPotion->handleEvents(eventInUiTrader);
     buttonForSkip->handleEvents(eventInUiTrader);
+    buttonForSell->handleEvents(eventInUiTrader);
 }
 
 void UiTrader::clear()

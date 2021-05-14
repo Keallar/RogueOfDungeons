@@ -17,13 +17,23 @@ ClassChoose::ClassChoose(SDL_Renderer* renderer) : ren(renderer)
     archerB = new Button("left", GameTextures->GetTexture("ArcherClass"), ren, {575, 296, 128, 128}, [this](){SetClass(2);}, NULL);
     mageB = new Button("left", GameTextures->GetTexture("MageClass"), ren, {739, 296, 128, 128}, [this](){SetClass(3);}, NULL);
 }
-void ClassChoose::handleEvents(SDL_Event event) {
+
+ClassChoose::~ClassChoose()
+{
+    delete warriorB;
+    delete archerB;
+    delete mageB;
+}
+
+void ClassChoose::handleEvents(SDL_Event& event)
+{
     warriorB->handleEvents(event);
     archerB->handleEvents(event);
     mageB->handleEvents(event);
 }
 
-void ClassChoose::Render() {
+void ClassChoose::Render()
+{
     RenderManager::CopyToRender(GameTextures->GetTexture("PlayBack"), ren);
     RenderManager::CopyToRender(Text, ren, {(1280-textW)/2, (720-textH)/2 - 200, textW, textH});
     warriorB->Render();

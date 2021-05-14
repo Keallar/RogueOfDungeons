@@ -12,6 +12,12 @@ Hp data/images/hp.png
 ManaBar data/images/ManaBar.png
 XP data/images/XP.png
 EnemyBar data/images/EnemyBar.png
+ShortSword data/images/ShortSword.png
+ShortBow data/images/ShortBow.png
+Spear data/images/Spear.png
+Fireball data/images/Fireball.png
+SmallHpPotion data/images/SmallHpPotion.png
+SmallMpPotion data/images/SmallMpPotion.png
 CaveTiles data/images/Tiles.png
 CastleTiles data/images/CastleTiles.png
 CastleTiles2 data/images/CastleTiles2.png

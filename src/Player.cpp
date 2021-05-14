@@ -103,8 +103,10 @@ Player::Player( SDL_Renderer* renderer):
     EqItems.equipedMeleeW = inventory->GetRealMelee(0);
 }
 
-void Player::PushItemsToInventory(int kit) {
-    if (kit == 4) {
+void Player::PushItemsToInventory(int kit)
+{
+    if (kit == 4)
+    {
         inventory->AddItem(1);
         inventory->AddItem(2);
         inventory->AddItem(5);
@@ -116,14 +118,16 @@ void Player::PushItemsToInventory(int kit) {
         inventory->AddItem(8);
         inventory->AddItem(9);
     }
-    if (kit == 1) {
+    if (kit == 1)
+    {
         inventory->AddItem(1);
         inventory->AddItem(5);
         inventory->AddItem(8);
-        inventory->AddItem(7);
+        inventory->AddItem(6);
         inventory->AddItem(9);
     }
-    if (kit == 2) {
+    if (kit == 2)
+    {
         inventory->AddItem(3);
         inventory->AddItem(5);
         inventory->AddItem(8);
@@ -134,6 +138,26 @@ void Player::PushItemsToInventory(int kit) {
         inventory->AddItem(4);
         inventory->AddItem(8);
         inventory->AddItem(7);
+    }
+}
+
+//UNODNE
+void Player::itemInInv(int num)
+{
+    if (num >= 1 && num <= 10)
+    {
+        inventory->AddItem(num);
+    }
+    else
+    {
+        try
+        {
+            if (num < 1 || num > 10)
+                throw "Num in itemInInv is wrong\n";
+        }  catch (const char* ex)
+        {
+            std::cerr << ex;
+        }
     }
 }
 
@@ -801,7 +825,7 @@ int Player::MagicAttack()
     if ((Inventory::ExistingItems[Player::EqItems.WeaponId]->Type == magic) &&
         Player::mana[0] != 0)
     {
-        damage = Player::EqItems.equipedMagic->DMG + Player::INT[0];
+        damage = Player::EqItems.equipedMagic->DMG + Player::WSD[0];
         std::cout << damage << "!" << std::endl;
     }
     return damage;

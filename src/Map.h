@@ -3,6 +3,7 @@
 
 class Map
 {
+private:
     void LabGeneration();
     void ChunkGenerationMethod();
     void ChunkGenerationMethod2();

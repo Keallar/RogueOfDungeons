@@ -1,5 +1,6 @@
 #pragma once
 #include <vector>
+#include <memory>
 #include "Enemy.h"
 #include "Player.h"
 #include "UI.h"
@@ -9,9 +10,9 @@
 #include "Map.h"
 #include "UiEnemy.h"
 #include "rangeenemy.h"
-#include <memory>
 #include "Coins.h"
 #include "TextureBase.h"
+#include "UiTrader.h"
 
 struct MouseCoords
 {
@@ -62,6 +63,7 @@ private:
     Map* LevelMap;
     Map* Gulag;
     std::vector<Coins*> coins;
+    UiTrader* uiTrader;
 
     bool PlayerDead;
     bool PlayerDeath;

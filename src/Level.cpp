@@ -34,6 +34,7 @@ Level::Level(SDL_Renderer* renderer, int playerClass) : ren (renderer), pClass(p
     mana = new ManaInfo(ren);
     exp = new ExpInfo(ren);
     uiEquiped = new UIEquipedItem(ren);
+    uiTrader = new UiTrader(ren);
     timer = 0;
     timeB = false;
     PlayerDeath = false;
@@ -78,7 +79,7 @@ Level::Level(SDL_Renderer* renderer, int playerClass) : ren (renderer), pClass(p
                 {
                     FlagManager::flagChest = 1;
                 }
-            } 
+            }
         }
     };
     keyW = new Keyboard(SDL_SCANCODE_W, pressW);
@@ -108,7 +109,7 @@ Level::Level(SDL_Renderer* renderer, int playerClass) : ren (renderer), pClass(p
             {
                 if (CurrentMap->Location[(EntityPosition::Coords[1]) / 32][(EntityPosition::Coords[0]) / 32 - 1] == 8)
                 {
-                   PlayerInGulagHole();
+                    PlayerInGulagHole();
                 }
                 if (CurrentMap->Location[(EntityPosition::Coords[1]) / 32][(EntityPosition::Coords[0]) / 32 - 1] == 4)
                 {
@@ -168,7 +169,7 @@ Level::Level(SDL_Renderer* renderer, int playerClass) : ren (renderer), pClass(p
                 {
                     FlagManager::flagChest = 3;
                 }
-            } 
+            }
         }
     };
     keyS = new Keyboard(SDL_SCANCODE_S, pressS);
@@ -263,6 +264,7 @@ Level::~Level()
     delete uiItem;
     delete UiEnemy;
     delete uiSpec;
+    delete uiTrader;
     delete hp;
     delete mana;
     delete exp;
@@ -332,20 +334,24 @@ void Level::deleteCoin()
 
 void Level::Update()
 {
-    if(PlayerDead) {
+    if(PlayerDead)
+    {
         delete player;
         player = nullptr;
     }
-    if (player != nullptr && player->GetSpecValue(6) != pLCK) {
+    if (player != nullptr && player->GetSpecValue(6) != pLCK)
+    {
         pLCK = player->GetSpecValue(6);
         Gulag->GulagChoose(pLCK);
     }
-    if(player != nullptr && player->GetHP(0) <= 0) {
+    if(player != nullptr && player->GetHP(0) <= 0)
+    {
         PlayerDeath = true;
         pCOORDS.x = EntityPosition::Coords[0];
         pCOORDS.y = EntityPosition::Coords[1];
         EntityPosition::Coords[0] = 32*13; EntityPosition::Coords[1] = 32*13;
-        while (Gulag->Location[EntityPosition::Coords[1]/32][EntityPosition::Coords[0]/32] == 4) {
+        while (Gulag->Location[EntityPosition::Coords[1]/32][EntityPosition::Coords[0]/32] == 4)
+        {
             EntityPosition::Coords[0] = rand()%30+1; EntityPosition::Coords[1] = rand()%20 + 1;
         }
         player->ChangeHpValue((1-(player->GetHP(0))));
@@ -358,7 +364,8 @@ void Level::Update()
 
     int n = Player::VIS;
 
-    if (!PlayerDeath) {
+    if (!PlayerDeath)
+    {
         for (int i = (EntityPosition::Coords[1] / 32) - n; i <= (EntityPosition::Coords[1] / 32) + n; i++)
         {
             for (int j = (EntityPosition::Coords[0] / 32) - n; j <= (EntityPosition::Coords[0] / 32) + n; j++)
@@ -373,7 +380,8 @@ void Level::Update()
         FlagManager::flagTurn = 0;
     }
 
-    if (player != nullptr) {
+    if (player != nullptr)
+    {
         if (!PlayerDeath) player->GetLevel(LevelMap->Location);
         if (PlayerDeath) player->GetLevel(Gulag->Location);
     }
@@ -384,7 +392,8 @@ void Level::Update()
         player->Update();
     }
 
-    if (!PlayerDeath) {
+    if (!PlayerDeath)
+    {
         for(Enemy* enemy : enemies)
         {
             if (enemy != nullptr &&
@@ -403,7 +412,8 @@ void Level::Update()
                     LevelMap->Location[LevelMap->portal.x][LevelMap->portal.y] = 4;
                     LevelMap->textureLocation[LevelMap->portal.x][LevelMap->portal.y] = 15;
                 }
-                if(!(rand()%3)) {
+                if(!(rand()%3))
+                {
                     player->GetItemOnLvl((6 + rand()%2));
                 }
             }
@@ -420,7 +430,6 @@ void Level::Update()
     if (Player::GetHP(0) <= 0 && player != nullptr)
     {
         player->Update();
-        //Level::deletePlayer();
     }
 
     for (Coins* coin : coins)
@@ -464,6 +473,16 @@ void Level::Update()
     {
         uiInfo->Update();
     }
+
+    if (FlagManager::flagUiTrader == 1 && player != nullptr)
+    {
+        uiTrader->Update(player);
+    }
+
+    if (FlagManager::flagUiTrader == 0)
+    {
+        uiTrader->Check();
+    }
 }
 
 void Level::Start()
@@ -480,7 +499,11 @@ void Level::Start()
         }
     }
 
-    if (LevelMap->floorLvl == 1) {
+    if (FlagManager::flagUiTrader == 0 && LevelMap->floorLvl != 1)
+        FlagManager::flagUiTrader = 1;
+
+    if (LevelMap->floorLvl == 1)
+    {
         player->PushItemsToInventory(pClass);
     }
     for (int i = 0; i < 22; i++)
@@ -583,7 +606,7 @@ void Level::Render()
         for (int j = 0; j < 32; j++)
         {
             if (PlayerDeath) {
-                 RenderManager::SetTile(j * 32, i * 32, Gulag->textureLocation[i][j], ren, TileTextures[Gulag->TileSet]);
+                RenderManager::SetTile(j * 32, i * 32, Gulag->textureLocation[i][j], ren, TileTextures[Gulag->TileSet]);
             }
             if (!PlayerDeath) {
                 if (LevelMap->Dark[i][j] == 1)
@@ -650,11 +673,11 @@ void Level::Render()
         if (FlagManager::flagINT == 1)
         {
             uiSpec->Update(Player::GetSpecValue(3), 3);
-            mana->UpdateMax();
         }
         if (FlagManager::flagWSD == 1)
         {
             uiSpec->Update(Player::GetSpecValue(4), 4);
+            mana->UpdateMax();
         }
         if (FlagManager::flagPHS == 1)
         {
@@ -720,6 +743,9 @@ void Level::Render()
             }
         }
     }
+
+    if (FlagManager::flagUiTrader == 1 && LevelMap->floorLvl != 1)
+        uiTrader->Render();
 }
 
 //возможность изменять уровень из вне
@@ -760,6 +786,8 @@ void Level::handleEvents(SDL_Event eventInLvl)
         //Вызов InfoEnemy
         UiEnemy->handleEvents(eventInLvl);
 
+        //Work with UiTrader
+        uiTrader->handleEvents(eventInLvl);
     }
 
     //Передача event в Player
@@ -904,7 +932,8 @@ void Level::Attack()
                     if (pow((mouseX-EntityPosition::Coords[0]/32), 2) + pow((mouseY-EntityPosition::Coords[1]/32), 2) <= pow(player->EqItems.equipedMagic->RNG, 2))
                     {
                         if(!FindWallsOnWay(EntityPosition::Coords[0], EntityPosition::Coords[1], mouseX*32, mouseY*32) ||
-                                Player::EqItems.equipedMagic->WeaponEl == magicEl::thunder) {
+                                Player::EqItems.equipedMagic->WeaponEl == magicEl::thunder)
+                        {
                             enemy->ChahgeHpEnemy(-(player->MagicAttack()));
                             if (player->EqItems.equipedMagic->WeaponEl == magicEl::fire)
                             {

@@ -24,6 +24,7 @@ Enemy::Enemy(const char* texturesheet, int framesOfAnimationForAttack,
     DMG = Damage;
     valueOfCoins = coins;
     coin = new Coins ("data/images/Coin.png", ren, valueOfCoins, 1);
+    redSquare = textureManager::LoadTexture("data/images/Red.png", ren);
     enemyTexture = textureManager::LoadTexture(texturesheet, ren);
     enemyAnimation = new Animation(ren, enemyTexture);
     framesOfAnimForAttack = framesOfAnimationForAttack;
@@ -43,6 +44,7 @@ Enemy::Enemy(Enemy* enemy)
     expReward = enemy->expReward;
     DMG = enemy->DMG;
     valueOfCoins = enemy->valueOfCoins;
+    redSquare = textureManager::LoadTexture("data/images/Red.png", ren);
     coin = new Coins ("data/images/Coin.png", ren, valueOfCoins, 1);
     enemyTexture = enemy->enemyTexture;
     enemyAnimation = new Animation(ren, enemyTexture);
@@ -53,6 +55,30 @@ Enemy::Enemy(Enemy* enemy)
 void Enemy::Render()
 {
     enemyAnimation->Render(Rect.x, Rect.y);
+    if (FlagManager::flagMeleeAttackEnemy == 1)
+    {
+        if ((Rect.x == EntityPosition::Coords[0]) &&
+                (Rect.y == EntityPosition::Coords[1] + 32))
+        {
+            RenderManager::CopyToRender(redSquare, ren, Rect.x, Rect.y - 32, 32, 32);
+        }
+        else if ((Rect.x == EntityPosition::Coords[0]) &&
+                 (Rect.y == EntityPosition::Coords[1] - 32))
+        {
+            RenderManager::CopyToRender(redSquare, ren, Rect.x, Rect.y + 32, 32, 32);
+        }
+        else if ((Rect.y == EntityPosition::Coords[1]) &&
+                 (Rect.x == EntityPosition::Coords[0] + 32))
+        {
+            RenderManager::CopyToRender(redSquare, ren, Rect.x - 32, Rect.y, 32, 32);
+        }
+        else if ((Rect.y == EntityPosition::Coords[1]) &&
+                 (Rect.x == EntityPosition::Coords[0] - 32))
+        {
+            RenderManager::CopyToRender(redSquare, ren, Rect.x + 32, Rect.y, 32, 32);
+        }
+
+    }
 }
 
 int Enemy::GetHpEnemy(int numOfHp)

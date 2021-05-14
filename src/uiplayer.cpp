@@ -63,7 +63,7 @@ void HpInfo::UpdateMax()
 
 void HpInfo::Render()
 {
-    if (Player::GetHP(0) == Player::GetHP(2))
+    if (Player::GetHP(0) >= Player::GetHP(2))
     {
         RenderManager::CopyToRender(hpBar, ren, 1080, 40, 160, 32, 0, 0, 128, 16);
     }
@@ -78,7 +78,7 @@ void HpInfo::Render()
         RenderManager::CopyToRender(hpBar, ren, 1080, 40, 160, 32, 0, 32, 128, 16);
     }
     else if ((Player::GetHP(0) <= (Player::GetHP(2) / 4) * 2) &&
-             (Player::GetHP(0) >= (Player::GetHP(2) / 4 )* 1))
+             (Player::GetHP(0) > 0))
     {
         RenderManager::CopyToRender(hpBar, ren, 1080, 40, 160, 32, 0, 48, 128, 16);
     }

@@ -63,7 +63,6 @@ Level::Level(SDL_Renderer* renderer, int playerClass) : ren (renderer), pClass(p
                 {
                     PlayerInGulagHole();
                 }
-            }
                 if (CurrentMap->Location[(EntityPosition::Coords[1]) / 32 - 1][(EntityPosition::Coords[0]) / 32] == 4)
                 {
                     Start();
@@ -77,6 +76,7 @@ Level::Level(SDL_Renderer* renderer, int playerClass) : ren (renderer), pClass(p
                 {
                     FlagManager::flagChest = 1;
                 }
+            } 
         }
     };
     keyW = new Keyboard(SDL_SCANCODE_W, pressW);
@@ -153,7 +153,6 @@ Level::Level(SDL_Renderer* renderer, int playerClass) : ren (renderer), pClass(p
                 {
                     PlayerInGulagHole();
                 }
-            }
                 if (CurrentMap->Location[(EntityPosition::Coords[1]) / 32 + 1][(EntityPosition::Coords[0]) / 32] == 4)
                 {
                     Start();
@@ -167,6 +166,7 @@ Level::Level(SDL_Renderer* renderer, int playerClass) : ren (renderer), pClass(p
                 {
                     FlagManager::flagChest = 3;
                 }
+            } 
         }
     };
     keyS = new Keyboard(SDL_SCANCODE_S, pressS);

@@ -14,6 +14,8 @@ class Map
     int CountingNeighbours(int x, int y, int NeighbourNumber);
     void PuttingPortal();
     void SetWallsForTileSet();
+    void SetWalls1();
+    void SetWalls2();
 public:
     Map();
     ~Map();

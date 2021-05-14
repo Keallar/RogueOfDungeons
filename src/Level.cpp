@@ -18,8 +18,10 @@ Level::Level(SDL_Renderer* renderer, int playerClass) : ren (renderer), pClass(p
     Gulag->GulagChoose(1);
     pLCK = 1;
     TileTextures[0] = GameTextures->GetTexture("CaveTiles");
-    TileTextures[1] = GameTextures->GetTexture("CastleTiles");
-    TileTextures[2] = GameTextures->GetTexture("CastleTiles2");
+    TileTextures[1] = GameTextures->GetTexture("JungleTiles");
+    TileTextures[2] = GameTextures->GetTexture("CastleTiles");
+    TileTextures[3] = GameTextures->GetTexture("CastleTiles2");
+    TileTextures[4] = GameTextures->GetTexture("ArcaneTiles");
     TileTextures[5] = GameTextures->GetTexture("Gulag");
     PlayBackground = textureManager::LoadTexture("data/images/Playback.png", ren);
     player = new Player(ren);
@@ -51,7 +53,7 @@ Level::Level(SDL_Renderer* renderer, int playerClass) : ren (renderer), pClass(p
                     wFlag = false;
                 }
                 else if (EntityPosition::Coords[0] == enemy->Rect.x &&
-                         (EntityPosition::Coords[1] - 32) == enemy->Rect.y)
+                         (EntityPosition::Coords[1] - 32) == enemy->Rect.y && !PlayerDeath)
                 {
                     wFlag = false;
                     //остановка при попытке пройти сквозь enemy
@@ -96,7 +98,7 @@ Level::Level(SDL_Renderer* renderer, int playerClass) : ren (renderer), pClass(p
                     AFlag = false;
                 }
                 else if ((EntityPosition::Coords[0] - 32) == enemy->Rect.x &&
-                         EntityPosition::Coords[1] == enemy->Rect.y)
+                         EntityPosition::Coords[1] == enemy->Rect.y && !PlayerDeath)
                 {
                     AFlag = false;
                     //остановка при попытке пройти сквозь enemy
@@ -141,7 +143,7 @@ Level::Level(SDL_Renderer* renderer, int playerClass) : ren (renderer), pClass(p
                     //остановка при упоре в стену
                 }
                 else if (EntityPosition::Coords[0] == enemy->Rect.x &&
-                         (EntityPosition::Coords[1] + 32) == enemy->Rect.y)
+                         (EntityPosition::Coords[1] + 32) == enemy->Rect.y && !PlayerDeath)
                 {
                     sFlag = false;
                     //остановка при попытке пройти сквозь enemy
@@ -186,7 +188,7 @@ Level::Level(SDL_Renderer* renderer, int playerClass) : ren (renderer), pClass(p
                     //остановка при упоре в стену
                 }
                 else if ((EntityPosition::Coords[0] + 32) == enemy->Rect.x &&
-                         EntityPosition::Coords[1] == enemy->Rect.y)
+                         EntityPosition::Coords[1] == enemy->Rect.y && !PlayerDeath)
                 {
                     dFlag = false;
                     //остановка при попытке пройти сквозь enemy

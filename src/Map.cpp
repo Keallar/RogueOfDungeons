@@ -37,8 +37,8 @@ Map::~Map() {
 }
 void Map::GenerateMap()
 {
-    srand(time(0));
     floorLvl++;
+    srand(time(0));
     if(floorLvl <= 3) {
         TileSet = 0;
         switch(rand()%3) {
@@ -49,19 +49,22 @@ void Map::GenerateMap()
         case 2: generateChoose = 2;
             break;
         }
-
     }
-
     if(floorLvl > 3 && floorLvl <= 7) {
         TileSet = 1;
-        switch(rand()%2) {case 0: generateChoose = 1; break; case 1: generateChoose = 5; break;}
+        switch(rand()%2) {case 0: generateChoose = 0; case 1: generateChoose = 4; break; case 2: generateChoose = 2; break;}
     }
-    if(floorLvl > 8 && floorLvl <= 12) {
+    if(floorLvl > 7 && floorLvl <= 11) {
         TileSet = 2;
         switch(rand()%2) {case 0: generateChoose = 1; break; case 1: generateChoose = 5; break;}
     }
-    if(floorLvl > 12) {
-        generateChoose = 0;
+    if(floorLvl > 11 && floorLvl <=15) {
+        TileSet = 3;
+        switch(rand()%2) {case 0: generateChoose = 1; break; case 1: generateChoose = 5; break;}
+    }
+    if (floorLvl > 15 && floorLvl <= 19) {
+        TileSet = 4;
+        switch(rand()%2) {case 0: generateChoose = 1; break; case 1: generateChoose = 5; break;}
     }
     if (generateChoose == 0) {
         ChunkGenerationMethod();
@@ -143,51 +146,55 @@ void Map::PuttingPortal() {
     Location[portal.x][portal.y] = 5;
 }
 
+void Map::SetWalls1() {
+    for (int i = 0; i < 22; i++) {
+        for (int j = 0; j < 32; j++) {
+            if ((textureLocation[i][j] == 0) || (textureLocation[i][j] == 4) || (textureLocation[i][j] == 6)) {
+                Location[i][j] = 0;
+            }
+            if ((textureLocation[i][j] == 1) || (textureLocation[i][j] == 3) || (textureLocation[i][j] == 5)) {
+                Location[i][j] = 1;
+            }
+            if (textureLocation[i][j] == 2) {
+                Location[i][j] = 2;
+            }
+        }
+    }
+}
+
+void Map::SetWalls2() {
+    for (int i = 0; i < 22; i++) {
+        for (int j = 0; j < 32; j++) {
+            if ((textureLocation[i][j] == 0) || (textureLocation[i][j] == 6) || (textureLocation[i][j] == 3) || (textureLocation[i][j] == 4) || (textureLocation[i][j] == 7) || (textureLocation[i][j] == 8)) {
+                Location[i][j] = 0;
+            }
+            if ((textureLocation[i][j] == 1) || (textureLocation[i][j] == 5)) {
+                Location[i][j] = 1;
+            }
+            if (textureLocation[i][j] == 2) {
+                Location[i][j] = 2;
+            }
+        }
+    }
+}
+
 void Map::SetWallsForTileSet() {
     switch(TileSet) {
     case 0:
-        for (int i = 0; i < 22; i++) {
-            for (int j = 0; j < 32; j++) {
-                if ((textureLocation[i][j] == 0) || (textureLocation[i][j] == 4) || (textureLocation[i][j] == 6)) {
-                    Location[i][j] = 0;
-                }
-                if ((textureLocation[i][j] == 1) || (textureLocation[i][j] == 3) || (textureLocation[i][j] == 5)) {
-                    Location[i][j] = 1;
-                }
-                if (textureLocation[i][j] == 2) {
-                    Location[i][j] = 2;
-                }
-            }
-        }
+        SetWalls1();
         break;
     case 1:
-        for (int i = 0; i < 22; i++) {
-            for (int j = 0; j < 32; j++) {
-                if ((textureLocation[i][j] == 0) || (textureLocation[i][j] == 6) || (textureLocation[i][j] == 3) || (textureLocation[i][j] == 4) || (textureLocation[i][j] == 7) || (textureLocation[i][j] == 8)) {
-                    Location[i][j] = 0;
-                }
-                if ((textureLocation[i][j] == 1) || (textureLocation[i][j] == 5)) {
-                    Location[i][j] = 1;
-                }
-                if (textureLocation[i][j] == 2) {
-                    Location[i][j] = 2;
-                }
-            }
-        }
+        SetWalls1();
+        break;
     case 2:
-        for (int i = 0; i < 22; i++) {
-            for (int j = 0; j < 32; j++) {
-                if ((textureLocation[i][j] == 0) || (textureLocation[i][j] == 6) || (textureLocation[i][j] == 3) || (textureLocation[i][j] == 4) || (textureLocation[i][j] == 7) || (textureLocation[i][j] == 8)) {
-                    Location[i][j] = 0;
-                }
-                if ((textureLocation[i][j] == 1) || (textureLocation[i][j] == 5)) {
-                    Location[i][j] = 1;
-                }
-                if (textureLocation[i][j] == 2) {
-                    Location[i][j] = 2;
-                }
-            }
-        }
+        SetWalls2();
+        break;
+    case 3:
+        SetWalls2();
+        break;
+    case 4:
+        SetWalls2();
+        break;
     }
 }
 
@@ -782,6 +789,4 @@ void Map::GulagChoose(int LCK) {
         count++;
         if (count >= (13 - LCK)) break;
     }
-    /*textureLocation[x][y] = 3;
-    Location[x][y] = 8;*/
 }

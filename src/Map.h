@@ -21,6 +21,7 @@ public:
         int x;
         int y;
     } portal;
+
     int generateChoose;
     int itemsOnLvl[3];
     int itemsHave;
@@ -31,4 +32,5 @@ public:
     int Location[22][32];
     int Dark[22][32];
     void GenerateMap();
+    void GulagChoose(int LCK);
 };

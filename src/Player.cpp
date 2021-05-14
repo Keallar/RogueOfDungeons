@@ -328,14 +328,14 @@ void Player::ChangeValueSpecsNoLvl(int numOfSpec, int Value)
 //Изменение текущего значения hp
 void Player::ChangeHpValue(int valueOfChangingHp)
 {
-    if (HP[0] != 0)
+    if (valueOfChangingHp != 0)
         HP[0] += valueOfChangingHp;
 }
 
 //Изменение текущего значения mana
 void Player::ChangeManaValue(int valueOfChangingMana)
 {
-    if (mana[0] >= 0)
+    if (valueOfChangingMana != 0)
         mana[0] += valueOfChangingMana;
 }
 

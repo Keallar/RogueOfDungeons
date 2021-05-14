@@ -14,7 +14,7 @@ private:
 public:
     static TextureBase* Instance()
     {
-        TextureBase* res = new TextureBase();
+        if(!res) res = new TextureBase();
         return res;
     }
     std::map<std::string, SDL_Texture*> Textures;

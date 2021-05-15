@@ -3,6 +3,7 @@
 #include "Level.h"
 #include "Managers.h"
 #include <ctime>
+#include <cmath>
 #include "UiMain.h"
 #include <vector>
 #include <iostream>

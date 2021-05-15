@@ -785,22 +785,25 @@ void Level::handleEvents(SDL_Event eventInLvl)
         }
     }
 
-    //Передача event в Player
-    if (player && FlagManager::flagTurn == 0)
+    if (FlagManager::flagUiTrader == 0)
     {
-        keyW->handleEvents(eventInLvl);
-        keyA->handleEvents(eventInLvl);
-        keyS->handleEvents(eventInLvl);
-        keyD->handleEvents(eventInLvl);
-        keyH->handleEvents(eventInLvl);
+        //Передача event в Player
+        if (player && FlagManager::flagTurn == 0)
+        {
+            keyW->handleEvents(eventInLvl);
+            keyA->handleEvents(eventInLvl);
+            keyS->handleEvents(eventInLvl);
+            keyD->handleEvents(eventInLvl);
+            keyH->handleEvents(eventInLvl);
 
-        buttonForPlayerAttack->handleEvents(eventInLvl);
-        buttonW->handleEvents(eventInLvl);
-        buttonA->handleEvents(eventInLvl);
-        buttonS->handleEvents(eventInLvl);
-        buttonD->handleEvents(eventInLvl);
+            buttonForPlayerAttack->handleEvents(eventInLvl);
+            buttonW->handleEvents(eventInLvl);
+            buttonA->handleEvents(eventInLvl);
+            buttonS->handleEvents(eventInLvl);
+            buttonD->handleEvents(eventInLvl);
+        }
+        CheckButton(eventInLvl);
     }
-    CheckButton(eventInLvl);
 }
 
 void Level::CheckButton(SDL_Event& eventInLvl) {

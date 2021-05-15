@@ -3,7 +3,7 @@
 #include "Managers.h"
 #include <iostream>
 #include "EntityPosition.h"
-#include "UI.h"
+#include "UiMain.h"
 #include "Inventory.h"
 #include "Enemy.h"
 #include "Buttons.h"
@@ -666,7 +666,8 @@ void Player::GetItemEquip(int id)
         }
         if (Inventory::ExistingItems[ItemId]->Type == armor)
         {
-            if (EqItems.ArmorId > 0) {
+            if (EqItems.ArmorId > 0)
+            {
                 inventory->inventory[id] = EqItems.ArmorId;
             }
             else
@@ -683,14 +684,16 @@ void Player::GetItemEquip(int id)
                 playerAnimation->UpdateTexture("HeroLether");
             }
         }
-        if (Inventory::ExistingItems[ItemId]->Type == potion) {
+        if (Inventory::ExistingItems[ItemId]->Type == potion)
+        {
             ChangeHpValue(static_cast<Potion*>(Inventory::ExistingItems[ItemId])->HEAL);
             ChangeManaValue(static_cast<Potion*>(Inventory::ExistingItems[ItemId])->MpHEAL);
             inventory->inventory[id] = -1;
         }
         if (Inventory::ExistingItems[ItemId]->Type == artifact)
         {
-            if (EqItems.ArtId > 0) {
+            if (EqItems.ArtId > 0)
+            {
                 inventory->inventory[id] = EqItems.ArtId;
             }
             else
@@ -701,7 +704,8 @@ void Player::GetItemEquip(int id)
 
             EqItems.equipedArtifact = inventory->GetRealArtifact(ItemId);
 
-            for(int i = 1; i <= 6; i++) {
+            for(int i = 1; i <= 6; i++)
+            {
                 ChangeValueSpecsNoLvl(i, EqItems.equipedArtifact->specs[i-1]);
             }
         }

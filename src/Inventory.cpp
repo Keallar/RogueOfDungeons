@@ -144,10 +144,7 @@ Inventory::Inventory()
     }
 }
 
-Inventory::~Inventory()
-{
-
-}
+Inventory::~Inventory(){}
 
 void Inventory::EquipItem(int i, int j) 
 {
@@ -156,10 +153,13 @@ void Inventory::EquipItem(int i, int j)
 }
 
 
-int Inventory::InventoryCount() {
+int Inventory::InventoryCount()
+{
     int count = 0;
-    for (int i = 0; i < INVENTORY_SIZE; i++) {
-        if (inventory[i] != -1) {
+    for (int i = 0; i < INVENTORY_SIZE; i++)
+    {
+        if (inventory[i] != -1)
+        {
             count++;
         }
     }
@@ -224,10 +224,7 @@ rangeWeapon::rangeWeapon(int Damage, int Range, int Chance, int deltaChanse, int
     Type = type;
     name = Name;
 }
-rangeWeapon::~rangeWeapon()
-{
-
-}
+rangeWeapon::~rangeWeapon(){}
 
 meleeWeapon::meleeWeapon(int Damage, int range, int Cost, type type, const char* WeapTex, std::string Name)
 {
@@ -238,10 +235,7 @@ meleeWeapon::meleeWeapon(int Damage, int range, int Cost, type type, const char*
     Type = type;
     name = Name;
 }
-meleeWeapon::~meleeWeapon()
-{
-
-}
+meleeWeapon::~meleeWeapon(){}
 
 magicWeapon::magicWeapon(int Damage, int range, int splash, int Cost, type type, magicEl weaponEl, magicType weaponType, const char* WeapTex, std::string Name)
 {
@@ -271,10 +265,7 @@ armorItem::armorItem(int Defence, type type, const char* WeapTex, std::string Na
     Type = type;
     name = Name;
 }
-armorItem::~armorItem()
-{
-
-}
+armorItem::~armorItem(){}
 
 Potion::Potion(int Heal, int MpHeal, type type, const char* WeapTex, std::string Name)
 {

@@ -12,7 +12,7 @@
 #include <memory>
 #include "Coins.h"
 #include "TextureBase.h"
-
+#include "bosssummoner.h"
 struct MouseCoords
 {
 	int x;
@@ -37,9 +37,12 @@ private:
     RangeEnemy* StandartDragonEnemy =  new RangeEnemy("data/images/Gragon.png", 4, ren, 3, 3, 8, 10, 6, 2);
     RangeEnemy* StandartBigDragonEnemy = new RangeEnemy("data/images/MDragon.png", 4, ren, 5, 5, 13, 15, 8, 2);
     Enemy* StandartEnemySlime = new Enemy("data/images/Slime.png", 4, ren, 8, 8, 1, 3, 2, 1);
-    std::array<Enemy*, 6> StandartEnemies = {StandartEnemySlime, StandartEnemyBear,
+    Enemy* StandartEnemySkeletonMinion = new Enemy("data/images/HeroEscape.png", 4, ren, 5, 5, 2, 1, 0, 1);
+    BossSummoner* StandartBossSkeleton = new BossSummoner("data/images/Boss.png", 4, ren, 25, 25, 0, 100, 20, 3);
+    std::array<Enemy*, 8> StandartEnemies = {StandartEnemySlime, StandartEnemyBear,
                                              StandartEnemyTurtle, StandartRangeEnemyTurtle,
-                                            StandartDragonEnemy, StandartBigDragonEnemy};
+                                            StandartDragonEnemy, StandartBigDragonEnemy,
+                                            StandartBossSkeleton, StandartEnemySkeletonMinion};
     UIEnemy* UiEnemy;
 	UIInfo* uiInfo;
 	UIItem* uiItem;

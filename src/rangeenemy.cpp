@@ -2,10 +2,6 @@
 #include "EntityPosition.h"
 #include "Player.h"
 #include <iostream>
-#include "Managers.h"
-#include "Inventory.h"
-#include "Animation.h"
-#include "Level.h"
 RangeEnemy::RangeEnemy(const char* texturesheet, int framesOfAnimationForAttack, SDL_Renderer* ren, int HealthP, int MaxHealthP, int Damage, int EXPR, int coins, int type):Enemy(texturesheet, framesOfAnimationForAttack, ren, HealthP, MaxHealthP, Damage, EXPR, coins, type)
 {
 
@@ -113,5 +109,6 @@ void RangeEnemy::meleeAttackEnemy()
     if (blankflag == true)
     {
         Player::ChangeHpValue(-this->enemyDamageCalculation());
+        DidMeAttacked = true;
     }
 }

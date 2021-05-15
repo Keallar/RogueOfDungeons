@@ -42,6 +42,7 @@ protected:
     Coins* coin;
     int valueOfCoins;
     int Type;
+    bool DidMeAttacked = false;
 public:
 	int generate = 0;
 	Enemy() = default;

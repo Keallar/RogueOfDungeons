@@ -409,6 +409,14 @@ void Level::Update()
             if (enemy != nullptr)
                 enemy->GetLoc(LevelMap->Location);
         }
+        //BOSS
+        if (StandartBossSkeleton->GetHpEnemy(0) > 0 && LevelMap->floorLvl == 2 && FlagManager::flagTurn != 0)
+        {
+            Enemy* enemy = new Enemy(StandartEnemySkeletonMinion);
+            enemies.push_back(enemy);
+            enemy->GetLoc(LevelMap->Location);
+            enemy->GetEnemyFirstCoords();
+        }
     }
 
     if (FlagManager::flagInAreaOfAnemy == 0)
@@ -501,22 +509,26 @@ void Level::Start()
         }
     }
     LevelMap->GenerateMap();
-    for(int i = 0; i<(LevelMap->floorLvl)%4+(LevelMap->floorLvl/4)+1; i++)
+    for(int i = 0; i<(LevelMap->floorLvl)%4+(LevelMap->floorLvl/4); i++)
     {
-
-        int MobTypeChoose = (LevelMap->floorLvl/4)*2+(rand()%2);
-        std::cout<< (LevelMap->floorLvl/4)*2 << "?" << LevelMap->floorLvl << std::endl;
-        std::cout << "( "<<(typeid(StandartEnemies[3]) == typeid(Enemy*)) << " )";
-        if(StandartEnemies[MobTypeChoose]->GetTypeName() == 1)
+        if (LevelMap->floorLvl != 2)
         {
-            Enemy* enemy = new Enemy(StandartEnemies[MobTypeChoose]);
-            enemies.push_back(enemy);
+            int MobTypeChoose = (LevelMap->floorLvl/4)*2+(rand()%2);
+            if(StandartEnemies[MobTypeChoose]->GetTypeName() == 1)
+            {
+                Enemy* enemy = new Enemy(StandartEnemies[MobTypeChoose]);
+                enemies.push_back(enemy);
+            }
+            else if(StandartEnemies[MobTypeChoose]->GetTypeName() == 2)
+            {
+                RangeEnemy* enemy1 = new RangeEnemy(StandartEnemies[MobTypeChoose]);
+                enemies.push_back(enemy1);
+            }
         }
-        else if(StandartEnemies[MobTypeChoose]->GetTypeName() == 2)
+        else
         {
-            RangeEnemy* enemy1 = new RangeEnemy(StandartEnemies[MobTypeChoose]);
-            std::cout << "qq" << (typeid(enemy1) == typeid(RangeEnemy*)) << std::endl;
-            enemies.push_back(enemy1);
+            enemies.push_back(StandartBossSkeleton);
+            break;
         }
     }
     player->generate = LevelMap->generateChoose;

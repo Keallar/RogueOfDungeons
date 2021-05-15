@@ -239,11 +239,12 @@ void Enemy::Update()
     {
         meleeAttackEnemy();
         if ((abs(Rect.x / 32 - EntityPosition::Coords[0] / 32) +
-             abs(Rect.y / 32 - EntityPosition::Coords[1] / 32)) > 1)
+             abs(Rect.y / 32 - EntityPosition::Coords[1] / 32)) > 1 && DidMeAttacked == false)
         {
             WAY(Rect.x / 32, Rect.y / 32, EntityPosition::Coords[0] / 32, EntityPosition::Coords[1] / 32);
             coin->SetRectCoords(Rect.x, Rect.y);
         }
+        DidMeAttacked = 0;
     }
     CheckHpEnemy();
     if (currentFrameOfEnemyAnim == framesOfAnimForAttack - 1 &&
@@ -321,6 +322,7 @@ void Enemy::meleeAttackEnemy()
             Enemy::attackOfEnemy(true);
             Timer = Timer2;
         }
+        DidMeAttacked = true;
     }
     else if ((((Rect.x == EntityPosition::Coords[0]) &&
                (Rect.y == EntityPosition::Coords[1] + 64)) ||
@@ -352,6 +354,7 @@ void Enemy::meleeAttackEnemy()
             Enemy::attackOfEnemy(false);
             Timer = Timer2;
         }
+        DidMeAttacked = true;
     }
 }
 

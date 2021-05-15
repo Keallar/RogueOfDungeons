@@ -16,3 +16,4 @@ CaveTiles data/images/Tiles.png
 CastleTiles data/images/CaslteTiles.png
 CastleTiles2 data/images/CastleTiles2.png
 Gulag data/images/GulagTiles.png
+Boss data/images/Boss.png

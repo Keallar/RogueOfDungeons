@@ -17,9 +17,12 @@ private:
     void SetWallsForTileSet();
     void SetWalls1();
     void SetWalls2();
-    void CreateSquare(int x, int y, int texture);
+    void CreateSquare(int x, int y, int texture, int size);
     void BigLabGenerationMethod();
     void BossGenerationNethod();
+    void WallsAroundLevel();
+    void RingGenerationmethod();
+    void CreateRing(int a, int b, int R);
 public:
     Map();
     ~Map();

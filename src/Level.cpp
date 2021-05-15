@@ -347,6 +347,17 @@ void Level::Update()
     if(player != nullptr && player->GetHP(0) <= 0)
     {
         PlayerDeath = true;
+        for (Coins* coin : coins)
+        {
+            if (coin != nullptr)
+            {
+                coins.erase(std::remove(coins.begin(), coins.end(), coin));
+                coins.shrink_to_fit();
+                delete coin;
+                coin = nullptr;
+                std::cout << "Start coin delete" << std::endl;
+            }
+        }
         pCOORDS.x = EntityPosition::Coords[0];
         pCOORDS.y = EntityPosition::Coords[1];
         EntityPosition::Coords[0] = 32*13; EntityPosition::Coords[1] = 32*13;
@@ -529,7 +540,7 @@ void Level::Start()
     for(int i = 0; i<(LevelMap->floorLvl)%4+(LevelMap->floorLvl/4)+1; i++)
     {
 
-        int MobTypeChoose = (LevelMap->floorLvl/4)*2+(rand()%2);
+        int MobTypeChoose = ((LevelMap->floorLvl-1)/4)*2+(rand()%2);
         if (MobTypeChoose > 4) MobTypeChoose = 4;
          //ВАЖНО
          //ВАЖНО

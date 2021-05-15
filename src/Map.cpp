@@ -3,6 +3,7 @@
 #include "Level.h"
 #include "Managers.h"
 #include <ctime>
+#include <cmath>
 #include "UI.h"
 #include <vector>
 #include <iostream>
@@ -10,7 +11,7 @@
 Map::Map()
 {
     TileSet = 0;
-    floorLvl = 19;
+    floorLvl = 1;
     for (int i = 0; i < 22; i++)
     {
         for (int j = 0; j < 32; j++)
@@ -39,7 +40,7 @@ void Map::GenerateMap()
 {
     floorLvl++;
     srand(time(0));
-    if(floorLvl <= 3) {
+    if(floorLvl <= 4) {
         TileSet = 0;
         switch(rand()%3) {
         case 0: generateChoose = 0;
@@ -50,47 +51,38 @@ void Map::GenerateMap()
             break;
         }
     }
-    if(floorLvl > 3 && floorLvl <= 7) {
+    if(floorLvl > 4 && floorLvl <= 8) {
         TileSet = 1;
-        switch(rand()%2) {case 0: generateChoose = 0; case 1: generateChoose = 4; break; case 2: generateChoose = 2; break;}
+        switch(rand()%3) {case 0: generateChoose = 0; case 1: generateChoose = 4; break; case 2: generateChoose = 2; break;}
     }
-    if(floorLvl > 7 && floorLvl <= 11) {
+    if(floorLvl > 8 && floorLvl <= 12) {
         TileSet = 2;
         switch(rand()%2) {case 0: generateChoose = 1; break; case 1: generateChoose = 5; break;}
     }
-    if(floorLvl > 11 && floorLvl <=15) {
+    if(floorLvl > 12 && floorLvl <=16) {
         TileSet = 3;
         switch(rand()%2) {case 0: generateChoose = 1; break; case 1: generateChoose = 5; break;}
     }
-    if (floorLvl > 15 && floorLvl <= 19) {
+    if (floorLvl > 16 && floorLvl <= 20) {
         TileSet = 4;
-        switch(rand()%2) {case 0: generateChoose = 1; break; case 1: generateChoose = 5; break;}
+        switch(rand()%3) {case 0: generateChoose = 1; break; case 1: generateChoose = 5; break; case 2: generateChoose = 7; break;}
     }
-    if (floorLvl == 20) {
+    if (floorLvl == 21) {
         TileSet = 4;
         generateChoose = 6;
     }
-    if (generateChoose == 0) {
-        ChunkGenerationMethod();
+
+    switch(generateChoose) {
+        case 0: {ChunkGenerationMethod(); break;}
+        case 1: {RoomGenerationMethod2(); break;}
+        case 2: {ChunkGenerationMethod2(); break;}
+        case 3: {BigLabGenerationMethod(); break;}
+        case 4: {CaveLabGeneration(); break;}
+        case 5: {CastleLabGeneration(); break;}
+        case 6: {BossGenerationNethod(); break;}
+        case 7: {RingGenerationmethod(); break;}
     }
-    if (generateChoose == 4) {
-        CaveLabGeneration();
-    }
-    if (generateChoose == 5) {
-        CastleLabGeneration();
-    }
-    if (generateChoose == 1) {
-        RoomGenerationMethod2();
-    }
-    if (generateChoose == 2) {
-        ChunkGenerationMethod2();
-    }
-    if (generateChoose == 3) {
-        BigLabGenerationMethod();
-    }
-    if (generateChoose == 6 ) {
-        BossGenerationNethod();
-    }
+
     for (int i = 0; i < 3; i++) {
         itemsOnLvl[i] = rand() % 4 + 1;
     }
@@ -112,6 +104,17 @@ void Map::CreateChunk2(int x, int y) {
         for (int j = y; j < y + 4; j++) {
             if ((j <= 31) || (i <= 21) || (j > 0) || (i > 0)) {
                 textureLocation[i][j] = 1;
+            }
+        }
+    }
+}
+
+void Map::WallsAroundLevel() {
+    for (int j = 0; j < 32; j++) {
+        for (int i = 0; i < 22; i++) {
+            //стены вокруг уровня
+            if ((j == 31) || (i == 21) || (j == 0) || (i == 0)) {
+                textureLocation[i][j] = 2;
             }
         }
     }
@@ -265,14 +268,8 @@ void Map::ChunkGenerationMethod() {
             }
         }
     }
-                //стены вокруг уровня
-    for (int j = 0; j < 32; j++) {
-        for (int i = 0; i < 22; i++) {
-            if ((j == 31) || (i == 21) || (j == 0) || (i == 0)) {
-                textureLocation[i][j] = 2;
-            }
-        }
-    }
+    //стены вокруг уровня
+    WallsAroundLevel();
 
     //ставим портал
 
@@ -295,14 +292,9 @@ void Map::ChunkGenerationMethod() {
 }
 
 void Map::LabGeneration() {
-    for (int j = 0; j < 32; j++) {
-        for (int i = 0; i < 22; i++) {
-            //стены вокруг уровня
-            if ((j == 31) || (i == 21) || (j == 0) || (i == 0)) {
-                textureLocation[i][j] = 2;
-            }
-        }
-    }
+
+    WallsAroundLevel();
+
     for (int i = 1; i < 19; i++) {
         for (int j = 1; j < 29; j++) {
             if ((i % 2 == 1) && (j % 2 == 1)) {
@@ -575,13 +567,7 @@ void Map::RoomGenerationMethod2() {
         }
     }
     //рисуем границы мапы
-    for (int i = 0; i < 22; i++) {
-        for (int j = 0; j < 32; j++) {
-            if ((i == 0) || (j == 0) || (i == 21) || (j == 31)) {
-                textureLocation[i][j] = 2;
-            }
-        }
-    }
+    WallsAroundLevel();
     //добавляем разнообразие в текстурки
     for (int i = 0; i < 22; i++) {
         for (int j = 0; j < 32; j++) {
@@ -728,13 +714,7 @@ void Map::ChunkGenerationMethod2() {
         }
     }
     //стены
-    for(int i = 0; i < 22; i++) {
-        for(int j = 0; j < 32; j++) {
-            if ((j == 31) || (i == 21) || (j == 0) || (i == 0)) {
-                textureLocation[i][j] = 2;
-            }
-        }
-    }
+    WallsAroundLevel();
 
     //ставим портал
 
@@ -801,9 +781,9 @@ void Map::GulagChoose(int LCK) {
     }
 }
 
-void Map::CreateSquare(int x, int y, int texture) {
-    for(int i = x; i < x+3; i++) {
-        for(int j = y; j < y+3; j++) {
+void Map::CreateSquare(int x, int y, int texture, int size) {
+    for(int i = x; i < x+size; i++) {
+        for(int j = y; j < y+size; j++) {
             textureLocation[j][i] = texture;
         }
     }
@@ -811,18 +791,12 @@ void Map::CreateSquare(int x, int y, int texture) {
 
 void Map::BigLabGenerationMethod() {
     srand(time(0));
-    for (int j = 0; j < 32; j++) {
-        for (int i = 0; i < 22; i++) {
-            //стены вокруг уровня
-            if ((j == 31) || (i == 21) || (j == 0) || (i == 0)) {
-                textureLocation[i][j] = 2;
-            }
-        }
-    }
+    WallsAroundLevel();
+
     for (int i = 3; i < 21; i+=6) {
         for (int j = 3; j < 31; j+=6) {
             if ((i % 2 == 1) && (j % 2 == 1)) {
-                CreateSquare(j, i, 0);
+                CreateSquare(j, i, 0, 3);
                 int Way = rand() % 2;
                 bool Choosed = false;
                 while (Choosed == false) {
@@ -834,7 +808,7 @@ void Map::BigLabGenerationMethod() {
                             Choosed = false;
                         }
                         else {
-                            CreateSquare(j + 3, i, 0);
+                            CreateSquare(j + 3, i, 0, 3);
                         }
                         break;
                     case 1:
@@ -843,7 +817,7 @@ void Map::BigLabGenerationMethod() {
                             Choosed = false;
                         }
                         else {
-                            CreateSquare(j, i+3, 0);
+                            CreateSquare(j, i+3, 0, 3);
                         }
                         break;
                     default:
@@ -862,9 +836,6 @@ void Map::BigLabGenerationMethod() {
         textureLocation[i][1] = 1;
     }
     for (int i = 1; i < 31; i++) {
-//        textureLocation[16][i] = 0;
-//        textureLocation[17][i] = 0;
-//        textureLocation[18][i] = 0;
         textureLocation[18][i] = 0;
         textureLocation[19][i] = 0;
         textureLocation[20][i] = 1;
@@ -905,14 +876,7 @@ void Map::BigLabGenerationMethod() {
             }
         }
     }
-    for (int j = 0; j < 32; j++) {
-        for (int i = 0; i < 22; i++) {
-            //стены вокруг уровня
-            if ((j == 31) || (i == 21) || (j == 0) || (i == 0)) {
-                textureLocation[i][j] = 2;
-            }
-        }
-    }
+    WallsAroundLevel();
     //генерим стены
 
     SetWallsForTileSet();
@@ -935,48 +899,16 @@ void Map::BigLabGenerationMethod() {
 }
 
 void Map::BossGenerationNethod() {
-    for (int i = 1; i < 21; i++) {
-        int p;
-        for(int j = 0; j < 4; j++) {
-            textureLocation[i][2+j] = 0;
-        }
-        for(int j = 0; j < 4; j++) {
-            textureLocation[i][8+j] = 0;
-        }
-        for(int j = 0; j < 5; j++) {
-            textureLocation[i][14+j] = 0;
-        }
-        for(int j = 0; j < 4; j++) {
-            textureLocation[i][21+j] = 0;
-        }
-        for(int j = 0; j < 4; j++) {
-            textureLocation[i][27+j] = 0;
+    for (int i = 0; i < 22; i++) {
+        for(int j = 0; j < 32; j++) {
+            textureLocation[i][j] = 0;
         }
     }
-    int p = rand()%20+1;
-    int count = 0;
-    while (count < 4) {
-        switch(count) {
-        case 0:
-            textureLocation[p][6] = 0;
-            textureLocation[p][7] = 0;
-            break;
-        case 1:
-            textureLocation[p][12] = 0;
-            textureLocation[p][13] = 0;
-            break;
-        case 2:
-            textureLocation[p][19] = 0;
-            textureLocation[p][20] = 0;
-            break;
-        case 3:
-            textureLocation[p][25] = 0;
-            textureLocation[p][26] = 0;
-            break;
-        }
-        count++;
-        p = rand()%20+1;
-    }
+    int x = 6; int y = 5; int size = 4;
+    CreateSquare(x, y, 1, size);
+    CreateSquare(32-x-size,22-y-size, 1, 4);
+    CreateSquare(x, 22-y-size, 1, 4);
+    CreateSquare(32-x-size, y, 1, 4);
     for (int i = 0; i < 22; i++) {
         for (int j = 0; j < 32; j++) {
             if ((textureLocation[i][j] == 1) && (!(rand() % 11))) {
@@ -1000,13 +932,56 @@ void Map::BossGenerationNethod() {
             }
         }
     }
-    for (int j = 0; j < 32; j++) {
-        for (int i = 0; i < 22; i++) {
-            //стены вокруг уровня
-            if ((j == 31) || (i == 21) || (j == 0) || (i == 0)) {
-                textureLocation[i][j] = 2;
+    WallsAroundLevel();
+
+    SetWallsForTileSet();
+}
+
+void Map::CreateRing(int a, int b, int R) {
+    for(int x = 0; x < 32; x++) {
+        for(int y = 0; y < 22; y++) {
+            if (pow((x-a), 2) + pow((y-b), 2) < pow(R, 2)) {
+                textureLocation[y][x] = 0;
             }
         }
     }
+}
+
+void Map::RingGenerationmethod() {
+    int Ring = rand()%6+6;
+    int RingPos = 17 - Ring + 1;
+    if (RingPos < 0 + Ring) RingPos = 0 + Ring + 1;
+    CreateRing(RingPos, 10, Ring);
+    Ring = rand()%6+6;
+    RingPos = 17 + Ring;
+    if (RingPos > 31 - Ring) RingPos = 31 - Ring;
+    CreateRing(RingPos, 10, Ring);
+    for (int i = 0; i < 22; i++) {
+        for (int j = 0; j < 32; j++) {
+            if ((textureLocation[i][j] == 1) && (!(rand() % 11))) {
+                textureLocation[i][j] = 5;
+            }
+            if ((textureLocation[i][j] == 0) && (!(rand() % 16))) {
+                if (rand() % 2) {
+                    textureLocation[i][j] = 3;
+                }
+                else {
+                    textureLocation[i][j] = 4;
+                }
+            }
+            if ((textureLocation[i][j] == 0) && (!(rand() % 4))) {
+                if (rand() % 2) {
+                    textureLocation[i][j] = 7;
+                }
+                else {
+                    textureLocation[i][j] = 8;
+                }
+            }
+        }
+    }
+    WallsAroundLevel();
+
     SetWallsForTileSet();
+
+    PuttingPortal();
 }

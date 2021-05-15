@@ -581,7 +581,7 @@ void Player::GetPlayerFirstCoords()
 {
     EntityPosition::Coords[0] = (rand() % 3 + 1) * 32;
     EntityPosition::Coords[1] = (rand() % 20 + 1) * 32;
-    if (generate != 4 && generate != 5)
+    if (generate != 4 && generate != 5 && generate != 7)
     {
         while ((Location[EntityPosition::Coords[1] / 32][EntityPosition::Coords[0] / 32] == 1) ||
                ((Location[EntityPosition::Coords[1] / 32][EntityPosition::Coords[0] / 32 - 1] != 0) &&
@@ -595,11 +595,21 @@ void Player::GetPlayerFirstCoords()
     }
     else
     {
-        while (Location[EntityPosition::Coords[1] / 32][EntityPosition::Coords[0] / 32] == 1)
-        {
-            EntityPosition::Coords[0] = (rand() % 3 + 1) * 32;
-            EntityPosition::Coords[1] = (rand() % 20 + 1) * 32;
-        }
+       if (generate != 7) {
+           while (Location[EntityPosition::Coords[1] / 32][EntityPosition::Coords[0] / 32] == 1)
+           {
+               EntityPosition::Coords[0] = (rand() % 3 + 1) * 32;
+               EntityPosition::Coords[1] = (rand() % 20 + 1) * 32;
+           }
+       }
+       else
+       {
+           while (Location[EntityPosition::Coords[1] / 32][EntityPosition::Coords[0] / 32] == 1)
+           {
+               EntityPosition::Coords[0] = (rand() % 16 + 1) * 32;
+               EntityPosition::Coords[1] = (rand() % 20 + 1) * 32;
+           }
+       }
     }
 }
 

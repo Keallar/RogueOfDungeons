@@ -640,6 +640,9 @@ void Level::Render()
             coin->Render();
     }
 
+    if (FlagManager::flagUiTrader == 1 && LevelMap->floorLvl != 1)
+        uiTrader->Render();
+
     //ALL UI
     {
         uiItem->Render();
@@ -736,9 +739,6 @@ void Level::Render()
             }
         }
     }
-
-    if (FlagManager::flagUiTrader == 1 && LevelMap->floorLvl != 1)
-        uiTrader->Render();
 }
 
 //возможность изменять уровень из вне
@@ -778,9 +778,11 @@ void Level::handleEvents(SDL_Event eventInLvl)
 
         //Вызов InfoEnemy
         UiEnemy->handleEvents(eventInLvl);
-
-        //Work with UiTrader
-        uiTrader->handleEvents(eventInLvl);
+        if (FlagManager::flagUiTrader == 1)
+        {
+            //Work with UiTrader
+            uiTrader->handleEvents(eventInLvl);
+        }
     }
 
     //Передача event в Player

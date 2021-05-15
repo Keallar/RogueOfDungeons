@@ -3,7 +3,7 @@
 #include "Managers.h"
 
 
-UiTrader::UiTrader(SDL_Renderer* renderer) : ren (renderer)
+UiTrader::UiTrader(SDL_Renderer* renderer): ren (renderer)
 {
     GameTextures = TextureBase::Instance();
     PATH_IN_FONT = "data/fonts/manaspc.ttf";
@@ -11,7 +11,6 @@ UiTrader::UiTrader(SDL_Renderer* renderer) : ren (renderer)
     //trader
     trader = GameTextures->GetTexture("");
     traderText = FontManager::renderText("Trader", PATH_IN_FONT, color, 32, ren);
-    SDL_QueryTexture(traderText, NULL, NULL, &textW, &textH);
 
     //items
     firstItem = GameTextures->GetTexture("ShortSword");
@@ -27,10 +26,6 @@ UiTrader::UiTrader(SDL_Renderer* renderer) : ren (renderer)
     manaBottle = GameTextures->GetTexture("SmallMpPotion");
     manaBtText = FontManager::renderText("20", PATH_IN_FONT, color, 32, ren);
 
-    //Coins
-    coins = FontManager::renderText("0", PATH_IN_FONT, color, 32, ren);
-    coinsText = FontManager::renderText("Coins", PATH_IN_FONT, color, 32, ren);
-
     skip = FontManager::renderText("Skip", PATH_IN_FONT, color, 32, ren);
 
     sell = FontManager::renderText("Sell", PATH_IN_FONT, color, 32, ren);
@@ -41,12 +36,12 @@ UiTrader::UiTrader(SDL_Renderer* renderer) : ren (renderer)
     }
 
     //Buttons
-    buttonForFirstItem = new Button("left", GameTextures->GetTexture("ShortSword"), ren, {413, 296, 128, 128}, [this](){bFirstItem = 1;}, NULL);
-    buttonForSecondItem = new Button("left", GameTextures->GetTexture("ShortBow"), ren, {575, 296, 128, 128}, [this](){bSecondItem = 1;}, NULL);
-    buttonForThirdItem = new Button("left", GameTextures->GetTexture("Spear"), ren, {739, 296, 128, 128}, [this](){bThirdItem = 1;}, NULL);
-    buttonForHpPotion = new Button("left", GameTextures->GetTexture("SmallHpPotion"), ren, {1280 / 16 * 2, 720 / 12 * 9, 64, 64}, [this](){bHpPotion = 1;}, NULL);
-    buttonForManaPotion = new Button("left", GameTextures->GetTexture("SmallMpPotion"), ren, {1280 / 16 * 3, 720 / 12 * 9, 64, 64}, [this](){bManaPotion = 1;}, NULL);
-    buttonForSkip = new Button("left", GameTextures->GetTexture("Button"), ren, {1280 / 16 * 14, 720 / 12 * 11, 32, 32}, [](){FlagManager::flagUiTrader = 0;}, NULL);
+    buttonForFirstItem = new Button("left", GameTextures->GetTexture("ShortSword"), ren, {TSCREEN_WEIGHT / 15 * 5, TSCREEN_HEIGHT / 16 * 7, 96, 96}, [this](){bFirstItem = 1;}, NULL);
+    buttonForSecondItem = new Button("left", GameTextures->GetTexture("ShortBow"), ren, {TSCREEN_WEIGHT / 15 * 7, TSCREEN_HEIGHT / 16 * 7, 96, 96}, [this](){bSecondItem = 1;}, NULL);
+    buttonForThirdItem = new Button("left", GameTextures->GetTexture("Spear"), ren, {TSCREEN_WEIGHT/ 15 * 9, TSCREEN_HEIGHT / 16 * 7, 96, 96}, [this](){bThirdItem = 1;}, NULL);
+    buttonForHpPotion = new Button("left", GameTextures->GetTexture("SmallHpPotion"), ren, {TSCREEN_WEIGHT / 15 * 2, TSCREEN_HEIGHT / 16 * 12, 64, 64}, [this](){bHpPotion = 1;}, NULL);
+    buttonForManaPotion = new Button("left", GameTextures->GetTexture("SmallMpPotion"), ren, {TSCREEN_WEIGHT / 15 * 4, TSCREEN_HEIGHT / 16 * 12, 64, 64}, [this](){bManaPotion = 1;}, NULL);
+    buttonForSkip = new Button("left", GameTextures->GetTexture("Button"), ren, {TSCREEN_WEIGHT / 15 * 14, TSCREEN_HEIGHT / 16 * 14, 32, 32}, [](){FlagManager::flagUiTrader = 0;}, NULL);
 
     auto chooseSell{
         []()
@@ -54,7 +49,7 @@ UiTrader::UiTrader(SDL_Renderer* renderer) : ren (renderer)
 
         }
     };
-    buttonForSell = new Button("left", GameTextures->GetTexture("Button"), ren, {1280 / 16 * 1, 720 / 12 * 7, 32, 32}, chooseSell, NULL);
+    buttonForSell = new Button("left", GameTextures->GetTexture("Button"), ren, {TSCREEN_WEIGHT / 15 * 14, TSCREEN_HEIGHT / 16 * 9, 32, 32}, chooseSell, NULL);
 
     for (auto item : items)
     {
@@ -75,26 +70,32 @@ UiTrader::~UiTrader()
 
 void UiTrader::Render()
 {
-    RenderManager::CopyToRender(GameTextures->GetTexture("PlayBack"), ren);
+    RenderManager::CopyToRender(GameTextures->GetTexture("PlayBack"), ren, 32, 32, TSCREEN_WEIGHT, TSCREEN_HEIGHT);
     //RenderManager::CopyToRender(trader, ren, 1, 1, 1, 1, 1, 1, 1, 1);
 
-    RenderManager::CopyToRender(traderText, ren, (1280-textW)/2, (720-textH)/2 - 200, textW, textH);
+    SDL_QueryTexture(traderText, NULL, NULL, &textW, &textH);
+    RenderManager::CopyToRender(traderText, ren, (TSCREEN_WEIGHT-textW)/2, (TSCREEN_HEIGHT-textH)/2 - 200, textW, textH);
     buttonForFirstItem->Render();
-    RenderManager::CopyToRender(firstCost, ren, 413, 444, 64, 64);
+    SDL_QueryTexture(firstCost, NULL, NULL, &textW, &textH);
+    RenderManager::CopyToRender(firstCost, ren, TSCREEN_WEIGHT / 15 * 5, TSCREEN_HEIGHT / 16 * 10, textW, textH);
     buttonForSecondItem->Render();
-    RenderManager::CopyToRender(secondCost, ren, 575, 444, 64, 64);
+    SDL_QueryTexture(secondCost, NULL, NULL, &textW, &textH);
+    RenderManager::CopyToRender(secondCost, ren, TSCREEN_WEIGHT / 15 * 7, TSCREEN_HEIGHT / 16 * 10, textW, textH);
     buttonForThirdItem->Render();
-    RenderManager::CopyToRender(thirdCost, ren, 739, 444, 64, 64);
+    SDL_QueryTexture(thirdCost, NULL, NULL, &textW, &textH);
+    RenderManager::CopyToRender(thirdCost, ren, TSCREEN_WEIGHT / 15 * 9, TSCREEN_HEIGHT / 16 * 10, textW, textH);
     buttonForHpPotion->Render();
-    RenderManager::CopyToRender(hpBtText, ren, 1280 / 16 * 2, 720 / 12 * 11, 64, 64);
+    SDL_QueryTexture(hpBtText, NULL, NULL, &textW, &textH);
+    RenderManager::CopyToRender(hpBtText, ren, TSCREEN_WEIGHT / 15 * 2 + 10, TSCREEN_HEIGHT / 16 * 14, textW, textH);
     buttonForManaPotion->Render();
-    RenderManager::CopyToRender(manaBtText, ren, 1280 / 16 * 3, 720 / 12 * 11, 64, 64);
-    RenderManager::CopyToRender(coins, ren , 1280 / 16 * 13, 720 / 12 * 4, 64, 64);
-    RenderManager::CopyToRender(coinsText, ren, 1280 / 16 * 13, 720 / 12 * 3, textW, textH);
+    SDL_QueryTexture(manaBtText, NULL, NULL, &textW, &textH);
+    RenderManager::CopyToRender(manaBtText, ren, TSCREEN_WEIGHT / 15 * 4 + 10, TSCREEN_HEIGHT / 16 * 14, textW, textH);
     buttonForSkip->Render();
-    RenderManager::CopyToRender(skip, ren, 1280 / 16 * 14, 720 / 12 * 10, textW, textH);
+    SDL_QueryTexture(skip, NULL, NULL, &textW, &textH);
+    RenderManager::CopyToRender(skip, ren, TSCREEN_WEIGHT / 15 * 14, TSCREEN_HEIGHT / 16 * 13, textW, textH);
     buttonForSell->Render();
-    RenderManager::CopyToRender(sell, ren, 1280 / 16 * 1, 720 / 12 * 6, textW, textH);
+    SDL_QueryTexture(sell, NULL, NULL, &textW, &textH);
+    RenderManager::CopyToRender(sell, ren, TSCREEN_WEIGHT / 15 * 14, TSCREEN_HEIGHT / 16 * 8, textW, textH);
 }
 
 void UiTrader::Update(Player* player)
@@ -129,12 +130,6 @@ void UiTrader::Update(Player* player)
             }
         }
     }
-
-    SDL_DestroyTexture(coins);
-    coins = 0;
-    std::string stringTemp2 = std::to_string(Player::GetCoinsOfPlayer(0));
-    const char* CHAR_VALUE2 = stringTemp2.c_str();
-    coins = FontManager::renderText(CHAR_VALUE2, PATH_IN_FONT, color, 32, ren);
 }
 
 void UiTrader::Check()

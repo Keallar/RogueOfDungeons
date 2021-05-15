@@ -5,7 +5,7 @@
 #include "Level.h"
 #include "GameObject.h"
 #include "Player.h"
-#include "UI.h"
+#include "UiMain.h"
 #include "Enemy.h"
 
 Game::Game() 

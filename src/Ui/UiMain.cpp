@@ -1,4 +1,4 @@
-#include "UI.h"
+#include "UiMain.h"
 #include "Managers.h"
 #include "EntityPosition.h"
 #include <iostream>
@@ -249,13 +249,13 @@ UIInventory::UIInventory(SDL_Renderer* renderer) : ren(renderer)
     auto callDrop{
         []()
         {
-            if (FlagManager::flagHaveDrop == false)
+            if (FlagManager::flagHaveDrop == 0)
             {
-                FlagManager::flagHaveDrop = true;
+                FlagManager::flagHaveDrop = 1;
             }
-            else if (FlagManager::flagHaveDrop == true)
+            else if (FlagManager::flagHaveDrop == 1)
             {
-                FlagManager::flagHaveDrop = false;
+                FlagManager::flagHaveDrop = 0;
             }
         }
     };

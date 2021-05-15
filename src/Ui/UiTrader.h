@@ -6,7 +6,8 @@
 #include "Buttons.h"
 #include "Player.h"
 #include "TextureBase.h"
-
+#define TSCREEN_WEIGHT 960
+#define TSCREEN_HEIGHT 640
 
 class UiTrader
 {
@@ -29,8 +30,6 @@ private:
     SDL_Texture* manaBottle;
     SDL_Texture* manaBtText;
     SDL_Texture* skip;
-    SDL_Texture* coins;
-    SDL_Texture* coinsText;
     SDL_Texture* sell;
 
     std::array<InventoryItem*, 3> items;

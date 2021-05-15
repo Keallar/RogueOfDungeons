@@ -1,6 +1,8 @@
 #include "Game.h"
 #include <SDL.h>
 #include <iostream>
+#define TSCREEN_WEIGHT 960
+#define TSCREEN_HEIGHT 640
 
 Game* game = nullptr;
 int main(int argc, char* argv[])

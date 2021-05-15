@@ -3,7 +3,7 @@
 #include <memory>
 #include "Enemy.h"
 #include "Player.h"
-#include "UI.h"
+#include "UiMain.h"
 #include "GameObject.h"
 #include "Buttons.h"
 #include "UiPlayer.h"

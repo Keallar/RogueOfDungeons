@@ -640,6 +640,9 @@ void Level::Render()
             coin->Render();
     }
 
+    if (FlagManager::flagUiTrader == 1 && LevelMap->floorLvl != 1)
+        uiTrader->Render();
+
     //ALL UI
     {
         uiItem->Render();
@@ -736,9 +739,6 @@ void Level::Render()
             }
         }
     }
-
-    if (FlagManager::flagUiTrader == 1 && LevelMap->floorLvl != 1)
-        uiTrader->Render();
 }
 
 //возможность изменять уровень из вне
@@ -778,27 +778,32 @@ void Level::handleEvents(SDL_Event eventInLvl)
 
         //Вызов InfoEnemy
         UiEnemy->handleEvents(eventInLvl);
-
-        //Work with UiTrader
-        uiTrader->handleEvents(eventInLvl);
+        if (FlagManager::flagUiTrader == 1)
+        {
+            //Work with UiTrader
+            uiTrader->handleEvents(eventInLvl);
+        }
     }
 
-    //Передача event в Player
-    if (player && FlagManager::flagTurn == 0)
+    if (FlagManager::flagUiTrader == 0)
     {
-        keyW->handleEvents(eventInLvl);
-        keyA->handleEvents(eventInLvl);
-        keyS->handleEvents(eventInLvl);
-        keyD->handleEvents(eventInLvl);
-        keyH->handleEvents(eventInLvl);
+        //Передача event в Player
+        if (player && FlagManager::flagTurn == 0)
+        {
+            keyW->handleEvents(eventInLvl);
+            keyA->handleEvents(eventInLvl);
+            keyS->handleEvents(eventInLvl);
+            keyD->handleEvents(eventInLvl);
+            keyH->handleEvents(eventInLvl);
 
-        buttonForPlayerAttack->handleEvents(eventInLvl);
-        buttonW->handleEvents(eventInLvl);
-        buttonA->handleEvents(eventInLvl);
-        buttonS->handleEvents(eventInLvl);
-        buttonD->handleEvents(eventInLvl);
+            buttonForPlayerAttack->handleEvents(eventInLvl);
+            buttonW->handleEvents(eventInLvl);
+            buttonA->handleEvents(eventInLvl);
+            buttonS->handleEvents(eventInLvl);
+            buttonD->handleEvents(eventInLvl);
+        }
+        CheckButton(eventInLvl);
     }
-    CheckButton(eventInLvl);
 }
 
 void Level::CheckButton(SDL_Event& eventInLvl) {

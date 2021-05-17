@@ -237,14 +237,17 @@ Level::Level(SDL_Renderer* renderer, int playerClass) : ren (renderer), pClass(p
     keyH = new Keyboard(SDL_SCANCODE_H, Escape);
 }
 
-void Level::PlayerInGulagHole() {
-    if(!(rand()%(12-pLCK))) {
+void Level::PlayerInGulagHole()
+{
+    if(!(rand()%(12-pLCK)))
+    {
         PlayerDeath = false;
         player->ChangeHpValue(player->GetHP(2)-1);
         EntityPosition::Coords[0] = pCOORDS.x;
         EntityPosition::Coords[1] = pCOORDS.y;
     }
-    else {
+    else
+    {
         PlayerDead = true;
         player->ChangeHpValue(-10);
     }

@@ -6,7 +6,11 @@
 UiTrader::UiTrader(SDL_Renderer* renderer): ren (renderer)
 {
     GameTextures = TextureBase::Instance();
-    PATH_IN_FONT = "data/fonts/manaspc.ttf";
+    traderInventory = new Inventory();
+    traderInventory->traderUpdate();
+    traderInventory->AddItem(4);
+    traderInventory->AddItem(5);
+    traderInventory->AddItem(6);
 
     //trader
     trader = GameTextures->GetTexture("");
@@ -31,15 +35,6 @@ UiTrader::UiTrader(SDL_Renderer* renderer): ren (renderer)
     sell = FontManager::renderText("Sell", PATH_IN_FONT, color, 32, ren);
 
     //Buttons
-    buttonForFirstItem = new Button("left", GameTextures->GetTexture("ShortSword"), ren,
-                                    {TSCREEN_WEIGHT / 15 * 5, TSCREEN_HEIGHT / 16 * 7, 96, 96},
-                                    [this](){bFirstItem = 1;}, NULL);
-    buttonForSecondItem = new Button("left", GameTextures->GetTexture("ShortBow"), ren,
-                                     {TSCREEN_WEIGHT / 15 * 7, TSCREEN_HEIGHT / 16 * 7, 96, 96},
-                                     [this](){bSecondItem = 1;}, NULL);
-    buttonForThirdItem = new Button("left", GameTextures->GetTexture("Spear"), ren,
-                                    {TSCREEN_WEIGHT/ 15 * 9, TSCREEN_HEIGHT / 16 * 7, 96, 96},
-                                    [this](){bThirdItem = 1;}, NULL);
     buttonForHpPotion = new Button("left", GameTextures->GetTexture("SmallHpPotion"), ren,
                                    {TSCREEN_WEIGHT / 15 * 2, TSCREEN_HEIGHT / 16 * 12, 64, 64},
                                    [this](){bHpPotion = 1;}, NULL);
@@ -65,18 +60,10 @@ UiTrader::UiTrader(SDL_Renderer* renderer): ren (renderer)
     buttonForSell = new Button("left", GameTextures->GetTexture("Button"), ren,
                                {TSCREEN_WEIGHT / 15 * 14, TSCREEN_HEIGHT / 16 * 9, 32, 32},
                                chooseSell, NULL);
-
-    for (auto item : items)
-    {
-        item = nullptr;
-    }
 }
 
 UiTrader::~UiTrader()
 {
-    delete buttonForFirstItem;
-    delete buttonForSecondItem;
-    delete buttonForThirdItem;
     delete buttonForHpPotion;
     delete buttonForManaPotion;
     delete buttonForSkip;
@@ -92,18 +79,6 @@ void UiTrader::Render()
     SDL_QueryTexture(traderText, NULL, NULL, &textW, &textH);
     RenderManager::CopyToRender(traderText, ren, (TSCREEN_WEIGHT-textW)/2,
                                 (TSCREEN_HEIGHT-textH)/2 - 200, textW, textH);
-    buttonForFirstItem->Render();
-    SDL_QueryTexture(firstCost, NULL, NULL, &textW, &textH);
-    RenderManager::CopyToRender(firstCost, ren, TSCREEN_WEIGHT / 15 * 5,
-                                TSCREEN_HEIGHT / 16 * 10, textW, textH);
-    buttonForSecondItem->Render();
-    SDL_QueryTexture(secondCost, NULL, NULL, &textW, &textH);
-    RenderManager::CopyToRender(secondCost, ren, TSCREEN_WEIGHT / 15 * 7,
-                                TSCREEN_HEIGHT / 16 * 10, textW, textH);
-    buttonForThirdItem->Render();
-    SDL_QueryTexture(thirdCost, NULL, NULL, &textW, &textH);
-    RenderManager::CopyToRender(thirdCost, ren, TSCREEN_WEIGHT / 15 * 9,
-                                TSCREEN_HEIGHT / 16 * 10, textW, textH);
     buttonForHpPotion->Render();
     SDL_QueryTexture(hpBtText, NULL, NULL, &textW, &textH);
     RenderManager::CopyToRender(hpBtText, ren, TSCREEN_WEIGHT / 15 * 2 + 10,
@@ -120,10 +95,24 @@ void UiTrader::Render()
     SDL_QueryTexture(sell, NULL, NULL, &textW, &textH);
     RenderManager::CopyToRender(sell, ren, TSCREEN_WEIGHT / 15 * 14,
                                 TSCREEN_HEIGHT / 16 * 8, textW, textH);
+
+    for (int j = 0; j < TRADING_SIZE; j++)
+    {
+        if (Inventory::traderFace[TRADING_SIZE] != -1)
+        {
+            Inventory::it = Inventory::ExistingItems.find(Inventory::traderFace[j]);
+            item = textureManager::LoadTexture((Inventory::it->second)->ItemTexture, ren);
+            std::cout <<  (TSCREEN_WEIGHT / 15) * (4 + j + 1) << std::endl;
+            RenderManager::CopyToRender(item, ren, (TSCREEN_WEIGHT / 15) * (4 + j + 1), TSCREEN_HEIGHT / 16 * 7, 96, 96);
+            SDL_DestroyTexture(item);
+            item = 0;
+        }
+    }
 }
 
 void UiTrader::Update(Player* player)
-{   
+{
+
     if (bHpPotion == 1)
     {
         if (buttonForHpPotion->GetTexture() != 0)
@@ -155,6 +144,8 @@ void UiTrader::Update(Player* player)
             }
         }
     }
+
+    traderInventory->traderUpdate();
 }
 
 void UiTrader::Check()
@@ -166,7 +157,6 @@ void UiTrader::Check()
         {
             buttonForHpPotion->SetTexture(GameTextures->GetTexture("SmallHpPotion"));
             hpBtText = FontManager::renderText("20", PATH_IN_FONT, color, 32, ren);
-            //std::cout <<"Check in UiTrader\n";
         }
     }
     if (bManaPotion == 0)
@@ -176,12 +166,11 @@ void UiTrader::Check()
         {
             buttonForManaPotion->SetTexture(GameTextures->GetTexture("SmallMpPotion"));
             manaBtText = FontManager::renderText("20", PATH_IN_FONT, color, 32, ren);
-            //std::cout <<"Check in UiTrader\n";
         }
     }
     if (bFirstItem == 0)
     {
-        //if (Inventory::ExistingItems[])
+
     }
     if (bSecondItem == 0)
     {
@@ -193,11 +182,25 @@ void UiTrader::Check()
     }
 }
 
+void UiTrader::clickForItemInTrader()
+{
+    SDL_GetMouseState(&mCoord.x, &mCoord.y);
+
+    for (int j = 0; j < TRADING_SIZE; j++)
+    {
+        if (InputManager::MouseInArea(TSCREEN_WEIGHT / 15 * (4 + j + 1), TSCREEN_HEIGHT / 16 * 7, 96, 96, mCoord.x, mCoord.y) &&
+                Inventory::traderFace[j] != -1 && FlagManager::flagUiTrader == 1)
+        {
+            if (FlagManager::flagBuy == false)
+            {
+                FlagManager::flagBuy = j;
+            }
+        }
+    }
+}
+
 void UiTrader::handleEvents(SDL_Event &eventInUiTrader)
 {
-    buttonForFirstItem->handleEvents(eventInUiTrader);
-    buttonForSecondItem->handleEvents(eventInUiTrader);
-    buttonForThirdItem->handleEvents(eventInUiTrader);
     buttonForHpPotion->handleEvents(eventInUiTrader);
     buttonForManaPotion->handleEvents(eventInUiTrader);
     buttonForSkip->handleEvents(eventInUiTrader);

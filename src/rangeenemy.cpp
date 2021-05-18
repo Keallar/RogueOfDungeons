@@ -115,5 +115,6 @@ void RangeEnemy::meleeAttackEnemy()
     if (blankflag == true)
     {
         Player::ChangeHpValue(-this->enemyDamageCalculation());
+        DidMeAttacked = true;
     }
 }

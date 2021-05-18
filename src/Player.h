@@ -79,8 +79,8 @@ public:
     static void ChangeExpValue(int valueOfChangingExp);
     static void ChangeValueSpecs(int numOfSpec);
     static void ChangeValueSpecsNoLvl(int numOfSpec, int Value);
-    static void ChangeMaxHpValue();
-    static void ChangeMaxManaValue();
+    static void ChangeMaxHpValue(int flag);
+    static void ChangeMaxManaValue(int flag);
     static void ChangeMaxExpValue();
     static void ChangeCoins(int value);
     static void ChangePointOfSpec(int valueOfChanging);

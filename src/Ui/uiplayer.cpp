@@ -47,7 +47,7 @@ void HpInfo::Update()
 
 void HpInfo::UpdateMax()
 {
-    Player::ChangeMaxHpValue();
+    Player::ChangeMaxHpValue(Player::GetSpecValue(5));
     SDL_DestroyTexture(hpMax);
     hpMax = 0;
     SDL_DestroyTexture(hpCurrent);
@@ -117,7 +117,7 @@ void ManaInfo::Update()
 
 void ManaInfo::UpdateMax()
 {
-    Player::ChangeMaxManaValue();
+    Player::ChangeMaxManaValue(Player::GetSpecValue(4));
     SDL_DestroyTexture(manaMax);
     manaMax = 0;
     SDL_DestroyTexture(manaCurrent);

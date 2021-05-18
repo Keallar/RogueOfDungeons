@@ -496,6 +496,19 @@ void Level::Update()
     }
 }
 
+void Level::SetLevelLoot() {
+    loc CurrentSpawn = static_cast<loc>(LevelMap->TileSet);
+    for (int i = 0; i < 3; i++) {
+        while(true) {
+            LevelMap->itemsOnLvl[i] = (rand() % (Inventory::ExistingItems.size()-1)) + 1;
+            if (Inventory::ExistingItems[LevelMap->itemsOnLvl[i]]->spawnLoc == CurrentSpawn) {
+                break;
+            }
+        }
+    }
+    LevelMap->itemsHave = 2;
+}
+
 void Level::Start()
 {
     for (Coins* coin : coins)
@@ -537,6 +550,9 @@ void Level::Start()
         }
     }
     LevelMap->GenerateMap();
+
+    SetLevelLoot();
+
     for(int i = 0; i<(LevelMap->floorLvl)%4+(LevelMap->floorLvl/4)+1; i++)
     {
 

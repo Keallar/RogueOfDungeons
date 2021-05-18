@@ -17,10 +17,19 @@ enum type
     artifact
 };
 
+enum class loc {
+    cave,
+    jungle,
+    castle,
+    hell,
+    arcane
+};
+
 class InventoryItem 
 {	
 public:
     int COST;
+    loc spawnLoc;
 	std::string name;
 	const char* ItemTexture;
 	SDL_Renderer* ren;
@@ -36,7 +45,7 @@ private:
 public:
 	int DMG;
 	int RNG;
-    meleeWeapon(int Damage, int range, int Cost, type type, const char* WeapTex, std::string Name);
+    meleeWeapon(int Damage, int range, int Cost, type type, const char* WeapTex, std::string Name, loc SpawnLoc);
 	~meleeWeapon();
 };
 class rangeWeapon : public InventoryItem 
@@ -48,7 +57,7 @@ public:
 	int RNG;
 	int CHNS;
 	int DCHNS;
-    rangeWeapon(int Damage, int Range, int Chanse, int deltaChanse, int Cost, type type, const char* WeapTex, std::string Name);
+    rangeWeapon(int Damage, int Range, int Chanse, int deltaChanse, int Cost, type type, const char* WeapTex, std::string Name,  loc SpawnLoc);
 	~rangeWeapon();
 };
 
@@ -73,7 +82,7 @@ public:
     int SPL;
     magicEl WeaponEl;
     magicType WeaponType;
-    magicWeapon(int Damage, int range, int splash, int Cost, type type, magicEl ElType, magicType WeaponType, const char* WeapTex, std::string Name);
+    magicWeapon(int Damage, int range, int splash, int Cost, type type, magicEl ElType, magicType WeaponType, const char* WeapTex, std::string Name,  loc SpawnLoc);
     ~magicWeapon();
 };
 
@@ -83,7 +92,7 @@ private:
 
 public:
     int specs[6];
-    Artifact(int STR, int DEX, int INT, int WSD, int PHS, int LCK, type type, const char* WeapTex, std::string Name);
+    Artifact(int STR, int DEX, int INT, int WSD, int PHS, int LCK, type type, const char* WeapTex, std::string Name,  loc SpawnLoc);
 };
 
 class armorItem : public InventoryItem
@@ -91,7 +100,7 @@ class armorItem : public InventoryItem
 private:
 
 public:
-	armorItem(int Defence, type type, const char* WeapTex, std::string Name);
+    armorItem(int Defence, type type, const char* WeapTex, std::string Name, loc SpawnLoc);
 	~armorItem();
 	int DEF;
 };
@@ -118,6 +127,7 @@ public:
 	void AddItem(int id);
 	void EquipItem(int i, int j);
 	void Update();
+    loc returnLoc(std::string Text);
 	meleeWeapon* GetRealMelee(int id);
 	rangeWeapon* GetRealRange(int id);
 	armorItem* GetRealArmor(int id);

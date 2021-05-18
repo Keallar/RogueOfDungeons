@@ -82,11 +82,6 @@ void Map::GenerateMap()
         case 6: {BossGenerationNethod(); break;}
         case 7: {RingGenerationmethod(); break;}
     }
-
-    for (int i = 0; i < 3; i++) {
-        itemsOnLvl[i] = rand() % 4 + 1;
-    }
-    itemsHave = 2;
 }
 
 void Map::CreateChunk(int x, int y) {

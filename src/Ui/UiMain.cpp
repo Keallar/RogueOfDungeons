@@ -60,16 +60,21 @@ UIInfo::UIInfo(SDL_Renderer* renderer) : ren (renderer)
         }
     };
     auto hoverSpec{
-        [=]()
+        [this]()
         {
             if (flagHoverSpec == 0)
                 flagHoverSpec = 1;
-            else if (flagHoverSpec == 1)
+        }
+    };
+    auto leaveHoverSpec{
+        [this]()
+        {
+            if (flagHoverSpec == 1)
                 flagHoverSpec = 0;
         }
     };
     buttonForCallSpecInfo = new Button("left", GameTextures->GetTexture("Button"), ren , { 1230, 240, 32, 32 },
-                                       callSpecOrInfoWin, hoverSpec);
+                                       callSpecOrInfoWin, hoverSpec, leaveHoverSpec);
     keyForCallSpecInfo = new Keyboard(SDL_SCANCODE_Q, callSpecOrInfoWin);
     auto callInvWin{
         []()
@@ -85,7 +90,7 @@ UIInfo::UIInfo(SDL_Renderer* renderer) : ren (renderer)
         }
     };
     buttonForCallInvWin = new Button("left", GameTextures->GetTexture("Button"), ren, { 1050, 665, 25, 22 },
-                                     callInvWin, NULL);
+                                     callInvWin, NULL, NULL);
     keyForcCallInvWin = new Keyboard(SDL_SCANCODE_I, callInvWin);
 }
 
@@ -259,7 +264,7 @@ UIInventory::UIInventory(SDL_Renderer* renderer) : ren(renderer)
             }
         }
     };
-    buttonForCallDpor = new Button("left", GameTextures->GetTexture("Button"), ren, { 790, 665, 25, 22 }, callDrop , NULL);
+    buttonForCallDpor = new Button("left", GameTextures->GetTexture("Button"), ren, { 790, 665, 25, 22 }, callDrop , NULL, NULL);
 }
 
 void UIInventory::Render()

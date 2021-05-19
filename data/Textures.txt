@@ -19,7 +19,9 @@ Fireball data/images/Fireball.png
 SmallHpPotion data/images/SmallHpPotion.png
 SmallMpPotion data/images/SmallMpPotion.png
 CaveTiles data/images/Tiles.png
-CastleTiles data/images/CaslteTiles.png
+CastleTiles data/images/CastleTiles.png
 CastleTiles2 data/images/CastleTiles2.png
 Gulag data/images/GulagTiles.png
+JungleTiles data/images/JungleTiles.png
+ArcaneTiles data/images/WTF.png
 Boss data/images/Boss.png

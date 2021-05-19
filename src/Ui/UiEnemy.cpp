@@ -30,7 +30,7 @@ UIEnemy::UIEnemy(SDL_Renderer* renderer, Enemy* enemy):
             }
         }
     };
-    buttonForCallEnemyInfo = new Button("right", NULL, ren, {tempEnemy->Rect.x,tempEnemy ->Rect.y, 32, 32}, callEnemyInfo, NULL);
+    buttonForCallEnemyInfo = new Button("right", NULL, ren, {tempEnemy->Rect.x,tempEnemy ->Rect.y, 32, 32}, callEnemyInfo, NULL, NULL);
 }
 
 void UIEnemy::Render()

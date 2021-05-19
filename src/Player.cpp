@@ -78,7 +78,7 @@ int Player::quantityOfCoins[3] = {
     100	 /*coins max*/
 };
 
-int Player::VIS = 16;
+int Player::VIS = 32;
 
 Player::Player( SDL_Renderer* renderer):
     GameObject( renderer)
@@ -107,16 +107,9 @@ void Player::PushItemsToInventory(int kit)
 {
     if (kit == 4)
     {
-        inventory->AddItem(1);
-        inventory->AddItem(2);
-        inventory->AddItem(5);
-        inventory->AddItem(3);
-        inventory->AddItem(4);
-        inventory->AddItem(6);
-        inventory->AddItem(6);
-        inventory->AddItem(7);
-        inventory->AddItem(8);
-        inventory->AddItem(9);
+        for(int i = 1; i < Inventory::ExistingItems.size(); i++) {
+            inventory->AddItem(i);
+        }
     }
     if (kit == 1)
     {
@@ -370,17 +363,21 @@ void Player::ChangeExpValue(int valueOfChangingExp)
 }
 
 //Изменение максимального значения hp
-void Player::ChangeMaxHpValue()
+void Player::ChangeMaxHpValue(int flag)
 {
-    HP[2] += 1;
-    HP[0] += 1;
+    int temp = HP[2];
+    HP[2] = 10 +1*flag - 1;
+    if(HP[2] != temp) HP[0] += HP[2] - temp;
+    if(HP[0] < 1) HP[0] = 1;
 }
 
 //Изменение максимального значения маны
-void Player::ChangeMaxManaValue()
+void Player::ChangeMaxManaValue(int flag)
 {
-    mana[2] += 10;
-    mana[0] += 10;
+    int temp = mana[2];
+    mana[2] = 10 + 10*flag - 10;
+    if(mana[2] != temp) mana[0] += mana[2] - temp;
+    if(mana[0] < 0) mana[0] = 0;
 }
 
 //Изменение максимального значения exp
@@ -579,9 +576,9 @@ void Player::GetLevel(int arr[22][32])
 
 void Player::GetPlayerFirstCoords()
 {
-    EntityPosition::Coords[0] = (rand() % 2 + 1) * 32;
+    EntityPosition::Coords[0] = (rand() % 3 + 1) * 32;
     EntityPosition::Coords[1] = (rand() % 20 + 1) * 32;
-    if (generate != 4 && generate != 5)
+    if (generate != 4 && generate != 5 && generate != 7)
     {
         while ((Location[EntityPosition::Coords[1] / 32][EntityPosition::Coords[0] / 32] == 1) ||
                ((Location[EntityPosition::Coords[1] / 32][EntityPosition::Coords[0] / 32 - 1] != 0) &&
@@ -589,17 +586,27 @@ void Player::GetPlayerFirstCoords()
                 (Location[EntityPosition::Coords[1] / 32 - 1][EntityPosition::Coords[0] / 32] != 0) &&
                 (Location[EntityPosition::Coords[1] / 32 + 1][EntityPosition::Coords[0] / 32] != 0)))
         {
-            EntityPosition::Coords[0] = (rand() % 2 + 1) * 32;
+            EntityPosition::Coords[0] = (rand() % 3 + 1) * 32;
             EntityPosition::Coords[1] = (rand() % 20 + 1) * 32;
         }
     }
     else
     {
-        while (Location[EntityPosition::Coords[1] / 32][EntityPosition::Coords[0] / 32] == 1)
-        {
-            EntityPosition::Coords[0] = (rand() % 2 + 1) * 32;
-            EntityPosition::Coords[1] = (rand() % 20 + 1) * 32;
-        }
+       if (generate != 7) {
+           while (Location[EntityPosition::Coords[1] / 32][EntityPosition::Coords[0] / 32] == 1)
+           {
+               EntityPosition::Coords[0] = (rand() % 3 + 1) * 32;
+               EntityPosition::Coords[1] = (rand() % 20 + 1) * 32;
+           }
+       }
+       else
+       {
+           while (Location[EntityPosition::Coords[1] / 32][EntityPosition::Coords[0] / 32] == 1)
+           {
+               EntityPosition::Coords[0] = (rand() % 16 + 1) * 32;
+               EntityPosition::Coords[1] = (rand() % 20 + 1) * 32;
+           }
+       }
     }
 }
 
@@ -694,6 +701,9 @@ void Player::GetItemEquip(int id)
         {
             if (EqItems.ArtId > 0)
             {
+                for(int i = 1; i <= 6; i++) {
+                    ChangeValueSpecsNoLvl(i, -(EqItems.equipedArtifact->specs[i-1]));
+                }
                 inventory->inventory[id] = EqItems.ArtId;
             }
             else

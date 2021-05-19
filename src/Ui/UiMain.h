@@ -25,7 +25,7 @@ private:
     SDL_Texture* levelOfPlayer;
 
     //flags
-    bool flagHoverSpec;
+    bool flagHoverSpec = 0;
 	
 	//XP
 	SDL_Texture* xpBar;

@@ -15,6 +15,14 @@ private:
     int CountingNeighbours(int x, int y, int NeighbourNumber);
     void PuttingPortal();
     void SetWallsForTileSet();
+    void SetWalls1();
+    void SetWalls2();
+    void CreateSquare(int x, int y, int texture, int size);
+    void BigLabGenerationMethod();
+    void BossGenerationNethod();
+    void WallsAroundLevel();
+    void RingGenerationmethod();
+    void CreateRing(int a, int b, int R);
 public:
     Map();
     ~Map();
@@ -22,7 +30,6 @@ public:
         int x;
         int y;
     } portal;
-
     int generateChoose;
     int itemsOnLvl[3];
     int itemsHave;

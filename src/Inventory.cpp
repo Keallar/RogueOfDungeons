@@ -21,6 +21,7 @@ Inventory::Inventory()
         int COST;
         std::string WeapTex;
         std::string Name;
+        std::string SpawnTex;
         int CHS;
         int dCHS;
         int DEF;
@@ -48,8 +49,10 @@ Inventory::Inventory()
                 Tex[i] = WeapTex[i];
             }
             file >> Name;
+            file >> SpawnTex;
+            loc SpawnLoc = returnLoc(SpawnTex);
             type ItemType = weapon;
-            ExistingItems[ItemNumber] = new meleeWeapon(DMG, RNG, COST, ItemType, Tex, Name);
+            ExistingItems[ItemNumber] = new meleeWeapon(DMG, RNG, COST, ItemType, Tex, Name, SpawnLoc);
         }
         if (Type == "rWeapon")
         {
@@ -65,8 +68,10 @@ Inventory::Inventory()
                 Tex[i] = WeapTex[i];
             }
             file >> Name;
+            file >> SpawnTex;
+            loc SpawnLoc = returnLoc(SpawnTex);
             type ItemType = rWeapon;
-            ExistingItems[ItemNumber] = new rangeWeapon(DMG, RNG, CHS, dCHS, COST, ItemType, Tex, Name);
+            ExistingItems[ItemNumber] = new rangeWeapon(DMG, RNG, CHS, dCHS, COST, ItemType, Tex, Name, SpawnLoc);
         }
         if (Type == "magic")
         {
@@ -89,8 +94,10 @@ Inventory::Inventory()
                 Tex[i] = WeapTex[i];
             }
             file >> Name;
+            file >> SpawnTex;
+            loc SpawnLoc = returnLoc(SpawnTex);
             type ItemType = magic;
-            ExistingItems[ItemNumber] = new magicWeapon(DMG, RNG, SPL, COST, ItemType, Eltype, WpType, Tex, Name);
+            ExistingItems[ItemNumber] = new magicWeapon(DMG, RNG, SPL, COST, ItemType, Eltype, WpType, Tex, Name, SpawnLoc);
         }
         if (Type == "armor") {
             file >> DEF;
@@ -101,8 +108,10 @@ Inventory::Inventory()
                 Tex[i] = WeapTex[i];
             }
             file >> Name;
+            file >> SpawnTex;
+            loc SpawnLoc = returnLoc(SpawnTex);
             type ItemType = armor;
-            ExistingItems[ItemNumber] = new armorItem(DEF, ItemType, Tex, Name);
+            ExistingItems[ItemNumber] = new armorItem(DEF, ItemType, Tex, Name, SpawnLoc);
         }
         if (Type == "potion")
         {
@@ -134,8 +143,10 @@ Inventory::Inventory()
                 Tex[i] = WeapTex[i];
             }
             file >> Name;
+            file >> SpawnTex;
+            loc SpawnLoc = returnLoc(SpawnTex);
             type ItemType = artifact;
-            ExistingItems[ItemNumber] = new Artifact(STR, DEX, INT, WSD, PHS, LCK, ItemType, Tex, Name);
+            ExistingItems[ItemNumber] = new Artifact(STR, DEX, INT, WSD, PHS, LCK, ItemType, Tex, Name, SpawnLoc);
         }
         ItemNumber++;
     }
@@ -222,7 +233,15 @@ int InventoryItem::GetCost()
     return COST;
 }
 
-rangeWeapon::rangeWeapon(int Damage, int Range, int Chance, int deltaChanse, int Cost, type type, const char* WeapTex, std::string Name)
+loc Inventory::returnLoc(std::string Text) {
+    if(Text == "cave") return loc::cave;
+    if(Text == "jungle") return loc::jungle;
+    if(Text == "castle") return loc::castle;
+    if(Text == "hell") return loc::hell;
+    if(Text == "arcane") return loc::arcane;
+}
+
+rangeWeapon::rangeWeapon(int Damage, int Range, int Chance, int deltaChanse, int Cost, type type, const char* WeapTex, std::string Name, loc SpawnLoc)
 {
     DMG = Damage;
     RNG = Range;
@@ -232,10 +251,11 @@ rangeWeapon::rangeWeapon(int Damage, int Range, int Chance, int deltaChanse, int
     ItemTexture = WeapTex;
     Type = type;
     name = Name;
+    spawnLoc = SpawnLoc;
 }
 rangeWeapon::~rangeWeapon(){}
 
-meleeWeapon::meleeWeapon(int Damage, int range, int Cost, type type, const char* WeapTex, std::string Name)
+meleeWeapon::meleeWeapon(int Damage, int range, int Cost, type type, const char* WeapTex, std::string Name, loc SpawnLoc)
 {
     DMG = Damage;
     RNG = range;
@@ -243,10 +263,11 @@ meleeWeapon::meleeWeapon(int Damage, int range, int Cost, type type, const char*
     ItemTexture = WeapTex;
     Type = type;
     name = Name;
+    spawnLoc = SpawnLoc;
 }
 meleeWeapon::~meleeWeapon(){}
 
-magicWeapon::magicWeapon(int Damage, int range, int splash, int Cost, type type, magicEl weaponEl, magicType weaponType, const char* WeapTex, std::string Name)
+magicWeapon::magicWeapon(int Damage, int range, int splash, int Cost, type type, magicEl weaponEl, magicType weaponType, const char* WeapTex, std::string Name, loc SpawnLoc)
 {
     DMG = Damage;
     RNG = range;
@@ -257,22 +278,25 @@ magicWeapon::magicWeapon(int Damage, int range, int splash, int Cost, type type,
     Type = type;
     ItemTexture = WeapTex;
     name = Name;
+    spawnLoc = SpawnLoc;
 }
 
-Artifact::Artifact(int STR, int DEX, int INT, int WSD, int PHS, int LCK, type type, const char* WeapTex, std::string Name)
+Artifact::Artifact(int STR, int DEX, int INT, int WSD, int PHS, int LCK, type type, const char* WeapTex, std::string Name, loc SpawnLoc)
 {
     specs[0] = STR; specs[1] = DEX; specs[2] = INT; specs[3] = WSD; specs[4] = PHS; specs[5] = LCK;
     Type = type;
     ItemTexture = WeapTex;
     name = Name;
+    spawnLoc = SpawnLoc;
 }
 
-armorItem::armorItem(int Defence, type type, const char* WeapTex, std::string Name)
+armorItem::armorItem(int Defence, type type, const char* WeapTex, std::string Name, loc SpawnLoc)
 {
     DEF = Defence;
     ItemTexture = WeapTex;
     Type = type;
     name = Name;
+    spawnLoc = SpawnLoc;
 }
 armorItem::~armorItem(){}
 

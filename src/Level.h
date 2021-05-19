@@ -15,6 +15,9 @@
 #include "bosssummoner.h"
 #include "UiTrader.h"
 
+=========
+#include "bosssummoner.h"
+>>>>>>>>> Temporary merge branch 2
 struct MouseCoords
 {
 	int x;
@@ -85,6 +88,7 @@ private:
     bool FindWallsOnWay(int x1, int y1, int x2, int y2);
     Uint32 timer;
     bool timeB;
+    void SetLevelLoot();
 public:
 	bool CheckPositionToMeleeAttack(SDL_Rect rect, int x, int y);
 	int GetGeneration();

@@ -18,8 +18,10 @@ Level::Level(SDL_Renderer* renderer, int playerClass) : ren (renderer), pClass(p
     Gulag->GulagChoose(1);
     pLCK = 1;
     TileTextures[0] = GameTextures->GetTexture("CaveTiles");
-    TileTextures[1] = GameTextures->GetTexture("CastleTiles");
-    TileTextures[2] = GameTextures->GetTexture("CastleTiles2");
+    TileTextures[1] = GameTextures->GetTexture("JungleTiles");
+    TileTextures[2] = GameTextures->GetTexture("CastleTiles");
+    TileTextures[3] = GameTextures->GetTexture("CastleTiles2");
+    TileTextures[4] = GameTextures->GetTexture("ArcaneTiles");
     TileTextures[5] = GameTextures->GetTexture("Gulag");
     PlayBackground = textureManager::LoadTexture("data/images/Playback.png", ren);
     player = new Player(ren);
@@ -52,7 +54,7 @@ Level::Level(SDL_Renderer* renderer, int playerClass) : ren (renderer), pClass(p
                     wFlag = false;
                 }
                 else if (EntityPosition::Coords[0] == enemy->Rect.x &&
-                         (EntityPosition::Coords[1] - 32) == enemy->Rect.y)
+                         (EntityPosition::Coords[1] - 32) == enemy->Rect.y && !PlayerDeath)
                 {
                     wFlag = false;
                     //остановка при попытке пройти сквозь enemy
@@ -81,7 +83,7 @@ Level::Level(SDL_Renderer* renderer, int playerClass) : ren (renderer), pClass(p
         }
     };
     keyW = new Keyboard(SDL_SCANCODE_W, pressW);
-    buttonW = new Button("left", NULL, ren, {EntityPosition::Coords[0], EntityPosition::Coords[1] - 32, 32, 32}, pressW, NULL);
+    buttonW = new Button("left", NULL, ren, {EntityPosition::Coords[0], EntityPosition::Coords[1] - 32, 32, 32}, pressW, NULL, NULL);
     auto pressA{
         [=]()
         {
@@ -97,7 +99,7 @@ Level::Level(SDL_Renderer* renderer, int playerClass) : ren (renderer), pClass(p
                     AFlag = false;
                 }
                 else if ((EntityPosition::Coords[0] - 32) == enemy->Rect.x &&
-                         EntityPosition::Coords[1] == enemy->Rect.y)
+                         EntityPosition::Coords[1] == enemy->Rect.y && !PlayerDeath)
                 {
                     AFlag = false;
                     //остановка при попытке пройти сквозь enemy
@@ -126,7 +128,7 @@ Level::Level(SDL_Renderer* renderer, int playerClass) : ren (renderer), pClass(p
         }
     };
     keyA = new Keyboard(SDL_SCANCODE_A, pressA);
-    buttonA = new Button("left", NULL, ren, {EntityPosition::Coords[0] - 32, EntityPosition::Coords[1], 32, 32}, pressA, NULL);
+    buttonA = new Button("left", NULL, ren, {EntityPosition::Coords[0] - 32, EntityPosition::Coords[1], 32, 32}, pressA, NULL, NULL);
     auto pressS{
         [=]()
         {
@@ -142,7 +144,7 @@ Level::Level(SDL_Renderer* renderer, int playerClass) : ren (renderer), pClass(p
                     //остановка при упоре в стену
                 }
                 else if (EntityPosition::Coords[0] == enemy->Rect.x &&
-                         (EntityPosition::Coords[1] + 32) == enemy->Rect.y)
+                         (EntityPosition::Coords[1] + 32) == enemy->Rect.y && !PlayerDeath)
                 {
                     sFlag = false;
                     //остановка при попытке пройти сквозь enemy
@@ -171,7 +173,7 @@ Level::Level(SDL_Renderer* renderer, int playerClass) : ren (renderer), pClass(p
         }
     };
     keyS = new Keyboard(SDL_SCANCODE_S, pressS);
-    buttonS = new Button("left", NULL, ren, {EntityPosition::Coords[0], EntityPosition::Coords[1] + 32, 32, 32}, pressS, NULL);
+    buttonS = new Button("left", NULL, ren, {EntityPosition::Coords[0], EntityPosition::Coords[1] + 32, 32, 32}, pressS, NULL, NULL);
     auto pressD{
         [=]()
         {
@@ -187,7 +189,7 @@ Level::Level(SDL_Renderer* renderer, int playerClass) : ren (renderer), pClass(p
                     //остановка при упоре в стену
                 }
                 else if ((EntityPosition::Coords[0] + 32) == enemy->Rect.x &&
-                         EntityPosition::Coords[1] == enemy->Rect.y)
+                         EntityPosition::Coords[1] == enemy->Rect.y && !PlayerDeath)
                 {
                     dFlag = false;
                     //остановка при попытке пройти сквозь enemy
@@ -216,7 +218,7 @@ Level::Level(SDL_Renderer* renderer, int playerClass) : ren (renderer), pClass(p
         }
     };
     keyD = new Keyboard(SDL_SCANCODE_D, pressD);
-    buttonD = new Button("left", NULL, ren, {EntityPosition::Coords[0] + 32, EntityPosition::Coords[1], 32, 32}, pressD, NULL);
+    buttonD = new Button("left", NULL, ren, {EntityPosition::Coords[0] + 32, EntityPosition::Coords[1], 32, 32}, pressD, NULL, NULL);
     auto playerAttack{
         [=]()
         {
@@ -227,7 +229,7 @@ Level::Level(SDL_Renderer* renderer, int playerClass) : ren (renderer), pClass(p
             }
         }
     };
-    buttonForPlayerAttack = new Button("left", NULL, ren, {0, 0, 32, 32}, playerAttack, NULL);
+    buttonForPlayerAttack = new Button("left", NULL, ren, {0, 0, 32, 32}, playerAttack, NULL, NULL);
     auto Escape {
         [=]()
         {
@@ -348,6 +350,17 @@ void Level::Update()
     if(player != nullptr && player->GetHP(0) <= 0)
     {
         PlayerDeath = true;
+        for (Coins* coin : coins)
+        {
+            if (coin != nullptr)
+            {
+                coins.erase(std::remove(coins.begin(), coins.end(), coin));
+                coins.shrink_to_fit();
+                delete coin;
+                coin = nullptr;
+                std::cout << "Start coin delete" << std::endl;
+            }
+        }
         pCOORDS.x = EntityPosition::Coords[0];
         pCOORDS.y = EntityPosition::Coords[1];
         EntityPosition::Coords[0] = 32*13; EntityPosition::Coords[1] = 32*13;
@@ -423,7 +436,7 @@ void Level::Update()
                 enemy->GetLoc(LevelMap->Location);
         }
         //BOSS
-        if (StandartBossSkeleton->GetHpEnemy(0) > 0 && LevelMap->floorLvl == 2 && FlagManager::flagTurn != 0)
+        if (StandartBossSkeleton->GetHpEnemy(0) > 0 && LevelMap->floorLvl == 21 && FlagManager::flagTurn != 0)
         {
             Enemy* enemy = new Enemy(StandartEnemySkeletonMinion);
             enemies.push_back(enemy);
@@ -494,6 +507,19 @@ void Level::Update()
     }
 }
 
+void Level::SetLevelLoot() {
+    loc CurrentSpawn = static_cast<loc>(LevelMap->TileSet);
+    for (int i = 0; i < 3; i++) {
+        while(true) {
+            LevelMap->itemsOnLvl[i] = (rand() % (Inventory::ExistingItems.size()-1)) + 1;
+            if (Inventory::ExistingItems[LevelMap->itemsOnLvl[i]]->spawnLoc == CurrentSpawn) {
+                break;
+            }
+        }
+    }
+    LevelMap->itemsHave = 2;
+}
+
 void Level::Start()
 {
     for (Coins* coin : coins)
@@ -535,9 +561,21 @@ void Level::Start()
         }
     }
     LevelMap->GenerateMap();
-    for(int i = 0; i<(LevelMap->floorLvl)%4+(LevelMap->floorLvl/4); i++)
+
+    SetLevelLoot();
+
+    for(int i = 0; i<(LevelMap->floorLvl)%4+(LevelMap->floorLvl/4)+1; i++)
     {
-        if (LevelMap->floorLvl != 2)
+
+        int MobTypeChoose = ((LevelMap->floorLvl-1)/4)*2+(rand()%2);
+        if (MobTypeChoose > 4) MobTypeChoose = 4;
+         //ВАЖНО
+         //ВАЖНО
+         //ВАЖНО я здесь добавил условие потому что нет мобов на 4 и 5 локу. Текстурки я добавил их осталось настроить, я
+         //не совсем понял как. Текстурки на них есть, кста джунгли теперь 2 лока, не замок, придется подвигать. Сумимасе.
+        std::cout<< (LevelMap->floorLvl/4)*2 << "?" << LevelMap->floorLvl << std::endl;
+        std::cout << "( "<<(typeid(StandartEnemies[3]) == typeid(Enemy*)) << " )";
+        if(StandartEnemies[MobTypeChoose]->GetTypeName() == 1)
         {
             int MobTypeChoose = (LevelMap->floorLvl/4)*2+(rand()%2);
             if(StandartEnemies[MobTypeChoose]->GetTypeName() == 1)

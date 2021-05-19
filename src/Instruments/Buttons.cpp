@@ -18,10 +18,11 @@ Button::Button(SDL_Texture* texture, SDL_Renderer* renderer, SDL_Rect rect)
 }
 
 Button::Button(std::string textButton, SDL_Texture* texture, SDL_Renderer* renderer, const SDL_Rect rect,
-               std::function <void()> callbackFunction, std::function <void()> hoverFunction):
-    buttonText (textButton), ren(renderer), callback(callbackFunction), hover(hoverFunction)
+               std::function <void()> callbackFunction, std::function <void()> hoverFunction,
+               std::function <void()> leaveHoverFunction):
+    buttonText (textButton), ren(renderer), callback(callbackFunction),
+    hover(hoverFunction), leaveHover(leaveHoverFunction)
 {
-
     button.x = rect.x;
     button.y = rect.y;
     button.w = rect.w;
@@ -92,6 +93,10 @@ void Button::handleEvents(SDL_Event& buttonEvent)
                 hover != NULL)
         {
             hover();
+        }
+        else if (leaveHover != NULL)
+        {
+            leaveHover();
         }
         break;
     default:

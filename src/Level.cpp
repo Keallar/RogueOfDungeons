@@ -433,7 +433,7 @@ void Level::Update()
                 enemy->GetLoc(LevelMap->Location);
         }
         //BOSS
-        if (StandartBossSkeleton->GetHpEnemy(0) > 0 && LevelMap->floorLvl == 2 && FlagManager::flagTurn != 0)
+        if (StandartBossSkeleton->GetHpEnemy(0) > 0 && LevelMap->floorLvl == 21 && FlagManager::flagTurn != 0)
         {
             Enemy* enemy = new Enemy(StandartEnemySkeletonMinion);
             enemies.push_back(enemy);

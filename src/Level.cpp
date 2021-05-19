@@ -40,7 +40,7 @@ Level::Level(SDL_Renderer* renderer, int playerClass) : ren (renderer), pClass(p
     PlayerDeath = false;
     PlayerDead = false;
     auto pressW{
-        [=]()
+        [this]()
         {
             Map* CurrentMap;
             if (!PlayerDeath) CurrentMap = LevelMap;
@@ -85,7 +85,7 @@ Level::Level(SDL_Renderer* renderer, int playerClass) : ren (renderer), pClass(p
     keyW = new Keyboard(SDL_SCANCODE_W, pressW);
     buttonW = new Button("left", NULL, ren, {EntityPosition::Coords[0], EntityPosition::Coords[1] - 32, 32, 32}, pressW, NULL, NULL);
     auto pressA{
-        [=]()
+        [this]()
         {
             Map* CurrentMap;
             if (!PlayerDeath) CurrentMap = LevelMap;
@@ -130,7 +130,7 @@ Level::Level(SDL_Renderer* renderer, int playerClass) : ren (renderer), pClass(p
     keyA = new Keyboard(SDL_SCANCODE_A, pressA);
     buttonA = new Button("left", NULL, ren, {EntityPosition::Coords[0] - 32, EntityPosition::Coords[1], 32, 32}, pressA, NULL, NULL);
     auto pressS{
-        [=]()
+        [this]()
         {
             Map* CurrentMap;
             if (!PlayerDeath) CurrentMap = LevelMap;
@@ -175,7 +175,7 @@ Level::Level(SDL_Renderer* renderer, int playerClass) : ren (renderer), pClass(p
     keyS = new Keyboard(SDL_SCANCODE_S, pressS);
     buttonS = new Button("left", NULL, ren, {EntityPosition::Coords[0], EntityPosition::Coords[1] + 32, 32, 32}, pressS, NULL, NULL);
     auto pressD{
-        [=]()
+        [this]()
         {
             Map* CurrentMap;
             if (!PlayerDeath) CurrentMap = LevelMap;
@@ -220,7 +220,7 @@ Level::Level(SDL_Renderer* renderer, int playerClass) : ren (renderer), pClass(p
     keyD = new Keyboard(SDL_SCANCODE_D, pressD);
     buttonD = new Button("left", NULL, ren, {EntityPosition::Coords[0] + 32, EntityPosition::Coords[1], 32, 32}, pressD, NULL, NULL);
     auto playerAttack{
-        [=]()
+        [this]()
         {
             player->playerTurn();
             if(!player->playerEscaping)
@@ -231,7 +231,7 @@ Level::Level(SDL_Renderer* renderer, int playerClass) : ren (renderer), pClass(p
     };
     buttonForPlayerAttack = new Button("left", NULL, ren, {0, 0, 32, 32}, playerAttack, NULL, NULL);
     auto Escape {
-        [=]()
+        [this]()
         {
             player->playerEscaping = !player->playerEscaping;
         }
@@ -526,13 +526,12 @@ void Level::Start()
     {
         if (coin != nullptr)
         {
-            coins.erase(std::remove(coins.begin(), coins.end(), coin));
-            coins.shrink_to_fit();
             delete coin;
             coin = nullptr;
             std::cout << "Start coin delete" << std::endl;
         }
     }
+    coins.clear();
 
     if (FlagManager::flagUiTrader == 0 && LevelMap->floorLvl != 1)
         FlagManager::flagUiTrader = 1;

@@ -14,10 +14,8 @@
 #include "TextureBase.h"
 #include "bosssummoner.h"
 #include "UiTrader.h"
-
-=========
 #include "bosssummoner.h"
->>>>>>>>> Temporary merge branch 2
+
 struct MouseCoords
 {
 	int x;

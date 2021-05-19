@@ -31,24 +31,24 @@ UiTrader::UiTrader(SDL_Renderer* renderer): ren (renderer)
     sell = FontManager::renderText("Sell", PATH_IN_FONT, color, 32, ren);
 
     //Buttons
-    buttonForFirstItem = new Button("left", GameTextures->GetTexture("ShortSword"), ren,
-                                    {TSCREEN_WEIGHT / 15 * 5, TSCREEN_HEIGHT / 16 * 7, 96, 96},
-                                    [this](){bFirstItem = 1;}, NULL);
-    buttonForSecondItem = new Button("left", GameTextures->GetTexture("ShortBow"), ren,
-                                     {TSCREEN_WEIGHT / 15 * 7, TSCREEN_HEIGHT / 16 * 7, 96, 96},
-                                     [this](){bSecondItem = 1;}, NULL);
-    buttonForThirdItem = new Button("left", GameTextures->GetTexture("Spear"), ren,
-                                    {TSCREEN_WEIGHT/ 15 * 9, TSCREEN_HEIGHT / 16 * 7, 96, 96},
-                                    [this](){bThirdItem = 1;}, NULL);
+//    buttonForFirstItem = new Button("left", GameTextures->GetTexture("ShortSword"), ren,
+//                                    {TSCREEN_WEIGHT / 15 * 5, TSCREEN_HEIGHT / 16 * 7, 96, 96},
+//                                    [this](){bFirstItem = 1;}, NULL);
+//    buttonForSecondItem = new Button("left", GameTextures->GetTexture("ShortBow"), ren,
+//                                     {TSCREEN_WEIGHT / 15 * 7, TSCREEN_HEIGHT / 16 * 7, 96, 96},
+//                                     [this](){bSecondItem = 1;}, NULL);
+//    buttonForThirdItem = new Button("left", GameTextures->GetTexture("Spear"), ren,
+//                                    {TSCREEN_WEIGHT/ 15 * 9, TSCREEN_HEIGHT / 16 * 7, 96, 96},
+//                                    [this](){bThirdItem = 1;}, NULL);
     buttonForHpPotion = new Button("left", GameTextures->GetTexture("SmallHpPotion"), ren,
                                    {TSCREEN_WEIGHT / 15 * 2, TSCREEN_HEIGHT / 16 * 12, 64, 64},
-                                   [this](){bHpPotion = 1;}, NULL);
+                                   [this](){bHpPotion = 1;}, NULL, NULL);
     buttonForManaPotion = new Button("left", GameTextures->GetTexture("SmallMpPotion"), ren,
                                      {TSCREEN_WEIGHT / 15 * 4, TSCREEN_HEIGHT / 16 * 12, 64, 64},
-                                     [this](){bManaPotion = 1;}, NULL);
+                                     [this](){bManaPotion = 1;}, NULL, NULL);
     buttonForSkip = new Button("left", GameTextures->GetTexture("Button"), ren,
                                {TSCREEN_WEIGHT / 15 * 14, TSCREEN_HEIGHT / 16 * 14, 32, 32},
-                               [](){FlagManager::flagUiTrader = 0;}, NULL);
+                               [](){FlagManager::flagUiTrader = 0;}, NULL, NULL);
     auto chooseSell{
         []()
         {
@@ -64,12 +64,8 @@ UiTrader::UiTrader(SDL_Renderer* renderer): ren (renderer)
     };
     buttonForSell = new Button("left", GameTextures->GetTexture("Button"), ren,
                                {TSCREEN_WEIGHT / 15 * 14, TSCREEN_HEIGHT / 16 * 9, 32, 32},
-                               chooseSell, NULL);
+                               chooseSell, NULL, NULL);
 
-    for (auto item : items)
-    {
-        item = nullptr;
-    }
 }
 
 UiTrader::~UiTrader()

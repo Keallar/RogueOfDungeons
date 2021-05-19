@@ -83,7 +83,7 @@ Level::Level(SDL_Renderer* renderer, int playerClass) : ren (renderer), pClass(p
         }
     };
     keyW = new Keyboard(SDL_SCANCODE_W, pressW);
-    buttonW = new Button("left", NULL, ren, {EntityPosition::Coords[0], EntityPosition::Coords[1] - 32, 32, 32}, pressW, NULL);
+    buttonW = new Button("left", NULL, ren, {EntityPosition::Coords[0], EntityPosition::Coords[1] - 32, 32, 32}, pressW, NULL, NULL);
     auto pressA{
         [=]()
         {
@@ -128,7 +128,7 @@ Level::Level(SDL_Renderer* renderer, int playerClass) : ren (renderer), pClass(p
         }
     };
     keyA = new Keyboard(SDL_SCANCODE_A, pressA);
-    buttonA = new Button("left", NULL, ren, {EntityPosition::Coords[0] - 32, EntityPosition::Coords[1], 32, 32}, pressA, NULL);
+    buttonA = new Button("left", NULL, ren, {EntityPosition::Coords[0] - 32, EntityPosition::Coords[1], 32, 32}, pressA, NULL, NULL);
     auto pressS{
         [=]()
         {
@@ -173,7 +173,7 @@ Level::Level(SDL_Renderer* renderer, int playerClass) : ren (renderer), pClass(p
         }
     };
     keyS = new Keyboard(SDL_SCANCODE_S, pressS);
-    buttonS = new Button("left", NULL, ren, {EntityPosition::Coords[0], EntityPosition::Coords[1] + 32, 32, 32}, pressS, NULL);
+    buttonS = new Button("left", NULL, ren, {EntityPosition::Coords[0], EntityPosition::Coords[1] + 32, 32, 32}, pressS, NULL, NULL);
     auto pressD{
         [=]()
         {
@@ -218,7 +218,7 @@ Level::Level(SDL_Renderer* renderer, int playerClass) : ren (renderer), pClass(p
         }
     };
     keyD = new Keyboard(SDL_SCANCODE_D, pressD);
-    buttonD = new Button("left", NULL, ren, {EntityPosition::Coords[0] + 32, EntityPosition::Coords[1], 32, 32}, pressD, NULL);
+    buttonD = new Button("left", NULL, ren, {EntityPosition::Coords[0] + 32, EntityPosition::Coords[1], 32, 32}, pressD, NULL, NULL);
     auto playerAttack{
         [=]()
         {
@@ -229,7 +229,7 @@ Level::Level(SDL_Renderer* renderer, int playerClass) : ren (renderer), pClass(p
             }
         }
     };
-    buttonForPlayerAttack = new Button("left", NULL, ren, {0, 0, 32, 32}, playerAttack, NULL);
+    buttonForPlayerAttack = new Button("left", NULL, ren, {0, 0, 32, 32}, playerAttack, NULL, NULL);
     auto Escape {
         [=]()
         {

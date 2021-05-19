@@ -24,10 +24,11 @@ private:
     SDL_Rect button;
     std::function <void()> callback;
     std::function <void()> hover;
+    std::function <void()> leaveHover;
     bool mouseInArea(int x, int y, int w, int h);
 public:
     Button(SDL_Texture* texture, SDL_Renderer* renderer, SDL_Rect rect);
-    Button(std::string textButton, SDL_Texture* texture, SDL_Renderer* renderer, SDL_Rect rect, std::function <void()> callbackFunction, std::function <void()>hoverFunction);
+    Button(std::string textButton, SDL_Texture* texture, SDL_Renderer* renderer, SDL_Rect rect, std::function <void()> callbackFunction, std::function <void()>hoverFunction, std::function <void()>leaveHoverFunction);
     void handleEvents(SDL_Event& buttonEvent);
     void Render();
     void updateCoords(int newx, int newy);

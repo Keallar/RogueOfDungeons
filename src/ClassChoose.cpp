@@ -13,9 +13,9 @@ ClassChoose::ClassChoose(SDL_Renderer* renderer) : ren(renderer)
     GameTextures = TextureBase::Instance();
     Text = FontManager::renderText("Choose Class", "data/fonts/manaspc.ttf", { 255, 255, 255, 255 }, 60, ren);
     SDL_QueryTexture(Text, NULL, NULL, &textW, &textH);
-    warriorB = new Button("left", GameTextures->GetTexture("WarriorClass"), ren, {413, 296, 128, 128}, [this](){SetClass(1);}, NULL);
-    archerB = new Button("left", GameTextures->GetTexture("ArcherClass"), ren, {575, 296, 128, 128}, [this](){SetClass(2);}, NULL);
-    mageB = new Button("left", GameTextures->GetTexture("MageClass"), ren, {739, 296, 128, 128}, [this](){SetClass(3);}, NULL);
+    warriorB = new Button("left", GameTextures->GetTexture("WarriorClass"), ren, {413, 296, 128, 128}, [this](){SetClass(1);}, NULL, NULL);
+    archerB = new Button("left", GameTextures->GetTexture("ArcherClass"), ren, {575, 296, 128, 128}, [this](){SetClass(2);}, NULL, NULL);
+    mageB = new Button("left", GameTextures->GetTexture("MageClass"), ren, {739, 296, 128, 128}, [this](){SetClass(3);}, NULL, NULL);
 }
 
 ClassChoose::~ClassChoose()

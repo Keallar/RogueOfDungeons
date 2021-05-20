@@ -351,21 +351,21 @@ void Enemy::meleeAttackEnemy()
         DidMeAttacked = true;
     }
     else if ((((Rect.x == EntityPosition::Coords[0]) &&
-               (Rect.y <= EntityPosition::Coords[1] + 64)) ||
+               (Rect.y == EntityPosition::Coords[1] + 64)) ||
               ((Rect.x == EntityPosition::Coords[0]) &&
-               (Rect.y >= EntityPosition::Coords[1] - 64)) ||
+               (Rect.y == EntityPosition::Coords[1] - 64)) ||
               ((Rect.y == EntityPosition::Coords[1]) &&
-               (Rect.x <= EntityPosition::Coords[0] + 64)) ||
+               (Rect.x == EntityPosition::Coords[0] + 64)) ||
               ((Rect.y == EntityPosition::Coords[1]) &&
-               (Rect.x >= EntityPosition::Coords[0] - 64)) ||
+               (Rect.x == EntityPosition::Coords[0] - 64)) ||
               ((Rect.x == EntityPosition::Coords[0] - 32) &&
-               (Rect.y <= EntityPosition::Coords[1] + 32)) ||
+               (Rect.y == EntityPosition::Coords[1] + 32)) ||
               ((Rect.x == EntityPosition::Coords[0] + 32) &&
-               (Rect.y <= EntityPosition::Coords[1] + 32)) ||
+               (Rect.y == EntityPosition::Coords[1] + 32)) ||
               ((Rect.x == EntityPosition::Coords[0] + 32) &&
-               (Rect.y >= EntityPosition::Coords[1] - 32)) ||
+               (Rect.y == EntityPosition::Coords[1] - 32)) ||
               ((Rect.x == EntityPosition::Coords[0] - 32) &&
-               (Rect.y >= EntityPosition::Coords[1] - 32))) &&
+               (Rect.y == EntityPosition::Coords[1] - 32))) &&
              FlagManager::flagMeleeAttackEnemy == 1)
     {
         if (temp == false)

@@ -12,9 +12,10 @@
 #include "rangeenemy.h"
 #include "Coins.h"
 #include "TextureBase.h"
-#include "UiTrader.h"
-
 #include "bosssummoner.h"
+#include "UiTrader.h"
+#include "bosssummoner.h"
+
 struct MouseCoords
 {
 	int x;

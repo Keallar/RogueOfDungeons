@@ -6,6 +6,7 @@
 #include <map>
 
 #define INVENTORY_SIZE 60
+#define TRADING_SIZE 3
 
 enum type 
 {
@@ -123,10 +124,12 @@ public:
 	~Inventory();
     int inventory[INVENTORY_SIZE];
     static int inventoryFace[INVENTORY_SIZE];
+    static int traderFace[TRADING_SIZE];
 	int InventoryCount();
 	void AddItem(int id);
 	void EquipItem(int i, int j);
 	void Update();
+    void traderUpdate();
     loc returnLoc(std::string Text);
 	meleeWeapon* GetRealMelee(int id);
 	rangeWeapon* GetRealRange(int id);

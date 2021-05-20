@@ -50,6 +50,7 @@ public:
     static bool flagLevelOfPlayer;
     static bool flagCoin;
     static bool flagUiTrader;
+    static int flagBuy;
     static bool flagSell;
     //Specs
     static bool flagSTR;

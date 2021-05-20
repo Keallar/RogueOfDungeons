@@ -91,6 +91,7 @@ bool FlagManager::flagInv = 0;
 bool FlagManager::flagHover = 0;
 bool FlagManager::flagCoin = 0;
 bool FlagManager::flagUiTrader = 0;
+int FlagManager::flagBuy = 0;
 bool FlagManager::flagSell = 0;
 //Checks of main characters
 bool FlagManager::flagCheckHP = 0;

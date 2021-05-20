@@ -9,13 +9,19 @@
 #define TSCREEN_WEIGHT 960
 #define TSCREEN_HEIGHT 640
 
+struct sCoord{
+    int x;
+    int y;
+};
+
 class UiTrader
 {
 private:
     TextureBase* GameTextures;
-    const char* PATH_IN_FONT;
+    const char* PATH_IN_FONT = "data/fonts/manaspc.ttf";
     SDL_Color color = { 255, 255, 255, 255 };
     int textW, textH;
+    sCoord mCoord;
     SDL_Renderer* ren;
     SDL_Texture* trader;
     SDL_Texture* traderText;
@@ -31,8 +37,11 @@ private:
     SDL_Texture* manaBtText;
     SDL_Texture* skip;
     SDL_Texture* sell;
+    SDL_Texture* item;
 
-    std::array<InventoryItem*, 3> items;
+    Inventory* traderInventory;
+
+    void clickForItemInTrader();
 
     Button* buttonForFirstItem;
     Button* buttonForSecondItem;

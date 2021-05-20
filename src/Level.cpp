@@ -423,6 +423,13 @@ void Level::Update()
 
     if (!PlayerDeath)
     {
+        if (StandartBossSkeleton->GetHpEnemy(0) > 0 && LevelMap->floorLvl == 20 && FlagManager::flagTurn != 0 && enemies.size() < 15)
+        {
+            Enemy* enemy = new Enemy(StandartEnemySkeletonMinion);
+            enemies.push_back(enemy);
+            enemy->GetLoc(LevelMap->Location);
+            enemy->GetEnemyFirstCoords();
+        }
         for(Enemy* enemy : enemies)
         {
             if (enemy != nullptr &&
@@ -451,13 +458,6 @@ void Level::Update()
                 enemy->GetLoc(LevelMap->Location);
         }
         //BOSS
-        if (StandartBossSkeleton->GetHpEnemy(0) > 0 && LevelMap->floorLvl == 21 && FlagManager::flagTurn != 0)
-        {
-            Enemy* enemy = new Enemy(StandartEnemySkeletonMinion);
-            enemies.push_back(enemy);
-            enemy->GetLoc(LevelMap->Location);
-            enemy->GetEnemyFirstCoords();
-        }
     }
 
     if (FlagManager::flagInAreaOfAnemy == 0)
@@ -578,18 +578,16 @@ void Level::Start()
 
     SetLevelLoot();
 
-    for(int i = 0; i<(LevelMap->floorLvl)%4+(LevelMap->floorLvl/4)+1; i++)
+    for(int i = 0; i<((LevelMap->floorLvl)%4)+(LevelMap->floorLvl/4); i++)
     {
-
-        int MobTypeChoose = ((LevelMap->floorLvl-1)/4)*2+(rand()%2);
-        if (MobTypeChoose > 4) MobTypeChoose = 4;
+        std::cout<<LevelMap->floorLvl << "F";
+        //int MobTypeChoose = ((LevelMap->floorLvl)/4)*2+(rand()%2);
+        //if (MobTypeChoose > 4) MobTypeChoose = 4;
          //ВАЖНО
          //ВАЖНО
          //ВАЖНО я здесь добавил условие потому что нет мобов на 4 и 5 локу. Текстурки я добавил их осталось настроить, я
          //не совсем понял как. Текстурки на них есть, кста джунгли теперь 2 лока, не замок, придется подвигать. Сумимасе.
-        std::cout<< (LevelMap->floorLvl/4)*2 << "?" << LevelMap->floorLvl << std::endl;
-        std::cout << "( "<<(typeid(StandartEnemies[3]) == typeid(Enemy*)) << " )";
-        if(StandartEnemies[MobTypeChoose]->GetTypeName() == 1)
+        if(LevelMap->floorLvl != 20)
         {
             int MobTypeChoose = (LevelMap->floorLvl/4)*2+(rand()%2);
             if(StandartEnemies[MobTypeChoose]->GetTypeName() == 1)

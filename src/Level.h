@@ -34,17 +34,23 @@ private:
 	SDL_Texture* PlayBackground;
 	SDL_Renderer* ren;
 	Player* player;
-    Enemy* StandartEnemyTurtle = new Enemy("data/images/Turtle.png", 4, ren, 10, 10, 4, 4, 5, 1);
-    RangeEnemy* StandartRangeEnemyTurtle = new RangeEnemy("data/images/TurtleR.png", 4, ren, 7, 7, 3, 4, 5, 2);
+    Enemy* StandartEnemyTurtle = new Enemy("data/images/Turtle.png", 4, ren, 10, 10, 5, 4, 5, 1);
+    RangeEnemy* StandartRangeEnemyTurtle = new RangeEnemy("data/images/TurtleR.png", 4, ren, 7, 7, 4, 4, 5, 2);
     Enemy* StandartEnemyBear = new Enemy("data/images/Bear.png", 4, ren, 12, 12, 2, 5, 6, 1);
     RangeEnemy* StandartDragonEnemy =  new RangeEnemy("data/images/Gragon.png", 4, ren, 3, 3, 8, 10, 6, 2);
     RangeEnemy* StandartBigDragonEnemy = new RangeEnemy("data/images/MDragon.png", 4, ren, 5, 5, 13, 15, 8, 2);
     Enemy* StandartEnemySlime = new Enemy("data/images/Slime.png", 4, ren, 8, 8, 1, 3, 2, 1);
     Enemy* StandartEnemySkeletonMinion = new Enemy("data/images/HeroEscape.png", 4, ren, 5, 5, 2, 1, 0, 1);
     BossSummoner* StandartBossSkeleton = new BossSummoner("data/images/Boss.png", 4, ren, 25, 25, 0, 100, 20, 3);
-    std::array<Enemy*, 8> StandartEnemies = {StandartEnemySlime, StandartEnemyBear,
+    RangeEnemy* StandartEnemyBee = new RangeEnemy("data/images/Bee.png", 4, ren, 8, 8, 2, 6, 6, 2);
+    Enemy* StandartEnemyJungleSlime = new Enemy("data/images/JungleSlime.png", 4, ren, 9, 9, 3, 7, 7, 1);
+    RangeEnemy* StandartEnemyRangeGhost = new RangeEnemy("data/images/MageGhost.png", 4, ren, 10, 10, 6, 10, 10, 2);
+    Enemy* StandartEnemyGhost = new Enemy("data/images/MeleeGhost", 4, ren, 14, 14, 8, 14, 14, 1);
+    std::array<Enemy*, 12> StandartEnemies = { StandartEnemySlime, StandartEnemyBear,
+                                             StandartEnemyBee, StandartEnemyJungleSlime,
                                              StandartEnemyTurtle, StandartRangeEnemyTurtle,
                                             StandartDragonEnemy, StandartBigDragonEnemy,
+                                             StandartEnemyRangeGhost, StandartEnemyGhost,
                                             StandartBossSkeleton, StandartEnemySkeletonMinion};
     UIEnemy* UiEnemy;
 	UIInfo* uiInfo;

@@ -504,15 +504,19 @@ void Level::Update()
     if (FlagManager::flagUiTrader == 0)
     {
         uiTrader->Check();
+
     }
 }
 
-void Level::SetLevelLoot() {
+void Level::SetLevelLoot()
+{
     loc CurrentSpawn = static_cast<loc>(LevelMap->TileSet);
-    for (int i = 0; i < 3; i++) {
+    for (int i = 0; i < 3; i++)
+    {
         while(true) {
             LevelMap->itemsOnLvl[i] = (rand() % (Inventory::ExistingItems.size()-1)) + 1;
-            if (Inventory::ExistingItems[LevelMap->itemsOnLvl[i]]->spawnLoc == CurrentSpawn) {
+            if (Inventory::ExistingItems[LevelMap->itemsOnLvl[i]]->spawnLoc == CurrentSpawn)
+            {
                 break;
             }
         }

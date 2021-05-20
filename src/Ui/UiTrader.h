@@ -38,10 +38,9 @@ private:
     SDL_Texture* skip;
     SDL_Texture* sell;
     SDL_Texture* item;
+    int first = 0, second = 0, third = 0;
 
     Inventory* traderInventory;
-
-    void clickForItemInTrader();
 
     Button* buttonForFirstItem;
     Button* buttonForSecondItem;
@@ -51,11 +50,12 @@ private:
     Button* buttonForSkip;
     Button* buttonForSell;
 
-    bool bFirstItem = 0;
-    bool bSecondItem = 0;
-    bool bThirdItem = 0;
+    bool bFirstItem = 1;
+    bool bSecondItem = 1;
+    bool bThirdItem = 1;
     bool bHpPotion = 0;
     bool bManaPotion = 0;
+    bool bSkip = 0;
     bool bSell = 0;
 public:
     UiTrader(SDL_Renderer* renderer);

@@ -78,7 +78,7 @@ int Player::quantityOfCoins[3] = {
     100	 /*coins max*/
 };
 
-int Player::VIS = 32;
+int Player::VIS = 10;
 
 Player::Player( SDL_Renderer* renderer):
     GameObject( renderer)
@@ -592,7 +592,8 @@ void Player::GetPlayerFirstCoords()
     }
     else
     {
-       if (generate != 7) {
+       if (generate != 7)
+       {
            while (Location[EntityPosition::Coords[1] / 32][EntityPosition::Coords[0] / 32] == 1)
            {
                EntityPosition::Coords[0] = (rand() % 3 + 1) * 32;

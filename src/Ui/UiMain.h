@@ -26,14 +26,6 @@ private:
 
     //flags
     bool flagHoverSpec = 0;
-	
-	//XP
-	SDL_Texture* xpBar;
-	SDL_Texture* xpText;
-
-	//MANA
-	SDL_Texture* mnBar;
-	SDL_Texture* mnText;
 
     //Coins
     SDL_Texture* coinText;

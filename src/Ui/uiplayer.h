@@ -41,6 +41,8 @@ public:
 class ManaInfo :public TextInfo
 {
 private:
+    SDL_Texture* mnBar;
+    SDL_Texture* mnText;
     SDL_Renderer* ren;
     SDL_Texture* manaCurrent;
     SDL_Texture* manaMax;
@@ -55,6 +57,8 @@ public:
 class ExpInfo : public TextInfo
 {
 private:
+    SDL_Texture* xpBar;
+    SDL_Texture* xpText;
     SDL_Renderer* ren;
     SDL_Texture* expCurrent;
     SDL_Texture* expMax;

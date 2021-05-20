@@ -24,20 +24,9 @@ UIInfo::UIInfo(SDL_Renderer* renderer) : ren (renderer)
 
     SPEC = FontManager::renderText("SPEC", PATH_IN_FONT, color, 32, ren);
 
-    //Mana
-    mnBar = GameTextures->GetTexture("ManaBar");
-    mnText = FontManager::renderText("MN", PATH_IN_FONT, color, 64, ren);
-
-    //XP
-    xpBar = GameTextures->GetTexture("XP");
-    xpText = FontManager::renderText("XP", PATH_IN_FONT, color, 64, ren);
-
     //Level Of Player
     textLevelOfPlayer = FontManager::renderText("Level:", PATH_IN_FONT, color, 32, ren);
     levelOfPlayer = FontManager::renderText("1", PATH_IN_FONT, color, 32, ren);
-//    int w, h;
-//    SDL_QueryTexture(levelOfPlayer, NULL, NULL, &w, &h);
-//    std::cout << w << " " << h << std::endl;
 
     //Coins
     coinText = FontManager::renderText("Coins: ", PATH_IN_FONT, color, 32, ren);
@@ -112,14 +101,6 @@ void UIInfo::Render()
 
     if (flagHoverSpec == 1)
         RenderManager::CopyToRender(SPEC, ren, 1230, 220, 30, 25);
-
-    //Mana
-    RenderManager::CopyToRender(mnBar, ren, 1080, 95, 230, 32, 21, 10, 128, 16);
-    RenderManager::CopyToRender(mnText, ren, 1050, 99, 25, 22);
-
-    //XP
-    RenderManager::CopyToRender(xpBar, ren, 1080, 150, 200, 32, 21, 10, 128, 16);
-    RenderManager::CopyToRender(xpText, ren, 1050, 152, 25, 22);
 
     //Level of Player
     RenderManager::CopyToRender(textLevelOfPlayer, ren, 1125, 210, 65, 25 );

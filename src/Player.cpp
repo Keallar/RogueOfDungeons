@@ -347,6 +347,8 @@ void Player::ChangeHpValue(int valueOfChangingHp)
 {
     if (valueOfChangingHp != 0)
         HP[0] += valueOfChangingHp;
+    if (HP[0] > HP[2])
+       HP[0] = HP[2];
 }
 
 //Изменение текущего значения mana
@@ -354,6 +356,8 @@ void Player::ChangeManaValue(int valueOfChangingMana)
 {
     if (valueOfChangingMana != 0)
         mana[0] += valueOfChangingMana;
+    if (mana[0] > mana[2])
+        mana[0] = mana[2];
 }
 
 //Изменение текущего значения exp

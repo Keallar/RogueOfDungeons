@@ -383,13 +383,21 @@ void Level::Update()
     }
 
     if (!PlayerDeath) {
+        //BOSS
+        if (StandartBossSkeleton->GetHpEnemy(0) > 0 && LevelMap->floorLvl == 2 && FlagManager::flagTurn != 0 && enemies.size()<11)
+        {
+            Enemy* enemy = new Enemy(StandartEnemySkeletonMinion);
+            enemies.push_back(enemy);
+            enemy->GetLoc(LevelMap->Location);
+            enemy->GetEnemyFirstCoords();
+        }
         for(Enemy* enemy : enemies)
         {
             if (enemy != nullptr &&
                     FlagManager::flagTurn != 0)
             {
-                enemy->Update();
                 enemy->GetLoc(LevelMap->Location);
+                enemy->Update();
             }
             //удаление player (enemy) при hp <= 0
             if (enemy->GetHpEnemy(0) <= 0 && enemy != nullptr)
@@ -409,14 +417,7 @@ void Level::Update()
             if (enemy != nullptr)
                 enemy->GetLoc(LevelMap->Location);
         }
-        //BOSS
-        if (StandartBossSkeleton->GetHpEnemy(0) > 0 && LevelMap->floorLvl == 2 && FlagManager::flagTurn != 0)
-        {
-            Enemy* enemy = new Enemy(StandartEnemySkeletonMinion);
-            enemies.push_back(enemy);
-            enemy->GetLoc(LevelMap->Location);
-            enemy->GetEnemyFirstCoords();
-        }
+
     }
 
     if (FlagManager::flagInAreaOfAnemy == 0)

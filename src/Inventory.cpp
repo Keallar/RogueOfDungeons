@@ -7,6 +7,7 @@
 int Inventory::inventoryFace[INVENTORY_SIZE]; //������ � ���� ��, ��� ������ inventory, �� � static
 std::map <int, InventoryItem*> Inventory::ExistingItems;
 std::map <int, InventoryItem*>::iterator Inventory::it;
+int Inventory::traderFace[TRADING_SIZE];
 
 Inventory::Inventory()
 {
@@ -163,7 +164,6 @@ void Inventory::EquipItem(int i, int j)
     //EquipedWeapon = ExistingItems[j];
 }
 
-
 int Inventory::InventoryCount()
 {
     int count = 0;
@@ -176,6 +176,7 @@ int Inventory::InventoryCount()
     }
     return count;
 }
+
 void Inventory::AddItem(int id) 
 {
     int count = 0;
@@ -196,6 +197,14 @@ void Inventory::Update()
     for (int i = 0; i < INVENTORY_SIZE; i++)
     {
         inventoryFace[i] = inventory[i];
+    }
+}
+
+void Inventory::traderUpdate()
+{
+    for (int j = 0; j < TRADING_SIZE; j++)
+    {
+        traderFace[j] = inventory[j];
     }
 }
 

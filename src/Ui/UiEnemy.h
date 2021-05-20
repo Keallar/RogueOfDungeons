@@ -24,6 +24,7 @@ private:
     Button* buttonForCallEnemyInfo;
 public:
     UIEnemy(SDL_Renderer* renderer, Enemy* enemy);
+    ~UIEnemy();
     void Render();
     void Update(Enemy* enemy);
     void UpdateMax(Enemy* enemy);

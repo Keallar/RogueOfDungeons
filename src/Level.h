@@ -25,7 +25,7 @@ class Level
 {
 private:
     TextureBase* GameTextures;
-	TextInfo* changeState[3];
+    //TextInfo* changeState[3];
 	HpInfo* hp;
 	ManaInfo* mana;
 	ExpInfo* exp;
@@ -50,7 +50,6 @@ private:
 	UIItem* uiItem;
 	UISpecifications* uiSpec;
 	UIEquipedItem* uiEquiped;
-	Animation* animation;
     std::vector <Enemy*> enemies;
 	UIInventory* uiInv;
 	MouseCoords mouseCoords;
@@ -69,7 +68,6 @@ private:
     std::vector<Coins*> coins;
     UiTrader* uiTrader;
 
-    bool PlayerDead;
     bool PlayerDeath;
     int pClass;
     int pLCK;
@@ -87,6 +85,7 @@ private:
     bool timeB;
     void SetLevelLoot();
 public:
+    bool PlayerDead;
 	bool CheckPositionToMeleeAttack(SDL_Rect rect, int x, int y);
 	int GetGeneration();
 	bool flagTB;

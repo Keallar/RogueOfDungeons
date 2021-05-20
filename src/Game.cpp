@@ -140,6 +140,12 @@ void Game::render()
         }
         else if (level) {
             level->Render();
+            if(level->PlayerDead) {
+                delete level;
+                level = nullptr;
+                Menu->flag = 1;
+                classChoose->choosedClass = 0;
+            }
         }
 	}
 	SDL_RenderPresent(renderer);

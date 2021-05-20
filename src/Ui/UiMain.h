@@ -67,6 +67,7 @@ private:
 	SDL_Texture* INV;
 public:
 	UIItem(SDL_Renderer* renderer);
+    ~UIItem();
 	void Render();
 };
 

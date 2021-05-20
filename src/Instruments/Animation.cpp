@@ -12,7 +12,7 @@ Animation::Animation(SDL_Renderer* renderer, SDL_Texture* texture) :
 
 Animation::~Animation()
 {
-	
+\
 }
 
 void Animation::Render(int xposition, int yposition)

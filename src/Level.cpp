@@ -255,8 +255,12 @@ void Level::PlayerInGulagHole() {
 Level::~Level()
 {
     //WTF нельзя делитнуть инвентарь (вылезает ошибка линковщика)
-    delete player;
+    //delete player;
     for (Enemy* enemy : enemies)
+    {
+        delete enemy;
+    }
+    for (Enemy* enemy : StandartEnemies)
     {
         delete enemy;
     }
@@ -269,16 +273,27 @@ Level::~Level()
     delete mana;
     delete exp;
     delete uiEquiped;
-    delete animation;
     delete keyW;
     delete keyA;
     delete keyS;
-    delete keyW;
     delete keyD;
     delete buttonW;
     delete buttonA;
     delete buttonS;
     delete buttonD;
+    delete buttonForPlayerAttack;
+    delete LevelMap;
+    delete Gulag;
+    SDL_DestroyTexture(PlayBackground);
+    for (Coins* coin : coins)
+    {
+        if (coin != nullptr)
+        {
+            delete coin;
+            coin = nullptr;
+        }
+    }
+    //delete uiTrader;
 }
 
 void Level::deletePlayer()

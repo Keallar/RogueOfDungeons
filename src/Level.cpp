@@ -578,7 +578,7 @@ void Level::Start()
 
     SetLevelLoot();
 
-    for(int i = 0; i<((LevelMap->floorLvl)%4)+(LevelMap->floorLvl/4); i++)
+    for(int i = 0; i<((LevelMap->floorLvl)%4+1)+(LevelMap->floorLvl/4); i++)
     {
         std::cout<<LevelMap->floorLvl << "F";
         //int MobTypeChoose = ((LevelMap->floorLvl)/4)*2+(rand()%2);

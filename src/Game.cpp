@@ -59,7 +59,7 @@ void Game::init(const char* title, int xpos, int ypos, int width, int height, bo
 		isRunning = false;
 	}
 	
-	Menu = new MainMenu("data/images/BackgroundMenu.png", "data/images/Play.png", "data/images/Settings.png","data/images/Exit.png", renderer);
+    Menu = new MainMenu("data/images/BackgroundMenu.png", "data/images/Play.png", "data/images/Settings.png", "data/images/Exit.png", renderer);
     classChoose = new ClassChoose(renderer);
     gameOverScreen = new TitleScreen("Game Over", renderer);
     winnerScreen = new TitleScreen("you did it", renderer);

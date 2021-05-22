@@ -107,8 +107,6 @@ UIInfo::~UIInfo()
     SDL_DestroyTexture(SPEC);
     SDL_DestroyTexture(textLevelOfPlayer);
     SDL_DestroyTexture(levelOfPlayer);
-    SDL_DestroyTexture(xpText);
-    SDL_DestroyTexture(mnText);
     SDL_DestroyTexture(coinText);
     SDL_DestroyTexture(coins);
     delete buttonForCallSpecInfo;
@@ -244,9 +242,9 @@ UIItem::UIItem(SDL_Renderer* renderer) : ren(renderer)
     item = FontManager::renderText("Items", PATH_IN_FONT, color, 32, ren);
 }
 
-UIItem::~UIItem() {
+UIItem::~UIItem()
+{
     SDL_DestroyTexture(item);
-    SDL_DestroyTexture(INV);
 }
 
 void UIItem::Render()

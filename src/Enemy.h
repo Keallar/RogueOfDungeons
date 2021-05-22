@@ -58,6 +58,7 @@ public:
 	bool WAY(int ax, int ay, int bx, int by);
 	void GetEnemyFirstCoords();
     int GetTypeName();
+    int GetExp();
     virtual void meleeAttackEnemy();
     void attackOfEnemy(bool damage);
 	int enemyDamageCalculation();

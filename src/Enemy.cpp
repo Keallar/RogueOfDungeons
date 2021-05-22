@@ -105,7 +105,10 @@ int Enemy::GetHpEnemy(int numOfHp)
         break;
     }
 }
-
+int Enemy::GetExp()
+{
+    return expReward;
+}
 Coins* Enemy::GetCoin()
 {
     return coin;
@@ -272,7 +275,7 @@ bool Enemy::WAY(int ax, int ay, int bx, int by)   // ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿
 void Enemy::Update()
 {
     if ((abs(EntityPosition::Coords[0] - this->Rect.x)/32 +
-         abs(EntityPosition::Coords[1] - this->Rect.y)/32) < Range)
+         abs(EntityPosition::Coords[1] - this->Rect.y)/32) <= Range)
     {
         meleeAttackEnemy();
         if ((abs(Rect.x / 32 - EntityPosition::Coords[0] / 32) +

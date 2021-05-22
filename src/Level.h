@@ -34,19 +34,19 @@ private:
 	SDL_Texture* PlayBackground;
 	SDL_Renderer* ren;
 	Player* player;
-    Enemy* StandartEnemyTurtle = new Enemy("data/images/Turtle.png", 4, ren, 28, 28, 5, 4, 5, 1, 10);
-    RangeEnemy* StandartRangeEnemyTurtle = new RangeEnemy("data/images/TurtleR.png", 4, ren, 24, 24, 5, 4, 5, 2, 7);
-    Enemy* StandartEnemyBear = new Enemy("data/images/Bear.png", 4, ren, 23, 23, 2, 5, 6, 1, 10);
-    RangeEnemy* StandartDragonEnemy =  new RangeEnemy("data/images/Gragon.png", 4, ren, 24, 24, 6, 10, 6, 2, 7);
-    Enemy* StandartBigDragonEnemy = new Enemy("data/images/MDragon.png", 4, ren, 36, 36, 7, 15, 8, 2, 10);
-    Enemy* StandartEnemySlime = new Enemy("data/images/Slime.png", 4, ren, 12, 12, 2, 3, 2, 1, 10);
-    Enemy* StandartEnemySkeletonMinion = new Enemy("data/images/HeroEscape.png", 4, ren, 5, 5, 2, 1, 0, 1, 10);
-    BossSummoner* StandartBossSkeleton = new BossSummoner("data/images/Boss.png", 4, ren, 25, 25, 0, 100, 20, 3, 10);
-    RangeEnemy* StandartEnemyBee = new RangeEnemy("data/images/Bee.png", 3, ren, 18, 20, 3, 6, 6, 2, 5);
-    Enemy* StandartEnemyJungleSlime = new Enemy("data/images/JungleSlime.png", 4, ren, 23, 30, 3, 7, 7, 1, 10);
-    RangeEnemy* StandartEnemyRangeGhost = new RangeEnemy("data/images/MageGhost.png", 4, ren, 42, 42, 8, 10, 10, 2, 8);
-    Enemy* StandartEnemyGhost = new Enemy("data/images/MeleeGhost", 4, ren, 42, 42, 8, 14, 14, 1, 10);
-    RangeEnemy* StandartRangeSkeletonMinion = new RangeEnemy("data/images/PAPAABOBA", 4, ren, 8, 8, 6, 10, 10, 2, 10);
+    Enemy* StandartEnemyTurtle = new Enemy("data/images/Turtle.png", 4, ren, 28, 28, 5, 150, 24, 1, 10);
+    RangeEnemy* StandartRangeEnemyTurtle = new RangeEnemy("data/images/TurtleR.png", 4, ren, 24, 24, 5, 150, 24, 2, 7);
+    Enemy* StandartEnemyBear = new Enemy("data/images/Bear.png", 4, ren, 23, 23, 2, 50, 2, 1, 10);
+    RangeEnemy* StandartDragonEnemy =  new RangeEnemy("data/images/Gragon.png", 4, ren, 24, 24, 6, 200, 72, 2, 7);
+    Enemy* StandartBigDragonEnemy = new Enemy("data/images/MDragon.png", 4, ren, 36, 36, 7, 200, 72, 1, 10);
+    Enemy* StandartEnemySlime = new Enemy("data/images/Slime.png", 4, ren, 12, 12, 2, 50, 2, 1, 10);
+    Enemy* StandartEnemySkeletonMinion = new Enemy("data/images/HeroEscape.png", 4, ren, 30, 30, 12, 0, 10, 1, 10);
+    BossSummoner* StandartBossSkeleton = new BossSummoner("data/images/Boss.png", 4, ren, 100, 100, 0, 100, 20, 3, 10);
+    RangeEnemy* StandartEnemyBee = new RangeEnemy("data/images/Bee.png", 4, ren, 18, 20, 3, 100, 8, 2, 5);
+    Enemy* StandartEnemyJungleSlime = new Enemy("data/images/JungleSlime.png", 4, ren, 23, 30, 3, 100, 8, 1, 10);
+    RangeEnemy* StandartEnemyRangeGhost = new RangeEnemy("data/images/MageGhost.png", 4, ren, 42, 42, 8, 250, 216, 2, 8);
+    Enemy* StandartEnemyGhost = new Enemy("data/images/MeleeGhost", 4, ren, 42, 42, 8, 250, 216, 1, 10);
+    RangeEnemy* StandartRangeSkeletonMinion = new RangeEnemy("data/images/PAPAABOBA", 4, ren, 8, 8, 6, 0, 10, 2, 10);
     std::array<Enemy*, 13> StandartEnemies = { StandartEnemySlime, StandartEnemyBear,
                                              StandartEnemyBee, StandartEnemyJungleSlime,
                                              StandartEnemyTurtle, StandartRangeEnemyTurtle,

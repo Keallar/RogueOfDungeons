@@ -142,87 +142,88 @@ void UiTrader::Render()
 
 void UiTrader::Update(Player* player)
 {
-    traderInventory->traderUpdate();
+    if (FlagManager::flagUiTrader == 1)
+    {
+        if (bHpPotion == 1)
+        {
+            if (buttonForHpPotion->GetTexture() != 0)
+            {
+                if (Player::GetCoinsOfPlayer(0) >= 10)
+                {
+                    bHpPotion = 0;
+                    Player::ChangeCoins(-10);
+                    player->itemInInv(6);
+                    SDL_DestroyTexture(hpBtText);
+                    hpBtText = 0;
+                    buttonForHpPotion->deleteTexture();
+                }
+            }
+        }
 
-    if (bHpPotion == 1)
-    {
-        if (buttonForHpPotion->GetTexture() != 0)
+        if (bManaPotion == 1)
         {
-            if (Player::GetCoinsOfPlayer(0) >= 10)
+            if (buttonForManaPotion->GetTexture() != 0)
             {
-                bHpPotion = 0;
-                Player::ChangeCoins(-10);
-                player->itemInInv(6);
-                SDL_DestroyTexture(hpBtText);
-                hpBtText = 0;
-                buttonForHpPotion->deleteTexture();
+                if (Player::GetCoinsOfPlayer(0) >= 10)
+                {
+                    bManaPotion = 0;
+                    Player::ChangeCoins(-10);
+                    player->itemInInv(7);
+                    SDL_DestroyTexture(manaBtText);
+                    manaBtText = 0;
+                    buttonForManaPotion->deleteTexture();
+                }
             }
         }
-    }
-
-    if (bManaPotion == 1)
-    {
-        if (buttonForManaPotion->GetTexture() != 0)
+        if (bFirstItem == 1)
         {
-            if (Player::GetCoinsOfPlayer(0) >= 10)
+            if (buttonForFirstItem->GetTexture() != 0)
             {
-                bManaPotion = 0;
-                Player::ChangeCoins(-10);
-                player->itemInInv(7);
-                SDL_DestroyTexture(manaBtText);
-                manaBtText = 0;
-                buttonForManaPotion->deleteTexture();
+                Inventory::it = Inventory::ExistingItems.find(Inventory::traderFace[0]);
+                if (Player::GetCoinsOfPlayer(0) >= Inventory::it->second->GetCost())
+                {
+                    bFirstItem = 0;
+                    Player::ChangeCoins(-Inventory::it->second->GetCost());
+                    traderInventory->inventory[0] = -1;
+                    player->itemInInv(first);
+                    SDL_DestroyTexture(firstCost);
+                    firstCost = 0;
+                    buttonForFirstItem->deleteTexture();
+                }
             }
         }
-    }
-    if (bFirstItem == 1)
-    {
-        if (buttonForFirstItem->GetTexture() != 0)
+        if (bSecondItem == 1)
         {
-            Inventory::it = Inventory::ExistingItems.find(Inventory::traderFace[0]);
-            if (Player::GetCoinsOfPlayer(0) >= Inventory::it->second->GetCost())
+            Inventory::it = Inventory::ExistingItems.find(Inventory::traderFace[1]);
+            if (buttonForSecondItem->GetTexture() != 0)
             {
-                bFirstItem = 0;
-                Player::ChangeCoins(-Inventory::it->second->GetCost());
-                traderInventory->inventory[0] = -1;
-                player->itemInInv(first);
-                SDL_DestroyTexture(firstCost);
-                firstCost = 0;
-                buttonForFirstItem->deleteTexture();
+                if (Player::GetCoinsOfPlayer(0) >= Inventory::it->second->GetCost())
+                {
+                    bSecondItem = 0;
+                    Player::ChangeCoins(-Inventory::it->second->GetCost());
+                    traderInventory->inventory[1] = -1;
+                    player->itemInInv(second);
+                    SDL_DestroyTexture(secondCost);
+                    secondCost = 0;
+                    buttonForSecondItem->deleteTexture();
+                }
             }
         }
-    }
-    if (bSecondItem == 1)
-    {
-        Inventory::it = Inventory::ExistingItems.find(Inventory::traderFace[1]);
-        if (buttonForSecondItem->GetTexture() != 0)
+        if (bThirdItem == 1)
         {
-            if (Player::GetCoinsOfPlayer(0) >= Inventory::it->second->GetCost())
+            Inventory::it = Inventory::ExistingItems.find(Inventory::traderFace[2]);
+            if (buttonForThirdItem->GetTexture() != 0)
             {
-                bSecondItem = 0;
-                Player::ChangeCoins(-Inventory::it->second->GetCost());
-                traderInventory->inventory[1] = -1;
-                player->itemInInv(second);
-                SDL_DestroyTexture(secondCost);
-                secondCost = 0;
-                buttonForSecondItem->deleteTexture();
-            }
-        }
-    }
-    if (bThirdItem == 1)
-    {
-        Inventory::it = Inventory::ExistingItems.find(Inventory::traderFace[2]);
-        if (buttonForThirdItem->GetTexture() != 0)
-        {
-            if (Player::GetCoinsOfPlayer(0) >= Inventory::it->second->GetCost())
-            {
-                bThirdItem = 0;
-                Player::ChangeCoins(-Inventory::it->second->GetCost());
-                traderInventory->inventory[2] = -1;
-                player->itemInInv(third);
-                SDL_DestroyTexture(thirdCost);
-                thirdCost = 0;
-                buttonForThirdItem->deleteTexture();
+                if (Player::GetCoinsOfPlayer(0) >= Inventory::it->second->GetCost())
+                {
+                    bThirdItem = 0;
+                    Player::ChangeCoins(-Inventory::it->second->GetCost());
+                    traderInventory->inventory[2] = -1;
+                    player->itemInInv(third);
+                    SDL_DestroyTexture(thirdCost);
+                    thirdCost = 0;
+                    buttonForThirdItem->deleteTexture();
+                }
             }
         }
     }
@@ -231,7 +232,6 @@ void UiTrader::Update(Player* player)
 
 void UiTrader::Check()
 {
-    traderInventory->traderUpdate();
     if (bHpPotion == 0)
     {
         if (buttonForHpPotion->GetTexture() == 0 &&
@@ -300,6 +300,8 @@ void UiTrader::Check()
                     firstCost != 0)
             {
                 traderInventory->inventory[0] = -1;
+                SDL_DestroyTexture(firstItem);
+                firstItem = 0;
                 SDL_DestroyTexture(firstCost);
                 firstCost = 0;
                 buttonForFirstItem->deleteTexture();
@@ -319,6 +321,8 @@ void UiTrader::Check()
                     secondCost != 0)
             {
                 traderInventory->inventory[1] = -1;
+                SDL_DestroyTexture(secondItem);
+                secondItem = 0;
                 SDL_DestroyTexture(secondCost);
                 secondCost = 0;
                 buttonForSecondItem->deleteTexture();
@@ -338,6 +342,8 @@ void UiTrader::Check()
                     thirdCost != 0)
             {
                 traderInventory->inventory[2] = -1;
+                SDL_DestroyTexture(thirdItmem);
+                thirdItmem = 0;
                 SDL_DestroyTexture(thirdCost);
                 thirdCost = 0;
                 buttonForThirdItem->deleteTexture();

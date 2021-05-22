@@ -32,6 +32,8 @@ UIInfo::UIInfo(SDL_Renderer* renderer) : ren (renderer)
     coinText = FontManager::renderText("Coins: ", PATH_IN_FONT, color, 32, ren);
     coins = FontManager::renderText("0", PATH_IN_FONT, color, 32 ,ren);
 
+        INV = FontManager::renderText("INV", PATH_IN_FONT, color, 32, ren);
+
     //Buttons
     auto callSpecOrInfoWin{
         []()
@@ -78,8 +80,22 @@ UIInfo::UIInfo(SDL_Renderer* renderer) : ren (renderer)
             }
         }
     };
+    auto hoverInv{
+      [this]()
+        {
+            if (flagHoverInv == 0)
+                flagHoverInv = 1;
+        }
+    };
+    auto leaveHoverInv{
+      [this]()
+        {
+            if (flagHoverInv == 1)
+                flagHoverInv = 0;
+        }
+    };
     buttonForCallInvWin = new Button("left", GameTextures->GetTexture("Button"), ren, { 1050, 665, 25, 22 },
-                                     callInvWin, NULL, NULL);
+                                     callInvWin, hoverInv, leaveHoverInv);
     keyForcCallInvWin = new Keyboard(SDL_SCANCODE_I, callInvWin);
 }
 
@@ -98,6 +114,9 @@ void UIInfo::Render()
     RenderManager::CopyToRender(slashhhhhhhhh, ren, 1152, 72, 32, 20);
     RenderManager::CopyToRender(slashhhhhhhhh, ren, 1152, 122, 32, 20);
     RenderManager::CopyToRender(slashhhhhhhhh, ren, 1152, 175, 32, 20);
+
+    if (flagHoverInv == 1)
+        RenderManager::CopyToRender(INV, ren, 1048, 648, 27, 22);
 
     if (flagHoverSpec == 1)
         RenderManager::CopyToRender(SPEC, ren, 1230, 220, 30, 25);
@@ -213,14 +232,12 @@ UIItem::UIItem(SDL_Renderer* renderer) : ren(renderer)
 
     itemBlock = GameTextures->GetTexture("InfoBlock");
     item = FontManager::renderText("Items", PATH_IN_FONT, color, 32, ren);
-    INV = FontManager::renderText("INV", PATH_IN_FONT, color, 32, ren);
 }
 
 void UIItem::Render()
 {
     RenderManager::CopyToRender(itemBlock, ren, 1024, 480, 256, 225);
     RenderManager::CopyToRender(item, ren, 1085, 490, 128, 32);
-    RenderManager::CopyToRender(INV, ren, 1048, 648, 27, 22);
 }
 
 UIInventory::UIInventory(SDL_Renderer* renderer) : ren(renderer)

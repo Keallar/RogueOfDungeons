@@ -19,6 +19,7 @@ private:
 	SDL_Texture* info;
 	SDL_Texture* slashhhhhhhhh;
 	SDL_Texture* SPEC;
+    SDL_Texture* INV;
 
     //Level
     SDL_Texture* textLevelOfPlayer;
@@ -26,6 +27,7 @@ private:
 
     //flags
     bool flagHoverSpec = 0;
+    bool flagHoverInv = 0;
 
     //Coins
     SDL_Texture* coinText;
@@ -55,8 +57,7 @@ private:
 	SDL_Color color;
 	SDL_Renderer* ren;
 	SDL_Texture* itemBlock;
-	SDL_Texture* item;
-	SDL_Texture* INV;
+    SDL_Texture* item;
 public:
 	UIItem(SDL_Renderer* renderer);
 	void Render();

@@ -78,7 +78,7 @@ int Player::quantityOfCoins[3] = {
     100	 /*coins max*/
 };
 
-int Player::VIS = 10;
+int Player::VIS = 4;
 
 Player::Player( SDL_Renderer* renderer):
     GameObject( renderer)

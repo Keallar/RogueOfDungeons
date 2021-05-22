@@ -933,10 +933,11 @@ void Level::CheckButton(SDL_Event& eventInLvl) {
             {
                 UiEnemy->Update(enemy);
                 UiEnemy->UpdateMax(enemy);
-                if (eventInLvl.button.button == SDL_BUTTON_LEFT)
-                {
-                    buttonForPlayerAttack->updateCoords(enemy->Rect.x, enemy->Rect.y);
-                }
+                buttonForPlayerAttack->updateCoords(enemy->Rect.x, enemy->Rect.y);
+//                if (eventInLvl.button.button == SDL_BUTTON_LEFT)
+//                {
+//                    buttonForPlayerAttack->updateCoords(enemy->Rect.x, enemy->Rect.y);
+//                }
                 break;
             }
         }
@@ -1008,6 +1009,7 @@ void Level::Attack()
                         }
                     }
                     enemies[0]->enemyTurn(); // ТОЖЕ ВАЖНО
+                    FlagManager::flagInAreaOfAnemy = 0;
                 }
             }
         }

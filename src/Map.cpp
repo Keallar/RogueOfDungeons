@@ -677,7 +677,9 @@ void Map::ChunkGenerationMethod2() {
         if ((rand() % 2)==1) {
             textureLocation[i][startTunnel + 5] = 0;
         }
-        startTunnel += rotation;
+        if(startTunnel > 4 && startTunnel < 27) {
+            startTunnel += rotation;
+        }
     }
 
     //далее рандомно выбираем клетки и меняем им тектурку, чтобы уровень был разнообразнее

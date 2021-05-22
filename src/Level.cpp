@@ -1150,7 +1150,7 @@ void Level::Attack()
 
                     if (blankflag == true)
                     {
-                        if (pow(((mouseX-EntityPosition::Coords[0])/32), 2) + pow(((mouseY-EntityPosition::Coords[1])/32), 2) <= pow(10, 2))
+                        if (pow(((mouseX-EntityPosition::Coords[0])/32), 2) + pow(((mouseY-EntityPosition::Coords[1])/32), 2) <= pow((player->EqItems.equipedRangeW->RNG), 2))
                         {
                            enemy->ChahgeHpEnemy(-(player->RangeAttack()));
                         }

@@ -42,7 +42,7 @@ private:
     Enemy* StandartEnemySlime = new Enemy("data/images/Slime.png", 4, ren, 12, 12, 2, 3, 2, 1, 10);
     Enemy* StandartEnemySkeletonMinion = new Enemy("data/images/HeroEscape.png", 4, ren, 5, 5, 2, 1, 0, 1, 10);
     BossSummoner* StandartBossSkeleton = new BossSummoner("data/images/Boss.png", 4, ren, 25, 25, 0, 100, 20, 3, 10);
-    RangeEnemy* StandartEnemyBee = new RangeEnemy("data/images/Bee.png", 3, ren, 18, 20, 3, 6, 6, 2, 5);
+    RangeEnemy* StandartEnemyBee = new RangeEnemy("data/images/Bee.png", 4, ren, 18, 20, 3, 6, 6, 2, 5);
     Enemy* StandartEnemyJungleSlime = new Enemy("data/images/JungleSlime.png", 4, ren, 23, 30, 3, 7, 7, 1, 10);
     RangeEnemy* StandartEnemyRangeGhost = new RangeEnemy("data/images/MageGhost.png", 4, ren, 42, 42, 8, 10, 10, 2, 8);
     Enemy* StandartEnemyGhost = new Enemy("data/images/MeleeGhost", 4, ren, 42, 42, 8, 14, 14, 1, 10);

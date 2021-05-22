@@ -37,6 +37,7 @@ public:
 	type Type;
 	std::string Description;
     int GetCost();
+    virtual std::string GetHoverText();
 };
 
 class meleeWeapon : public InventoryItem 
@@ -48,6 +49,7 @@ public:
 	int RNG;
     meleeWeapon(int Damage, int range, int Cost, type type, const char* WeapTex, std::string Name, loc SpawnLoc);
 	~meleeWeapon();
+    virtual std::string GetHoverText();
 };
 class rangeWeapon : public InventoryItem 
 {
@@ -60,6 +62,7 @@ public:
 	int DCHNS;
     rangeWeapon(int Damage, int Range, int Chanse, int deltaChanse, int Cost, type type, const char* WeapTex, std::string Name,  loc SpawnLoc);
 	~rangeWeapon();
+    virtual std::string GetHoverText();
 };
 
 enum class magicEl {
@@ -85,6 +88,7 @@ public:
     magicType WeaponType;
     magicWeapon(int Damage, int range, int splash, int Cost, type type, magicEl ElType, magicType WeaponType, const char* WeapTex, std::string Name,  loc SpawnLoc);
     ~magicWeapon();
+    virtual std::string GetHoverText();
 };
 
 class Artifact : public InventoryItem
@@ -104,6 +108,7 @@ public:
     armorItem(int Defence, int Cost, type type, const char* WeapTex, std::string Name, loc SpawnLoc);
 	~armorItem();
 	int DEF;
+    virtual std::string GetHoverText();
 };
 
 class Potion : public InventoryItem
@@ -112,6 +117,7 @@ public:
 	int HEAL;
 	int MpHEAL;
     Potion(int Heal, int MpHeal, int Cost, type type, const char* WeapTex, std::string Name, loc SpawnLoc);
+    virtual std::string GetHoverText();
 };
 
 class Inventory
@@ -126,6 +132,7 @@ public:
     static int traderFace[TRADING_SIZE];
 	int InventoryCount();
 	void AddItem(int id);
+    void AddPlaceItem(int id, int place);
 	void EquipItem(int i, int j);
 	void Update();
     void traderUpdate();

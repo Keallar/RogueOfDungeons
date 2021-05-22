@@ -73,7 +73,7 @@ Level::Level(SDL_Renderer* renderer, int playerClass) : ren (renderer), pClass(p
                 if (CurrentMap->Location[(EntityPosition::Coords[1]) / 32 - 1][(EntityPosition::Coords[0]) / 32] == 0)
                 {
                     EntityPosition::Coords[1] -= 32;
-                    Player::ChangeManaValue(+2);
+                    Player::ChangeManaValue(+1);
                     FlagManager::flagTurn = 1;
                 }
                 if (CurrentMap->Location[(EntityPosition::Coords[1]) / 32 - 1][(EntityPosition::Coords[0]) / 32] == 3)
@@ -119,7 +119,7 @@ Level::Level(SDL_Renderer* renderer, int playerClass) : ren (renderer), pClass(p
                 if (CurrentMap->Location[(EntityPosition::Coords[1]) / 32][(EntityPosition::Coords[0]) / 32 - 1] == 0)
                 {
                     EntityPosition::Coords[0] -= 32;
-                    Player::ChangeManaValue(+2);
+                    Player::ChangeManaValue(+1);
                     FlagManager::flagTurn = 1;
                 }
                 if (CurrentMap->Location[(EntityPosition::Coords[1]) / 32][(EntityPosition::Coords[0]) / 32 - 1] == 3)
@@ -165,7 +165,7 @@ Level::Level(SDL_Renderer* renderer, int playerClass) : ren (renderer), pClass(p
                 if (CurrentMap->Location[(EntityPosition::Coords[1]) / 32 + 1][(EntityPosition::Coords[0]) / 32] == 0)
                 {
                     EntityPosition::Coords[1] += 32;
-                    Player::ChangeManaValue(+2);
+                    Player::ChangeManaValue(+1);
                     FlagManager::flagTurn = 1;
                 }
                 if (CurrentMap->Location[(EntityPosition::Coords[1]) / 32 + 1][(EntityPosition::Coords[0]) / 32] == 3)
@@ -211,7 +211,7 @@ Level::Level(SDL_Renderer* renderer, int playerClass) : ren (renderer), pClass(p
                 if (CurrentMap->Location[(EntityPosition::Coords[1]) / 32][(EntityPosition::Coords[0]) / 32 + 1] == 0)
                 {
                     EntityPosition::Coords[0] += 32;
-                    Player::ChangeManaValue(+2);
+                    Player::ChangeManaValue(+1);
                     FlagManager::flagTurn = 1;
                 }
                 if (CurrentMap->Location[(EntityPosition::Coords[1]) / 32][(EntityPosition::Coords[0]) / 32 + 1] == 3)
@@ -1150,7 +1150,7 @@ void Level::Attack()
 
                     if (blankflag == true)
                     {
-                        if (pow(((mouseX-EntityPosition::Coords[0])/32), 2) + pow(((mouseY-EntityPosition::Coords[1])/32), 2) <= pow(10, 2))
+                        if (pow(((mouseX-EntityPosition::Coords[0])/32), 2) + pow(((mouseY-EntityPosition::Coords[1])/32), 2) <= pow((player->EqItems.equipedRangeW->RNG), 2))
                         {
                            enemy->ChahgeHpEnemy(-(player->RangeAttack()));
                         }

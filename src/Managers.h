@@ -60,6 +60,7 @@ public:
     static bool flagPHS;
     static bool flagLCK;
     //Equip Inv
+    static int flagInvHover;
     static int flagEquip;
     static int flagUnEquip;
     static int flagDrop;

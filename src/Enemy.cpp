@@ -33,7 +33,8 @@ Enemy::Enemy(const char* texturesheet, int framesOfAnimationForAttack,
     Range = range;
 }
 
-Enemy::~Enemy() {
+Enemy::~Enemy()
+{
     delete coin;
     SDL_DestroyTexture(redSquare);
     SDL_DestroyTexture(enemyTexture);

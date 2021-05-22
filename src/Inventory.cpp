@@ -3,6 +3,7 @@
 #include <string>
 #include <iostream>
 #include <fstream>
+#include <cassert>
 
 int Inventory::inventoryFace[INVENTORY_SIZE]; //������ � ���� ��, ��� ������ inventory, �� � static
 std::map <int, InventoryItem*> Inventory::ExistingItems;
@@ -180,7 +181,7 @@ int Inventory::InventoryCount()
     return count;
 }
 
-void Inventory::AddItem(int id) 
+void Inventory::AddItem(int id)
 {
     int count = 0;
     for (int i = 0; i < INVENTORY_SIZE; i++)
@@ -193,6 +194,19 @@ void Inventory::AddItem(int id)
         }
         count++;
     }
+}
+
+void Inventory::AddPlaceItem(int id, int place)
+{
+    try {
+        if (place >= TRADING_SIZE && place < 0)
+            throw "place more or less than TRADING_SIZE";
+    }  catch (const char* ex) {
+        std::cerr << "Error in AddPlaceItem" << ex << std::endl;
+    }
+    assert(place < TRADING_SIZE);
+    if (place < TRADING_SIZE)
+        inventory[place] = id;
 }
 
 void Inventory::Update() 

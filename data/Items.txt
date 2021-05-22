@@ -4,8 +4,8 @@ weapon 2 2 50 data/images/Spear.png Spear cave
 rWeapon 1 4 60 15 20 data/images/ShortBow.png ShortBow cave
 magic 2 10 1 fire point 100 data/images/FireBall.png FireBall cave
 armor 1 20 data/images/LetherArmor.png LetherArmor cave
-potion 4 0 20 data/images/SmallHpPotion.png SmallHpPotion
-potion 0 4 20 data/images/SmallMpPotion.png SmallMpPotion
+potion 4 0 10 data/images/SmallHpPotion.png SmallHpPotion
+potion 0 4 10 data/images/SmallMpPotion.png SmallMpPotion
 potion 7 0 50 data/images/Pie.png Pie
 artifact 1 2 1 0 0 0 100 data/images/SpeedBoots.png SpeedBoots cave
 rWeapon 2 6 75 20 30 data/images/JungleBow.png JungleBow jungle

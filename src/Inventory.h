@@ -126,6 +126,7 @@ public:
     static int traderFace[TRADING_SIZE];
 	int InventoryCount();
 	void AddItem(int id);
+    void AddPlaceItem(int id, int place);
 	void EquipItem(int i, int j);
 	void Update();
     void traderUpdate();

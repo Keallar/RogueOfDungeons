@@ -852,7 +852,7 @@ int Player::RangeAttack()
 {
     if ((Inventory::ExistingItems[Player::EqItems.WeaponId]->Type == rWeapon) &&
             FlagManager::flagRangeAttackPlayer == 1 &&
-            Player::mana[0] != 0)
+            Player::mana[0] >= 0)
     {
         damage = Player::EqItems.equipedRangeW->DMG + Player::DEX[0];
         std::cout << damage << "!" << std::endl;
@@ -862,7 +862,7 @@ int Player::RangeAttack()
 int Player::MagicAttack()
 {
     if ((Inventory::ExistingItems[Player::EqItems.WeaponId]->Type == magic) &&
-        Player::mana[0] != 0)
+        Player::mana[0] >= 0)
     {
         damage = Player::EqItems.equipedMagic->DMG + Player::WSD[0];
         std::cout << damage << "!" << std::endl;

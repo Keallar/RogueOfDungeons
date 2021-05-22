@@ -397,7 +397,7 @@ void Player::ChangeExpValue(int valueOfChangingExp)
 void Player::ChangeMaxHpValue(int flag)
 {
     int temp = HP[2];
-    HP[2] = 10 +1*flag - 1;
+    HP[2] = 10 +2*flag - 1;
     if(HP[2] != temp) HP[0] += HP[2] - temp;
     if(HP[0] < 1) HP[0] = 1;
 }

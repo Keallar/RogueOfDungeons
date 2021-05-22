@@ -87,7 +87,7 @@ UiTrader::UiTrader(SDL_Renderer* renderer): ren (renderer)
 
 }
 
-UiTrader::~UiTrader()
+UiTrader::~UiTrader() noexcept
 {
     delete buttonForFirstItem;
     delete buttonForSecondItem;
@@ -226,10 +226,12 @@ void UiTrader::Update(Player* player)
             }
         }
     }
+    traderInventory->traderUpdate();
 }
 
 void UiTrader::Check()
 {
+    traderInventory->traderUpdate();
     if (bHpPotion == 0)
     {
         if (buttonForHpPotion->GetTexture() == 0 &&

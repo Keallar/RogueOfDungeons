@@ -58,8 +58,9 @@ private:
     bool bSkip = 0;
     bool bSell = 0;
 public:
+    UiTrader() = default;
     UiTrader(SDL_Renderer* renderer);
-    ~UiTrader();
+    ~UiTrader() noexcept;
     void Render();
     void Update(Player* player);
     void Check();

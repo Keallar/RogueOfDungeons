@@ -66,13 +66,13 @@ public:
 	void GetItemUnEquip(int id);
 	void GetItemDrop(int id);
 
-    static int GetHP(int numOfArr);
-    static int GetEXP(int numOfArr);
-    static int GetMana(int numOfArr);
-    static int GetSpecValue(int numSpec);
-    static int GetPointOfSpec(int numPoint);
-    static int GetLevelOfPlayer(int numLvl);
-    static int GetCoinsOfPlayer(int numCoins);
+    static int GetHP(int numOfArr) noexcept;
+    static int GetEXP(int numOfArr) noexcept;
+    static int GetMana(int numOfArr) noexcept;
+    static int GetSpecValue(int numSpec) noexcept;
+    static int GetPointOfSpec(int numPoint) noexcept;
+    static int GetLevelOfPlayer(int numLvl) noexcept;
+    static int GetCoinsOfPlayer(int numCoins) noexcept;
 
     static void ChangeHpValue(int valueOfChangingHp);
     static void ChangeManaValue(int valueOfChangingMana);

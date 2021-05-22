@@ -154,7 +154,7 @@ void Player::itemInInv(int num)
     }
 }
 
-int Player::GetHP(int numOfArr)
+int Player::GetHP(int numOfArr) noexcept
 {
     switch (numOfArr)
     {
@@ -169,7 +169,7 @@ int Player::GetHP(int numOfArr)
     }
 }
 
-int Player::GetEXP(int numOfArr)
+int Player::GetEXP(int numOfArr) noexcept
 {
     switch (numOfArr)
     {
@@ -184,7 +184,7 @@ int Player::GetEXP(int numOfArr)
     }
 }
 
-int Player::GetMana(int numOfArr)
+int Player::GetMana(int numOfArr) noexcept
 {
     switch (numOfArr)
     {
@@ -200,7 +200,7 @@ int Player::GetMana(int numOfArr)
 }
 
 //Получение значения характеристик (STR, DEX, INT, WSD, PHS, LCK)
-int Player::GetSpecValue(int numSpec)
+int Player::GetSpecValue(int numSpec) noexcept
 {
     switch (numSpec)
     {
@@ -222,7 +222,7 @@ int Player::GetSpecValue(int numSpec)
     }
 }
 
-int Player::GetPointOfSpec(int numPoint)
+int Player::GetPointOfSpec(int numPoint) noexcept
 {
     switch (numPoint)
     {
@@ -238,7 +238,7 @@ int Player::GetPointOfSpec(int numPoint)
     }
 }
 
-int Player::GetLevelOfPlayer(int numLvl)
+int Player::GetLevelOfPlayer(int numLvl) noexcept
 {
     switch (numLvl)
     {
@@ -254,7 +254,7 @@ int Player::GetLevelOfPlayer(int numLvl)
     }
 }
 
-int Player::GetCoinsOfPlayer(int numCoins)
+int Player::GetCoinsOfPlayer(int numCoins) noexcept
 {
     switch (numCoins)
     {

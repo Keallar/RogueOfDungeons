@@ -127,8 +127,10 @@ Inventory::Inventory()
                 Tex[i] = WeapTex[i];
             }
             file >> Name;
+            file >> SpawnTex;
+            loc SpawnLoc = returnLoc(SpawnTex);
             type ItemType = potion;
-            ExistingItems[ItemNumber] = new Potion(HEAL, MpHEAL, COST, ItemType, Tex, Name);
+            ExistingItems[ItemNumber] = new Potion(HEAL, MpHEAL, COST, ItemType, Tex, Name, SpawnLoc);
         }
         if (Type == "artifact")
         {
@@ -284,33 +286,36 @@ magicWeapon::magicWeapon(int Damage, int range, int splash, int Cost, type type,
     spawnLoc = SpawnLoc;
 }
 
-Artifact::Artifact(int STR, int DEX, int INT, int WSD, int PHS, int LCK, int cost, type type, const char* WeapTex, std::string Name, loc SpawnLoc)
+Artifact::Artifact(int STR, int DEX, int INT, int WSD, int PHS, int LCK, int Cost, type type, const char* WeapTex, std::string Name, loc SpawnLoc)
 {
     specs[0] = STR; specs[1] = DEX; specs[2] = INT; specs[3] = WSD; specs[4] = PHS; specs[5] = LCK;
-    COST = cost;
+    COST = Cost;
     Type = type;
     ItemTexture = WeapTex;
     name = Name;
     spawnLoc = SpawnLoc;
 }
 
-armorItem::armorItem(int Defence, int cost, type type, const char* WeapTex, std::string Name, loc SpawnLoc)
+armorItem::armorItem(int Defence, int Cost, type type, const char* WeapTex, std::string Name, loc SpawnLoc)
 {
-    COST = cost;
+    COST = Cost;
     DEF = Defence;
     ItemTexture = WeapTex;
     Type = type;
     name = Name;
     spawnLoc = SpawnLoc;
+    COST = Cost;
 }
 armorItem::~armorItem(){}
 
-Potion::Potion(int Heal, int MpHeal, int cost, type type, const char* WeapTex, std::string Name)
+Potion::Potion(int Heal, int MpHeal, int Cost, type type, const char* WeapTex, std::string Name, loc SpawnLoc)
 {
-    COST = cost;
+    COST = Cost;
     Type = type;
     ItemTexture = WeapTex;
     HEAL = Heal;
     MpHEAL = MpHeal;
+    spawnLoc = SpawnLoc;
     name = Name;
+    COST = Cost;
 }

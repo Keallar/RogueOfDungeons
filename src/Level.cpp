@@ -456,7 +456,23 @@ void Level::Update()
                 }
                 if(!(rand()%3))
                 {
-                    player->GetItemOnLvl((6 + rand()%2));
+                    while(true) {
+                        int item = rand()%(Inventory::ExistingItems.size());
+                        if (Inventory::ExistingItems[item]->Type == potion) {
+                            if(LevelMap->TileSet == 0 || LevelMap->TileSet == 1) {
+                                if (Inventory::ExistingItems[item]->spawnLoc == loc::cave) {
+                                    player->GetItemOnLvl((item));
+                                    break;
+                                }
+                            }
+                            if(LevelMap->TileSet == 2 || LevelMap->TileSet == 3 || LevelMap->TileSet == 4) {
+                                if (Inventory::ExistingItems[item]->spawnLoc == loc::castle) {
+                                    player->GetItemOnLvl((item));
+                                    break;
+                                }
+                            }
+                        }
+                    }
                 }
             }
 
@@ -561,7 +577,7 @@ void Level::Start()
 
     if (LevelMap->floorLvl == 1)
     {
-        player->PushItemsToInventory(pClass);
+        player->PushItemsToInventory(4);
     }
     for (int i = 0; i < 22; i++)
     {

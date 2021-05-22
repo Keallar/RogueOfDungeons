@@ -93,7 +93,7 @@ private:
 
 public:
     int specs[6];
-    Artifact(int STR, int DEX, int INT, int WSD, int PHS, int LCK, int cost, type type, const char* WeapTex, std::string Name,  loc SpawnLoc);
+    Artifact(int STR, int DEX, int INT, int WSD, int PHS, int LCK,int Cost, type type, const char* WeapTex, std::string Name,  loc SpawnLoc);
 };
 
 class armorItem : public InventoryItem
@@ -101,7 +101,7 @@ class armorItem : public InventoryItem
 private:
 
 public:
-    armorItem(int Defence, int cost, type type, const char* WeapTex, std::string Name, loc SpawnLoc);
+    armorItem(int Defence, int Cost, type type, const char* WeapTex, std::string Name, loc SpawnLoc);
 	~armorItem();
 	int DEF;
 };
@@ -111,7 +111,7 @@ class Potion : public InventoryItem
 public:
 	int HEAL;
 	int MpHEAL;
-    Potion(int Heal, int MpHeal, int cost, type type, const char* WeapTex, std::string Name);
+    Potion(int Heal, int MpHeal, int Cost, type type, const char* WeapTex, std::string Name, loc SpawnLoc);
 };
 
 class Inventory

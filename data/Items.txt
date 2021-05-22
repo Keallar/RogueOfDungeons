@@ -1,20 +1,28 @@
 weapon 0 1 0 data/images/Punch.png Punch cave
 weapon 1 1 10 data/images/ShortSword.png ShortSword cave
-weapon 2 2 50 data/images/Spear.png Spear cave
-rWeapon 1 4 60 15 20 data/images/ShortBow.png ShortBow cave
-magic 2 10 1 fire point 100 data/images/FireBall.png FireBall cave
-armor 1 data/images/LetherArmor.png LetherArmor cave
-potion 4 0 20 data/images/SmallHpPotion.png SmallHpPotion
-potion 0 4 20 data/images/SmallMpPotion.png SmallMpPotion
-potion 7 0 50 data/images/Pie.png Pie
-artifact 1 2 1 0 0 0 data/images/SpeedBoots.png SpeedBoots cave
-rWeapon 2 6 75 20 30 data/images/JungleBow.png JungleBow jungle
-weapon 3 3 80 data/images/JungleSword.png JungleSword jungle
-magic 3 10 1 ice point 150 data/images/IceBall.png IceBall jungle
-rWeapon 3 7 80 30 50 data/images/CastleBow.png CastleBow castle
-weapon 5 4 80 data/images/CastleSword.png CastleSword castle
-magic 5 10 1 fire field 200 data/images/CastleFireBall.png CastleFireBall castle
-rWeapon 6 8 90 50 100 data/images/SuperBow.png SuperBow hell
-weapon 8 3 200 data/images/FireSword.png FireSword hell
-magic 7 10 1 fire field 200 data/images/FireStaff.png FireStaff hell
-artifact 1 1 1 5 5 1 data/images/Poseidon'sSphere.png Poseidon'sSphere hell
+weapon 2 2 10 data/images/Spear.png Spear cave
+rWeapon 1 5 60 15 10 data/images/ShortBow.png ShortBow cave
+magic 1 5 1 fire point 10 data/images/FireBall.png FireBall cave
+armor 1 10 data/images/LetherArmor.png LetherArmor cave
+potion 4 0 6 data/images/SmallHpPotion.png SmallHpPotion cave
+potion 0 4 6 data/images/SmallMpPotion.png SmallMpPotion cave
+potion 7 0 60 data/images/Pie.png Pie castle
+artifact 2 0 0 0 2 0 10 data/images/SpeedBoots.png SpeedBoots cave
+rWeapon 5 7 75 20 40 data/images/JungleBow.png JungleBow jungle
+weapon 5 1 40 data/images/JungleSword.png JungleSword jungle
+magic 4 7 1 ice point 40 data/images/IceBall.png IceBall jungle
+rWeapon 8 7 80 30 120 data/images/CastleBow.png CastleBow castle
+weapon 7 4 120 data/images/CastleSword.png CastleSword castle
+magic 7 7 1 fire field 120 data/images/CastleFireBall.png CastleFireBall castle
+rWeapon 11 7 90 50 360 data/images/SuperBow.png SuperBow hell
+weapon 11 3 360 data/images/FireSword.png FireSword hell
+magic 10 7 1 fire field 360 data/images/FireStaff.png FireStaff hell
+artifact 1 1 1 5 5 1 360 data/images/Poseidon'sSphere.png Poseidon'sSphere hell
+artifact 0 2 0 0 1 1 10 data/images/Quiver.png Quiver cave
+artifact 0 0 2 2 0 0 10 data/images/ManaTalon.png ManaTalon cave
+weapon 15 1 1080 data/images/ArcaneSword.png ArcaneSword arcane
+potion 8 0 60 data/images/MediumHpPotion.png MediumHpPotion castle
+potion 0 8 60 data/images/MediumMpPotion.png MediumMpPotion castle
+rWeapon 18 8 100 100 1080 data/images/ArcaneBow.png ArcaneBow arcane
+magic 16 8 1 fire point 1080 data/images/WooDoo.png WooDoo arcane
+

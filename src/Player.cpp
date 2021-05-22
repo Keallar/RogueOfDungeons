@@ -138,6 +138,8 @@ void Player::PushItemsToInventory(int kit)
         inventory->AddItem(8);
         inventory->AddItem(6);
         inventory->AddItem(9);
+        ChangeValueSpecsNoLvl(1, 2);
+        ChangeValueSpecsNoLvl(5, 2);
     }
     if (kit == 2)
     {
@@ -145,12 +147,17 @@ void Player::PushItemsToInventory(int kit)
         inventory->AddItem(5);
         inventory->AddItem(8);
         inventory->AddItem(7);
-        inventory->AddItem(9);
+        inventory->AddItem(20);
+        ChangeValueSpecsNoLvl(2, 1);
+        ChangeValueSpecsNoLvl(4, 1);
+        ChangeValueSpecsNoLvl(5, 1);
     }
     if (kit == 3) {
         inventory->AddItem(4);
         inventory->AddItem(8);
-        inventory->AddItem(7);
+        inventory->AddItem(21);
+        ChangeValueSpecsNoLvl(3, 2);
+        ChangeValueSpecsNoLvl(4, 2);
     }
 }
 

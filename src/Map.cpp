@@ -51,23 +51,23 @@ void Map::GenerateMap()
             break;
         }
     }
-    if(floorLvl > 4 && floorLvl <= 8) {
+    if(floorLvl > 3 && floorLvl <= 7) {
         TileSet = 1;
         switch(rand()%3) {case 0: generateChoose = 0; case 1: generateChoose = 4; break; case 2: generateChoose = 2; break;}
     }
-    if(floorLvl > 8 && floorLvl <= 12) {
+    if(floorLvl > 7 && floorLvl <= 11) {
         TileSet = 2;
         switch(rand()%2) {case 0: generateChoose = 1; break; case 1: generateChoose = 5; break;}
     }
-    if(floorLvl > 12 && floorLvl <=16) {
+    if(floorLvl > 11 && floorLvl <=15) {
         TileSet = 3;
         switch(rand()%2) {case 0: generateChoose = 1; break; case 1: generateChoose = 5; break;}
     }
-    if (floorLvl > 16 && floorLvl <= 20) {
+    if (floorLvl > 15 && floorLvl <= 19) {
         TileSet = 4;
         switch(rand()%3) {case 0: generateChoose = 1; break; case 1: generateChoose = 5; break; case 2: generateChoose = 7; break;}
     }
-    if (floorLvl == 21) {
+    if (floorLvl == 20) {
         TileSet = 4;
         generateChoose = 6;
     }

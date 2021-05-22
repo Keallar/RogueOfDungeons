@@ -61,6 +61,8 @@ void Game::init(const char* title, int xpos, int ypos, int width, int height, bo
 	
 	Menu = new MainMenu("data/images/BackgroundMenu.png", "data/images/Play.png", "data/images/Settings.png","data/images/Exit.png", renderer);
     classChoose = new ClassChoose(renderer);
+    gameOverScreen = new TitleScreen("Game Over", renderer);
+    winnerScreen = new TitleScreen("you did it", renderer);
 }
 
 void Game::handleEvents()
@@ -71,6 +73,12 @@ void Game::handleEvents()
         if (classChoose->flag == 1)
         {
             classChoose->handleEvents(event);
+        }
+        if (gameOverScreen->flag) {
+            gameOverScreen->handleEvents(event);
+        }
+        if (winnerScreen->flag) {
+            winnerScreen->handleEvents(event);
         }
         if (level)
         {
@@ -123,6 +131,13 @@ void Game::update()
         if (level)
         {
             level->Update();
+            if(level->PlayerDead) {
+                delete level;
+                level = nullptr;
+                Menu->flag = 1;
+                classChoose->choosedClass = 0;
+                gameOverScreen->flag = true;
+            }
         }
 	}	
 }
@@ -142,6 +157,12 @@ void Game::render()
             level->Render();
         }
 	}
+    if (gameOverScreen->flag) {
+        gameOverScreen->Render();
+    }
+    if (winnerScreen->flag) {
+        winnerScreen->Render();
+    }
 	SDL_RenderPresent(renderer);
 }
 void Game::clean()

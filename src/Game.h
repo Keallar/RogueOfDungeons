@@ -7,6 +7,7 @@
 #include "Level.h"
 #include "Player.h"
 #include "ClassChoose.h"
+#include "TitleScreen.h"
 
 struct COORDS 
 {
@@ -29,12 +30,15 @@ private:
 	bool isRunning;
 	SDL_Window* window;
 	SDL_Texture* texture;
+    SDL_Texture* gameOvertexture;
 	SDL_Rect tex_RECT;
 	SDL_Rect tex_posRect;
 	COORDS mouseCoord;
 	MainMenu* Menu;
 	Level* level;
     ClassChoose* classChoose;
+    TitleScreen* gameOverScreen;
+    TitleScreen* winnerScreen;
 	UIInfo* uiLevel;
 public:
 	static SDL_Renderer* renderer;

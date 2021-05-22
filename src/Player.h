@@ -49,7 +49,7 @@ public:
     static int damage;
     static Equiped EqItems;
     Player(SDL_Renderer* ren);
-
+    ~Player();
     void Update() override;
     void Render() override;
 

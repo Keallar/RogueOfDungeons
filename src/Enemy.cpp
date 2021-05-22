@@ -31,6 +31,13 @@ Enemy::Enemy(const char* texturesheet, int framesOfAnimationForAttack,
     currentFrameOfEnemyAnim = 0;
     Type = type;
 }
+
+Enemy::~Enemy() {
+    delete coin;
+    SDL_DestroyTexture(redSquare);
+    SDL_DestroyTexture(enemyTexture);
+}
+
 Enemy::Enemy(Enemy* enemy)
 {
     ren = enemy->ren;

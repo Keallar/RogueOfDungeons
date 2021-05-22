@@ -33,6 +33,15 @@ UIEnemy::UIEnemy(SDL_Renderer* renderer, Enemy* enemy):
     buttonForCallEnemyInfo = new Button("right", NULL, ren, {tempEnemy->Rect.x,tempEnemy ->Rect.y, 32, 32}, callEnemyInfo, NULL, NULL);
 }
 
+UIEnemy::~UIEnemy() {
+    SDL_DestroyTexture(enemyTex);
+    SDL_DestroyTexture(hpTextEnemy);
+    SDL_DestroyTexture(hpCurrentTextEnemy);
+    SDL_DestroyTexture(slashhhhhhhhh);
+    SDL_DestroyTexture(hpMaxEnemy);
+    delete buttonForCallEnemyInfo;
+}
+
 void UIEnemy::Render()
 {
     RenderManager::CopyToRender(enemyTex, ren, 1116, 250, 64, 32);

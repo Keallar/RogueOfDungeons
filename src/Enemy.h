@@ -47,6 +47,7 @@ protected:
 public:
 	int generate = 0;
 	Enemy() = default;
+    ~Enemy();
     Enemy(Enemy *enemy);
     Enemy(const char* texturesheet, int framesOfAnimationForAttack, SDL_Renderer* ren, int HealthP, int MaxHealthP, int Damage, int EXPR, int coins, int type);
 	void Update() override;

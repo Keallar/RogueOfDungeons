@@ -46,7 +46,8 @@ private:
     Enemy* StandartEnemyJungleSlime = new Enemy("data/images/JungleSlime.png", 4, ren, 9, 9, 3, 7, 7, 1);
     RangeEnemy* StandartEnemyRangeGhost = new RangeEnemy("data/images/MageGhost.png", 4, ren, 10, 10, 6, 10, 10, 2);
     Enemy* StandartEnemyGhost = new Enemy("data/images/MeleeGhost", 4, ren, 14, 14, 8, 14, 14, 1);
-    std::array<Enemy*, 12> StandartEnemies = { StandartEnemySlime, StandartEnemyBear,
+    RangeEnemy* StandartRangeSkeletonMinion = new RangeEnemy("data/images/PAPAABOBA", 4, ren, 8, 8, 6, 10, 10, 2); 
+    std::array<Enemy*, 13> StandartEnemies = { StandartEnemySlime, StandartEnemyBear,
                                              StandartEnemyBee, StandartEnemyJungleSlime,
                                              StandartEnemyTurtle, StandartRangeEnemyTurtle,
                                             StandartDragonEnemy, StandartBigDragonEnemy,
@@ -70,7 +71,6 @@ private:
     Button* buttonD = 0;
     Keyboard* keyH = 0;
     Button* buttonForPlayerAttack;
-    Keyboard* keyE;
     Map* LevelMap;
     Map* Gulag;
     std::vector<Coins*> coins;
@@ -110,7 +110,7 @@ public:
 	int GetLocation(int x, int y);
 	void ChangeLocation(int x, int y);
 	void ChangeLevel(int x, int y, int LocationChange, int TextureChange);
-//    void TimerTurn();
+    void TimerTurn();
 };
 
 

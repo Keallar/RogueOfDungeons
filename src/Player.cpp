@@ -101,6 +101,26 @@ Player::Player( SDL_Renderer* renderer):
     inventory->Update();
     EqItems.WeaponId = 0;
     EqItems.equipedMeleeW = inventory->GetRealMelee(0);
+    HP[0] = 10; HP[1] = 10; HP[2] = 10;
+    mana[0] = 50; mana[1] = 0; mana[2] = 50;
+    exp[0] = 0; exp[1] = 0; exp[2] = 100;
+    STR[0] = 1; STR[1] = 1;
+    DEX[0] = 1; DEX[1] = 1;
+    INT[0] = 1; INT[1] = 1;
+    WSD[0] = 1; WSD[1] = 1;
+    PHS[0] = 1; PHS[1] = 1;
+    LCK[0] = 1; LCK[1] = 1;
+    pointOfSpec[0] = 0; pointOfSpec[1] = 0; pointOfSpec[2] = 10;
+    levelOfPlayer[0] = 1; levelOfPlayer[1] = 1; levelOfPlayer[2] = 100;
+    quantityOfCoins[0] = 0; quantityOfCoins[1] = 0; quantityOfCoins[2] = 100;
+    EqItems = { -1, nullptr, nullptr, nullptr, -1, nullptr, -1, nullptr};
+    EqItems.WeaponId = 0;
+    EqItems.equipedMeleeW = inventory->GetRealMelee(0);
+}
+
+Player::~Player() {
+    delete inventory;
+    delete playerAnimation;
 }
 
 void Player::PushItemsToInventory(int kit)

@@ -101,6 +101,16 @@ UIInfo::UIInfo(SDL_Renderer* renderer) : ren (renderer)
 
 UIInfo::~UIInfo()
 {
+    SDL_DestroyTexture(versionBLock);
+    SDL_DestroyTexture(info);
+    SDL_DestroyTexture(slashhhhhhhhh);
+    SDL_DestroyTexture(SPEC);
+    SDL_DestroyTexture(textLevelOfPlayer);
+    SDL_DestroyTexture(levelOfPlayer);
+    SDL_DestroyTexture(xpText);
+    SDL_DestroyTexture(mnText);
+    SDL_DestroyTexture(coinText);
+    SDL_DestroyTexture(coins);
     delete buttonForCallSpecInfo;
     delete buttonForCallInvWin;
     delete keyForCallSpecInfo;
@@ -232,6 +242,11 @@ UIItem::UIItem(SDL_Renderer* renderer) : ren(renderer)
 
     itemBlock = GameTextures->GetTexture("InfoBlock");
     item = FontManager::renderText("Items", PATH_IN_FONT, color, 32, ren);
+}
+
+UIItem::~UIItem() {
+    SDL_DestroyTexture(item);
+    SDL_DestroyTexture(INV);
 }
 
 void UIItem::Render()

@@ -368,6 +368,27 @@ UISpecifications::~UISpecifications()
     delete keyForIncWSD;
     delete keyForIncPHS;
     delete keyForIncLCK;
+    SDL_DestroyTexture(specifcation);
+    SDL_DestroyTexture(STR);
+    SDL_DestroyTexture(valueSTR);
+    SDL_DestroyTexture(DEX);
+    SDL_DestroyTexture(valueDEX);
+    SDL_DestroyTexture(INT);
+    SDL_DestroyTexture(valueINT);
+    SDL_DestroyTexture(WSD);
+    SDL_DestroyTexture(valueWSD);
+    SDL_DestroyTexture(PHS);
+    SDL_DestroyTexture(valuePHS);
+    SDL_DestroyTexture(LCK);
+    SDL_DestroyTexture(valueLCK);
+    SDL_DestroyTexture(textPointOfSpec);
+    SDL_DestroyTexture(pointOfSpec);
+    SDL_DestroyTexture(one);
+    SDL_DestroyTexture(two);
+    SDL_DestroyTexture(three);
+    SDL_DestroyTexture(four);
+    SDL_DestroyTexture(five);
+    SDL_DestroyTexture(six);
 }
 
 void UISpecifications::Render()

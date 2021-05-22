@@ -282,22 +282,33 @@ void Enemy::attackOfEnemy(bool damage)
 {
     if (currentFrameOfEnemyAnim == framesOfAnimForAttack - 1)
     {
-        std::cout << "Chance of trick" << std::endl;
-        if (FlagManager::flagTimerTurn == 0)
+        if (temp == false)
         {
-            std::cout << "Delay Melee Attack" << std::endl;
-            currentFrameOfEnemyAnim = enemyAnimation->animationPlusForX(framesOfAnimForAttack);
+            Timer = SDL_GetTicks();
+            temp = true;
         }
+        Uint32 Timer2 = SDL_GetTicks();
+        if (Timer2 - Timer >= 200 && temp == true)
+        {
+            currentFrameOfEnemyAnim = enemyAnimation->animationPlusForX(framesOfAnimForAttack);
+            Timer = Timer2;
+        }
+//        std::cout << "Chance of trick" << std::endl;
+//        if (FlagManager::flagTimerTurn == 0)
+//        {
+//            std::cout << "Delay Melee Attack" << std::endl;
+//            currentFrameOfEnemyAnim = enemyAnimation->animationPlusForX(framesOfAnimForAttack);
+//        }
     }
-    else if (currentFrameOfEnemyAnim == framesOfAnimForAttack &&
-             damage == false)
-    {
-        temp1 = false;
-        temp = false;
-        currentFrameOfEnemyAnim = enemyAnimation->animationPlusForX(framesOfAnimForAttack);
-        std::cout << "Hit1" << std::endl;
-        Player::playerTurn();
-    }
+//    else if (currentFrameOfEnemyAnim == framesOfAnimForAttack &&
+//             damage == false)
+//    {
+//        temp1 = false;
+//        temp = false;
+//        currentFrameOfEnemyAnim = enemyAnimation->animationPlusForX(framesOfAnimForAttack);
+//        std::cout << "Hit1" << std::endl;
+//        Player::playerTurn();
+//    }
     else if (currentFrameOfEnemyAnim == framesOfAnimForAttack &&
              damage == true)
     {
@@ -335,53 +346,53 @@ void Enemy::meleeAttackEnemy()
          ((Rect.y == EntityPosition::Coords[1]) &&
           (Rect.x == EntityPosition::Coords[0] - 32))))
     {
-
-        if (temp == false)
-        {
-            Timer = SDL_GetTicks();
-            temp = true;
-        }
-        Uint32 Timer2 = SDL_GetTicks();
-        Enemy::enemyTurn();
-        if (Timer2 - Timer >= 100 && temp == true)
-        {
-            Enemy::attackOfEnemy(true);
-            Timer = Timer2;
-        }
-        DidMeAttacked = true;
+    attackOfEnemy(true);
+//        if (temp == false)
+//        {
+//            Timer = SDL_GetTicks();
+//            temp = true;
+//        }
+//        Uint32 Timer2 = SDL_GetTicks();
+//        Enemy::enemyTurn();
+//        if (Timer2 - Timer >= 100 && temp == true)
+//        {
+//            Enemy::attackOfEnemy(true);
+//            Timer = Timer2;
+//        }
+//        DidMeAttacked = true;
     }
-    else if ((((Rect.x == EntityPosition::Coords[0]) &&
-               (Rect.y == EntityPosition::Coords[1] + 64)) ||
-              ((Rect.x == EntityPosition::Coords[0]) &&
-               (Rect.y == EntityPosition::Coords[1] - 64)) ||
-              ((Rect.y == EntityPosition::Coords[1]) &&
-               (Rect.x == EntityPosition::Coords[0] + 64)) ||
-              ((Rect.y == EntityPosition::Coords[1]) &&
-               (Rect.x == EntityPosition::Coords[0] - 64)) ||
-              ((Rect.x == EntityPosition::Coords[0] - 32) &&
-               (Rect.y == EntityPosition::Coords[1] + 32)) ||
-              ((Rect.x == EntityPosition::Coords[0] + 32) &&
-               (Rect.y == EntityPosition::Coords[1] + 32)) ||
-              ((Rect.x == EntityPosition::Coords[0] + 32) &&
-               (Rect.y == EntityPosition::Coords[1] - 32)) ||
-              ((Rect.x == EntityPosition::Coords[0] - 32) &&
-               (Rect.y == EntityPosition::Coords[1] - 32))) &&
-             FlagManager::flagMeleeAttackEnemy == 1)
-    {
-        if (temp == false)
-        {
-            Timer = SDL_GetTicks();
-            temp = true;
-        }
-        Uint32 Timer2 = SDL_GetTicks();
-        Enemy::enemyTurn();
-        if (Timer2 - Timer >= 100 && temp == true)
-        {
-            Enemy::attackOfEnemy(false);
-            Timer = Timer2;
-        }
-        DidMeAttacked = true;
-    }
+//    else if ((((Rect.x == EntityPosition::Coords[0]) &&
+//               (Rect.y == EntityPosition::Coords[1] + 64)) ||
+//              ((Rect.x == EntityPosition::Coords[0]) &&
+//               (Rect.y == EntityPosition::Coords[1] - 64)) ||
+//              ((Rect.y == EntityPosition::Coords[1]) &&
+//               (Rect.x == EntityPosition::Coords[0] + 64)) ||
+//              ((Rect.y == EntityPosition::Coords[1]) &&
+//               (Rect.x == EntityPosition::Coords[0] - 64)) ||
+//              ((Rect.x == EntityPosition::Coords[0] - 32) &&
+//               (Rect.y == EntityPosition::Coords[1] + 32)) ||
+//              ((Rect.x == EntityPosition::Coords[0] + 32) &&
+//               (Rect.y == EntityPosition::Coords[1] + 32)) ||
+//              ((Rect.x == EntityPosition::Coords[0] + 32) &&
+//               (Rect.y == EntityPosition::Coords[1] - 32)) ||
+//              ((Rect.x == EntityPosition::Coords[0] - 32) &&
+//               (Rect.y == EntityPosition::Coords[1] - 32))) &&
+//             FlagManager::flagMeleeAttackEnemy == 1)
+//    {
+//        if (temp == false)
+//        {
+//            Timer = SDL_GetTicks();
+//            temp = true;
+//        }
+//        Uint32 Timer2 = SDL_GetTicks();
+//        Enemy::enemyTurn();
+//        if (Timer2 - Timer >= 100 && temp == true)
+//        {
+//            Enemy::attackOfEnemy(false);
+//            Timer = Timer2;
+//        }
+//        DidMeAttacked = true;
+//    }
 }
 
 int Enemy::getDamageEnemy()

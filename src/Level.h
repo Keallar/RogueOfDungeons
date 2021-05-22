@@ -65,6 +65,7 @@ private:
     Button* buttonD = 0;
     Keyboard* keyH = 0;
     Button* buttonForPlayerAttack;
+    Keyboard* keyE;
     Map* LevelMap;
     Map* Gulag;
     std::vector<Coins*> coins;
@@ -104,7 +105,7 @@ public:
 	int GetLocation(int x, int y);
 	void ChangeLocation(int x, int y);
 	void ChangeLevel(int x, int y, int LocationChange, int TextureChange);
-    void TimerTurn();
+//    void TimerTurn();
 };
 
 

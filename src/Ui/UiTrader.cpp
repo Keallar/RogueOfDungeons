@@ -41,9 +41,9 @@ UiTrader::UiTrader(SDL_Renderer* renderer): ren (renderer)
 
     //Potions
     hpBottle = GameTextures->GetTexture("SmallHpPotion");
-    hpBtText = FontManager::renderText("20", PATH_IN_FONT, color, 32, ren);
+    hpBtText = FontManager::renderText("10", PATH_IN_FONT, color, 32, ren);
     manaBottle = GameTextures->GetTexture("SmallMpPotion");
-    manaBtText = FontManager::renderText("20", PATH_IN_FONT, color, 32, ren);
+    manaBtText = FontManager::renderText("10", PATH_IN_FONT, color, 32, ren);
 
     skip = FontManager::renderText("Skip", PATH_IN_FONT, color, 32, ren);
 
@@ -148,10 +148,10 @@ void UiTrader::Update(Player* player)
     {
         if (buttonForHpPotion->GetTexture() != 0)
         {
-            if (Player::GetCoinsOfPlayer(0) >= 20)
+            if (Player::GetCoinsOfPlayer(0) >= 10)
             {
                 bHpPotion = 0;
-                Player::ChangeCoins(-20);
+                Player::ChangeCoins(-10);
                 player->itemInInv(6);
                 SDL_DestroyTexture(hpBtText);
                 hpBtText = 0;
@@ -164,10 +164,10 @@ void UiTrader::Update(Player* player)
     {
         if (buttonForManaPotion->GetTexture() != 0)
         {
-            if (Player::GetCoinsOfPlayer(0) >= 20)
+            if (Player::GetCoinsOfPlayer(0) >= 10)
             {
                 bManaPotion = 0;
-                Player::ChangeCoins(-20);
+                Player::ChangeCoins(-10);
                 player->itemInInv(7);
                 SDL_DestroyTexture(manaBtText);
                 manaBtText = 0;
@@ -236,7 +236,7 @@ void UiTrader::Check()
                 hpBtText == 0)
         {
             buttonForHpPotion->SetTexture(GameTextures->GetTexture("SmallHpPotion"));
-            hpBtText = FontManager::renderText("20", PATH_IN_FONT, color, 32, ren);
+            hpBtText = FontManager::renderText("10", PATH_IN_FONT, color, 32, ren);
         }
     }
     if (bManaPotion == 0)
@@ -245,7 +245,7 @@ void UiTrader::Check()
                 manaBtText == 0)
         {
             buttonForManaPotion->SetTexture(GameTextures->GetTexture("SmallMpPotion"));
-            manaBtText = FontManager::renderText("20", PATH_IN_FONT, color, 32, ren);
+            manaBtText = FontManager::renderText("10", PATH_IN_FONT, color, 32, ren);
         }
     }
     if (bFirstItem == 0)

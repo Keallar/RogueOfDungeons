@@ -73,6 +73,7 @@ Level::Level(SDL_Renderer* renderer, int playerClass) : ren (renderer), pClass(p
                 if (CurrentMap->Location[(EntityPosition::Coords[1]) / 32 - 1][(EntityPosition::Coords[0]) / 32] == 0)
                 {
                     EntityPosition::Coords[1] -= 32;
+                    Player::ChangeManaValue(+2);
                     FlagManager::flagTurn = 1;
                 }
                 if (CurrentMap->Location[(EntityPosition::Coords[1]) / 32 - 1][(EntityPosition::Coords[0]) / 32] == 3)
@@ -118,6 +119,7 @@ Level::Level(SDL_Renderer* renderer, int playerClass) : ren (renderer), pClass(p
                 if (CurrentMap->Location[(EntityPosition::Coords[1]) / 32][(EntityPosition::Coords[0]) / 32 - 1] == 0)
                 {
                     EntityPosition::Coords[0] -= 32;
+                    Player::ChangeManaValue(+2);
                     FlagManager::flagTurn = 1;
                 }
                 if (CurrentMap->Location[(EntityPosition::Coords[1]) / 32][(EntityPosition::Coords[0]) / 32 - 1] == 3)
@@ -163,6 +165,7 @@ Level::Level(SDL_Renderer* renderer, int playerClass) : ren (renderer), pClass(p
                 if (CurrentMap->Location[(EntityPosition::Coords[1]) / 32 + 1][(EntityPosition::Coords[0]) / 32] == 0)
                 {
                     EntityPosition::Coords[1] += 32;
+                    Player::ChangeManaValue(+2);
                     FlagManager::flagTurn = 1;
                 }
                 if (CurrentMap->Location[(EntityPosition::Coords[1]) / 32 + 1][(EntityPosition::Coords[0]) / 32] == 3)
@@ -208,6 +211,7 @@ Level::Level(SDL_Renderer* renderer, int playerClass) : ren (renderer), pClass(p
                 if (CurrentMap->Location[(EntityPosition::Coords[1]) / 32][(EntityPosition::Coords[0]) / 32 + 1] == 0)
                 {
                     EntityPosition::Coords[0] += 32;
+                    Player::ChangeManaValue(+2);
                     FlagManager::flagTurn = 1;
                 }
                 if (CurrentMap->Location[(EntityPosition::Coords[1]) / 32][(EntityPosition::Coords[0]) / 32 + 1] == 3)
@@ -229,7 +233,9 @@ Level::Level(SDL_Renderer* renderer, int playerClass) : ren (renderer), pClass(p
             }
         }
     };
+
     buttonForPlayerAttack = new Button("left", NULL, ren, {0, 0, 32, 32}, playerAttack, NULL, NULL);
+    keyE = new Keyboard(SDL_SCANCODE_E, playerAttack);
     auto Escape {
         [this]()
         {
@@ -371,7 +377,7 @@ void Level::Update()
         player->ChangeHpValue((1-(player->GetHP(0))));
     }
 
-    Level::TimerTurn();
+//    Level::TimerTurn();
 
     if(player!= nullptr && (player->playerEscaping || PlayerDeath))
         FlagManager::flagTurn = 0;
@@ -614,30 +620,30 @@ void Level::Start()
     player->playerTurn();
 }
 
-void Level::TimerTurn()
-{
-    if (FlagManager::flagTimerTurn == 1)
-    {
-        if (timeB == false)
-        {
-            timer = SDL_GetTicks();
-            timeB = true;
-        }
-        Uint32 timer2 = SDL_GetTicks();
-        if (timer2 - timer >= 200 && timeB == true)
-        {
-            std::cout << "TimerTurn" << std::endl;
-            timer = timer2;
-            FlagManager::flagTimerTurn = 0;
-            FlagManager::flagTurn = 1;
-        }
-        else
-        {
-            FlagManager::flagTimerTurn = 1;
-            FlagManager::flagTurn = 0;
-        }
-    }
-}
+//void Level::TimerTurn()
+//{
+//    if (FlagManager::flagTimerTurn == 1)
+//    {
+//        if (timeB == false)
+//        {
+//            timer = SDL_GetTicks();
+//            timeB = true;
+//        }
+//        Uint32 timer2 = SDL_GetTicks();
+//        if (timer2 - timer >= 200 && timeB == true)
+//        {
+//            std::cout << "TimerTurn" << std::endl;
+//            timer = timer2;
+//            FlagManager::flagTimerTurn = 0;
+//            FlagManager::flagTurn = 1;
+//        }
+//        else
+//        {
+//            FlagManager::flagTimerTurn = 1;
+//            FlagManager::flagTurn = 0;
+//        }
+//    }
+//}
 
 void Level::ChangeDark(int i, int j) 
 {

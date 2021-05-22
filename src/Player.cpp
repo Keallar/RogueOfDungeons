@@ -454,9 +454,9 @@ void Player::CheckMANA()
 //Проверка изменения EXP
 void Player::CheckEXP()
 {
-    if (Player::exp[0] == Player::exp[2])
+    if (Player::exp[0] >= Player::exp[2])
     {
-        Player::exp[0] = 0;
+        Player::exp[0] = Player::exp[0]-Player::exp[2];
         ChangeMaxExpValue();
         Player::levelOfPlayer[0] += 1;
         Player::pointOfSpec[0] += 1;

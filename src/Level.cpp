@@ -1123,17 +1123,9 @@ void Level::Attack()
 
                     if (blankflag == true)
                     {
-                        int x = (enemy->Rect.y - EntityPosition::Coords[1]) / 32;
-                        int y = (enemy->Rect.x - EntityPosition::Coords[0]) / 32;
-                        int i = rand() % 100;
-                        if (i < ((Player::EqItems.equipedRangeW->CHNS) -
-                                 ((Player::EqItems.equipedRangeW->DCHNS) *
-                                  abs(((float)(sqrt(x * x + y * y))) - Player::EqItems.equipedRangeW->RNG))))
+                        if (pow(((mouseX-EntityPosition::Coords[0])/32), 2) + pow(((mouseY-EntityPosition::Coords[1])/32), 2) <= pow(10, 2))
                         {
-                            std::cout << ((Player::EqItems.equipedRangeW->CHNS) -
-                                          ((Player::EqItems.equipedRangeW->DCHNS) *
-                                           abs(((float)(sqrt(x * x + y * y))) - Player::EqItems.equipedRangeW->RNG)));
-                            enemy->ChahgeHpEnemy(-(player->RangeAttack()));
+                           enemy->ChahgeHpEnemy(-(player->RangeAttack()));
                         }
                     }
                     player->ChangeManaValue(-5);

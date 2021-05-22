@@ -259,7 +259,7 @@ Level::Level(SDL_Renderer* renderer, int playerClass) : ren (renderer), pClass(p
 
 void Level::PlayerInGulagHole()
 {
-
+    if(pLCK >= 12) pLCK = 11;
     if(!(rand()%(12-pLCK)))
     {
         PlayerDeath = false;

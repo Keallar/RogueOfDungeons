@@ -577,7 +577,7 @@ void Level::Start()
 
     if (LevelMap->floorLvl == 1)
     {
-        player->PushItemsToInventory(4);
+        player->PushItemsToInventory(pClass);
     }
     for (int i = 0; i < 22; i++)
     {

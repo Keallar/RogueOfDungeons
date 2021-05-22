@@ -36,9 +36,9 @@ private:
     SDL_Texture* manaBottle;
     SDL_Texture* manaBtText;
     SDL_Texture* skip;
-    SDL_Texture* sell;
+    //SDL_Texture* sell;
     SDL_Texture* item;
-    int first = 0, second = 0, third = 0;
+    int first = 0, second = 0, third = 0, four = 0, five = 0, six = 0;
 
     Inventory* traderInventory;
 
@@ -48,7 +48,7 @@ private:
     Button* buttonForHpPotion;
     Button* buttonForManaPotion;
     Button* buttonForSkip;
-    Button* buttonForSell;
+    //Button* buttonForSell;
 
     int iFirstItem = 0;
     int iSecondItem = 0;

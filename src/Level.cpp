@@ -326,11 +326,11 @@ void Level::deleteEnemy()
     {
         if (enemy->GetHpEnemy(0) <= 0)
         {
+            player->ChangeExpValue(enemy->GetExp());
             coins.push_back(enemy->GetCoin());
             enemies.erase(std::remove(enemies.begin(), enemies.end(), enemy));
             std::cout << "Delete enemy" << std::endl;
             FlagManager::flagUiEnemy = 0;
-            player->ChangeExpValue(100);
             FlagManager::flagInAreaOfAnemy = 0;
         }
     }

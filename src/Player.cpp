@@ -138,6 +138,8 @@ void Player::PushItemsToInventory(int kit)
         inventory->AddItem(8);
         inventory->AddItem(6);
         inventory->AddItem(9);
+        ChangeValueSpecsNoLvl(1, 2);
+        ChangeValueSpecsNoLvl(5, 2);
     }
     if (kit == 2)
     {
@@ -145,12 +147,17 @@ void Player::PushItemsToInventory(int kit)
         inventory->AddItem(5);
         inventory->AddItem(8);
         inventory->AddItem(7);
-        inventory->AddItem(9);
+        inventory->AddItem(20);
+        ChangeValueSpecsNoLvl(2, 1);
+        ChangeValueSpecsNoLvl(4, 1);
+        ChangeValueSpecsNoLvl(5, 1);
     }
     if (kit == 3) {
         inventory->AddItem(4);
         inventory->AddItem(8);
-        inventory->AddItem(7);
+        inventory->AddItem(21);
+        ChangeValueSpecsNoLvl(3, 2);
+        ChangeValueSpecsNoLvl(4, 2);
     }
 }
 
@@ -390,7 +397,7 @@ void Player::ChangeExpValue(int valueOfChangingExp)
 void Player::ChangeMaxHpValue(int flag)
 {
     int temp = HP[2];
-    HP[2] = 10 +1*flag - 1;
+    HP[2] = 10 +2*flag - 1;
     if(HP[2] != temp) HP[0] += HP[2] - temp;
     if(HP[0] < 1) HP[0] = 1;
 }
@@ -855,6 +862,8 @@ int Player::RangeAttack()
             Player::mana[0] >= 0)
     {
         damage = Player::EqItems.equipedRangeW->DMG + Player::DEX[0];
+        if(int i = rand()%100; 5+5*Player::LCK[1] < i)
+        {damage = damage*2;}
         std::cout << damage << "!" << std::endl;
     }
     return damage;

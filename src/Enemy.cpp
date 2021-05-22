@@ -8,7 +8,7 @@
 using namespace std;
 
 Enemy::Enemy(const char* texturesheet, int framesOfAnimationForAttack,
-             SDL_Renderer* renderer, int HealthP, int MaxHealthP, int Damage, int EXPR, int coins, int type):
+             SDL_Renderer* renderer, int HealthP, int MaxHealthP, int Damage, int EXPR, int coins, int type, int range):
     GameObject( renderer)
 {
     ren = renderer;
@@ -30,6 +30,7 @@ Enemy::Enemy(const char* texturesheet, int framesOfAnimationForAttack,
     framesOfAnimForAttack = framesOfAnimationForAttack;
     currentFrameOfEnemyAnim = 0;
     Type = type;
+    Range = range;
 }
 
 Enemy::~Enemy()
@@ -59,6 +60,7 @@ Enemy::Enemy(Enemy* enemy)
     framesOfAnimForAttack = enemy->framesOfAnimForAttack;
     currentFrameOfEnemyAnim = 0;
     Type = enemy->Type;
+    Range = enemy->Range;
 }
 void Enemy::Render()
 {
@@ -179,7 +181,8 @@ void Enemy::GetEnemyFirstCoords()
                ((enemyLoc[Rect.y / 32][(Rect.x / 32) - 1] != -1) ||
                 (enemyLoc[Rect.y / 32][(Rect.x / 32) + 1] != -1) ||
                 (enemyLoc[(Rect.y / 32) - 1][Rect.x / 32] != -1) ||
-                (enemyLoc[(Rect.y / 32) + 1][Rect.x / 32] != -1)))
+                (enemyLoc[(Rect.y / 32) + 1][Rect.x / 32] != -1)) ||
+               (Rect.y == EntityPosition::Coords[1] && Rect.x == EntityPosition::Coords[0]))
         {
             Rect.x = (rand() % 30) * 32;
             Rect.y = (rand() % 20) * 32;
@@ -269,7 +272,7 @@ bool Enemy::WAY(int ax, int ay, int bx, int by)   // ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿
 void Enemy::Update()
 {
     if ((abs(EntityPosition::Coords[0] - this->Rect.x)/32 +
-         abs(EntityPosition::Coords[1] - this->Rect.y)/32) < 9)
+         abs(EntityPosition::Coords[1] - this->Rect.y)/32) < Range)
     {
         meleeAttackEnemy();
         if ((abs(Rect.x / 32 - EntityPosition::Coords[0] / 32) +

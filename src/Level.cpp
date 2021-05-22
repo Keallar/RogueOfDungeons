@@ -456,7 +456,23 @@ void Level::Update()
                 }
                 if(!(rand()%3))
                 {
-                    player->GetItemOnLvl((6 + rand()%2));
+                    while(true) {
+                        int item = rand()%(Inventory::ExistingItems.size());
+                        if (Inventory::ExistingItems[item]->Type == potion) {
+                            if(LevelMap->TileSet == 0 || LevelMap->TileSet == 1) {
+                                if (Inventory::ExistingItems[item]->spawnLoc == loc::cave) {
+                                    player->GetItemOnLvl((item));
+                                    break;
+                                }
+                            }
+                            if(LevelMap->TileSet == 2 || LevelMap->TileSet == 3 || LevelMap->TileSet == 4) {
+                                if (Inventory::ExistingItems[item]->spawnLoc == loc::castle) {
+                                    player->GetItemOnLvl((item));
+                                    break;
+                                }
+                            }
+                        }
+                    }
                 }
             }
 
@@ -612,6 +628,15 @@ void Level::Start()
         else
         {
             enemies.push_back(StandartBossSkeleton);
+            for (int i = 0; i<4; i++)
+            {
+                Enemy* enemy = new Enemy(StandartEnemySkeletonMinion);
+                enemies.push_back(enemy);
+                Enemy* enemy1 = new Enemy(StandartEnemySkeletonMinion);
+                enemies.push_back(enemy1);
+                RangeEnemy* range = new RangeEnemy(StandartRangeSkeletonMinion);
+                enemies.push_back(range);
+            }
             break;
         }
     }
@@ -1125,17 +1150,9 @@ void Level::Attack()
 
                     if (blankflag == true)
                     {
-                        int x = (enemy->Rect.y - EntityPosition::Coords[1]) / 32;
-                        int y = (enemy->Rect.x - EntityPosition::Coords[0]) / 32;
-                        int i = rand() % 100;
-                        if (i < ((Player::EqItems.equipedRangeW->CHNS) -
-                                 ((Player::EqItems.equipedRangeW->DCHNS) *
-                                  abs(((float)(sqrt(x * x + y * y))) - Player::EqItems.equipedRangeW->RNG))))
+                        if (pow(((mouseX-EntityPosition::Coords[0])/32), 2) + pow(((mouseY-EntityPosition::Coords[1])/32), 2) <= pow((player->EqItems.equipedRangeW->RNG), 2))
                         {
-                            std::cout << ((Player::EqItems.equipedRangeW->CHNS) -
-                                          ((Player::EqItems.equipedRangeW->DCHNS) *
-                                           abs(((float)(sqrt(x * x + y * y))) - Player::EqItems.equipedRangeW->RNG)));
-                            enemy->ChahgeHpEnemy(-(player->RangeAttack()));
+                           enemy->ChahgeHpEnemy(-(player->RangeAttack()));
                         }
                     }
                     player->ChangeManaValue(-5);

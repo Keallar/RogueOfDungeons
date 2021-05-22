@@ -103,6 +103,7 @@ int FlagManager::flagChest = 0;
 int FlagManager::flagEquip = -1;
 int FlagManager::flagUnEquip = -1;
 int FlagManager::flagDrop = -1;
+int FlagManager::flagInvHover = -1;
 //Specs and level of player
 bool FlagManager::flagPointOfSpec = 0;
 bool FlagManager::flagLevelOfPlayer = 0;

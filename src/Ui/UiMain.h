@@ -77,6 +77,7 @@ private:
 	int yMouseCoord;
 	Button* buttonForCallDpor;
     Button* buttonForInvItems;
+    SDL_Texture* hoverTexture;
 public:
 	UIInventory(SDL_Renderer* renderer);
 	~UIInventory();

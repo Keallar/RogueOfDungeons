@@ -128,8 +128,10 @@ Inventory::Inventory()
                 Tex[i] = WeapTex[i];
             }
             file >> Name;
+            file >> SpawnTex;
+            loc SpawnLoc = returnLoc(SpawnTex);
             type ItemType = potion;
-            ExistingItems[ItemNumber] = new Potion(HEAL, MpHEAL, COST, ItemType, Tex, Name);
+            ExistingItems[ItemNumber] = new Potion(HEAL, MpHEAL, COST, ItemType, Tex, Name, SpawnLoc);
         }
         if (Type == "artifact")
         {
@@ -250,6 +252,11 @@ int InventoryItem::GetCost()
     return COST;
 }
 
+std::string InventoryItem::GetHoverText()
+{
+    return name;
+}
+
 loc Inventory::returnLoc(std::string Text) {
     if(Text == "cave") return loc::cave;
     if(Text == "jungle") return loc::jungle;
@@ -272,6 +279,11 @@ rangeWeapon::rangeWeapon(int Damage, int Range, int Chance, int deltaChanse, int
 }
 rangeWeapon::~rangeWeapon(){}
 
+std::string rangeWeapon::GetHoverText()
+{
+    return "DMG:"+std::to_string(DMG);
+}
+
 meleeWeapon::meleeWeapon(int Damage, int range, int Cost, type type, const char* WeapTex, std::string Name, loc SpawnLoc)
 {
     DMG = Damage;
@@ -283,6 +295,11 @@ meleeWeapon::meleeWeapon(int Damage, int range, int Cost, type type, const char*
     spawnLoc = SpawnLoc;
 }
 meleeWeapon::~meleeWeapon(){}
+
+std::string meleeWeapon::GetHoverText()
+{
+    return "DMG:"+std::to_string(DMG);
+}
 
 magicWeapon::magicWeapon(int Damage, int range, int splash, int Cost, type type, magicEl weaponEl, magicType weaponType, const char* WeapTex, std::string Name, loc SpawnLoc)
 {
@@ -298,33 +315,54 @@ magicWeapon::magicWeapon(int Damage, int range, int splash, int Cost, type type,
     spawnLoc = SpawnLoc;
 }
 
-Artifact::Artifact(int STR, int DEX, int INT, int WSD, int PHS, int LCK, int cost, type type, const char* WeapTex, std::string Name, loc SpawnLoc)
+std::string magicWeapon::GetHoverText()
+{
+    return "DMG:"+std::to_string(DMG);
+}
+
+Artifact::Artifact(int STR, int DEX, int INT, int WSD, int PHS, int LCK, int Cost, type type, const char* WeapTex, std::string Name, loc SpawnLoc)
 {
     specs[0] = STR; specs[1] = DEX; specs[2] = INT; specs[3] = WSD; specs[4] = PHS; specs[5] = LCK;
-    COST = cost;
+    COST = Cost;
     Type = type;
     ItemTexture = WeapTex;
     name = Name;
     spawnLoc = SpawnLoc;
 }
 
-armorItem::armorItem(int Defence, int cost, type type, const char* WeapTex, std::string Name, loc SpawnLoc)
+armorItem::armorItem(int Defence, int Cost, type type, const char* WeapTex, std::string Name, loc SpawnLoc)
 {
-    COST = cost;
+    COST = Cost;
     DEF = Defence;
     ItemTexture = WeapTex;
     Type = type;
     name = Name;
     spawnLoc = SpawnLoc;
+    COST = Cost;
 }
 armorItem::~armorItem(){}
 
-Potion::Potion(int Heal, int MpHeal, int cost, type type, const char* WeapTex, std::string Name)
+std::string armorItem::GetHoverText()
 {
-    COST = cost;
+    return "STR:"+std::to_string(DEF);
+}
+
+Potion::Potion(int Heal, int MpHeal, int Cost, type type, const char* WeapTex, std::string Name, loc SpawnLoc)
+{
+    COST = Cost;
     Type = type;
     ItemTexture = WeapTex;
     HEAL = Heal;
     MpHEAL = MpHeal;
+    spawnLoc = SpawnLoc;
     name = Name;
+    COST = Cost;
+}
+
+std::string Potion::GetHoverText()
+{
+    if(HEAL == 0)
+        return "MP:"+std::to_string(MpHEAL);
+    else
+        return "HP:"+std::to_string(HEAL);
 }

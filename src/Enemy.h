@@ -44,12 +44,13 @@ protected:
     int valueOfCoins;
     int Type;
     bool DidMeAttacked = false;
+    int Range;
 public:
 	int generate = 0;
 	Enemy() = default;
     ~Enemy();
     Enemy(Enemy *enemy);
-    Enemy(const char* texturesheet, int framesOfAnimationForAttack, SDL_Renderer* ren, int HealthP, int MaxHealthP, int Damage, int EXPR, int coins, int type);
+    Enemy(const char* texturesheet, int framesOfAnimationForAttack, SDL_Renderer* ren, int HealthP, int MaxHealthP, int Damage, int EXPR, int coins, int type, int range);
 	void Update() override;
     void Render() override;
 	void GetLoc(int arr[22][32]);

@@ -37,6 +37,7 @@ public:
 	type Type;
 	std::string Description;
     int GetCost();
+    virtual std::string GetHoverText();
 };
 
 class meleeWeapon : public InventoryItem 
@@ -48,6 +49,7 @@ public:
 	int RNG;
     meleeWeapon(int Damage, int range, int Cost, type type, const char* WeapTex, std::string Name, loc SpawnLoc);
 	~meleeWeapon();
+    virtual std::string GetHoverText();
 };
 class rangeWeapon : public InventoryItem 
 {
@@ -60,6 +62,7 @@ public:
 	int DCHNS;
     rangeWeapon(int Damage, int Range, int Chanse, int deltaChanse, int Cost, type type, const char* WeapTex, std::string Name,  loc SpawnLoc);
 	~rangeWeapon();
+    virtual std::string GetHoverText();
 };
 
 enum class magicEl {
@@ -85,6 +88,7 @@ public:
     magicType WeaponType;
     magicWeapon(int Damage, int range, int splash, int Cost, type type, magicEl ElType, magicType WeaponType, const char* WeapTex, std::string Name,  loc SpawnLoc);
     ~magicWeapon();
+    virtual std::string GetHoverText();
 };
 
 class Artifact : public InventoryItem
@@ -93,7 +97,7 @@ private:
 
 public:
     int specs[6];
-    Artifact(int STR, int DEX, int INT, int WSD, int PHS, int LCK, int cost, type type, const char* WeapTex, std::string Name,  loc SpawnLoc);
+    Artifact(int STR, int DEX, int INT, int WSD, int PHS, int LCK,int Cost, type type, const char* WeapTex, std::string Name,  loc SpawnLoc);
 };
 
 class armorItem : public InventoryItem
@@ -101,9 +105,10 @@ class armorItem : public InventoryItem
 private:
 
 public:
-    armorItem(int Defence, int cost, type type, const char* WeapTex, std::string Name, loc SpawnLoc);
+    armorItem(int Defence, int Cost, type type, const char* WeapTex, std::string Name, loc SpawnLoc);
 	~armorItem();
 	int DEF;
+    virtual std::string GetHoverText();
 };
 
 class Potion : public InventoryItem
@@ -111,7 +116,8 @@ class Potion : public InventoryItem
 public:
 	int HEAL;
 	int MpHEAL;
-    Potion(int Heal, int MpHeal, int cost, type type, const char* WeapTex, std::string Name);
+    Potion(int Heal, int MpHeal, int Cost, type type, const char* WeapTex, std::string Name, loc SpawnLoc);
+    virtual std::string GetHoverText();
 };
 
 class Inventory

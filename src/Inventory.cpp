@@ -236,6 +236,11 @@ int InventoryItem::GetCost()
     return COST;
 }
 
+std::string InventoryItem::GetHoverText()
+{
+    return name;
+}
+
 loc Inventory::returnLoc(std::string Text) {
     if(Text == "cave") return loc::cave;
     if(Text == "jungle") return loc::jungle;
@@ -258,6 +263,11 @@ rangeWeapon::rangeWeapon(int Damage, int Range, int Chance, int deltaChanse, int
 }
 rangeWeapon::~rangeWeapon(){}
 
+std::string rangeWeapon::GetHoverText()
+{
+    return "DMG:"+std::to_string(DMG);
+}
+
 meleeWeapon::meleeWeapon(int Damage, int range, int Cost, type type, const char* WeapTex, std::string Name, loc SpawnLoc)
 {
     DMG = Damage;
@@ -269,6 +279,11 @@ meleeWeapon::meleeWeapon(int Damage, int range, int Cost, type type, const char*
     spawnLoc = SpawnLoc;
 }
 meleeWeapon::~meleeWeapon(){}
+
+std::string meleeWeapon::GetHoverText()
+{
+    return "DMG:"+std::to_string(DMG);
+}
 
 magicWeapon::magicWeapon(int Damage, int range, int splash, int Cost, type type, magicEl weaponEl, magicType weaponType, const char* WeapTex, std::string Name, loc SpawnLoc)
 {
@@ -282,6 +297,11 @@ magicWeapon::magicWeapon(int Damage, int range, int splash, int Cost, type type,
     ItemTexture = WeapTex;
     name = Name;
     spawnLoc = SpawnLoc;
+}
+
+std::string magicWeapon::GetHoverText()
+{
+    return "DMG:"+std::to_string(DMG);
 }
 
 Artifact::Artifact(int STR, int DEX, int INT, int WSD, int PHS, int LCK, int cost, type type, const char* WeapTex, std::string Name, loc SpawnLoc)
@@ -305,6 +325,11 @@ armorItem::armorItem(int Defence, int cost, type type, const char* WeapTex, std:
 }
 armorItem::~armorItem(){}
 
+std::string armorItem::GetHoverText()
+{
+    return "STR:"+std::to_string(DEF);
+}
+
 Potion::Potion(int Heal, int MpHeal, int cost, type type, const char* WeapTex, std::string Name)
 {
     COST = cost;
@@ -313,4 +338,12 @@ Potion::Potion(int Heal, int MpHeal, int cost, type type, const char* WeapTex, s
     HEAL = Heal;
     MpHEAL = MpHeal;
     name = Name;
+}
+
+std::string Potion::GetHoverText()
+{
+    if(HEAL == 0)
+        return "MP:"+std::to_string(MpHEAL);
+    else
+        return "HP:"+std::to_string(HEAL);
 }

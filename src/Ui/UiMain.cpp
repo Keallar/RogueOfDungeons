@@ -276,6 +276,7 @@ UIInventory::UIInventory(SDL_Renderer* renderer) : ren(renderer)
         }
     };
     buttonForCallDpor = new Button("left", GameTextures->GetTexture("Button"), ren, { 790, 665, 25, 22 }, callDrop , NULL, NULL);
+    hoverTexture = nullptr;
 }
 
 void UIInventory::Render()
@@ -295,11 +296,44 @@ void UIInventory::Render()
             item = 0;
         }
     }
+    if(hoverTexture)
+    {
+        int textW, textH;
+        SDL_QueryTexture(hoverTexture, NULL, NULL, &textW, &textH);
+        RenderManager::CopyToRender(hoverTexture, ren, {(770 + 36 * (FlagManager::flagInvHover % 6)), (100 + ((FlagManager::flagInvHover / 6) * 50)), textW, textH});
+    }
 }
 
 void UIInventory::handleEvents(SDL_Event& eventInInv)
 {
     buttonForCallDpor->handleEvents(eventInInv);
+    SDL_GetMouseState(&xMouseCoord, &yMouseCoord);
+    int works = -1;
+    std::string text;
+    for (int i = 0; i < INVENTORY_SIZE; i++)
+    {
+        if (InputManager::MouseInArea((770 + 36 * (i % 6)), (100 + ((i / 6) * 50)), 32, 32, xMouseCoord, yMouseCoord) &&
+                Inventory::inventoryFace[i] != -1 && FlagManager::flagInv == 1)
+        {
+            works = i;
+            auto it = Inventory::ExistingItems.find(Inventory::inventoryFace[works]);
+            text = it->second->GetHoverText();
+        }
+    }
+    if(works != FlagManager::flagInvHover)
+    {
+        if(hoverTexture != nullptr)
+        {
+            SDL_DestroyTexture(hoverTexture);
+            hoverTexture = nullptr;
+            std::cout<<"Reser texture"<<std::endl;
+        }
+        if(works != -1)
+        {
+            hoverTexture = FontManager::renderText(text.c_str(), "data/fonts/manaspc.ttf", {255, 255, 255, 255}, 10, ren);
+        }
+        FlagManager::flagInvHover = works;
+    }
 }
 
 void UIInventory::clickForItemsInInv()

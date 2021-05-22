@@ -178,7 +178,8 @@ void Enemy::GetEnemyFirstCoords()
                ((enemyLoc[Rect.y / 32][(Rect.x / 32) - 1] != -1) ||
                 (enemyLoc[Rect.y / 32][(Rect.x / 32) + 1] != -1) ||
                 (enemyLoc[(Rect.y / 32) - 1][Rect.x / 32] != -1) ||
-                (enemyLoc[(Rect.y / 32) + 1][Rect.x / 32] != -1)))
+                (enemyLoc[(Rect.y / 32) + 1][Rect.x / 32] != -1)) ||
+               (Rect.y == EntityPosition::Coords[1] && Rect.x == EntityPosition::Coords[0]))
         {
             Rect.x = (rand() % 30) * 32;
             Rect.y = (rand() % 20) * 32;

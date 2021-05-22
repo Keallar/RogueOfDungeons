@@ -46,12 +46,14 @@ private:
     Enemy* StandartEnemyJungleSlime = new Enemy("data/images/JungleSlime.png", 4, ren, 9, 9, 3, 7, 7, 1);
     RangeEnemy* StandartEnemyRangeGhost = new RangeEnemy("data/images/MageGhost.png", 4, ren, 10, 10, 6, 10, 10, 2);
     Enemy* StandartEnemyGhost = new Enemy("data/images/MeleeGhost", 4, ren, 14, 14, 8, 14, 14, 1);
-    std::array<Enemy*, 12> StandartEnemies = { StandartEnemySlime, StandartEnemyBear,
+    RangeEnemy* StandartRangeSkeletonMinion = new RangeEnemy("data/images/PAPAABOBA", 4, ren, 8, 8, 6, 10, 10, 2);
+    std::array<Enemy*, 13> StandartEnemies = { StandartEnemySlime, StandartEnemyBear,
                                              StandartEnemyBee, StandartEnemyJungleSlime,
                                              StandartEnemyTurtle, StandartRangeEnemyTurtle,
                                             StandartDragonEnemy, StandartBigDragonEnemy,
                                              StandartEnemyRangeGhost, StandartEnemyGhost,
-                                            StandartBossSkeleton, StandartEnemySkeletonMinion};
+                                            StandartBossSkeleton, StandartEnemySkeletonMinion,
+                                               StandartRangeSkeletonMinion};
     UIEnemy* UiEnemy;
 	UIInfo* uiInfo;
 	UIItem* uiItem;

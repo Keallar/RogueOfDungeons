@@ -604,6 +604,15 @@ void Level::Start()
         else
         {
             enemies.push_back(StandartBossSkeleton);
+            for (int i = 0; i<4; i++)
+            {
+                Enemy* enemy = new Enemy(StandartEnemySkeletonMinion);
+                enemies.push_back(enemy);
+                Enemy* enemy1 = new Enemy(StandartEnemySkeletonMinion);
+                enemies.push_back(enemy1);
+                RangeEnemy* range = new RangeEnemy(StandartRangeSkeletonMinion);
+                enemies.push_back(range);
+            }
             break;
         }
     }

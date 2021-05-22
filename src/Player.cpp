@@ -862,8 +862,8 @@ int Player::RangeAttack()
             Player::mana[0] != 0)
     {
         damage = Player::EqItems.equipedRangeW->DMG + Player::DEX[0];
-        if(int i = rand()%100; 5+5*Player::LCK[1] < i)
-        {damage = damage*2;}
+        if(int i = rand()%100; 5+5*Player::LCK[1] > i)
+        {damage = damage*2; std::cout << "V ZHBAN";}
         std::cout << damage << "!" << std::endl;
     }
     return damage;

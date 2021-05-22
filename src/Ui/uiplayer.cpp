@@ -65,26 +65,26 @@ void HpInfo::Render()
 {
     if (Player::GetHP(0) >= Player::GetHP(2))
     {
-        RenderManager::CopyToRender(hpBar, ren, 1080, 40, 160, 32, 0, 0, 128, 16);
+        RenderManager::CopyToRender(hpBar, ren, 1080, 35, 160, 32, 0, 0, 128, 16);
     }
     else if ((Player::GetHP(0) >= (Player::GetHP(2) / 4) * 3) &&
              Player::GetHP(0) <= Player::GetHP(2))
     {
-        RenderManager::CopyToRender(hpBar, ren, 1080, 40, 160, 32, 0, 16, 128, 16);
+        RenderManager::CopyToRender(hpBar, ren, 1080, 35, 160, 32, 0, 16, 128, 16);
     }
     else if ((Player::GetHP(0) <= (Player::GetHP(2) / 4) * 3) &&
              (Player::GetHP(0) >= (Player::GetHP(2) / 4 )* 2))
     {
-        RenderManager::CopyToRender(hpBar, ren, 1080, 40, 160, 32, 0, 32, 128, 16);
+        RenderManager::CopyToRender(hpBar, ren, 1080, 35, 160, 32, 0, 32, 128, 16);
     }
     else if ((Player::GetHP(0) <= (Player::GetHP(2) / 4) * 2) &&
              (Player::GetHP(0) > 0))
     {
-        RenderManager::CopyToRender(hpBar, ren, 1080, 40, 160, 32, 0, 48, 128, 16);
+        RenderManager::CopyToRender(hpBar, ren, 1080, 35, 160, 32, 0, 48, 128, 16);
     }
     else if (Player::GetHP(0) == 0)
     {
-        RenderManager::CopyToRender(hpBar, ren, 1080, 40, 160, 32, 0, 64, 128, 16);
+        RenderManager::CopyToRender(hpBar, ren, 1080, 35, 160, 32, 0, 64, 128, 16);
     }
     RenderManager::CopyToRender(hpText, ren, 1050, 47, 25, 22);
     RenderManager::CopyToRender(hpCurrent, ren, 1120, 72, 32, 20);
@@ -108,6 +108,9 @@ ManaInfo::~ManaInfo()
 
 void ManaInfo::Update()
 {
+    //Mana
+    mnBar = GameTextures->GetTexture("ManaBar");
+    mnText = FontManager::renderText("MN", PATH_IN_FONT, color, 64, ren);
     SDL_DestroyTexture(manaCurrent);
     manaCurrent = 0;
     std::string stringTemp = std::to_string(Player::GetMana(0));
@@ -130,18 +133,43 @@ void ManaInfo::UpdateMax()
     std::string stringTemp2 = std::to_string(Player::GetMana(0));
     const char* CHAR_VALUE2 = stringTemp2.c_str();
     manaCurrent = FontManager::renderText(CHAR_VALUE2, PATH_IN_FONT, color, 32, ren);
-
-
 }
 
 void ManaInfo::Render()
 {
+    if (Player::GetMana(0) >= Player::GetMana(2))
+    {
+        RenderManager::CopyToRender(mnBar, ren, 1080, 90, 160, 32, 0, 0, 128, 16);
+    }
+    else if ((Player::GetMana(0) >= (Player::GetMana(2) / 4) * 3) &&
+             Player::GetMana(0) <= Player::GetMana(2))
+    {
+        RenderManager::CopyToRender(mnBar, ren, 1080, 90, 160, 32, 0, 16, 128, 16);
+    }
+    else if ((Player::GetMana(0) <= (Player::GetMana(2) / 4) * 3) &&
+             (Player::GetMana(0) >= (Player::GetMana(2) / 4 )* 2))
+    {
+        RenderManager::CopyToRender(mnBar, ren, 1080, 90, 160, 32, 0, 32, 128, 16);
+    }
+    else if ((Player::GetMana(0) <= (Player::GetMana(2) / 4) * 2) &&
+             (Player::GetMana(0) > 0))
+    {
+        RenderManager::CopyToRender(mnBar, ren, 1080, 90, 160, 32, 0, 48, 128, 16);
+    }
+    else if (Player::GetMana(0) == 0)
+    {
+        RenderManager::CopyToRender(mnBar, ren, 1080, 90, 160, 32, 0, 64, 128, 16);
+    }
+    RenderManager::CopyToRender(mnText, ren, 1050, 99, 25, 22);
     RenderManager::CopyToRender(manaCurrent, ren, 1120, 122, 32, 20);
     RenderManager::CopyToRender(manaMax, ren, 1180, 122, 32, 20);
 }
 
 ExpInfo::ExpInfo(SDL_Renderer* renderer) : ren (renderer)
 {
+    xpBar = GameTextures->GetTexture("XP");
+    xpText = FontManager::renderText("XP", PATH_IN_FONT, color, 64, ren);
+
     std::string stringTemp1 = std::to_string(Player::GetEXP(0));
     const char* TEXT_VALUE_CURRENT_VALUE = stringTemp1.c_str();
     expCurrent = FontManager::renderText(TEXT_VALUE_CURRENT_VALUE, PATH_IN_FONT, color, 32, ren);
@@ -175,6 +203,30 @@ void ExpInfo::UpdateMax()
 
 void ExpInfo::Render()
 {
+    if (Player::GetEXP(0) >= Player::GetEXP(2))
+    {
+        RenderManager::CopyToRender(xpBar, ren, 1080, 140, 160, 32, 0, 0, 128, 16);
+    }
+    else if ((Player::GetEXP(0) >= (Player::GetEXP(2) / 4) * 3) &&
+             Player::GetEXP(0) <= Player::GetEXP(2))
+    {
+        RenderManager::CopyToRender(xpBar, ren, 1080, 140, 160, 32, 0, 16, 128, 16);
+    }
+    else if ((Player::GetEXP(0) <= (Player::GetEXP(2) / 4) * 3) &&
+             (Player::GetEXP(0) >= (Player::GetEXP(2) / 4 )* 2))
+    {
+        RenderManager::CopyToRender(xpBar, ren, 1080, 140, 160, 32, 0, 32, 128, 16);
+    }
+    else if ((Player::GetEXP(0) <= (Player::GetEXP(2) / 4) * 2) &&
+             (Player::GetEXP(0) > 0))
+    {
+        RenderManager::CopyToRender(xpBar, ren, 1080, 140, 160, 32, 0, 48, 128, 16);
+    }
+    else if (Player::GetEXP(0) == 0)
+    {
+        RenderManager::CopyToRender(xpBar, ren, 1080, 140, 160, 32, 0, 64, 128, 16);
+    }
+    RenderManager::CopyToRender(xpText, ren, 1050, 152, 25, 22);
     RenderManager::CopyToRender(expCurrent, ren, 1120, 175, 32, 20);
     RenderManager::CopyToRender(expMax, ren, 1180, 175, 32, 20);
 }

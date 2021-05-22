@@ -6,7 +6,7 @@
 #include <map>
 
 #define INVENTORY_SIZE 60
-#define TRADING_SIZE 3
+#define TRADING_SIZE 5
 
 enum type 
 {
@@ -93,7 +93,7 @@ private:
 
 public:
     int specs[6];
-    Artifact(int STR, int DEX, int INT, int WSD, int PHS, int LCK, type type, int Cost, const char* WeapTex, std::string Name,  loc SpawnLoc);
+    Artifact(int STR, int DEX, int INT, int WSD, int PHS, int LCK,int Cost, type type, const char* WeapTex, std::string Name,  loc SpawnLoc);
 };
 
 class armorItem : public InventoryItem
@@ -101,7 +101,7 @@ class armorItem : public InventoryItem
 private:
 
 public:
-    armorItem(int Defence, type type, int Cost, const char* WeapTex, std::string Name, loc SpawnLoc);
+    armorItem(int Defence, int Cost, type type, const char* WeapTex, std::string Name, loc SpawnLoc);
 	~armorItem();
 	int DEF;
 };
@@ -111,8 +111,7 @@ class Potion : public InventoryItem
 public:
 	int HEAL;
 	int MpHEAL;
-    int Cost;
-    Potion(int Heal, int MpHeal, type type, int Cost, const char* WeapTex, std::string Name, loc SpawnLoc);
+    Potion(int Heal, int MpHeal, int Cost, type type, const char* WeapTex, std::string Name, loc SpawnLoc);
 };
 
 class Inventory

@@ -25,4 +25,3 @@ potion 8 0 60 data/images/MediumHpPotion.png MediumHpPotion castle
 potion 0 8 60 data/images/MediumMpPotion.png MediumMpPotion castle
 rWeapon 18 8 100 100 1080 data/images/ArcaneBow.png ArcaneBow arcane
 magic 16 8 1 fire point 1080 data/images/WooDoo.png WooDoo arcane
-

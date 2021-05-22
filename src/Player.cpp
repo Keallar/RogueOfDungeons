@@ -78,7 +78,7 @@ int Player::quantityOfCoins[3] = {
     100	 /*coins max*/
 };
 
-int Player::VIS = 32;
+int Player::VIS = 10;
 
 Player::Player( SDL_Renderer* renderer):
     GameObject( renderer)
@@ -181,7 +181,7 @@ void Player::itemInInv(int num)
     }
 }
 
-int Player::GetHP(int numOfArr)
+int Player::GetHP(int numOfArr) noexcept
 {
     switch (numOfArr)
     {
@@ -196,7 +196,7 @@ int Player::GetHP(int numOfArr)
     }
 }
 
-int Player::GetEXP(int numOfArr)
+int Player::GetEXP(int numOfArr) noexcept
 {
     switch (numOfArr)
     {
@@ -211,7 +211,7 @@ int Player::GetEXP(int numOfArr)
     }
 }
 
-int Player::GetMana(int numOfArr)
+int Player::GetMana(int numOfArr) noexcept
 {
     switch (numOfArr)
     {
@@ -227,7 +227,7 @@ int Player::GetMana(int numOfArr)
 }
 
 //Получение значения характеристик (STR, DEX, INT, WSD, PHS, LCK)
-int Player::GetSpecValue(int numSpec)
+int Player::GetSpecValue(int numSpec) noexcept
 {
     switch (numSpec)
     {
@@ -249,7 +249,7 @@ int Player::GetSpecValue(int numSpec)
     }
 }
 
-int Player::GetPointOfSpec(int numPoint)
+int Player::GetPointOfSpec(int numPoint) noexcept
 {
     switch (numPoint)
     {
@@ -265,7 +265,7 @@ int Player::GetPointOfSpec(int numPoint)
     }
 }
 
-int Player::GetLevelOfPlayer(int numLvl)
+int Player::GetLevelOfPlayer(int numLvl) noexcept
 {
     switch (numLvl)
     {
@@ -281,7 +281,7 @@ int Player::GetLevelOfPlayer(int numLvl)
     }
 }
 
-int Player::GetCoinsOfPlayer(int numCoins)
+int Player::GetCoinsOfPlayer(int numCoins) noexcept
 {
     switch (numCoins)
     {
@@ -374,6 +374,8 @@ void Player::ChangeHpValue(int valueOfChangingHp)
 {
     if (valueOfChangingHp != 0)
         HP[0] += valueOfChangingHp;
+    if (HP[0] > HP[2])
+       HP[0] = HP[2];
 }
 
 //Изменение текущего значения mana
@@ -381,6 +383,8 @@ void Player::ChangeManaValue(int valueOfChangingMana)
 {
     if (valueOfChangingMana != 0)
         mana[0] += valueOfChangingMana;
+    if (mana[0] > mana[2])
+        mana[0] = mana[2];
 }
 
 //Изменение текущего значения exp
@@ -619,7 +623,8 @@ void Player::GetPlayerFirstCoords()
     }
     else
     {
-       if (generate != 7) {
+       if (generate != 7)
+       {
            while (Location[EntityPosition::Coords[1] / 32][EntityPosition::Coords[0] / 32] == 1)
            {
                EntityPosition::Coords[0] = (rand() % 3 + 1) * 32;

@@ -73,6 +73,7 @@ Level::Level(SDL_Renderer* renderer, int playerClass) : ren (renderer), pClass(p
                 if (CurrentMap->Location[(EntityPosition::Coords[1]) / 32 - 1][(EntityPosition::Coords[0]) / 32] == 0)
                 {
                     EntityPosition::Coords[1] -= 32;
+                    Player::ChangeManaValue(+2);
                     FlagManager::flagTurn = 1;
                 }
                 if (CurrentMap->Location[(EntityPosition::Coords[1]) / 32 - 1][(EntityPosition::Coords[0]) / 32] == 3)
@@ -118,6 +119,7 @@ Level::Level(SDL_Renderer* renderer, int playerClass) : ren (renderer), pClass(p
                 if (CurrentMap->Location[(EntityPosition::Coords[1]) / 32][(EntityPosition::Coords[0]) / 32 - 1] == 0)
                 {
                     EntityPosition::Coords[0] -= 32;
+                    Player::ChangeManaValue(+2);
                     FlagManager::flagTurn = 1;
                 }
                 if (CurrentMap->Location[(EntityPosition::Coords[1]) / 32][(EntityPosition::Coords[0]) / 32 - 1] == 3)
@@ -163,6 +165,7 @@ Level::Level(SDL_Renderer* renderer, int playerClass) : ren (renderer), pClass(p
                 if (CurrentMap->Location[(EntityPosition::Coords[1]) / 32 + 1][(EntityPosition::Coords[0]) / 32] == 0)
                 {
                     EntityPosition::Coords[1] += 32;
+                    Player::ChangeManaValue(+2);
                     FlagManager::flagTurn = 1;
                 }
                 if (CurrentMap->Location[(EntityPosition::Coords[1]) / 32 + 1][(EntityPosition::Coords[0]) / 32] == 3)
@@ -208,6 +211,7 @@ Level::Level(SDL_Renderer* renderer, int playerClass) : ren (renderer), pClass(p
                 if (CurrentMap->Location[(EntityPosition::Coords[1]) / 32][(EntityPosition::Coords[0]) / 32 + 1] == 0)
                 {
                     EntityPosition::Coords[0] += 32;
+                    Player::ChangeManaValue(+2);
                     FlagManager::flagTurn = 1;
                 }
                 if (CurrentMap->Location[(EntityPosition::Coords[1]) / 32][(EntityPosition::Coords[0]) / 32 + 1] == 3)
@@ -229,7 +233,9 @@ Level::Level(SDL_Renderer* renderer, int playerClass) : ren (renderer), pClass(p
             }
         }
     };
+
     buttonForPlayerAttack = new Button("left", NULL, ren, {0, 0, 32, 32}, playerAttack, NULL, NULL);
+    keyE = new Keyboard(SDL_SCANCODE_E, playerAttack);
     auto Escape {
         [this]()
         {
@@ -386,7 +392,7 @@ void Level::Update()
         player->ChangeHpValue((1-(player->GetHP(0))));
     }
 
-    Level::TimerTurn();
+//    Level::TimerTurn();
 
     if(player!= nullptr && (player->playerEscaping || PlayerDeath))
         FlagManager::flagTurn = 0;
@@ -526,24 +532,26 @@ void Level::Update()
     {
         uiInfo->Update();
     }
-
     if (FlagManager::flagUiTrader == 1 && player != nullptr)
     {
         uiTrader->Update(player);
     }
-
     if (FlagManager::flagUiTrader == 0)
     {
         uiTrader->Check();
     }
 }
 
-void Level::SetLevelLoot() {
+void Level::SetLevelLoot()
+{
     loc CurrentSpawn = static_cast<loc>(LevelMap->TileSet);
-    for (int i = 0; i < 3; i++) {
-        while(true) {
+    for (int i = 0; i < 3; i++)
+    {
+        while(true)
+        {
             LevelMap->itemsOnLvl[i] = (rand() % (Inventory::ExistingItems.size()-1)) + 1;
-            if (Inventory::ExistingItems[LevelMap->itemsOnLvl[i]]->spawnLoc == CurrentSpawn) {
+            if (Inventory::ExistingItems[LevelMap->itemsOnLvl[i]]->spawnLoc == CurrentSpawn)
+            {
                 break;
             }
         }
@@ -620,6 +628,15 @@ void Level::Start()
         else
         {
             enemies.push_back(StandartBossSkeleton);
+            for (int i = 0; i<4; i++)
+            {
+                Enemy* enemy = new Enemy(StandartEnemySkeletonMinion);
+                enemies.push_back(enemy);
+                Enemy* enemy1 = new Enemy(StandartEnemySkeletonMinion);
+                enemies.push_back(enemy1);
+                RangeEnemy* range = new RangeEnemy(StandartRangeSkeletonMinion);
+                enemies.push_back(range);
+            }
             break;
         }
     }
@@ -639,30 +656,30 @@ void Level::Start()
     player->playerTurn();
 }
 
-void Level::TimerTurn()
-{
-    if (FlagManager::flagTimerTurn == 1)
-    {
-        if (timeB == false)
-        {
-            timer = SDL_GetTicks();
-            timeB = true;
-        }
-        Uint32 timer2 = SDL_GetTicks();
-        if (timer2 - timer >= 200 && timeB == true)
-        {
-            std::cout << "TimerTurn" << std::endl;
-            timer = timer2;
-            FlagManager::flagTimerTurn = 0;
-            FlagManager::flagTurn = 1;
-        }
-        else
-        {
-            FlagManager::flagTimerTurn = 1;
-            FlagManager::flagTurn = 0;
-        }
-    }
-}
+//void Level::TimerTurn()
+//{
+//    if (FlagManager::flagTimerTurn == 1)
+//    {
+//        if (timeB == false)
+//        {
+//            timer = SDL_GetTicks();
+//            timeB = true;
+//        }
+//        Uint32 timer2 = SDL_GetTicks();
+//        if (timer2 - timer >= 200 && timeB == true)
+//        {
+//            std::cout << "TimerTurn" << std::endl;
+//            timer = timer2;
+//            FlagManager::flagTimerTurn = 0;
+//            FlagManager::flagTurn = 1;
+//        }
+//        else
+//        {
+//            FlagManager::flagTimerTurn = 1;
+//            FlagManager::flagTurn = 0;
+//        }
+//    }
+//}
 
 void Level::ChangeDark(int i, int j) 
 {
@@ -679,10 +696,12 @@ void Level::Render()
     {
         for (int j = 0; j < 32; j++)
         {
-            if (PlayerDeath) {
+            if (PlayerDeath)
+            {
                 RenderManager::SetTile(j * 32, i * 32, Gulag->textureLocation[i][j], ren, TileTextures[Gulag->TileSet]);
             }
-            if (!PlayerDeath) {
+            if (!PlayerDeath)
+            {
                 if (LevelMap->Dark[i][j] == 1)
                 {
                     RenderManager::SetTile(j * 32, i * 32, LevelMap->textureLocation[i][j], ren, TileTextures[LevelMap->TileSet]);
@@ -698,7 +717,8 @@ void Level::Render()
     {
         player->Render();
     }
-    if (!PlayerDeath) {
+    if (!PlayerDeath)
+    {
         for(Enemy* enemy : enemies)
         {
             if (enemy != nullptr)
@@ -1130,17 +1150,9 @@ void Level::Attack()
 
                     if (blankflag == true)
                     {
-                        int x = (enemy->Rect.y - EntityPosition::Coords[1]) / 32;
-                        int y = (enemy->Rect.x - EntityPosition::Coords[0]) / 32;
-                        int i = rand() % 100;
-                        if (i < ((Player::EqItems.equipedRangeW->CHNS) -
-                                 ((Player::EqItems.equipedRangeW->DCHNS) *
-                                  abs(((float)(sqrt(x * x + y * y))) - Player::EqItems.equipedRangeW->RNG))))
+                        if (pow(((mouseX-EntityPosition::Coords[0])/32), 2) + pow(((mouseY-EntityPosition::Coords[1])/32), 2) <= pow(10, 2))
                         {
-                            std::cout << ((Player::EqItems.equipedRangeW->CHNS) -
-                                          ((Player::EqItems.equipedRangeW->DCHNS) *
-                                           abs(((float)(sqrt(x * x + y * y))) - Player::EqItems.equipedRangeW->RNG)));
-                            enemy->ChahgeHpEnemy(-(player->RangeAttack()));
+                           enemy->ChahgeHpEnemy(-(player->RangeAttack()));
                         }
                     }
                     player->ChangeManaValue(-5);

@@ -33,7 +33,7 @@ public:
     void Render();
     void updateCoords(int newx, int newy);
     void updateScaleButton(int newx, int newy, int neww, int newh);
-    void updateTexture(std::string texturesheet);
+    void updateTexture(SDL_Texture* tex);
     void deleteTexture();
     SDL_Rect GetCoords();
     SDL_Texture* GetTexture() {return buttonTexture;}

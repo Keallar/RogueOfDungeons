@@ -34,7 +34,7 @@ UiTrader::UiTrader(SDL_Renderer* renderer): ren (renderer)
     secondCost = FontManager::renderText(CHAR_VALUE2, PATH_IN_FONT, color, 32, ren);
 
     Inventory::it = Inventory::ExistingItems.find(Inventory::traderFace[2]);
-    thirdItmem = textureManager::LoadTexture((Inventory::it->second)->ItemTexture, ren);
+    thirdItem = textureManager::LoadTexture((Inventory::it->second)->ItemTexture, ren);
     std::string stringTemp3 = std::to_string(Inventory::it->second->GetCost());
     const char* CHAR_VALUE3 = stringTemp3.c_str();
     thirdCost = FontManager::renderText(CHAR_VALUE3, PATH_IN_FONT, color, 32, ren);
@@ -52,19 +52,19 @@ UiTrader::UiTrader(SDL_Renderer* renderer): ren (renderer)
     //Buttons
     buttonForFirstItem = new Button("left", firstItem, ren,
                                     {(TSCREEN_WEIGHT / 15) * 5, TSCREEN_HEIGHT / 16 * 7, 96, 96},
-                                    [this](){bFirstItem = 1;}, NULL, NULL);
+                                    [this](){iFirstItem = 1;}, NULL, NULL);
     buttonForSecondItem = new Button("left", secondItem, ren,
                                      {(TSCREEN_WEIGHT / 15) * 7, TSCREEN_HEIGHT / 16 * 7, 96, 96},
-                                     [this](){bSecondItem = 1;}, NULL, NULL);
-    buttonForThirdItem = new Button("left", thirdItmem, ren,
+                                     [this](){iSecondItem = 1;}, NULL, NULL);
+    buttonForThirdItem = new Button("left", thirdItem, ren,
                                     {(TSCREEN_WEIGHT / 15) * 9, TSCREEN_HEIGHT / 16 * 7, 96, 96},
-                                    [this](){bThirdItem = 1;}, NULL, NULL);
-    buttonForHpPotion = new Button("left", GameTextures->GetTexture("SmallHpPotion"), ren,
+                                    [this](){iThirdItem = 1;}, NULL, NULL);
+    buttonForHpPotion = new Button("left",hpBottle, ren,
                                    {TSCREEN_WEIGHT / 15 * 2, TSCREEN_HEIGHT / 16 * 12, 64, 64},
-                                   [this](){bHpPotion = 1;}, NULL, NULL);
-    buttonForManaPotion = new Button("left", GameTextures->GetTexture("SmallMpPotion"), ren,
+                                   [this](){iHpPotion = 1;}, NULL, NULL);
+    buttonForManaPotion = new Button("left", manaBottle, ren,
                                      {TSCREEN_WEIGHT / 15 * 4, TSCREEN_HEIGHT / 16 * 12, 64, 64},
-                                     [this](){bManaPotion = 1;}, NULL, NULL);
+                                     [this](){iManaPotion = 1;}, NULL, NULL);
     buttonForSkip = new Button("left", GameTextures->GetTexture("Button"), ren,
                                {TSCREEN_WEIGHT / 15 * 14, TSCREEN_HEIGHT / 16 * 14, 32, 32},
                                [this](){FlagManager::flagUiTrader = 0; bSkip = 1;}, NULL, NULL);
@@ -144,233 +144,264 @@ void UiTrader::Update(Player* player)
 {
     if (FlagManager::flagUiTrader == 1)
     {
-        if (bHpPotion == 1)
+        if (iHpPotion == 1)
         {
             if (buttonForHpPotion->GetTexture() != 0)
             {
                 if (Player::GetCoinsOfPlayer(0) >= 10)
                 {
-                    bHpPotion = 0;
                     Player::ChangeCoins(-10);
                     player->itemInInv(6);
+                    buttonForHpPotion->deleteTexture();
                     SDL_DestroyTexture(hpBtText);
                     hpBtText = 0;
-                    buttonForHpPotion->deleteTexture();
                 }
             }
         }
 
-        if (bManaPotion == 1)
+        if (iManaPotion == 1)
         {
             if (buttonForManaPotion->GetTexture() != 0)
             {
                 if (Player::GetCoinsOfPlayer(0) >= 10)
                 {
-                    bManaPotion = 0;
                     Player::ChangeCoins(-10);
                     player->itemInInv(7);
+                    buttonForManaPotion->deleteTexture();
                     SDL_DestroyTexture(manaBtText);
                     manaBtText = 0;
-                    buttonForManaPotion->deleteTexture();
                 }
             }
         }
-        if (bFirstItem == 1)
+        if (iFirstItem == 1)
         {
             if (buttonForFirstItem->GetTexture() != 0)
             {
                 Inventory::it = Inventory::ExistingItems.find(Inventory::traderFace[0]);
                 if (Player::GetCoinsOfPlayer(0) >= Inventory::it->second->GetCost())
                 {
-                    bFirstItem = 0;
                     Player::ChangeCoins(-Inventory::it->second->GetCost());
                     traderInventory->inventory[0] = -1;
                     player->itemInInv(first);
+                    buttonForFirstItem->deleteTexture();
+                    SDL_DestroyTexture(firstItem);
+                    firstItem = 0;
                     SDL_DestroyTexture(firstCost);
                     firstCost = 0;
-                    buttonForFirstItem->deleteTexture();
                 }
             }
         }
-        if (bSecondItem == 1)
+        if (iSecondItem == 1)
         {
             Inventory::it = Inventory::ExistingItems.find(Inventory::traderFace[1]);
             if (buttonForSecondItem->GetTexture() != 0)
             {
                 if (Player::GetCoinsOfPlayer(0) >= Inventory::it->second->GetCost())
                 {
-                    bSecondItem = 0;
                     Player::ChangeCoins(-Inventory::it->second->GetCost());
                     traderInventory->inventory[1] = -1;
                     player->itemInInv(second);
+                    buttonForSecondItem->deleteTexture();
+                    SDL_DestroyTexture(secondCost);
+                    firstItem = 0;
                     SDL_DestroyTexture(secondCost);
                     secondCost = 0;
-                    buttonForSecondItem->deleteTexture();
+
                 }
             }
         }
-        if (bThirdItem == 1)
+        if (iThirdItem == 1)
         {
             Inventory::it = Inventory::ExistingItems.find(Inventory::traderFace[2]);
             if (buttonForThirdItem->GetTexture() != 0)
             {
                 if (Player::GetCoinsOfPlayer(0) >= Inventory::it->second->GetCost())
                 {
-                    bThirdItem = 0;
                     Player::ChangeCoins(-Inventory::it->second->GetCost());
                     traderInventory->inventory[2] = -1;
                     player->itemInInv(third);
+                    buttonForThirdItem->deleteTexture();
+                    SDL_DestroyTexture(thirdItem);
+                    thirdItem = 0;
                     SDL_DestroyTexture(thirdCost);
                     thirdCost = 0;
-                    buttonForThirdItem->deleteTexture();
+
                 }
             }
         }
     }
+    if (iFirstItem == 0)
+        iFirstItem = 2;
+    if (iSecondItem == 0)
+        iSecondItem = 2;
+    if (iThirdItem == 0)
+        iThirdItem = 2;
+
     traderInventory->traderUpdate();
 }
 
 void UiTrader::Check()
 {
-    if (bHpPotion == 0)
-    {
-        if (buttonForHpPotion->GetTexture() == 0 &&
-                hpBtText == 0)
-        {
-            buttonForHpPotion->SetTexture(GameTextures->GetTexture("SmallHpPotion"));
-            hpBtText = FontManager::renderText("10", PATH_IN_FONT, color, 32, ren);
-        }
-    }
-    if (bManaPotion == 0)
-    {
-        if (buttonForManaPotion->GetTexture() == 0 &&
-                manaBtText == 0)
-        {
-            buttonForManaPotion->SetTexture(GameTextures->GetTexture("SmallMpPotion"));
-            manaBtText = FontManager::renderText("10", PATH_IN_FONT, color, 32, ren);
-        }
-    }
-    if (bFirstItem == 0)
-    {
-        if (buttonForFirstItem->GetTexture() == 0 &&
-                firstCost == 0)
-        {
-            first = rand() % 20 + 1;
-            traderInventory->AddItem(first);
-            Inventory::it = Inventory::ExistingItems.find(Inventory::traderFace[0]);
-            firstItem = textureManager::LoadTexture((Inventory::it->second)->ItemTexture, ren);
-            std::string stringTemp1 = std::to_string(Inventory::it->second->GetCost());
-            const char* CHAR_VALUE1 = stringTemp1.c_str();
-            firstCost = FontManager::renderText(CHAR_VALUE1, PATH_IN_FONT, color, 32, ren);
-        }
-    }
-    if (bSecondItem == 0)
-    {
-        if (buttonForSecondItem->GetTexture() == 0 &&
-                secondCost == 0)
-        {
-            second = rand() % 20 + 1;
-            traderInventory->AddItem(second);
-            Inventory::it = Inventory::ExistingItems.find(Inventory::traderFace[1]);
-            secondItem =  textureManager::LoadTexture((Inventory::it->second)->ItemTexture, ren);
-            std::string stringTemp2 = std::to_string(Inventory::it->second->GetCost());
-            const char* CHAR_VALUE2 = stringTemp2.c_str();
-            secondCost = FontManager::renderText(CHAR_VALUE2, PATH_IN_FONT, color, 32, ren);
-        }
-    }
-    if (bThirdItem == 0)
-    {
-        if (buttonForThirdItem->GetTexture() == 0 &&
-                thirdCost == 0)
-        {
-            third = rand() % 20 + 1;
-            traderInventory->AddItem(third);
-            Inventory::it = Inventory::ExistingItems.find(Inventory::traderFace[2]);
-            thirdItmem = textureManager::LoadTexture((Inventory::it->second)->ItemTexture, ren);
-            std::string stringTemp3 = std::to_string(Inventory::it->second->GetCost());
-            const char* CHAR_VALUE3 = stringTemp3.c_str();
-            thirdCost = FontManager::renderText(CHAR_VALUE3, PATH_IN_FONT, color, 32, ren);
-        }
-    }
     if (bSkip == 1)
     {
-        if (bFirstItem == 1)
+        if (iHpPotion == 1)
+        {
+            if (buttonForHpPotion->GetTexture() == 0 &&
+                    hpBtText == 0)
+            {
+                buttonForHpPotion->SetTexture(hpBottle);
+                hpBtText = FontManager::renderText("10", PATH_IN_FONT, color, 32, ren);
+                iHpPotion = 0;
+            }
+        }
+        if (iManaPotion == 1)
+        {
+            if (buttonForManaPotion->GetTexture() == 0 &&
+                    manaBtText == 0)
+            {
+                buttonForManaPotion->SetTexture(manaBottle);
+                manaBtText = FontManager::renderText("10", PATH_IN_FONT, color, 32, ren);
+                iManaPotion = 0;
+            }
+        }
+        if (iFirstItem == 1)
+        {
+            if (buttonForFirstItem->GetTexture() == 0 &&
+                    firstCost == 0)
+            {
+                first = rand() % 20 + 1;
+                traderInventory->AddItem(first);
+                traderInventory->traderUpdate();
+                Inventory::it = Inventory::ExistingItems.find(Inventory::traderFace[0]);
+                firstItem = textureManager::LoadTexture((Inventory::it->second)->ItemTexture, ren);
+                std::string stringTemp1 = std::to_string(Inventory::it->second->GetCost());
+                const char* CHAR_VALUE1 = stringTemp1.c_str();
+                firstCost = FontManager::renderText(CHAR_VALUE1, PATH_IN_FONT, color, 32, ren);
+                iFirstItem = 0;
+            }
+        }
+        if (iSecondItem == 1)
+        {
+            if (buttonForSecondItem->GetTexture() == 0 &&
+                    secondCost == 0)
+            {
+                second = rand() % 20 + 1;
+                traderInventory->AddItem(second);
+                traderInventory->traderUpdate();
+                Inventory::it = Inventory::ExistingItems.find(Inventory::traderFace[1]);
+                secondItem =  textureManager::LoadTexture((Inventory::it->second)->ItemTexture, ren);
+                std::string stringTemp2 = std::to_string(Inventory::it->second->GetCost());
+                const char* CHAR_VALUE2 = stringTemp2.c_str();
+                secondCost = FontManager::renderText(CHAR_VALUE2, PATH_IN_FONT, color, 32, ren);
+                iSecondItem = 0;
+            }
+        }
+        if (iThirdItem == 1)
+        {
+            if (buttonForThirdItem->GetTexture() == 0 &&
+                    thirdCost == 0)
+            {
+                third = rand() % 20 + 1;
+                traderInventory->AddItem(third);
+                traderInventory->traderUpdate();
+                Inventory::it = Inventory::ExistingItems.find(Inventory::traderFace[2]);
+                thirdItem = textureManager::LoadTexture((Inventory::it->second)->ItemTexture, ren);
+                std::string stringTemp3 = std::to_string(Inventory::it->second->GetCost());
+                const char* CHAR_VALUE3 = stringTemp3.c_str();
+                thirdCost = FontManager::renderText(CHAR_VALUE3, PATH_IN_FONT, color, 32, ren);
+                iThirdItem = 0;
+            }
+        }
+        if (iFirstItem == 2)
         {
             if (buttonForFirstItem->GetTexture() != 0 &&
                     firstCost != 0)
             {
-                traderInventory->inventory[0] = -1;
+                buttonForFirstItem->deleteTexture();
                 SDL_DestroyTexture(firstItem);
                 firstItem = 0;
                 SDL_DestroyTexture(firstCost);
                 firstCost = 0;
-                buttonForFirstItem->deleteTexture();
+                traderInventory->inventory[0] = -1;
                 first = rand() % 20 + 1;
                 traderInventory->AddItem(first);
+                traderInventory->traderUpdate();
                 Inventory::it = Inventory::ExistingItems.find(Inventory::traderFace[0]);
                 firstItem = textureManager::LoadTexture((Inventory::it->second)->ItemTexture, ren);
                 buttonForFirstItem->updateTexture(firstItem);
                 std::string stringTemp1 = std::to_string(Inventory::it->second->GetCost());
                 const char* CHAR_VALUE1 = stringTemp1.c_str();
                 firstCost = FontManager::renderText(CHAR_VALUE1, PATH_IN_FONT, color, 32, ren);
+                iFirstItem = 0;
             }
         }
-        if (bSecondItem == 1)
+        if (iSecondItem == 2)
         {
             if (buttonForSecondItem->GetTexture() != 0 &&
                     secondCost != 0)
             {
-                traderInventory->inventory[1] = -1;
+                buttonForSecondItem->deleteTexture();
                 SDL_DestroyTexture(secondItem);
                 secondItem = 0;
                 SDL_DestroyTexture(secondCost);
                 secondCost = 0;
-                buttonForSecondItem->deleteTexture();
+                traderInventory->inventory[1] = -1;
                 second = rand() % 20 + 1;
                 traderInventory->AddItem(second);
+                traderInventory->traderUpdate();
                 Inventory::it = Inventory::ExistingItems.find(Inventory::traderFace[1]);
                 secondItem = textureManager::LoadTexture((Inventory::it->second)->ItemTexture, ren);
                 buttonForSecondItem->updateTexture(secondItem);
                 std::string stringTemp2 = std::to_string(Inventory::it->second->GetCost());
                 const char* CHAR_VALUE2 = stringTemp2.c_str();
                 secondCost = FontManager::renderText(CHAR_VALUE2, PATH_IN_FONT, color, 32, ren);
+                iSecondItem = 0;
             }
         }
-        if (bThirdItem == 1)
+        if (iThirdItem == 2)
         {
             if (buttonForThirdItem->GetTexture() != 0 &&
                     thirdCost != 0)
             {
-                traderInventory->inventory[2] = -1;
-                SDL_DestroyTexture(thirdItmem);
-                thirdItmem = 0;
+                buttonForThirdItem->deleteTexture();
+                SDL_DestroyTexture(thirdItem);
+                thirdItem = 0;
                 SDL_DestroyTexture(thirdCost);
                 thirdCost = 0;
-                buttonForThirdItem->deleteTexture();
+                traderInventory->inventory[2] = -1;
                 third = rand() % 20 + 1;
                 traderInventory->AddItem(third);
+                traderInventory->traderUpdate();
                 Inventory::it = Inventory::ExistingItems.find(Inventory::traderFace[2]);
-                buttonForThirdItem->updateTexture(thirdItmem);
-                thirdItmem = textureManager::LoadTexture((Inventory::it->second)->ItemTexture, ren);
+                thirdItem = textureManager::LoadTexture((Inventory::it->second)->ItemTexture, ren);
+                buttonForThirdItem->updateTexture(thirdItem);
                 std::string stringTemp3 = std::to_string(Inventory::it->second->GetCost());
                 const char* CHAR_VALUE3 = stringTemp3.c_str();
                 thirdCost = FontManager::renderText(CHAR_VALUE3, PATH_IN_FONT, color, 32, ren);
+                iThirdItem = 0;
             }
         }
         if (bSkip == 1)
             bSkip = 0;
     }
-
     traderInventory->traderUpdate();
 }
 
 void UiTrader::handleEvents(SDL_Event &eventInUiTrader)
 {
-    buttonForFirstItem->handleEvents(eventInUiTrader);
-    buttonForSecondItem->handleEvents(eventInUiTrader);
-    buttonForThirdItem->handleEvents(eventInUiTrader);
-    buttonForHpPotion->handleEvents(eventInUiTrader);
-    buttonForManaPotion->handleEvents(eventInUiTrader);
+    Inventory::it = Inventory::ExistingItems.find(Inventory::traderFace[0]);
+    if (Player::GetCoinsOfPlayer(0) >= Inventory::it->second->GetCost())
+        buttonForFirstItem->handleEvents(eventInUiTrader);
+    Inventory::it = Inventory::ExistingItems.find(Inventory::traderFace[1]);
+    if (Player::GetCoinsOfPlayer(0) >= Inventory::it->second->GetCost())
+        buttonForSecondItem->handleEvents(eventInUiTrader);
+    Inventory::it = Inventory::ExistingItems.find(Inventory::traderFace[2]);
+    if (Player::GetCoinsOfPlayer(0) >= Inventory::it->second->GetCost())
+        buttonForThirdItem->handleEvents(eventInUiTrader);
+    if (Player::GetCoinsOfPlayer(0) >= 10)
+        buttonForHpPotion->handleEvents(eventInUiTrader);
+    if (Player::GetCoinsOfPlayer(0) >= 10)
+        buttonForManaPotion->handleEvents(eventInUiTrader);
     buttonForSkip->handleEvents(eventInUiTrader);
     buttonForSell->handleEvents(eventInUiTrader);
 }

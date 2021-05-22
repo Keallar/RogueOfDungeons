@@ -501,16 +501,13 @@ void Level::Update()
     {
         uiInfo->Update();
     }
-
     if (FlagManager::flagUiTrader == 1 && player != nullptr)
     {
         uiTrader->Update(player);
     }
-
     if (FlagManager::flagUiTrader == 0)
     {
         uiTrader->Check();
-
     }
 }
 
@@ -519,7 +516,8 @@ void Level::SetLevelLoot()
     loc CurrentSpawn = static_cast<loc>(LevelMap->TileSet);
     for (int i = 0; i < 3; i++)
     {
-        while(true) {
+        while(true)
+        {
             LevelMap->itemsOnLvl[i] = (rand() % (Inventory::ExistingItems.size()-1)) + 1;
             if (Inventory::ExistingItems[LevelMap->itemsOnLvl[i]]->spawnLoc == CurrentSpawn)
             {
@@ -660,10 +658,12 @@ void Level::Render()
     {
         for (int j = 0; j < 32; j++)
         {
-            if (PlayerDeath) {
+            if (PlayerDeath)
+            {
                 RenderManager::SetTile(j * 32, i * 32, Gulag->textureLocation[i][j], ren, TileTextures[Gulag->TileSet]);
             }
-            if (!PlayerDeath) {
+            if (!PlayerDeath)
+            {
                 if (LevelMap->Dark[i][j] == 1)
                 {
                     RenderManager::SetTile(j * 32, i * 32, LevelMap->textureLocation[i][j], ren, TileTextures[LevelMap->TileSet]);
@@ -679,7 +679,8 @@ void Level::Render()
     {
         player->Render();
     }
-    if (!PlayerDeath) {
+    if (!PlayerDeath)
+    {
         for(Enemy* enemy : enemies)
         {
             if (enemy != nullptr)

@@ -6,7 +6,7 @@
 #include <map>
 
 #define INVENTORY_SIZE 60
-#define TRADING_SIZE 3
+#define TRADING_SIZE 5
 
 enum type 
 {

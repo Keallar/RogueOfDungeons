@@ -280,8 +280,6 @@ void Enemy::Update()
 
 void Enemy::attackOfEnemy(bool damage)
 {
-    std::cout << currentFrameOfEnemyAnim << std::endl;
-
 //    if (currentFrameOfEnemyAnim == framesOfAnimForAttack - 1)
 //    {
 
@@ -301,7 +299,7 @@ void Enemy::attackOfEnemy(bool damage)
     //        std::cout << "Hit1" << std::endl;
     //        Player::playerTurn();
     //    }
-    if (currentFrameOfEnemyAnim == framesOfAnimForAttack &&
+    if (currentFrameOfEnemyAnim >= framesOfAnimForAttack &&
              damage == true)
     {
         temp1 = false;

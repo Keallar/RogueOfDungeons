@@ -27,7 +27,7 @@ private:
     SDL_Texture* traderText;
     SDL_Texture* firstItem;
     SDL_Texture* secondItem;
-    SDL_Texture* thirdItmem;
+    SDL_Texture* thirdItem;
     SDL_Texture* firstCost;
     SDL_Texture* secondCost;
     SDL_Texture* thirdCost;
@@ -50,11 +50,11 @@ private:
     Button* buttonForSkip;
     Button* buttonForSell;
 
-    bool bFirstItem = 1;
-    bool bSecondItem = 1;
-    bool bThirdItem = 1;
-    bool bHpPotion = 0;
-    bool bManaPotion = 0;
+    int iFirstItem = 0;
+    int iSecondItem = 0;
+    int iThirdItem = 0;
+    int iHpPotion = 0;
+    int iManaPotion = 0;
     bool bSkip = 0;
     bool bSell = 0;
 public:

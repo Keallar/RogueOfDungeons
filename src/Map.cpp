@@ -1,4 +1,4 @@
-﻿#include "Map.h"
+#include "Map.h"
 #include "Game.h"
 #include "Level.h"
 #include "Managers.h"

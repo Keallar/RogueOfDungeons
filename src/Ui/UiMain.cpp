@@ -24,24 +24,15 @@ UIInfo::UIInfo(SDL_Renderer* renderer) : ren (renderer)
 
     SPEC = FontManager::renderText("SPEC", PATH_IN_FONT, color, 32, ren);
 
-    //Mana
-    mnBar = GameTextures->GetTexture("ManaBar");
-    mnText = FontManager::renderText("MN", PATH_IN_FONT, color, 64, ren);
-
-    //XP
-    xpBar = GameTextures->GetTexture("XP");
-    xpText = FontManager::renderText("XP", PATH_IN_FONT, color, 64, ren);
-
     //Level Of Player
     textLevelOfPlayer = FontManager::renderText("Level:", PATH_IN_FONT, color, 32, ren);
     levelOfPlayer = FontManager::renderText("1", PATH_IN_FONT, color, 32, ren);
-//    int w, h;
-//    SDL_QueryTexture(levelOfPlayer, NULL, NULL, &w, &h);
-//    std::cout << w << " " << h << std::endl;
 
     //Coins
     coinText = FontManager::renderText("Coins: ", PATH_IN_FONT, color, 32, ren);
     coins = FontManager::renderText("0", PATH_IN_FONT, color, 32 ,ren);
+
+        INV = FontManager::renderText("INV", PATH_IN_FONT, color, 32, ren);
 
     //Buttons
     auto callSpecOrInfoWin{
@@ -89,8 +80,22 @@ UIInfo::UIInfo(SDL_Renderer* renderer) : ren (renderer)
             }
         }
     };
+    auto hoverInv{
+      [this]()
+        {
+            if (flagHoverInv == 0)
+                flagHoverInv = 1;
+        }
+    };
+    auto leaveHoverInv{
+      [this]()
+        {
+            if (flagHoverInv == 1)
+                flagHoverInv = 0;
+        }
+    };
     buttonForCallInvWin = new Button("left", GameTextures->GetTexture("Button"), ren, { 1050, 665, 25, 22 },
-                                     callInvWin, NULL, NULL);
+                                     callInvWin, hoverInv, leaveHoverInv);
     keyForcCallInvWin = new Keyboard(SDL_SCANCODE_I, callInvWin);
 }
 
@@ -120,16 +125,11 @@ void UIInfo::Render()
     RenderManager::CopyToRender(slashhhhhhhhh, ren, 1152, 122, 32, 20);
     RenderManager::CopyToRender(slashhhhhhhhh, ren, 1152, 175, 32, 20);
 
+    if (flagHoverInv == 1)
+        RenderManager::CopyToRender(INV, ren, 1048, 648, 27, 22);
+
     if (flagHoverSpec == 1)
         RenderManager::CopyToRender(SPEC, ren, 1230, 220, 30, 25);
-
-    //Mana
-    RenderManager::CopyToRender(mnBar, ren, 1080, 95, 230, 32, 21, 10, 128, 16);
-    RenderManager::CopyToRender(mnText, ren, 1050, 99, 25, 22);
-
-    //XP
-    RenderManager::CopyToRender(xpBar, ren, 1080, 150, 200, 32, 21, 10, 128, 16);
-    RenderManager::CopyToRender(xpText, ren, 1050, 152, 25, 22);
 
     //Level of Player
     RenderManager::CopyToRender(textLevelOfPlayer, ren, 1125, 210, 65, 25 );
@@ -242,7 +242,6 @@ UIItem::UIItem(SDL_Renderer* renderer) : ren(renderer)
 
     itemBlock = GameTextures->GetTexture("InfoBlock");
     item = FontManager::renderText("Items", PATH_IN_FONT, color, 32, ren);
-    INV = FontManager::renderText("INV", PATH_IN_FONT, color, 32, ren);
 }
 
 UIItem::~UIItem() {
@@ -254,7 +253,6 @@ void UIItem::Render()
 {
     RenderManager::CopyToRender(itemBlock, ren, 1024, 480, 256, 225);
     RenderManager::CopyToRender(item, ren, 1085, 490, 128, 32);
-    RenderManager::CopyToRender(INV, ren, 1048, 648, 27, 22);
 }
 
 UIInventory::UIInventory(SDL_Renderer* renderer) : ren(renderer)

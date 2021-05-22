@@ -147,11 +147,9 @@ void Button::updateScaleButton(int newx, int newy, int newh, int neww)
     button.h = newh;
 }
 
-void Button::updateTexture(std::string texturesheet)
+void Button::updateTexture(SDL_Texture* tex)
 {
-    SDL_DestroyTexture(buttonTexture);
-    buttonTexture = 0;
-    buttonTexture = GameTextures->GetTexture(texturesheet);
+    buttonTexture = tex;
 }
 
 void Button::deleteTexture()

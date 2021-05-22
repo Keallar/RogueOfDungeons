@@ -27,7 +27,7 @@ private:
     SDL_Texture* traderText;
     SDL_Texture* firstItem;
     SDL_Texture* secondItem;
-    SDL_Texture* thirdItmem;
+    SDL_Texture* thirdItem;
     SDL_Texture* firstCost;
     SDL_Texture* secondCost;
     SDL_Texture* thirdCost;
@@ -38,10 +38,9 @@ private:
     SDL_Texture* skip;
     SDL_Texture* sell;
     SDL_Texture* item;
+    int first = 0, second = 0, third = 0;
 
     Inventory* traderInventory;
-
-    void clickForItemInTrader();
 
     Button* buttonForFirstItem;
     Button* buttonForSecondItem;
@@ -51,15 +50,17 @@ private:
     Button* buttonForSkip;
     Button* buttonForSell;
 
-    bool bFirstItem = 0;
-    bool bSecondItem = 0;
-    bool bThirdItem = 0;
-    bool bHpPotion = 0;
-    bool bManaPotion = 0;
+    int iFirstItem = 0;
+    int iSecondItem = 0;
+    int iThirdItem = 0;
+    int iHpPotion = 0;
+    int iManaPotion = 0;
+    bool bSkip = 0;
     bool bSell = 0;
 public:
+    UiTrader() = default;
     UiTrader(SDL_Renderer* renderer);
-    ~UiTrader();
+    ~UiTrader() noexcept;
     void Render();
     void Update(Player* player);
     void Check();

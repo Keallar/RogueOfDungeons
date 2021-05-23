@@ -39,6 +39,7 @@ Level::Level(SDL_Renderer* renderer, int playerClass) : ren (renderer), pClass(p
     timeB = false;
     PlayerDeath = false;
     PlayerDead = false;
+    BossDead = false;
     auto pressW{
         [this]()
         {
@@ -307,14 +308,14 @@ Level::~Level()
     delete LevelMap;
     delete Gulag;
     SDL_DestroyTexture(PlayBackground);
-    for (Coins* coin : coins)
-    {
-        if (coin != nullptr)
-        {
-            delete coin;
-            coin = nullptr;
-        }
-    }
+//    for (Coins* coin : coins)
+//    {
+//        if (coin != nullptr)
+//        {
+//            delete coin;
+//            coin = nullptr;
+//        }
+//    }
     //delete uiTrader;
 }
 
@@ -371,6 +372,9 @@ void Level::deleteCoin()
 
 void Level::Update()
 {
+    if(StandartBossSkeleton->GetHpEnemy(0) <= 0) {
+        BossDead = true;
+    }
     if(PlayerDead)
     {
         delete player;
@@ -461,6 +465,7 @@ void Level::Update()
             if (enemy->GetHpEnemy(0) <= 0 && enemy != nullptr)
             {
                 Level::deleteEnemy();
+                enemy = nullptr;
                 std::cout << enemies.size() << std::endl;
                 if (enemies.size() == 0)
                 {

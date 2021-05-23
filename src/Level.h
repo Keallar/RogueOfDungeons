@@ -95,6 +95,7 @@ private:
     bool timeB;
     void SetLevelLoot();
 public:
+    bool BossDead;
     bool PlayerDead;
 	bool CheckPositionToMeleeAttack(SDL_Rect rect, int x, int y);
 	int GetGeneration();

@@ -45,8 +45,8 @@ private:
     RangeEnemy* StandartEnemyBee = new RangeEnemy("data/images/Bee.png", 4, ren, 18, 20, 3, 100, 8, 2, 5);
     Enemy* StandartEnemyJungleSlime = new Enemy("data/images/JungleSlime.png", 4, ren, 23, 30, 3, 100, 8, 1, 10);
     RangeEnemy* StandartEnemyRangeGhost = new RangeEnemy("data/images/MageGhost.png", 4, ren, 42, 42, 8, 250, 216, 2, 8);
-    Enemy* StandartEnemyGhost = new Enemy("data/images/MeleeGhost", 4, ren, 42, 42, 8, 250, 216, 1, 10);
-    RangeEnemy* StandartRangeSkeletonMinion = new RangeEnemy("data/images/PAPAABOBA", 4, ren, 8, 8, 6, 0, 10, 2, 10);
+    Enemy* StandartEnemyGhost = new Enemy("data/images/MeleeGhost.png", 4, ren, 42, 42, 8, 250, 216, 1, 10);
+    RangeEnemy* StandartRangeSkeletonMinion = new RangeEnemy("data/images/PAPAABOBA.png", 4, ren, 8, 8, 6, 0, 10, 2, 10);
     std::array<Enemy*, 13> StandartEnemies = { StandartEnemySlime, StandartEnemyBear,
                                              StandartEnemyBee, StandartEnemyJungleSlime,
                                              StandartEnemyTurtle, StandartRangeEnemyTurtle,

@@ -285,7 +285,7 @@ Level::~Level()
     }
     for (Enemy* enemy : StandartEnemies)
     {
-        delete enemy;
+        if (enemy != StandartBossSkeleton) delete enemy;
     }
     delete uiInfo;
     delete uiItem;

@@ -39,6 +39,7 @@ Level::Level(SDL_Renderer* renderer, int playerClass) : ren (renderer), pClass(p
     timeB = false;
     PlayerDeath = false;
     PlayerDead = false;
+    BossDead = false;
     auto pressW{
         [this]()
         {
@@ -80,6 +81,9 @@ Level::Level(SDL_Renderer* renderer, int playerClass) : ren (renderer), pClass(p
                 {
                     FlagManager::flagChest = 1;
                 }
+            }
+            if(player->playerEscaping == true) {
+                player->ChangeExpValue(-1);
             }
         }
     };
@@ -127,6 +131,9 @@ Level::Level(SDL_Renderer* renderer, int playerClass) : ren (renderer), pClass(p
                     FlagManager::flagChest = 2;
                 }
             }
+            if(player->playerEscaping == true) {
+                player->ChangeExpValue(-1);
+            }
         }
     };
     keyA = new Keyboard(SDL_SCANCODE_A, pressA);
@@ -172,6 +179,9 @@ Level::Level(SDL_Renderer* renderer, int playerClass) : ren (renderer), pClass(p
                 {
                     FlagManager::flagChest = 3;
                 }
+            }
+            if(player->playerEscaping == true) {
+                player->ChangeExpValue(-1);
             }
         }
     };
@@ -219,6 +229,9 @@ Level::Level(SDL_Renderer* renderer, int playerClass) : ren (renderer), pClass(p
                     FlagManager::flagChest = 4;
                 }
             }
+            if(player->playerEscaping == true) {
+                player->ChangeExpValue(-1);
+            }
         }
     };
     keyD = new Keyboard(SDL_SCANCODE_D, pressD);
@@ -247,6 +260,7 @@ Level::Level(SDL_Renderer* renderer, int playerClass) : ren (renderer), pClass(p
 
 void Level::PlayerInGulagHole()
 {
+    if(pLCK >= 12) pLCK = 11;
     if(!(rand()%(12-pLCK)))
     {
         PlayerDeath = false;
@@ -294,14 +308,14 @@ Level::~Level()
     delete LevelMap;
     delete Gulag;
     SDL_DestroyTexture(PlayBackground);
-    for (Coins* coin : coins)
-    {
-        if (coin != nullptr)
-        {
-            delete coin;
-            coin = nullptr;
-        }
-    }
+//    for (Coins* coin : coins)
+//    {
+//        if (coin != nullptr)
+//        {
+//            delete coin;
+//            coin = nullptr;
+//        }
+//    }
     //delete uiTrader;
 }
 
@@ -326,11 +340,11 @@ void Level::deleteEnemy()
     {
         if (enemy->GetHpEnemy(0) <= 0)
         {
+            player->ChangeExpValue(enemy->GetExp());
             coins.push_back(enemy->GetCoin());
             enemies.erase(std::remove(enemies.begin(), enemies.end(), enemy));
             std::cout << "Delete enemy" << std::endl;
             FlagManager::flagUiEnemy = 0;
-            player->ChangeExpValue(100);
             FlagManager::flagInAreaOfAnemy = 0;
         }
     }
@@ -358,6 +372,9 @@ void Level::deleteCoin()
 
 void Level::Update()
 {
+    if(StandartBossSkeleton->GetHpEnemy(0) <= 0) {
+        BossDead = true;
+    }
     if(PlayerDead)
     {
         delete player;
@@ -448,6 +465,7 @@ void Level::Update()
             if (enemy->GetHpEnemy(0) <= 0 && enemy != nullptr)
             {
                 Level::deleteEnemy();
+                enemy = nullptr;
                 std::cout << enemies.size() << std::endl;
                 if (enemies.size() == 0)
                 {
@@ -933,10 +951,11 @@ void Level::CheckButton(SDL_Event& eventInLvl) {
             {
                 UiEnemy->Update(enemy);
                 UiEnemy->UpdateMax(enemy);
-                if (eventInLvl.button.button == SDL_BUTTON_LEFT)
-                {
-                    buttonForPlayerAttack->updateCoords(enemy->Rect.x, enemy->Rect.y);
-                }
+                buttonForPlayerAttack->updateCoords(enemy->Rect.x, enemy->Rect.y);
+//                if (eventInLvl.button.button == SDL_BUTTON_LEFT)
+//                {
+//                    buttonForPlayerAttack->updateCoords(enemy->Rect.x, enemy->Rect.y);
+//                }
                 break;
             }
         }
@@ -990,24 +1009,27 @@ void Level::Attack()
                         {
                             for(Enemy* enemy : enemies) {
                                 if(enemy->Rect.x/32 == i && enemy->Rect.y/32 == j) {
-                                    enemy->ChahgeHpEnemy(-((player->MagicAttack())/2));
-                                    if (enemy->Rect.x/32 == mouseX && enemy->Rect.y/32 == mouseY)
-                                    {
+                                    if(player->GetMana(0) >= 5) {
                                         enemy->ChahgeHpEnemy(-((player->MagicAttack())/2));
-                                    }
-                                    if (player->EqItems.equipedMagic->WeaponEl == magicEl::fire)
-                                    {
-                                        enemy->ChahgeHpEnemy(-(player->GetSpecValue(3)));
-                                    }
-                                    if (player->EqItems.equipedMagic->WeaponEl == magicEl::ice)
-                                    {
-                                        //UNDONE
+                                        if (enemy->Rect.x/32 == mouseX && enemy->Rect.y/32 == mouseY)
+                                        {
+                                            enemy->ChahgeHpEnemy(-((player->MagicAttack())/2));
+                                        }
+                                        if (player->EqItems.equipedMagic->WeaponEl == magicEl::fire)
+                                        {
+                                            enemy->ChahgeHpEnemy(-(player->GetSpecValue(3)));
+                                        }
+                                        if (player->EqItems.equipedMagic->WeaponEl == magicEl::ice)
+                                        {
+                                            //UNDONE
+                                        }
                                     }
                                 }
                             }
                         }
                     }
                     enemies[0]->enemyTurn(); // ТОЖЕ ВАЖНО
+                    FlagManager::flagInAreaOfAnemy = 0;
                 }
             }
         }
@@ -1033,18 +1055,20 @@ void Level::Attack()
                         if(!FindWallsOnWay(EntityPosition::Coords[0], EntityPosition::Coords[1], mouseX*32, mouseY*32) ||
                                 Player::EqItems.equipedMagic->WeaponEl == magicEl::thunder)
                         {
-                            enemy->ChahgeHpEnemy(-(player->MagicAttack()));
-                            if (player->EqItems.equipedMagic->WeaponEl == magicEl::fire)
-                            {
-                                enemy->ChahgeHpEnemy(-(player->GetSpecValue(3)));
-                            }
-                            if (player->EqItems.equipedMagic->WeaponEl == magicEl::ice)
-                            {
-                                //UNDONE
-                            }
-                            player->ChangeManaValue(-5);
-                            enemies[0]->enemyTurn(); // ТОЖЕ ВАЖНО
-                            FlagManager::flagInAreaOfAnemy = 0;
+                           if(player->GetMana(0) >= 5) {
+                               enemy->ChahgeHpEnemy(-(player->MagicAttack()));
+                               if (player->EqItems.equipedMagic->WeaponEl == magicEl::fire)
+                               {
+                                   enemy->ChahgeHpEnemy(-(player->GetSpecValue(3)));
+                               }
+                               if (player->EqItems.equipedMagic->WeaponEl == magicEl::ice)
+                               {
+                                   //UNDONE
+                               }
+                               player->ChangeManaValue(-5);
+                           }
+                           enemies[0]->enemyTurn(); // ТОЖЕ ВАЖНО
+                           FlagManager::flagInAreaOfAnemy = 0;
                         }
                     }
                 }
@@ -1152,10 +1176,14 @@ void Level::Attack()
                     {
                         if (pow(((mouseX-EntityPosition::Coords[0])/32), 2) + pow(((mouseY-EntityPosition::Coords[1])/32), 2) <= pow((player->EqItems.equipedRangeW->RNG), 2))
                         {
-                           enemy->ChahgeHpEnemy(-(player->RangeAttack()));
+                           if(player->GetMana(0) >= 5) {
+                               enemy->ChahgeHpEnemy(-(player->RangeAttack()));
+                           }
                         }
                     }
-                    player->ChangeManaValue(-5);
+                    if(player->GetMana(0) >= 5) {
+                        player->ChangeManaValue(-5);
+                    }
                     enemies[0]->enemyTurn();// ВАЖНО
                     FlagManager::flagInAreaOfAnemy = 0;
                 }

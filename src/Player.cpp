@@ -78,7 +78,7 @@ int Player::quantityOfCoins[3] = {
     100	 /*coins max*/
 };
 
-int Player::VIS = 10;
+int Player::VIS = 4;
 
 Player::Player( SDL_Renderer* renderer):
     GameObject( renderer)
@@ -454,9 +454,9 @@ void Player::CheckMANA()
 //Проверка изменения EXP
 void Player::CheckEXP()
 {
-    if (Player::exp[0] == Player::exp[2])
+    if (Player::exp[0] >= Player::exp[2])
     {
-        Player::exp[0] = 0;
+        Player::exp[0] = Player::exp[0]-Player::exp[2];
         ChangeMaxExpValue();
         Player::levelOfPlayer[0] += 1;
         Player::pointOfSpec[0] += 1;
@@ -862,8 +862,8 @@ int Player::RangeAttack()
             Player::mana[0] >= 0)
     {
         damage = Player::EqItems.equipedRangeW->DMG + Player::DEX[0];
-        if(int i = rand()%100; 5+5*Player::LCK[1] < i)
-        {damage = damage*2;}
+        if(int i = rand()%100; 5+5*Player::LCK[1] > i)
+        {damage = damage*2; std::cout << "V ZHBAN";}
         std::cout << damage << "!" << std::endl;
     }
     return damage;

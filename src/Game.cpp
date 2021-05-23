@@ -138,6 +138,13 @@ void Game::update()
                 classChoose->choosedClass = 0;
                 gameOverScreen->flag = true;
             }
+            if(level->BossDead) {
+                delete level;
+                level = nullptr;
+                Menu->flag = 1;
+                classChoose->choosedClass = 0;
+                winnerScreen->flag = true;
+            }
         }
 	}	
 }

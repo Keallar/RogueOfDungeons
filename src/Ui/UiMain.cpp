@@ -31,8 +31,9 @@ UIInfo::UIInfo(SDL_Renderer* renderer) : ren (renderer)
     //Coins
     coinText = FontManager::renderText("Coins: ", PATH_IN_FONT, color, 32, ren);
     coins = FontManager::renderText("0", PATH_IN_FONT, color, 32 ,ren);
+    coinTex = GameTextures->GetTexture("Coin");
 
-        INV = FontManager::renderText("INV", PATH_IN_FONT, color, 32, ren);
+    INV = FontManager::renderText("INV", PATH_IN_FONT, color, 32, ren);
 
     //Buttons
     auto callSpecOrInfoWin{
@@ -81,14 +82,14 @@ UIInfo::UIInfo(SDL_Renderer* renderer) : ren (renderer)
         }
     };
     auto hoverInv{
-      [this]()
+        [this]()
         {
             if (flagHoverInv == 0)
                 flagHoverInv = 1;
         }
     };
     auto leaveHoverInv{
-      [this]()
+        [this]()
         {
             if (flagHoverInv == 1)
                 flagHoverInv = 0;
@@ -133,9 +134,10 @@ void UIInfo::Render()
     RenderManager::CopyToRender(textLevelOfPlayer, ren, 1125, 210, 65, 25 );
     RenderManager::CopyToRender(levelOfPlayer, ren, 1187, 212, 21, 32);
 
-    //Coins UNDONE
+    //Coins
     RenderManager::CopyToRender(coinText, ren, 1125, 400, 65, 25);
     RenderManager::CopyToRender(coins, ren, 1187, 400, 21, 32);
+    RenderManager::CopyToRender(coinTex, ren, 1080, 387, 48, 48);
 
     //Buttons
     buttonForCallSpecInfo->Render();
@@ -268,14 +270,19 @@ UIInventory::UIInventory(SDL_Renderer* renderer) : ren(renderer)
             if (FlagManager::flagHaveDrop == 0)
             {
                 FlagManager::flagHaveDrop = 1;
+                //                buttonForCallDpor->deleteTexture();
+                //                buttonForCallDpor->updateTexture(GameTextures->GetTexture("YellowButton"));
             }
             else if (FlagManager::flagHaveDrop == 1)
             {
                 FlagManager::flagHaveDrop = 0;
+                //                buttonForCallDpor->deleteTexture();
+                //                buttonForCallDpor->updateTexture(GameTextures->GetTexture("Button"));
             }
         }
     };
-    buttonForCallDpor = new Button("left", GameTextures->GetTexture("Button"), ren, { 790, 665, 25, 22 }, callDrop , NULL, NULL);
+    buttonForCallDpor = new Button("left", GameTextures->GetTexture("Button"), ren, { 790, 665, 25, 22 },
+                                   callDrop , NULL, NULL);
     hoverTexture = nullptr;
 }
 
@@ -284,6 +291,10 @@ void UIInventory::Render()
     RenderManager::CopyToRender(inventoryBlock, ren, 730, 0, 300, 710);
     RenderManager::CopyToRender(inventoryText, ren, 780, 50, 160, 32);
     buttonForCallDpor->Render();
+    if (FlagManager::flagHaveDrop == 0)
+        buttonForCallDpor->Render();
+    else if (FlagManager::flagHaveDrop == 1)
+        RenderManager::CopyToRender(GameTextures->GetTexture("YellowButton"), ren, 790, 665, 25, 22);
 
     for (int i = 0; i < INVENTORY_SIZE; i++)
     {
@@ -326,7 +337,7 @@ void UIInventory::handleEvents(SDL_Event& eventInInv)
         {
             SDL_DestroyTexture(hoverTexture);
             hoverTexture = nullptr;
-            std::cout<<"Reser texture"<<std::endl;
+            //std::cout<<"Reser texture"<<std::endl;
         }
         if(works != -1)
         {

@@ -32,6 +32,7 @@ private:
     //Coins
     SDL_Texture* coinText;
     SDL_Texture* coins;
+    SDL_Texture* coinTex;
 
 	//Buttons
 	Button* buttonForCallSpecInfo;

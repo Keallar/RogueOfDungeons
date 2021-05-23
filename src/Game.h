@@ -39,6 +39,7 @@ private:
     ClassChoose* classChoose;
     TitleScreen* gameOverScreen;
     TitleScreen* winnerScreen;
+    TitleScreen* story;
 	UIInfo* uiLevel;
 public:
 	static SDL_Renderer* renderer;

@@ -7,6 +7,7 @@
 #include "Player.h"
 #include "UiMain.h"
 #include "Enemy.h"
+#include "TextureBase.h"
 
 Game::Game() 
 {
@@ -61,8 +62,10 @@ void Game::init(const char* title, int xpos, int ypos, int width, int height, bo
 	
     Menu = new MainMenu("data/images/BackgroundMenu.png", "data/images/Play.png", "data/images/Settings.png", "data/images/Exit.png", renderer);
     classChoose = new ClassChoose(renderer);
-    gameOverScreen = new TitleScreen("Game Over", renderer);
-    winnerScreen = new TitleScreen("you did it", renderer);
+    TextureBase* GameTextures = TextureBase::Instance();
+    gameOverScreen = new TitleScreen("Game Over",GameTextures->GetTexture("RIP") , renderer);
+    winnerScreen = new TitleScreen("you did it",GameTextures->GetTexture("PapaDead") , renderer);
+    story = new TitleScreen("Story", GameTextures->GetTexture("Story"), renderer);
 }
 
 void Game::handleEvents()
@@ -76,6 +79,9 @@ void Game::handleEvents()
         }
         if (gameOverScreen->flag) {
             gameOverScreen->handleEvents(event);
+        }
+        if (story->flag) {
+            story->handleEvents(event);
         }
         if (winnerScreen->flag) {
             winnerScreen->handleEvents(event);
@@ -101,6 +107,7 @@ void Game::handleEvents()
 				}
 				if (InputManager::MouseInArea(640, 471, 420, 100, mouseCoord.x, mouseCoord.y))
 				{
+                    story->flag = true;
 					break;
 				}
 				if (InputManager::MouseInArea(640, 581, 250, 100, mouseCoord.x, mouseCoord.y))
@@ -138,6 +145,8 @@ void Game::update()
                 classChoose->choosedClass = 0;
                 gameOverScreen->flag = true;
             }
+        }
+        if(level) {
             if(level->BossDead) {
                 delete level;
                 level = nullptr;
@@ -169,6 +178,9 @@ void Game::render()
     }
     if (winnerScreen->flag) {
         winnerScreen->Render();
+    }
+    if (story->flag) {
+        story->Render();
     }
 	SDL_RenderPresent(renderer);
 }

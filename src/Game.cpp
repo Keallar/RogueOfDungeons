@@ -61,12 +61,12 @@ void Game::init(const char* title, int xpos, int ypos, int width, int height, bo
 		isRunning = false;
 	}
 	
-    Menu = new MainMenu("data/images/BackgroundMenu.png", "data/images/Play.png", "data/images/Settings.png", "data/images/Exit.png", renderer);
+    Menu = new MainMenu("data/images/BackgroundMenu.png", "data/images/Play.png", "data/images/Settings.png", "data/images/Exit.png", "data/images/Credits.png", renderer);
     classChoose = new ClassChoose(renderer);
     credits = new Credits(Menu);
+    TextureBase* GameTextures = TextureBase::Instance();
     winnerScreen = new TitleScreen("you did it",GameTextures->GetTexture("PapaDead") , renderer);
     gameOverScreen = new TitleScreen("Game Over",GameTextures->GetTexture("RIP") , renderer);
-    TextureBase* GameTextures = TextureBase::Instance();
     story = new TitleScreen("Story", GameTextures->GetTexture("Story"), renderer);
 }
 
@@ -117,7 +117,7 @@ void Game::handleEvents()
                     isRunning = false;
 					break;
 				}
-                if (InputManager::MouseInArea(0, 581, 420, 100, mouseCoord.x, mouseCoord.y))
+                if (InputManager::MouseInArea(10, 630, 210, 60, mouseCoord.x, mouseCoord.y))
                 {
                     credits->flag = 1;
                     Menu->flag = 2;

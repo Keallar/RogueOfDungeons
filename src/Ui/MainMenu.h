@@ -9,10 +9,11 @@ private:
 	SDL_Texture* PlayButton;
 	SDL_Texture* SettingsButton;
 	SDL_Texture* ExitButton;
+    SDL_Texture* Credits;
 public:
 	int flag = 1;
 	MainMenu(const char* texturesheetMenu, const char* texturesheetPlay,
-		const char* texturesheetSettings, const char* texturesheetExit, SDL_Renderer* ren);
+        const char* texturesheetSettings, const char* texturesheetExit, const char* credits, SDL_Renderer* ren);
 	~MainMenu();
 	void Render();
 };

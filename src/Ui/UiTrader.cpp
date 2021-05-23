@@ -216,7 +216,7 @@ void UiTrader::Update(Player* player)
                     iRandPotion = 2;
                     Player::ChangeCoins(-Inventory::it->second->GetCost());
                     traderInventory->inventory[5] = -1;
-                    player->itemInInv(first);
+                    player->itemInInv(six);
                     buttonForRandPotion->deleteTexture();
                     SDL_DestroyTexture(randBottle);
                     randBottle = 0;

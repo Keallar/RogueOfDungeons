@@ -1,4 +1,4 @@
-#include "UiPlayer.h"
+#include "uiplayer.h"
 #include "Managers.h"
 #include "Player.h"
 
@@ -344,6 +344,10 @@ UISpecifications::UISpecifications(SDL_Renderer* renderer) : ren (renderer)
     textPointOfSpec = FontManager::renderText("Points:", PATH_IN_FONT, color, 32, ren);
     pointOfSpec = FontManager::renderText("0", PATH_IN_FONT, color, 32, ren);
 
+    //Damage Info
+    damageText = FontManager::renderText("DMG:",PATH_IN_FONT, color, 32, ren );
+    damage = FontManager::renderText("0", PATH_IN_FONT, color, 32, ren);
+
     //numbers
     one = FontManager::renderText("(1)", PATH_IN_FONT, color, 64, ren);
     two = FontManager::renderText("(2)", PATH_IN_FONT, color, 64, ren);
@@ -430,6 +434,8 @@ void UISpecifications::Render()
     //Points
     RenderManager::CopyToRender(textPointOfSpec, ren, 1150, 400, 80, 32);
     RenderManager::CopyToRender(pointOfSpec, ren, 1230, 403, 21, 32);
+    //DamageInfo
+
 }
 
 void UISpecifications::Update()

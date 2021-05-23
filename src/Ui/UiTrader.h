@@ -26,15 +26,23 @@ private:
     SDL_Texture* trader;
     SDL_Texture* traderText;
     SDL_Texture* firstItem;
-    SDL_Texture* secondItem;
-    SDL_Texture* thirdItem;
     SDL_Texture* firstCost;
+    SDL_Texture* firstInfo;
+    SDL_Texture* secondItem;
     SDL_Texture* secondCost;
+    SDL_Texture* secondInfo;
+    SDL_Texture* thirdItem;
+    SDL_Texture* thirdInfo;
     SDL_Texture* thirdCost;
     SDL_Texture* hpBottle;
     SDL_Texture* hpBtText;
+    SDL_Texture* hpbtInfo;
     SDL_Texture* manaBottle;
     SDL_Texture* manaBtText;
+    SDL_Texture* manaBtInfo;
+    SDL_Texture* randBottle;
+    SDL_Texture* randBtText;
+    SDL_Texture* randBtInfo;
     SDL_Texture* skip;
     //SDL_Texture* sell;
     SDL_Texture* item;
@@ -47,6 +55,7 @@ private:
     Button* buttonForThirdItem;
     Button* buttonForHpPotion;
     Button* buttonForManaPotion;
+    Button* buttonForRandPotion;
     Button* buttonForSkip;
     //Button* buttonForSell;
 
@@ -55,6 +64,7 @@ private:
     int iThirdItem = 0;
     int iHpPotion = 0;
     int iManaPotion = 0;
+    int iRandPotion = 0;
     bool bSkip = 0;
     bool bSell = 0;
 public:

@@ -100,6 +100,9 @@ private:
     //Points
     SDL_Texture* textPointOfSpec;
     SDL_Texture* pointOfSpec;
+    //Damage Info
+    SDL_Texture* damageText;
+    SDL_Texture* damage;
     //buttons
     Button* buttonForCallInfoWin;
     Button* buttonForIncPlayerSTR;

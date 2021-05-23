@@ -74,11 +74,14 @@ private:
 	SDL_Texture* inventoryText;
 	SDL_Texture* inventory;
 	SDL_Texture* item;
+    SDL_Texture* dropText;
 	int xMouseCoord;
 	int yMouseCoord;
 	Button* buttonForCallDpor;
     Button* buttonForInvItems;
     SDL_Texture* hoverTexture;
+
+    bool bDrop;
 public:
 	UIInventory(SDL_Renderer* renderer);
 	~UIInventory();

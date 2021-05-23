@@ -5,7 +5,7 @@ project(RougeOfDungeons LANGUAGES CXX)
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-include_directories(thirdParty/include src/Ui src/Instruments src)
+include_directories(thirdParty/include src/Ui src/Instruments src src/main)
 
 link_directories(thirdParty/libs)
 set (PROJECT_LIBS SDL2main SDL2 SDL2_image SDL2_ttf)

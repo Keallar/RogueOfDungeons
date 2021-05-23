@@ -1,6 +1,4 @@
-#ifndef BOSSSUMMONER_H
-#define BOSSSUMMONER_H
-
+#pragma once
 #include "Enemy.h"
 
 class BossSummoner : public Enemy
@@ -11,5 +9,3 @@ public:
     BossSummoner(const char* texturesheet, int framesOfAnimationForAttack,SDL_Renderer* ren, int HealthP, int MaxHealthP, int Damage, int EXPR, int coins, int type, int range);
     virtual void meleeAttackEnemy();
 };
-
-#endif // BOSSSUMMONER_H

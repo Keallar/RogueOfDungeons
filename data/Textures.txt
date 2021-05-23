@@ -26,3 +26,6 @@ JungleTiles data/images/JungleTiles.png
 ArcaneTiles data/images/WTF.png
 Boss data/images/Boss.png
 YellowButton data/images/YellowButton.png
+RIP data/images/RIP.png
+PapaDead data/images/PapaDead.png
+Story data/images/Story.png

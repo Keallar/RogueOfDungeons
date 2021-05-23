@@ -15,7 +15,7 @@ UIInfo::UIInfo(SDL_Renderer* renderer) : ren (renderer)
     flagHoverSpec = false;
 
     //Version
-    versionBLock = FontManager::renderText("ROGUE OF DUNGEONS V-0.1 ALPHA", PATH_IN_FONT, color, 32, ren);
+    versionBLock = FontManager::renderText("ROGUE OF DUNGEONS V-0.5 BETA", PATH_IN_FONT, color, 32, ren);
 
     infoBlock = GameTextures->GetTexture("InfoBlock");
     info = FontManager::renderText("Info", PATH_IN_FONT, color, 32, ren);
@@ -264,25 +264,35 @@ UIInventory::UIInventory(SDL_Renderer* renderer) : ren(renderer)
 
     inventoryBlock = GameTextures->GetTexture("InfoBlock");
     inventoryText = FontManager::renderText("Inventory", PATH_IN_FONT, color, 64, ren);
+    dropText = FontManager::renderText("DROP", PATH_IN_FONT, color, 64, ren);
+
     auto callDrop{
         []()
         {
             if (FlagManager::flagHaveDrop == 0)
             {
                 FlagManager::flagHaveDrop = 1;
-                //                buttonForCallDpor->deleteTexture();
-                //                buttonForCallDpor->updateTexture(GameTextures->GetTexture("YellowButton"));
             }
             else if (FlagManager::flagHaveDrop == 1)
             {
                 FlagManager::flagHaveDrop = 0;
-                //                buttonForCallDpor->deleteTexture();
-                //                buttonForCallDpor->updateTexture(GameTextures->GetTexture("Button"));
             }
         }
     };
+    auto hoverDrop{
+      [this]()
+        {
+            bDrop = 1;
+        }
+    };
+    auto leaveHoverDrop{
+      [this]()
+        {
+            bDrop = 0;
+        }
+    };
     buttonForCallDpor = new Button("left", GameTextures->GetTexture("Button"), ren, { 790, 665, 25, 22 },
-                                   callDrop , NULL, NULL);
+                                   callDrop , hoverDrop, leaveHoverDrop);
     hoverTexture = nullptr;
 }
 
@@ -291,6 +301,8 @@ void UIInventory::Render()
     RenderManager::CopyToRender(inventoryBlock, ren, 730, 0, 300, 710);
     RenderManager::CopyToRender(inventoryText, ren, 780, 50, 160, 32);
     buttonForCallDpor->Render();
+    if (bDrop == 1)
+        RenderManager::CopyToRender(dropText, ren, 790, 650, 27, 22);
     if (FlagManager::flagHaveDrop == 0)
         buttonForCallDpor->Render();
     else if (FlagManager::flagHaveDrop == 1)

@@ -41,6 +41,7 @@ private:
     Credits* credits;
     TitleScreen* gameOverScreen;
     TitleScreen* winnerScreen;
+    TitleScreen* story;
 	UIInfo* uiLevel;
 public:
 	static SDL_Renderer* renderer;

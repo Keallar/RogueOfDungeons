@@ -7,7 +7,7 @@
 #include "Player.h"
 #include "UiMain.h"
 #include "Enemy.h"
-
+#include "Buttons.h"
 Game::Game() 
 {
 	level = 0;
@@ -63,6 +63,7 @@ void Game::init(const char* title, int xpos, int ypos, int width, int height, bo
     classChoose = new ClassChoose(renderer);
     gameOverScreen = new TitleScreen("Game Over", renderer);
     winnerScreen = new TitleScreen("you did it", renderer);
+    credits = new Credits(Menu);
 }
 
 void Game::handleEvents()
@@ -101,6 +102,8 @@ void Game::handleEvents()
 				}
 				if (InputManager::MouseInArea(640, 471, 420, 100, mouseCoord.x, mouseCoord.y))
 				{
+                    credits->flag = 1;
+                    Menu->flag = 2;
 					break;
 				}
 				if (InputManager::MouseInArea(640, 581, 250, 100, mouseCoord.x, mouseCoord.y))
@@ -108,7 +111,18 @@ void Game::handleEvents()
                     isRunning = false;
 					break;
 				}
+                if (InputManager::MouseInArea(0, 581, 420, 100, mouseCoord.x, mouseCoord.y))
+                {
+                    credits->flag = 1;
+                    Menu->flag = 2;
+                    break;
+                }
+
 			}
+            if (Menu->flag == 2)
+            {
+                credits->handleEvent(event);
+            }
 		default:
 			break;
 		}
@@ -164,6 +178,10 @@ void Game::render()
             level->Render();
         }
 	}
+    else if (Menu->flag == 2)
+    {
+        credits->render();
+    }
     if (gameOverScreen->flag) {
         gameOverScreen->Render();
     }

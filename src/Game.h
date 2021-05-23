@@ -8,6 +8,7 @@
 #include "Player.h"
 #include "ClassChoose.h"
 #include "TitleScreen.h"
+#include "Credits.h"
 
 struct COORDS 
 {
@@ -37,6 +38,7 @@ private:
 	MainMenu* Menu;
 	Level* level;
     ClassChoose* classChoose;
+    Credits* credits;
     TitleScreen* gameOverScreen;
     TitleScreen* winnerScreen;
 	UIInfo* uiLevel;
